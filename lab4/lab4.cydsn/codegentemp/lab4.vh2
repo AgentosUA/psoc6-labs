@@ -1,0 +1,274 @@
+--
+--	Conversion of lab4.v to vh2:
+--
+--	Cypress Semiconductor - WARP Version 6.3 IR 41
+--	Wed Sep 25 17:50:56 2019
+--
+
+USE cypress.cypress.all;
+USE cypress.rtlpkg.all;
+ENTITY top_RTL IS
+ATTRIBUTE part_name of top_RTL:TYPE IS "cpsoc3";
+END top_RTL;
+--------------------------------------------------------
+ARCHITECTURE R_T_L OF top_RTL IS
+TERMINAL Net_60 : bit;
+TERMINAL Net_62 : bit;
+SIGNAL Net_184 : bit;
+SIGNAL \PWM_1:swap\ : bit;
+SIGNAL \PWM_1:count\ : bit;
+SIGNAL \PWM_1:reload\ : bit;
+SIGNAL \PWM_1:kill\ : bit;
+SIGNAL \PWM_1:start\ : bit;
+SIGNAL Net_90 : bit;
+SIGNAL Net_91 : bit;
+SIGNAL Net_89 : bit;
+SIGNAL Net_92 : bit;
+SIGNAL Net_45 : bit;
+SIGNAL Net_88 : bit;
+SIGNAL one : bit;
+SIGNAL tmpFB_0__Pin_Red_net_0 : bit;
+SIGNAL tmpIO_0__Pin_Red_net_0 : bit;
+TERMINAL tmpSIOVREF__Pin_Red_net_0 : bit;
+TERMINAL Net_64 : bit;
+SIGNAL Net_94 : bit;
+SIGNAL tmpFB_0__Pin_Blue_net_0 : bit;
+SIGNAL tmpIO_0__Pin_Blue_net_0 : bit;
+TERMINAL Net_93 : bit;
+TERMINAL tmpSIOVREF__Pin_Blue_net_0 : bit;
+SIGNAL \PWM_2:swap\ : bit;
+SIGNAL \PWM_2:count\ : bit;
+SIGNAL \PWM_2:reload\ : bit;
+SIGNAL \PWM_2:kill\ : bit;
+SIGNAL \PWM_2:start\ : bit;
+SIGNAL Net_192 : bit;
+SIGNAL Net_193 : bit;
+SIGNAL Net_191 : bit;
+SIGNAL Net_194 : bit;
+SIGNAL Net_190 : bit;
+TERMINAL Net_106 : bit;
+TERMINAL Net_107 : bit;
+SIGNAL Net_112 : bit;
+SIGNAL tmpFB_0__Pin_Green_net_0 : bit;
+SIGNAL tmpIO_0__Pin_Green_net_0 : bit;
+TERMINAL Net_111 : bit;
+TERMINAL tmpSIOVREF__Pin_Green_net_0 : bit;
+SIGNAL \PWM_3:swap\ : bit;
+SIGNAL \PWM_3:count\ : bit;
+SIGNAL \PWM_3:reload\ : bit;
+SIGNAL \PWM_3:kill\ : bit;
+SIGNAL \PWM_3:start\ : bit;
+SIGNAL Net_202 : bit;
+SIGNAL Net_203 : bit;
+SIGNAL Net_201 : bit;
+SIGNAL Net_204 : bit;
+SIGNAL Net_200 : bit;
+TERMINAL Net_124 : bit;
+TERMINAL Net_125 : bit;
+BEGIN
+
+\PWM_1:swap\ <=  ('0') ;
+
+one <=  ('1') ;
+
+R_1:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Resistor_v1_0",
+		port_names=>"T1, T2",
+		width=>2)
+	PORT MAP(connect=>(Net_60, Net_62));
+Clock_1:cy_clock_v1_0
+	GENERIC MAP(cy_registers=>"",
+		id=>"f4c12b77-3930-48bc-ad21-7c6b1fcc2b37",
+		source_clock_id=>"2FB4EC85-8328-4C5A-9ED9-8B63060178EB",
+		divisor=>0,
+		period=>"1000000000000",
+		is_direct=>'0',
+		is_digital=>'0')
+	PORT MAP(clock_out=>Net_184,
+		dig_domain_out=>open);
+\PWM_1:TCPWM\:cy_mxs40_tcpwm_v1_0
+	GENERIC MAP(cy_registers=>"",
+		width=>16,
+		exact_width=>'0')
+	PORT MAP(clock=>Net_184,
+		capture=>\PWM_1:swap\,
+		count=>one,
+		reload=>\PWM_1:swap\,
+		stop=>\PWM_1:swap\,
+		start=>\PWM_1:swap\,
+		tr_underflow=>Net_90,
+		tr_compare_match=>Net_91,
+		tr_overflow=>Net_89,
+		line_compl=>Net_92,
+		line=>Net_45,
+		interrupt=>Net_88);
+Pin_Red:cy_mxs40_gpio_v1_0
+	GENERIC MAP(cy_registers=>"",
+		width=>1,
+		sio_grp_cnt=>0,
+		id=>"a61270bc-07ec-447d-ac9e-34cfe85c30e9",
+		drive_mode=>"6",
+		ibuf_enabled=>"0",
+		init_dr_st=>"1",
+		input_sync=>"0",
+		intr_mode=>"0",
+		io_voltage=>"",
+		output_conn=>"1",
+		oe_conn=>"0",
+		output_sync=>"0",
+		oe_sync=>"0",
+		drive_strength=>"0",
+		max_frequency=>"100",
+		output_current_cap=>"8",
+		i2c_mode=>"0",
+		pin_aliases=>"",
+		pin_mode=>"O",
+		slew_rate=>"0",
+		vtrip=>"0",
+		use_annotation=>"1",
+		hotswap_needed=>"0")
+	PORT MAP(oe=>(one),
+		y=>Net_45,
+		fb=>(tmpFB_0__Pin_Red_net_0),
+		analog=>(open),
+		io=>(tmpIO_0__Pin_Red_net_0),
+		annotation=>Net_60,
+		siovref=>(tmpSIOVREF__Pin_Red_net_0));
+GND_1:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Gnd_v1_0",
+		port_names=>"T1",
+		width=>1)
+	PORT MAP(connect=>Net_64);
+D_1:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"LED_v1_0",
+		port_names=>"A, K",
+		width=>2)
+	PORT MAP(connect=>(Net_62, Net_64));
+Pin_Blue:cy_mxs40_gpio_v1_0
+	GENERIC MAP(cy_registers=>"",
+		width=>1,
+		sio_grp_cnt=>0,
+		id=>"40dc6df9-5f10-4f72-bf12-57021a6d4fb5",
+		drive_mode=>"6",
+		ibuf_enabled=>"0",
+		init_dr_st=>"1",
+		input_sync=>"0",
+		intr_mode=>"0",
+		io_voltage=>"",
+		output_conn=>"1",
+		oe_conn=>"0",
+		output_sync=>"0",
+		oe_sync=>"0",
+		drive_strength=>"0",
+		max_frequency=>"100",
+		output_current_cap=>"8",
+		i2c_mode=>"0",
+		pin_aliases=>"",
+		pin_mode=>"O",
+		slew_rate=>"0",
+		vtrip=>"0",
+		use_annotation=>"1",
+		hotswap_needed=>"0")
+	PORT MAP(oe=>(one),
+		y=>Net_94,
+		fb=>(tmpFB_0__Pin_Blue_net_0),
+		analog=>(open),
+		io=>(tmpIO_0__Pin_Blue_net_0),
+		annotation=>Net_93,
+		siovref=>(tmpSIOVREF__Pin_Blue_net_0));
+\PWM_2:TCPWM\:cy_mxs40_tcpwm_v1_0
+	GENERIC MAP(cy_registers=>"",
+		width=>16,
+		exact_width=>'0')
+	PORT MAP(clock=>Net_184,
+		capture=>\PWM_1:swap\,
+		count=>one,
+		reload=>\PWM_1:swap\,
+		stop=>\PWM_1:swap\,
+		start=>\PWM_1:swap\,
+		tr_underflow=>Net_192,
+		tr_compare_match=>Net_193,
+		tr_overflow=>Net_191,
+		line_compl=>Net_194,
+		line=>Net_94,
+		interrupt=>Net_190);
+R_2:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Resistor_v1_0",
+		port_names=>"T1, T2",
+		width=>2)
+	PORT MAP(connect=>(Net_93, Net_106));
+D_2:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"LED_v1_0",
+		port_names=>"A, K",
+		width=>2)
+	PORT MAP(connect=>(Net_106, Net_107));
+GND_2:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Gnd_v1_0",
+		port_names=>"T1",
+		width=>1)
+	PORT MAP(connect=>Net_107);
+Pin_Green:cy_mxs40_gpio_v1_0
+	GENERIC MAP(cy_registers=>"",
+		width=>1,
+		sio_grp_cnt=>0,
+		id=>"5532a322-0612-497e-b236-9d942602a358",
+		drive_mode=>"6",
+		ibuf_enabled=>"0",
+		init_dr_st=>"1",
+		input_sync=>"0",
+		intr_mode=>"0",
+		io_voltage=>"",
+		output_conn=>"1",
+		oe_conn=>"0",
+		output_sync=>"0",
+		oe_sync=>"0",
+		drive_strength=>"0",
+		max_frequency=>"100",
+		output_current_cap=>"8",
+		i2c_mode=>"0",
+		pin_aliases=>"",
+		pin_mode=>"O",
+		slew_rate=>"0",
+		vtrip=>"0",
+		use_annotation=>"1",
+		hotswap_needed=>"0")
+	PORT MAP(oe=>(one),
+		y=>Net_112,
+		fb=>(tmpFB_0__Pin_Green_net_0),
+		analog=>(open),
+		io=>(tmpIO_0__Pin_Green_net_0),
+		annotation=>Net_111,
+		siovref=>(tmpSIOVREF__Pin_Green_net_0));
+\PWM_3:TCPWM\:cy_mxs40_tcpwm_v1_0
+	GENERIC MAP(cy_registers=>"",
+		width=>16,
+		exact_width=>'0')
+	PORT MAP(clock=>Net_184,
+		capture=>\PWM_1:swap\,
+		count=>one,
+		reload=>\PWM_1:swap\,
+		stop=>\PWM_1:swap\,
+		start=>\PWM_1:swap\,
+		tr_underflow=>Net_202,
+		tr_compare_match=>Net_203,
+		tr_overflow=>Net_201,
+		line_compl=>Net_204,
+		line=>Net_112,
+		interrupt=>Net_200);
+R_3:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Resistor_v1_0",
+		port_names=>"T1, T2",
+		width=>2)
+	PORT MAP(connect=>(Net_111, Net_124));
+D_3:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"LED_v1_0",
+		port_names=>"A, K",
+		width=>2)
+	PORT MAP(connect=>(Net_124, Net_125));
+GND_3:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Gnd_v1_0",
+		port_names=>"T1",
+		width=>1)
+	PORT MAP(connect=>Net_125);
+
+END R_T_L;
