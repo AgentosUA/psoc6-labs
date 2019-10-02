@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
   27:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_quaddec.c **** * Initializes the counter in the TCPWM block for the QuadDec operation.
   28:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_quaddec.c **** *
   29:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_quaddec.c **** * \param base
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 2
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 2
 
 
   30:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_quaddec.c **** * The pointer to a TCPWM instance.
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
   56              		.loc 1 55 0
   57 001e 9369     		ldr	r3, [r2, #24]
   58 0020 B3F1FF3F 		cmp	r3, #-1
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 3
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 3
 
 
   59 0024 13D0     		beq	.L3
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
   96 0062 43F00303 		orr	r3, r3, #3
   63:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_quaddec.c ****                                       _VAL2FLD(TCPWM_CNT_TR_CTRL1_COUNT_EDGE, CY_TCPWM_INPUT_LEVEL)
   97              		.loc 1 63 0
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 4
 
 
   98 0066 04EB8114 		add	r4, r4, r1, lsl #6
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  142              		.global	Cy_TCPWM_QuadDec_DeInit
  143              		.thumb
  144              		.thumb_func
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 5
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 5
 
 
  145              		.type	Cy_TCPWM_QuadDec_DeInit, %function
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  104:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_quaddec.c ****     base->CNT[cntNum].PERIOD = CY_TCPWM_CNT_PERIOD_DEFAULT;
  171              		.loc 1 104 0
  172 001e C3F81451 		str	r5, [r3, #276]
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 6
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 6
 
 
  105:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_quaddec.c ****     base->CNT[cntNum].PERIOD_BUFF = CY_TCPWM_CNT_PERIOD_BUFF_DEFAULT;
@@ -349,8 +349,8 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  206              		.size	Cy_TCPWM_QuadDec_DeInit, .-Cy_TCPWM_QuadDec_DeInit
  207              		.text
  208              	.Letext0:
- 209              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
- 210              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 209              		.file 2 "d:\\programs\\psoc\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-ea
+ 210              		.file 3 "d:\\programs\\psoc\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-ea
  211              		.file 4 "Generated_Source\\PSoC6\\pdl\\devices/psoc6/ip/cyip_tcpwm.h"
  212              		.file 5 "Generated_Source\\PSoC6\\pdl\\drivers\\peripheral\\tcpwm\\cy_tcpwm.h"
  213              		.file 6 "Generated_Source\\PSoC6\\pdl\\drivers\\peripheral\\tcpwm\\cy_tcpwm_quaddec.h"
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  215              		.section	.debug_info,"",%progbits
  216              	.Ldebug_info0:
  217 0000 A0030000 		.4byte	0x3a0
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 7
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 7
 
 
  218 0004 0400     		.2byte	0x4
@@ -368,18 +368,18 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  222 000c C0000000 		.4byte	.LASF57
  223 0010 0C       		.byte	0xc
  224 0011 1E000000 		.4byte	.LASF58
- 225 0015 65020000 		.4byte	.LASF59
+ 225 0015 D7030000 		.4byte	.LASF59
  226 0019 00000000 		.4byte	.Ldebug_ranges0+0
  227 001d 00000000 		.4byte	0
  228 0021 00000000 		.4byte	.Ldebug_line0
  229 0025 02       		.uleb128 0x2
  230 0026 01       		.byte	0x1
  231 0027 06       		.byte	0x6
- 232 0028 DA010000 		.4byte	.LASF0
+ 232 0028 59020000 		.4byte	.LASF0
  233 002c 02       		.uleb128 0x2
  234 002d 01       		.byte	0x1
  235 002e 08       		.byte	0x8
- 236 002f 47020000 		.4byte	.LASF1
+ 236 002f 3B020000 		.4byte	.LASF1
  237 0033 02       		.uleb128 0x2
  238 0034 02       		.byte	0x2
  239 0035 05       		.byte	0x5
@@ -387,16 +387,16 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  241 003a 02       		.uleb128 0x2
  242 003b 02       		.byte	0x2
  243 003c 07       		.byte	0x7
- 244 003d F0020000 		.4byte	.LASF3
+ 244 003d C4020000 		.4byte	.LASF3
  245 0041 03       		.uleb128 0x3
- 246 0042 9F030000 		.4byte	.LASF5
+ 246 0042 73030000 		.4byte	.LASF5
  247 0046 02       		.byte	0x2
  248 0047 3F       		.byte	0x3f
  249 0048 4C000000 		.4byte	0x4c
  250 004c 02       		.uleb128 0x2
  251 004d 04       		.byte	0x4
  252 004e 05       		.byte	0x5
- 253 004f 01020000 		.4byte	.LASF4
+ 253 004f F5010000 		.4byte	.LASF4
  254 0053 03       		.uleb128 0x3
  255 0054 84010000 		.4byte	.LASF6
  256 0058 02       		.byte	0x2
@@ -405,40 +405,40 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  259 005e 02       		.uleb128 0x2
  260 005f 04       		.byte	0x4
  261 0060 07       		.byte	0x7
- 262 0061 5F030000 		.4byte	.LASF7
+ 262 0061 33030000 		.4byte	.LASF7
  263 0065 02       		.uleb128 0x2
  264 0066 08       		.byte	0x8
  265 0067 05       		.byte	0x5
- 266 0068 EC010000 		.4byte	.LASF8
+ 266 0068 E0010000 		.4byte	.LASF8
  267 006c 02       		.uleb128 0x2
  268 006d 08       		.byte	0x8
  269 006e 07       		.byte	0x7
- 270 006f 9A020000 		.4byte	.LASF9
+ 270 006f 6E020000 		.4byte	.LASF9
  271 0073 04       		.uleb128 0x4
  272 0074 04       		.byte	0x4
  273 0075 05       		.byte	0x5
  274 0076 696E7400 		.ascii	"int\000"
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 8
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 8
 
 
  275 007a 02       		.uleb128 0x2
  276 007b 04       		.byte	0x4
  277 007c 07       		.byte	0x7
- 278 007d C5020000 		.4byte	.LASF10
+ 278 007d 99020000 		.4byte	.LASF10
  279 0081 03       		.uleb128 0x3
- 280 0082 0F030000 		.4byte	.LASF11
+ 280 0082 E3020000 		.4byte	.LASF11
  281 0086 03       		.byte	0x3
  282 0087 2C       		.byte	0x2c
  283 0088 41000000 		.4byte	0x41
  284 008c 03       		.uleb128 0x3
- 285 008d B1020000 		.4byte	.LASF12
+ 285 008d 85020000 		.4byte	.LASF12
  286 0091 03       		.byte	0x3
  287 0092 30       		.byte	0x30
  288 0093 53000000 		.4byte	0x53
  289 0097 02       		.uleb128 0x2
  290 0098 08       		.byte	0x8
  291 0099 04       		.byte	0x4
- 292 009a 25020000 		.4byte	.LASF13
+ 292 009a 19020000 		.4byte	.LASF13
  293 009e 02       		.uleb128 0x2
  294 009f 04       		.byte	0x4
  295 00a0 07       		.byte	0x7
@@ -453,19 +453,19 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  304 00b2 22       		.byte	0x22
  305 00b3 77010000 		.4byte	0x177
  306 00b7 08       		.uleb128 0x8
- 307 00b8 55020000 		.4byte	.LASF15
+ 307 00b8 49020000 		.4byte	.LASF15
  308 00bc 04       		.byte	0x4
  309 00bd 23       		.byte	0x23
  310 00be A5000000 		.4byte	0xa5
  311 00c2 00       		.byte	0
  312 00c3 08       		.uleb128 0x8
- 313 00c4 FA010000 		.4byte	.LASF16
+ 313 00c4 EE010000 		.4byte	.LASF16
  314 00c8 04       		.byte	0x4
  315 00c9 24       		.byte	0x24
  316 00ca AA000000 		.4byte	0xaa
  317 00ce 04       		.byte	0x4
  318 00cf 08       		.uleb128 0x8
- 319 00d0 C0030000 		.4byte	.LASF17
+ 319 00d0 94030000 		.4byte	.LASF17
  320 00d4 04       		.byte	0x4
  321 00d5 25       		.byte	0x25
  322 00d6 A5000000 		.4byte	0xa5
@@ -477,8 +477,8 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  328 00e1 A5000000 		.4byte	0xa5
  329 00e5 0C       		.byte	0xc
  330 00e6 08       		.uleb128 0x8
- 331 00e7 1D020000 		.4byte	.LASF18
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 9
+ 331 00e7 11020000 		.4byte	.LASF18
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 9
 
 
  332 00eb 04       		.byte	0x4
@@ -498,7 +498,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  346 0105 A5000000 		.4byte	0xa5
  347 0109 18       		.byte	0x18
  348 010a 08       		.uleb128 0x8
- 349 010b C8030000 		.4byte	.LASF21
+ 349 010b 9C030000 		.4byte	.LASF21
  350 010f 04       		.byte	0x4
  351 0110 2A       		.byte	0x2a
  352 0111 AA000000 		.4byte	0xaa
@@ -522,34 +522,34 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  370 0135 A5000000 		.4byte	0xa5
  371 0139 28       		.byte	0x28
  372 013a 08       		.uleb128 0x8
- 373 013b 4B030000 		.4byte	.LASF25
+ 373 013b 1F030000 		.4byte	.LASF25
  374 013f 04       		.byte	0x4
  375 0140 2E       		.byte	0x2e
  376 0141 AA000000 		.4byte	0xaa
  377 0145 2C       		.byte	0x2c
  378 0146 08       		.uleb128 0x8
- 379 0147 46030000 		.4byte	.LASF26
+ 379 0147 1A030000 		.4byte	.LASF26
  380 014b 04       		.byte	0x4
  381 014c 2F       		.byte	0x2f
  382 014d A5000000 		.4byte	0xa5
  383 0151 30       		.byte	0x30
  384 0152 08       		.uleb128 0x8
- 385 0153 91020000 		.4byte	.LASF27
+ 385 0153 65020000 		.4byte	.LASF27
  386 0157 04       		.byte	0x4
  387 0158 30       		.byte	0x30
  388 0159 A5000000 		.4byte	0xa5
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 10
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 10
 
 
  389 015d 34       		.byte	0x34
  390 015e 08       		.uleb128 0x8
- 391 015f E6020000 		.4byte	.LASF28
+ 391 015f BA020000 		.4byte	.LASF28
  392 0163 04       		.byte	0x4
  393 0164 31       		.byte	0x31
  394 0165 A5000000 		.4byte	0xa5
  395 0169 38       		.byte	0x38
  396 016a 08       		.uleb128 0x8
- 397 016b 11020000 		.4byte	.LASF29
+ 397 016b 05020000 		.4byte	.LASF29
  398 016f 04       		.byte	0x4
  399 0170 32       		.byte	0x32
  400 0171 AA000000 		.4byte	0xaa
@@ -566,13 +566,13 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  411 0186 38       		.byte	0x38
  412 0187 05020000 		.4byte	0x205
  413 018b 08       		.uleb128 0x8
- 414 018c 55020000 		.4byte	.LASF15
+ 414 018c 49020000 		.4byte	.LASF15
  415 0190 04       		.byte	0x4
  416 0191 39       		.byte	0x39
  417 0192 A5000000 		.4byte	0xa5
  418 0196 00       		.byte	0
  419 0197 08       		.uleb128 0x8
- 420 0198 B7030000 		.4byte	.LASF31
+ 420 0198 8B030000 		.4byte	.LASF31
  421 019c 04       		.byte	0x4
  422 019d 3A       		.byte	0x3a
  423 019e A5000000 		.4byte	0xa5
@@ -596,9 +596,9 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  441 01c2 A5000000 		.4byte	0xa5
  442 01c6 10       		.byte	0x10
  443 01c7 08       		.uleb128 0x8
- 444 01c8 DD020000 		.4byte	.LASF35
+ 444 01c8 B1020000 		.4byte	.LASF35
  445 01cc 04       		.byte	0x4
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 11
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 11
 
 
  446 01cd 3E       		.byte	0x3e
@@ -611,13 +611,13 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  453 01da A5000000 		.4byte	0xa5
  454 01de 18       		.byte	0x18
  455 01df 08       		.uleb128 0x8
- 456 01e0 5A020000 		.4byte	.LASF37
+ 456 01e0 4E020000 		.4byte	.LASF37
  457 01e4 04       		.byte	0x4
  458 01e5 40       		.byte	0x40
  459 01e6 AA000000 		.4byte	0xaa
  460 01ea 1C       		.byte	0x1c
  461 01eb 08       		.uleb128 0x8
- 462 01ec C8030000 		.4byte	.LASF21
+ 462 01ec 9C030000 		.4byte	.LASF21
  463 01f0 04       		.byte	0x4
  464 01f1 41       		.byte	0x41
  465 01f2 1A020000 		.4byte	0x21a
@@ -648,25 +648,25 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  490 022d 1F       		.byte	0x1f
  491 022e 00       		.byte	0
  492 022f 03       		.uleb128 0x3
- 493 0230 F3030000 		.4byte	.LASF38
+ 493 0230 C7030000 		.4byte	.LASF38
  494 0234 04       		.byte	0x4
  495 0235 43       		.byte	0x43
  496 0236 82010000 		.4byte	0x182
  497 023a 02       		.uleb128 0x2
  498 023b 01       		.byte	0x1
  499 023c 08       		.byte	0x8
- 500 023d 0A030000 		.4byte	.LASF39
+ 500 023d DE020000 		.4byte	.LASF39
  501 0241 02       		.uleb128 0x2
  502 0242 04       		.byte	0x4
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 12
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 12
 
 
  503 0243 04       		.byte	0x4
- 504 0244 E6010000 		.4byte	.LASF40
+ 504 0244 DA010000 		.4byte	.LASF40
  505 0248 02       		.uleb128 0x2
  506 0249 08       		.byte	0x8
  507 024a 04       		.byte	0x4
- 508 024b 71030000 		.4byte	.LASF41
+ 508 024b 45030000 		.4byte	.LASF41
  509 024f 0E       		.uleb128 0xe
  510 0250 04       		.byte	0x4
  511 0251 7A000000 		.4byte	0x7a
@@ -677,22 +677,22 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  516 025d 73010000 		.4byte	.LASF42
  517 0261 00       		.byte	0
  518 0262 10       		.uleb128 0x10
- 519 0263 17030000 		.4byte	.LASF43
+ 519 0263 EB020000 		.4byte	.LASF43
  520 0267 0100B600 		.4byte	0xb60001
  521 026b 00       		.byte	0
  522 026c 11       		.uleb128 0x11
- 523 026d D1030000 		.4byte	.LASF44
+ 523 026d A5030000 		.4byte	.LASF44
  524 0271 05       		.byte	0x5
  525 0272 4E01     		.2byte	0x14e
  526 0274 4F020000 		.4byte	0x24f
  527 0278 12       		.uleb128 0x12
- 528 0279 2A030000 		.4byte	.LASF60
+ 528 0279 FE020000 		.4byte	.LASF60
  529 027d 20       		.byte	0x20
  530 027e 06       		.byte	0x6
  531 027f 2B       		.byte	0x2b
  532 0280 E5020000 		.4byte	0x2e5
  533 0284 08       		.uleb128 0x8
- 534 0285 D2020000 		.4byte	.LASF45
+ 534 0285 A6020000 		.4byte	.LASF45
  535 0289 06       		.byte	0x6
  536 028a 2E       		.byte	0x2e
  537 028b 8C000000 		.4byte	0x8c
@@ -704,21 +704,21 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  543 0297 8C000000 		.4byte	0x8c
  544 029b 04       		.byte	0x4
  545 029c 08       		.uleb128 0x8
- 546 029d 90030000 		.4byte	.LASF47
+ 546 029d 64030000 		.4byte	.LASF47
  547 02a1 06       		.byte	0x6
  548 02a2 32       		.byte	0x32
  549 02a3 8C000000 		.4byte	0x8c
  550 02a7 08       		.byte	0x8
  551 02a8 08       		.uleb128 0x8
- 552 02a9 BA020000 		.4byte	.LASF48
+ 552 02a9 8E020000 		.4byte	.LASF48
  553 02ad 06       		.byte	0x6
  554 02ae 34       		.byte	0x34
  555 02af 8C000000 		.4byte	0x8c
  556 02b3 0C       		.byte	0xc
  557 02b4 08       		.uleb128 0x8
- 558 02b5 A9030000 		.4byte	.LASF49
+ 558 02b5 7D030000 		.4byte	.LASF49
  559 02b9 06       		.byte	0x6
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 13
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 13
 
 
  560 02ba 36       		.byte	0x36
@@ -731,7 +731,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  567 02c7 8C000000 		.4byte	0x8c
  568 02cb 14       		.byte	0x14
  569 02cc 08       		.uleb128 0x8
- 570 02cd 55030000 		.4byte	.LASF51
+ 570 02cd 29030000 		.4byte	.LASF51
  571 02d1 06       		.byte	0x6
  572 02d2 3A       		.byte	0x3a
  573 02d3 8C000000 		.4byte	0x8c
@@ -749,7 +749,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  585 02eb 3E       		.byte	0x3e
  586 02ec 78020000 		.4byte	0x278
  587 02f0 13       		.uleb128 0x13
- 588 02f1 31020000 		.4byte	.LASF61
+ 588 02f1 25020000 		.4byte	.LASF61
  589 02f5 01       		.byte	0x1
  590 02f6 2D       		.byte	0x2d
  591 02f7 6C020000 		.4byte	0x26c
@@ -759,13 +759,13 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  595 0304 9C       		.byte	0x9c
  596 0305 42030000 		.4byte	0x342
  597 0309 14       		.uleb128 0x14
- 598 030a FE030000 		.4byte	.LASF54
+ 598 030a D2030000 		.4byte	.LASF54
  599 030e 01       		.byte	0x1
  600 030f 2D       		.byte	0x2d
  601 0310 42030000 		.4byte	0x342
  602 0314 00000000 		.4byte	.LLST0
  603 0318 15       		.uleb128 0x15
- 604 0319 0A020000 		.4byte	.LASF55
+ 604 0319 FE010000 		.4byte	.LASF55
  605 031d 01       		.byte	0x1
  606 031e 2D       		.byte	0x2d
  607 031f 8C000000 		.4byte	0x8c
@@ -778,11 +778,11 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  614 032c 48030000 		.4byte	0x348
  615 0330 01       		.uleb128 0x1
  616 0331 52       		.byte	0x52
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 14
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 14
 
 
  617 0332 16       		.uleb128 0x16
- 618 0333 03030000 		.4byte	.LASF62
+ 618 0333 D7020000 		.4byte	.LASF62
  619 0337 01       		.byte	0x1
  620 0338 30       		.byte	0x30
  621 0339 6C020000 		.4byte	0x26c
@@ -797,7 +797,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  630 034e 06       		.uleb128 0x6
  631 034f E5020000 		.4byte	0x2e5
  632 0353 18       		.uleb128 0x18
- 633 0354 78030000 		.4byte	.LASF63
+ 633 0354 4C030000 		.4byte	.LASF63
  634 0358 01       		.byte	0x1
  635 0359 62       		.byte	0x62
  636 035a 00000000 		.4byte	.LFB145
@@ -806,13 +806,13 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  639 0363 9C       		.byte	0x9c
  640 0364 92030000 		.4byte	0x392
  641 0368 14       		.uleb128 0x14
- 642 0369 FE030000 		.4byte	.LASF54
+ 642 0369 D2030000 		.4byte	.LASF54
  643 036d 01       		.byte	0x1
  644 036e 62       		.byte	0x62
  645 036f 42030000 		.4byte	0x342
  646 0373 B8000000 		.4byte	.LLST2
  647 0377 15       		.uleb128 0x15
- 648 0378 0A020000 		.4byte	.LASF55
+ 648 0378 FE010000 		.4byte	.LASF55
  649 037c 01       		.byte	0x1
  650 037d 62       		.byte	0x62
  651 037e 8C000000 		.4byte	0x8c
@@ -827,7 +827,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  660 0390 52       		.byte	0x52
  661 0391 00       		.byte	0
  662 0392 19       		.uleb128 0x19
- 663 0393 E6030000 		.4byte	.LASF64
+ 663 0393 BA030000 		.4byte	.LASF64
  664 0397 07       		.byte	0x7
  665 0398 EA07     		.2byte	0x7ea
  666 039a 9E030000 		.4byte	0x39e
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  671              	.Ldebug_abbrev0:
  672 0000 01       		.uleb128 0x1
  673 0001 11       		.uleb128 0x11
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 15
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 15
 
 
  674 0002 01       		.byte	0x1
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  728 0038 00       		.byte	0
  729 0039 49       		.uleb128 0x49
  730 003a 13       		.uleb128 0x13
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 16
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 16
 
 
  731 003b 00       		.byte	0
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  785 0071 01       		.byte	0x1
  786 0072 0B       		.uleb128 0xb
  787 0073 05       		.uleb128 0x5
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 17
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 17
 
 
  788 0074 3A       		.uleb128 0x3a
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  842 00aa 00       		.byte	0
  843 00ab 00       		.byte	0
  844 00ac 0F       		.uleb128 0xf
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 18
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 18
 
 
  845 00ad 28       		.uleb128 0x28
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  899 00e3 3B       		.uleb128 0x3b
  900 00e4 0B       		.uleb128 0xb
  901 00e5 27       		.uleb128 0x27
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 19
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 19
 
 
  902 00e6 19       		.uleb128 0x19
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  956 011d 49       		.uleb128 0x49
  957 011e 13       		.uleb128 0x13
  958 011f 02       		.uleb128 0x2
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 20
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 20
 
 
  959 0120 17       		.uleb128 0x17
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  1013 0157 00       		.byte	0
  1014              		.section	.debug_loc,"",%progbits
  1015              	.Ldebug_loc0:
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 21
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 21
 
 
  1016              	.LLST0:
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  1070 0082 0600     		.2byte	0x6
  1071 0084 0C       		.byte	0xc
  1072 0085 0100B600 		.4byte	0xb60001
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 22
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 22
 
 
  1073 0089 9F       		.byte	0x9f
@@ -1316,9 +1316,9 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  1125 0014 00000000 		.4byte	0
  1126              		.section	.debug_line,"",%progbits
  1127              	.Ldebug_line0:
- 1128 0000 4D020000 		.section	.debug_str,"MS",%progbits,1
- 1128      0200F101 
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 23
+ 1128 0000 31020000 		.section	.debug_str,"MS",%progbits,1
+ 1128      0200D501 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 23
 
 
  1128      00000201 
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  1151      54524C32 
  1151      00
  1152              	.LASF57:
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 24
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 24
 
 
  1153 00c0 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
@@ -1438,206 +1438,206 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 1
  1172      00
  1173              	.LASF36:
  1174 01d0 434D445F 		.ascii	"CMD_START\000"
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 25
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 25
 
 
  1174      53544152 
  1174      5400
- 1175              	.LASF0:
- 1176 01da 7369676E 		.ascii	"signed char\000"
- 1176      65642063 
- 1176      68617200 
- 1177              	.LASF40:
- 1178 01e6 666C6F61 		.ascii	"float\000"
+ 1175              	.LASF40:
+ 1176 01da 666C6F61 		.ascii	"float\000"
+ 1176      7400
+ 1177              	.LASF8:
+ 1178 01e0 6C6F6E67 		.ascii	"long long int\000"
+ 1178      206C6F6E 
+ 1178      6720696E 
  1178      7400
- 1179              	.LASF8:
- 1180 01ec 6C6F6E67 		.ascii	"long long int\000"
- 1180      206C6F6E 
- 1180      6720696E 
- 1180      7400
- 1181              	.LASF16:
- 1182 01fa 53544154 		.ascii	"STATUS\000"
- 1182      555300
- 1183              	.LASF4:
- 1184 0201 6C6F6E67 		.ascii	"long int\000"
- 1184      20696E74 
- 1184      00
- 1185              	.LASF55:
- 1186 020a 636E744E 		.ascii	"cntNum\000"
- 1186      756D00
- 1187              	.LASF29:
- 1188 0211 494E5452 		.ascii	"INTR_MASKED\000"
- 1188      5F4D4153 
- 1188      4B454400 
- 1189              	.LASF18:
- 1190 021d 43435F42 		.ascii	"CC_BUFF\000"
- 1190      55464600 
- 1191              	.LASF13:
- 1192 0225 6C6F6E67 		.ascii	"long double\000"
- 1192      20646F75 
- 1192      626C6500 
- 1193              	.LASF61:
- 1194 0231 43795F54 		.ascii	"Cy_TCPWM_QuadDec_Init\000"
- 1194      4350574D 
- 1194      5F517561 
- 1194      64446563 
- 1194      5F496E69 
- 1195              	.LASF1:
- 1196 0247 756E7369 		.ascii	"unsigned char\000"
- 1196      676E6564 
- 1196      20636861 
- 1196      7200
- 1197              	.LASF15:
- 1198 0255 4354524C 		.ascii	"CTRL\000"
- 1198      00
- 1199              	.LASF37:
- 1200 025a 494E5452 		.ascii	"INTR_CAUSE\000"
- 1200      5F434155 
- 1200      534500
- 1201              	.LASF59:
- 1202 0265 443A5C73 		.ascii	"D:\\student\\FeS-31\\Stepaniuk\\lab4\\lab4.cydsn\000"
- 1202      74756465 
- 1202      6E745C46 
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 26
+ 1179              	.LASF16:
+ 1180 01ee 53544154 		.ascii	"STATUS\000"
+ 1180      555300
+ 1181              	.LASF4:
+ 1182 01f5 6C6F6E67 		.ascii	"long int\000"
+ 1182      20696E74 
+ 1182      00
+ 1183              	.LASF55:
+ 1184 01fe 636E744E 		.ascii	"cntNum\000"
+ 1184      756D00
+ 1185              	.LASF29:
+ 1186 0205 494E5452 		.ascii	"INTR_MASKED\000"
+ 1186      5F4D4153 
+ 1186      4B454400 
+ 1187              	.LASF18:
+ 1188 0211 43435F42 		.ascii	"CC_BUFF\000"
+ 1188      55464600 
+ 1189              	.LASF13:
+ 1190 0219 6C6F6E67 		.ascii	"long double\000"
+ 1190      20646F75 
+ 1190      626C6500 
+ 1191              	.LASF61:
+ 1192 0225 43795F54 		.ascii	"Cy_TCPWM_QuadDec_Init\000"
+ 1192      4350574D 
+ 1192      5F517561 
+ 1192      64446563 
+ 1192      5F496E69 
+ 1193              	.LASF1:
+ 1194 023b 756E7369 		.ascii	"unsigned char\000"
+ 1194      676E6564 
+ 1194      20636861 
+ 1194      7200
+ 1195              	.LASF15:
+ 1196 0249 4354524C 		.ascii	"CTRL\000"
+ 1196      00
+ 1197              	.LASF37:
+ 1198 024e 494E5452 		.ascii	"INTR_CAUSE\000"
+ 1198      5F434155 
+ 1198      534500
+ 1199              	.LASF0:
+ 1200 0259 7369676E 		.ascii	"signed char\000"
+ 1200      65642063 
+ 1200      68617200 
+ 1201              	.LASF27:
+ 1202 0265 494E5452 		.ascii	"INTR_SET\000"
+ 1202      5F534554 
+ 1202      00
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 26
 
 
- 1202      65532D33 
- 1202      315C5374 
- 1203              	.LASF27:
- 1204 0291 494E5452 		.ascii	"INTR_SET\000"
- 1204      5F534554 
- 1204      00
- 1205              	.LASF9:
- 1206 029a 6C6F6E67 		.ascii	"long long unsigned int\000"
- 1206      206C6F6E 
- 1206      6720756E 
- 1206      7369676E 
- 1206      65642069 
- 1207              	.LASF12:
- 1208 02b1 75696E74 		.ascii	"uint32_t\000"
- 1208      33325F74 
- 1208      00
- 1209              	.LASF48:
- 1210 02ba 696E6465 		.ascii	"indexInput\000"
- 1210      78496E70 
- 1210      757400
- 1211              	.LASF10:
- 1212 02c5 756E7369 		.ascii	"unsigned int\000"
- 1212      676E6564 
- 1212      20696E74 
- 1212      00
- 1213              	.LASF45:
- 1214 02d2 7265736F 		.ascii	"resolution\000"
- 1214      6C757469 
- 1214      6F6E00
- 1215              	.LASF35:
- 1216 02dd 434D445F 		.ascii	"CMD_STOP\000"
- 1216      53544F50 
- 1216      00
- 1217              	.LASF28:
- 1218 02e6 494E5452 		.ascii	"INTR_MASK\000"
- 1218      5F4D4153 
- 1218      4B00
- 1219              	.LASF3:
- 1220 02f0 73686F72 		.ascii	"short unsigned int\000"
- 1220      7420756E 
- 1220      7369676E 
- 1220      65642069 
- 1220      6E7400
- 1221              	.LASF62:
- 1222 0303 73746174 		.ascii	"status\000"
- 1222      757300
- 1223              	.LASF39:
- 1224 030a 63686172 		.ascii	"char\000"
- 1224      00
- 1225              	.LASF11:
- 1226 030f 696E7433 		.ascii	"int32_t\000"
- 1226      325F7400 
- 1227              	.LASF43:
- 1228 0317 43595F54 		.ascii	"CY_TCPWM_BAD_PARAM\000"
- 1228      4350574D 
- 1228      5F424144 
- 1228      5F504152 
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 27
+ 1203              	.LASF9:
+ 1204 026e 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1204      206C6F6E 
+ 1204      6720756E 
+ 1204      7369676E 
+ 1204      65642069 
+ 1205              	.LASF12:
+ 1206 0285 75696E74 		.ascii	"uint32_t\000"
+ 1206      33325F74 
+ 1206      00
+ 1207              	.LASF48:
+ 1208 028e 696E6465 		.ascii	"indexInput\000"
+ 1208      78496E70 
+ 1208      757400
+ 1209              	.LASF10:
+ 1210 0299 756E7369 		.ascii	"unsigned int\000"
+ 1210      676E6564 
+ 1210      20696E74 
+ 1210      00
+ 1211              	.LASF45:
+ 1212 02a6 7265736F 		.ascii	"resolution\000"
+ 1212      6C757469 
+ 1212      6F6E00
+ 1213              	.LASF35:
+ 1214 02b1 434D445F 		.ascii	"CMD_STOP\000"
+ 1214      53544F50 
+ 1214      00
+ 1215              	.LASF28:
+ 1216 02ba 494E5452 		.ascii	"INTR_MASK\000"
+ 1216      5F4D4153 
+ 1216      4B00
+ 1217              	.LASF3:
+ 1218 02c4 73686F72 		.ascii	"short unsigned int\000"
+ 1218      7420756E 
+ 1218      7369676E 
+ 1218      65642069 
+ 1218      6E7400
+ 1219              	.LASF62:
+ 1220 02d7 73746174 		.ascii	"status\000"
+ 1220      757300
+ 1221              	.LASF39:
+ 1222 02de 63686172 		.ascii	"char\000"
+ 1222      00
+ 1223              	.LASF11:
+ 1224 02e3 696E7433 		.ascii	"int32_t\000"
+ 1224      325F7400 
+ 1225              	.LASF43:
+ 1226 02eb 43595F54 		.ascii	"CY_TCPWM_BAD_PARAM\000"
+ 1226      4350574D 
+ 1226      5F424144 
+ 1226      5F504152 
+ 1226      414D00
+ 1227              	.LASF60:
+ 1228 02fe 63795F73 		.ascii	"cy_stc_tcpwm_quaddec_config\000"
+ 1228      74635F74 
+ 1228      6370776D 
+ 1228      5F717561 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 27
 
 
- 1228      414D00
- 1229              	.LASF60:
- 1230 032a 63795F73 		.ascii	"cy_stc_tcpwm_quaddec_config\000"
- 1230      74635F74 
- 1230      6370776D 
- 1230      5F717561 
- 1230      64646563 
- 1231              	.LASF26:
- 1232 0346 494E5452 		.ascii	"INTR\000"
- 1232      00
- 1233              	.LASF25:
- 1234 034b 52455345 		.ascii	"RESERVED1\000"
- 1234      52564544 
- 1234      3100
- 1235              	.LASF51:
- 1236 0355 70686941 		.ascii	"phiAInput\000"
- 1236      496E7075 
+ 1228      64646563 
+ 1229              	.LASF26:
+ 1230 031a 494E5452 		.ascii	"INTR\000"
+ 1230      00
+ 1231              	.LASF25:
+ 1232 031f 52455345 		.ascii	"RESERVED1\000"
+ 1232      52564544 
+ 1232      3100
+ 1233              	.LASF51:
+ 1234 0329 70686941 		.ascii	"phiAInput\000"
+ 1234      496E7075 
+ 1234      7400
+ 1235              	.LASF7:
+ 1236 0333 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1236      20756E73 
+ 1236      69676E65 
+ 1236      6420696E 
  1236      7400
- 1237              	.LASF7:
- 1238 035f 6C6F6E67 		.ascii	"long unsigned int\000"
- 1238      20756E73 
- 1238      69676E65 
- 1238      6420696E 
- 1238      7400
- 1239              	.LASF41:
- 1240 0371 646F7562 		.ascii	"double\000"
- 1240      6C6500
- 1241              	.LASF63:
- 1242 0378 43795F54 		.ascii	"Cy_TCPWM_QuadDec_DeInit\000"
- 1242      4350574D 
- 1242      5F517561 
- 1242      64446563 
- 1242      5F446549 
- 1243              	.LASF47:
- 1244 0390 696E6465 		.ascii	"indexInputMode\000"
- 1244      78496E70 
- 1244      75744D6F 
- 1244      646500
- 1245              	.LASF5:
- 1246 039f 5F5F696E 		.ascii	"__int32_t\000"
- 1246      7433325F 
- 1246      7400
- 1247              	.LASF49:
- 1248 03a9 73746F70 		.ascii	"stopInputMode\000"
- 1248      496E7075 
- 1248      744D6F64 
- 1248      6500
- 1249              	.LASF31:
- 1250 03b7 4354524C 		.ascii	"CTRL_CLR\000"
- 1250      5F434C52 
- 1250      00
- 1251              	.LASF17:
- 1252 03c0 434F554E 		.ascii	"COUNTER\000"
- 1252      54455200 
- 1253              	.LASF21:
- 1254 03c8 52455345 		.ascii	"RESERVED\000"
- 1254      52564544 
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccPXAwoE.s 			page 28
+ 1237              	.LASF41:
+ 1238 0345 646F7562 		.ascii	"double\000"
+ 1238      6C6500
+ 1239              	.LASF63:
+ 1240 034c 43795F54 		.ascii	"Cy_TCPWM_QuadDec_DeInit\000"
+ 1240      4350574D 
+ 1240      5F517561 
+ 1240      64446563 
+ 1240      5F446549 
+ 1241              	.LASF47:
+ 1242 0364 696E6465 		.ascii	"indexInputMode\000"
+ 1242      78496E70 
+ 1242      75744D6F 
+ 1242      646500
+ 1243              	.LASF5:
+ 1244 0373 5F5F696E 		.ascii	"__int32_t\000"
+ 1244      7433325F 
+ 1244      7400
+ 1245              	.LASF49:
+ 1246 037d 73746F70 		.ascii	"stopInputMode\000"
+ 1246      496E7075 
+ 1246      744D6F64 
+ 1246      6500
+ 1247              	.LASF31:
+ 1248 038b 4354524C 		.ascii	"CTRL_CLR\000"
+ 1248      5F434C52 
+ 1248      00
+ 1249              	.LASF17:
+ 1250 0394 434F554E 		.ascii	"COUNTER\000"
+ 1250      54455200 
+ 1251              	.LASF21:
+ 1252 039c 52455345 		.ascii	"RESERVED\000"
+ 1252      52564544 
+ 1252      00
+ 1253              	.LASF44:
+ 1254 03a5 63795F65 		.ascii	"cy_en_tcpwm_status_t\000"
+ 1254      6E5F7463 
+ 1254      70776D5F 
+ 1254      73746174 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccKlAhpU.s 			page 28
 
 
- 1254      00
- 1255              	.LASF44:
- 1256 03d1 63795F65 		.ascii	"cy_en_tcpwm_status_t\000"
- 1256      6E5F7463 
- 1256      70776D5F 
- 1256      73746174 
- 1256      75735F74 
- 1257              	.LASF64:
- 1258 03e6 49544D5F 		.ascii	"ITM_RxBuffer\000"
- 1258      52784275 
- 1258      66666572 
- 1258      00
- 1259              	.LASF38:
- 1260 03f3 54435057 		.ascii	"TCPWM_Type\000"
- 1260      4D5F5479 
- 1260      706500
- 1261              	.LASF54:
- 1262 03fe 62617365 		.ascii	"base\000"
- 1262      00
+ 1254      75735F74 
+ 1255              	.LASF64:
+ 1256 03ba 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1256      52784275 
+ 1256      66666572 
+ 1256      00
+ 1257              	.LASF38:
+ 1258 03c7 54435057 		.ascii	"TCPWM_Type\000"
+ 1258      4D5F5479 
+ 1258      706500
+ 1259              	.LASF54:
+ 1260 03d2 62617365 		.ascii	"base\000"
+ 1260      00
+ 1261              	.LASF59:
+ 1262 03d7 443A5C57 		.ascii	"D:\\Web\\psoc6-labs\\lab4\\lab4.cydsn\000"
+ 1262      65625C70 
+ 1262      736F6336 
+ 1262      2D6C6162 
+ 1262      735C6C61 
  1263              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
