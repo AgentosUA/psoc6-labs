@@ -322,7 +322,18 @@
 </userData>
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
-<OpenDocs />
+<OpenDocs>
+<name v=".\lab4.cydsn\lab4.cydwr" />
+<name v=".\lab4.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\lab4.cydsn\main_cm4.c" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1350, 636" SelectedTabbedMdiWindow="f71cfd9f-0fbd-4357-8707-29c1bb63e9d9"><DocumentWindow Key="D:\Web\psoc6-labs\lab4\lab4.cydsn\lab4.cydwr" Guid="a1bebdbc-c5df-456f-8c85-c95bd71ee5cd" /><DocumentWindow Key="D:\Web\psoc6-labs\lab4\lab4.cydsn\TopDesign\TopDesign.cysch" Guid="d9bf0eed-bf97-4d5d-9a26-c90be61ec03c" /><DocumentWindow Key="D:\Web\psoc6-labs\lab4\lab4.cydsn\main_cm4.c" Guid="f71cfd9f-0fbd-4357-8707-29c1bb63e9d9" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
