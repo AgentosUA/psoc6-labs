@@ -1,0 +1,25 @@
+(DELAYFILE
+ (SDFVERSION "IEEE 1497 4.0")
+ (DATE "2019-10-09T14:38:46Z")
+ (DESIGN "lab5")
+ (VENDOR "Cypress Semiconductor")
+ (PROGRAM "PSoC Creator")
+ (VERSION " 4.2")
+ (DIVIDER .)
+ (TIMESCALE 1 ns)
+ (CELL
+  (CELLTYPE "lab5")
+  (INSTANCE *)
+  (DELAY
+   (ABSOLUTE
+    (INTERCONNECT CY_CPUSS_SWJ_SWCLK_TCLK\(0\).fb CPUSS.swj_swclk_tclk (0.000:0.000:0.000))
+    (INTERCONNECT CY_CPUSS_SWJ_SWDIO_TMS\(0\).fb CPUSS.swj_swdio_tms (0.000:0.000:0.000))
+    (INTERCONNECT ClockBlock.periclk SysInt_Switch.clock (0.000:0.000:0.000))
+    (INTERCONNECT IOSS.interrupt_port_0 SysInt_Switch.interrupt (0.000:0.000:0.000))
+    (INTERCONNECT KIT_LED_RED\(0\)_PAD KIT_LED_RED\(0\).pad_in (0.000:0.000:0.000))
+    (INTERCONNECT KIT_BTN1\(0\)_PAD KIT_BTN1\(0\).pad_in (0.000:0.000:0.000))
+    (INTERCONNECT KIT_LED_BLUE\(0\)_PAD KIT_LED_BLUE\(0\).pad_in (0.000:0.000:0.000))
+   )
+  )
+ )
+)
