@@ -2753,6 +2753,7 @@
 <name_val_pair name="Generated_Source\PSoC6\pdl\drivers\peripheral\lvd\cy_lvd.c" v="-mcpu=cortex-m0plus -mthumb -I. -IGenerated_Source\PSoC6 -IGenerated_Source\PSoC6\pdl\cmsis/include/ -IGenerated_Source\PSoC6\pdl\devices/psoc6/ip/ -IGenerated_Source\PSoC6\pdl\devices/psoc6/psoc63/include/ -IGenerated_Source\PSoC6\pdl\drivers/peripheral/ -IGenerated_Source\PSoC6\pdl\middleware/ -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -D CY_CORE_ID=0 -D CY_PSOC_CREATOR_USED=1 -D CY8C6347BZI_BLD53 -Wall -ffunction-sections -ffat-lto-objects -Og" />
 <name_val_pair name="Generated_Source\PSoC6\pdl\middleware\ble\cy_ble_clk.c" v="-mcpu=cortex-m0plus -mthumb -I. -IGenerated_Source\PSoC6 -IGenerated_Source\PSoC6\pdl\cmsis/include/ -IGenerated_Source\PSoC6\pdl\devices/psoc6/ip/ -IGenerated_Source\PSoC6\pdl\devices/psoc6/psoc63/include/ -IGenerated_Source\PSoC6\pdl\drivers/peripheral/ -IGenerated_Source\PSoC6\pdl\middleware/ -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -D CY_CORE_ID=0 -D CY_PSOC_CREATOR_USED=1 -D CY8C6347BZI_BLD53 -Wall -ffunction-sections -ffat-lto-objects -Og" />
 <name_val_pair name="D:\student\FeS-31\Stepaniuk\lab2\Workspace01\Design01.cydsn\CortexM0p\ARM_GCC_541\Debug\Design01.hex" v="-mcpu=cortex-m0plus -mthumb -L Generated_Source\PSoC6 -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T cy8c6xx7_cm0plus.ld -specs=nano.specs -Wl,--gc-sections -g -ffunction-sections -Og -ffat-lto-objects" />
+<name_val_pair name="D:\student\FeS-31\Stepaniuk\lab2\lab_2_1\Design01.cydsn\CortexM0p\ARM_GCC_541\Debug\Design01.hex" v="-mcpu=cortex-m0plus -mthumb -L Generated_Source\PSoC6 -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T cy8c6xx7_cm0plus.ld -specs=nano.specs -Wl,--gc-sections -g -ffunction-sections -Og -ffat-lto-objects" />
 </name>
 <name v="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM4">
 <name_val_pair name="armgcc\startup\startup_psoc63_cm4.S" v="-mcpu=cortex-m4 -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -mthumb -I. -IGenerated_Source\PSoC6 -IGenerated_Source\PSoC6\pdl\cmsis/include/ -IGenerated_Source\PSoC6\pdl\devices/psoc6/ip/ -IGenerated_Source\PSoC6\pdl\devices/psoc6/psoc63/include/ -IGenerated_Source\PSoC6\pdl\drivers/peripheral/ -IGenerated_Source\PSoC6\pdl\middleware/ -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -D CY_CORE_ID=0 -D CY_PSOC_CREATOR_USED=1 -D CY8C6347BZI_BLD53 -Wall -ffunction-sections -ffat-lto-objects -Og" />
@@ -2781,9 +2782,10 @@
 <name_val_pair name="Generated_Source\PSoC6\pdl\drivers\peripheral\lvd\cy_lvd.c" v="-mcpu=cortex-m4 -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -mthumb -I. -IGenerated_Source\PSoC6 -IGenerated_Source\PSoC6\pdl\cmsis/include/ -IGenerated_Source\PSoC6\pdl\devices/psoc6/ip/ -IGenerated_Source\PSoC6\pdl\devices/psoc6/psoc63/include/ -IGenerated_Source\PSoC6\pdl\drivers/peripheral/ -IGenerated_Source\PSoC6\pdl\middleware/ -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -D CY_CORE_ID=0 -D CY_PSOC_CREATOR_USED=1 -D CY8C6347BZI_BLD53 -Wall -ffunction-sections -ffat-lto-objects -Og" />
 <name_val_pair name="Generated_Source\PSoC6\pdl\middleware\ble\cy_ble_clk.c" v="-mcpu=cortex-m4 -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -mthumb -I. -IGenerated_Source\PSoC6 -IGenerated_Source\PSoC6\pdl\cmsis/include/ -IGenerated_Source\PSoC6\pdl\devices/psoc6/ip/ -IGenerated_Source\PSoC6\pdl\devices/psoc6/psoc63/include/ -IGenerated_Source\PSoC6\pdl\drivers/peripheral/ -IGenerated_Source\PSoC6\pdl\middleware/ -Wa,-alh=${OutputDir}/${CompileFile}.lst -g -D DEBUG -D CY_CORE_ID=0 -D CY_PSOC_CREATOR_USED=1 -D CY8C6347BZI_BLD53 -Wall -ffunction-sections -ffat-lto-objects -Og" />
 <name_val_pair name="D:\student\FeS-31\Stepaniuk\lab2\Workspace01\Design01.cydsn\CortexM4\ARM_GCC_541\Debug\Design01.hex" v="-mcpu=cortex-m4 -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -mthumb -L Generated_Source\PSoC6 -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T cy8c6xx7_cm4_dual.ld -specs=nano.specs -Wl,--gc-sections -g -ffunction-sections -Og -ffat-lto-objects" />
+<name_val_pair name="D:\student\FeS-31\Stepaniuk\lab2\lab_2_1\Design01.cydsn\CortexM4\ARM_GCC_541\Debug\Design01.hex" v="-mcpu=cortex-m4 -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -mthumb -L Generated_Source\PSoC6 -Wl,-Map,${OutputDir}/${ProjectShortName}.map -T cy8c6xx7_cm4_dual.ld -specs=nano.specs -Wl,--gc-sections -g -ffunction-sections -Og -ffat-lto-objects" />
 </name>
 </genericCmdLineData>
-<codeGenCmdLineTag v="-.appdatapath &quot;C:\Users\cypress\AppData\Local\Cypress Semiconductor\PSoC Creator\4.2&quot; -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p D:\student\FeS-31\Stepaniuk\lab2\Workspace01\Design01.cydsn\Design01.cyprj -d CY8C6347BZI-BLD53 -s D:\student\FeS-31\Stepaniuk\lab2\Workspace01\Design01.cydsn\Generated_Source\PSoC6 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE" />
+<codeGenCmdLineTag v="-.appdatapath &quot;C:\Users\cypress\AppData\Local\Cypress Semiconductor\PSoC Creator\4.2&quot; -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p D:\student\FeS-31\Stepaniuk\lab2\lab_2_1\Design01.cydsn\Design01.cyprj -d CY8C6347BZI-BLD53 -s D:\student\FeS-31\Stepaniuk\lab2\lab_2_1\Design01.cydsn\Generated_Source\PSoC6 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE" />
 </CyGuid_b0374e30-ce3a-47f2-ad85-821643292c68>
 </dataGuid>
 <dataGuid v="597c5b74-0c46-4204-8b7f-96f3570671dc">
@@ -3019,7 +3021,7 @@
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif</v>
 <v>C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif</v>
 </warp_dep>
-<deps_time v="132126848572215707" />
+<deps_time v="132138924666244426" />
 <top_block v="TopDesign" />
 <last_generation v="0" />
 <pdl_path v="C:\Program Files (x86)\Cypress\PDL\3.0.1\" />
@@ -3029,8 +3031,8 @@
 <dataGuid v="769d31ea-68b1-4f0c-b90a-7c10a43ee563">
 <CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563 type_name="CyDesigner.Common.ProjMgmt.Model.CyLinkCustomData" version="1">
 <link_deps_times>
-<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM0p" v="132126848618314593" />
-<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM4" v="132126857424098877" />
+<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM0p" v="132138924670306941" />
+<name_val_pair name="c9323d49-d323-40b8-9b59-cc008d68a989@Debug@CortexM4" v="132138924674682420" />
 </link_deps_times>
 </CyGuid_769d31ea-68b1-4f0c-b90a-7c10a43ee563>
 </dataGuid>

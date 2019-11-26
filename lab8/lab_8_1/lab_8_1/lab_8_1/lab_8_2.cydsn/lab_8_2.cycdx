@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<blockRegMap version="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://cypress.com/xsd/cyblockregmap cyblockregmap.xsd" xmlns="http://cypress.com/xsd/cyblockregmap">
+  <block name="CY_EINK_DispRst" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="CY_EINK_DispBusy" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="CY_EINK_Ssel" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="CY_EINK_DispEn" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="CY_EINK_DisplayEn" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="CY_EINK_Border" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="CY_EINK_Discharge" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="EINK_Clock" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Cy_EINK_Timer" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+    <block name="TCPWM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  </block>
+  <block name="CY_EINK_SPIM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+    <block name="sclk_s_VM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="select_s_VM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="SCB" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="SCB_IRQ" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="miso_m_VM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="mosi_s_VM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="or_sclk" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="mosi_m" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="sclk_m" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="SCBCLK" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="ZeroTerminal_7" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="clock_VM" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+    <block name="miso_m" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  </block>
+  <block name="Status_SW2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false">
+    <register name="Status_SW2_STATUS_REG" address="0x40341604" bitWidth="8" desc="" hidden="false" />
+    <register name="Status_SW2_MASK_REG" address="0x40341804" bitWidth="8" desc="" hidden="false" />
+    <register name="Status_SW2_STATUS_AUX_CTL_REG" address="0x40341904" bitWidth="8" desc="" hidden="false">
+      <field name="FIFO0" from="5" to="5" access="RW" resetVal="" desc="FIFO0 clear" hidden="false">
+        <value name="ENABLED" value="1" desc="Enable counter" />
+        <value name="DISABLED" value="0" desc="Disable counter" />
+      </field>
+      <field name="INTRENBL" from="4" to="4" access="RW" resetVal="" desc="Enables or disables the Interrupt" hidden="false">
+        <value name="ENABLED" value="1" desc="Interrupt enabled" />
+        <value name="DISABLED" value="0" desc="Interrupt disabled" />
+      </field>
+      <field name="FIFO1LEVEL" from="3" to="3" access="RW" resetVal="" desc="FIFO level" hidden="false">
+        <value name="ENABLED" value="1" desc="FIFO LVL: input mode: FIFO at least 1/2 empty; output mode: FIFO at least 1/2 full" />
+        <value name="DISABLED" value="0" desc="FIFO LVL: input mode: FIFO not full; output mode: FIFO not empty" />
+      </field>
+      <field name="FIFO0LEVEL" from="2" to="2" access="RW" resetVal="" desc="FIFO level" hidden="false">
+        <value name="ENABLED" value="1" desc="FIFO LVL: input mode: FIFO at least 1/2 empty; output mode: FIFO at least 1/2 full" />
+        <value name="DISABLED" value="0" desc="FIFO LVL: input mode: FIFO not full; output mode: FIFO not empty" />
+      </field>
+      <field name="FIFO1CLEAR" from="1" to="1" access="RW" resetVal="" desc="FIFO clear" hidden="false">
+        <value name="ENABLED" value="1" desc="Clear FIFO state" />
+        <value name="DISABLED" value="0" desc="Normal FIFO operation" />
+      </field>
+      <field name="FIFO0CLEAR" from="0" to="0" access="RW" resetVal="" desc="FIFO clear" hidden="false">
+        <value name="ENABLED" value="1" desc="Clear FIFO state" />
+        <value name="DISABLED" value="0" desc="Normal FIFO operation" />
+      </field>
+    </register>
+  </block>
+  <block name="GreenLED" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="SW_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+  <block name="Clock_2" BASE="0x0" SIZE="0x0" desc="" visible="true" hidden="false" />
+</blockRegMap>

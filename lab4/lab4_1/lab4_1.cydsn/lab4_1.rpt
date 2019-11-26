@@ -1,0 +1,825 @@
+Loading plugins phase: Elapsed time ==> 0s.140ms
+<CYPRESSTAG name="CyDsfit arguments...">
+cydsfit arguments: -.fdsnotice -.fdswarpdepfile=warp_dependencies.txt -.fdselabdepfile=elab_dependencies.txt -.fdsbldfile=generated_files.txt -.fdsreffile=referenced_files.txt -p D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\lab4_1.cyprj -d CY8C6347BZI-BLD53 -s D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\Generated_Source\PSoC6 -- -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE
+</CYPRESSTAG>
+<CYPRESSTAG name="Design elaboration results...">
+</CYPRESSTAG>
+Elaboration phase: Elapsed time ==> 0s.796ms
+<CYPRESSTAG name="HDL generation results...">
+</CYPRESSTAG>
+HDL generation phase: Elapsed time ==> 0s.031ms
+<CYPRESSTAG name="Synthesis results...">
+
+     | | | | | | |
+   _________________
+  -|               |-
+  -|               |-
+  -|               |-
+  -|    CYPRESS    |-
+  -|               |-
+  -|               |-   Warp Verilog Synthesis Compiler: Version 6.3 IR 41
+  -|               |-   Copyright (C) 1991-2001 Cypress Semiconductor
+   |_______________|
+     | | | | | | |
+
+======================================================================
+Compiling:  lab4_1.v
+Program  :   C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\bin\warp.exe
+Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\lab4_1.cyprj -dcpsoc3 lab4_1.v -verilog
+======================================================================
+
+======================================================================
+Compiling:  lab4_1.v
+Program  :   C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\bin\warp.exe
+Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\lab4_1.cyprj -dcpsoc3 lab4_1.v -verilog
+======================================================================
+
+======================================================================
+Compiling:  lab4_1.v
+Program  :   vlogfe
+Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\lab4_1.cyprj -dcpsoc3 -verilog lab4_1.v
+======================================================================
+
+vlogfe V6.3 IR 41:  Verilog parser
+Wed Oct 02 17:50:51 2019
+
+
+======================================================================
+Compiling:  lab4_1.v
+Program  :   vpp
+Options  :    -yv2 -q10 lab4_1.v
+======================================================================
+
+vpp V6.3 IR 41:  Verilog Pre-Processor
+Wed Oct 02 17:50:51 2019
+
+Flattening file 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\xor_v1_0\xor_v1_0.v'
+
+vpp:  No errors.
+
+Library 'work' => directory 'lcpsoc3'
+General_symbol_table
+General_symbol_table
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\std.vhd'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\cypress.vhd'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\work\cypress.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\ieee\work\stdlogic.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\lpmpkg.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\mod_cnst.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\mod_mthv.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif'.
+Using control file 'lab4_1.ctl'.
+
+vlogfe:  No errors.
+
+
+======================================================================
+Compiling:  lab4_1.v
+Program  :   tovif
+Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\lab4_1.cyprj -dcpsoc3 -verilog lab4_1.v
+======================================================================
+
+tovif V6.3 IR 41:  High-level synthesis
+Wed Oct 02 17:50:51 2019
+
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\std.vhd'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\cypress.vhd'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\work\cypress.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\ieee\work\stdlogic.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\lpmpkg.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\mod_cnst.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\mod_mthv.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif'.
+Linking 'D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\codegentemp\lab4_1.ctl'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\xor_v1_0\xor_v1_0.v'.
+Linking 'D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\codegentemp\lab4_1.v'.
+
+tovif:  No errors.
+
+
+======================================================================
+Compiling:  lab4_1.v
+Program  :   topld
+Options  :    -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\lab4_1.cyprj -dcpsoc3 -verilog lab4_1.v
+======================================================================
+
+topld V6.3 IR 41:  Synthesis and optimization
+Wed Oct 02 17:50:52 2019
+
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\std.vhd'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\cypress.vhd'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\work\cypress.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\ieee\work\stdlogic.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\lpmpkg.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\rtlpkg.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\mod_cnst.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\mod_mthv.vif'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\common\stdlogic\mod_genv.vif'.
+Linking 'D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\codegentemp\lab4_1.ctl'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\xor_v1_0\xor_v1_0.v'.
+Linking 'D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\codegentemp\lab4_1.v'.
+Linking 'C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\lib\lcpsoc3\stdlogic\cpsoc3.vif'.
+
+----------------------------------------------------------
+Detecting unused logic.
+----------------------------------------------------------
+
+
+
+------------------------------------------------------
+Alias Detection
+------------------------------------------------------
+Aliasing \PWM_1:reload\ to \PWM_1:swap\
+Aliasing \PWM_1:kill\ to \PWM_1:swap\
+Aliasing \PWM_1:start\ to \PWM_1:swap\
+Aliasing one to \PWM_1:count\
+Aliasing \PWM_2:swap\ to \PWM_1:swap\
+Aliasing \PWM_2:count\ to \PWM_1:count\
+Aliasing \PWM_2:reload\ to \PWM_1:swap\
+Aliasing \PWM_2:kill\ to \PWM_1:swap\
+Aliasing \PWM_2:start\ to \PWM_1:swap\
+Removing Lhs of wire \PWM_1:reload\[11] = \PWM_1:swap\[9]
+Removing Lhs of wire \PWM_1:kill\[12] = \PWM_1:swap\[9]
+Removing Lhs of wire \PWM_1:start\[13] = \PWM_1:swap\[9]
+Removing Rhs of wire one[21] = \PWM_1:count\[10]
+Removing Lhs of wire \PWM_2:swap\[28] = \PWM_1:swap\[9]
+Removing Lhs of wire \PWM_2:count\[29] = one[21]
+Removing Lhs of wire \PWM_2:reload\[30] = \PWM_1:swap\[9]
+Removing Lhs of wire \PWM_2:kill\[31] = \PWM_1:swap\[9]
+Removing Lhs of wire \PWM_2:start\[32] = \PWM_1:swap\[9]
+
+------------------------------------------------------
+Aliased 0 equations, 9 wires.
+------------------------------------------------------
+
+----------------------------------------------------------
+Circuit simplification
+----------------------------------------------------------
+
+Substituting virtuals - pass 1:
+
+
+----------------------------------------------------------
+Circuit simplification results:
+
+	Expanded 0 signals.
+	Turned 0 signals into soft nodes.
+	Maximum default expansion cost was set at 3.
+----------------------------------------------------------
+
+topld:  No errors.
+
+CYPRESS_DIR    : C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp
+Warp Program   : C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\warp\bin\warp.exe
+Warp Arguments : -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\lab4_1.cyprj -dcpsoc3 lab4_1.v -verilog
+</CYPRESSTAG>
+Warp synthesis phase: Elapsed time ==> 0s.281ms
+<CYPRESSTAG name="Fitter results...">
+<CYPRESSTAG name="Fitter startup details...">
+cyp3fit: V4.2.0.641, Family: PSoC3, Started at: Wednesday, 02 October 2019 17:50:52
+Options: -yv2 -q10 -ygs -o2 -v3 -.fftcfgtype=LE -ya -.fftprj=D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\lab4_1.cyprj -d CY8C6347BZI-BLD53 lab4_1.v -verilog
+</CYPRESSTAG>
+<CYPRESSTAG name="Design parsing">
+Design parsing phase: Elapsed time ==> 0s.046ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Tech Mapping">
+<CYPRESSTAG name="Initial Mapping" icon="FILE_RPT_TECHM">
+
+Removing unused cells resulting from optimization
+Done removing unused cells.
+<CYPRESSTAG name="Global Clock Selection" icon="FILE_RPT_TECHM">
+    Fixed Function Clock 11: Automatic-assigning  clock 'Clock_1'. Signal=Net_133_ff11
+    Fixed Function Clock 12: Automatic-assigning  clock 'Clock_1'. Signal=Net_133_ff12
+<CYPRESSTAG name="UDB Clock/Enable Remapping Results">
+</CYPRESSTAG>
+</CYPRESSTAG>
+Info: plm.M0038: The pin named CY_CPUSS_SWJ_SWCLK_TCLK(0) at location P6[7] prevents usage of special purposes: TCPWM[3].line_compl. (App=cydsfit)
+Info: plm.M0038: The pin named CY_CPUSS_SWJ_SWCLK_TCLK(0) at location P6[7] prevents usage of special purposes: TCPWM[19].line_compl. (App=cydsfit)
+Info: plm.M0038: The pin named CY_CPUSS_SWJ_SWDIO_TMS(0) at location P6[6] prevents usage of special purposes: TCPWM[3].line. (App=cydsfit)
+Info: plm.M0038: The pin named CY_CPUSS_SWJ_SWDIO_TMS(0) at location P6[6] prevents usage of special purposes: TCPWM[19].line. (App=cydsfit)
+<CYPRESSTAG name="Duplicate Macrocell detection">
+</CYPRESSTAG>
+</CYPRESSTAG>
+<CYPRESSTAG name="Duplicate Macrocell detection">
+</CYPRESSTAG>
+<CYPRESSTAG name="Design Equations" icon="FILE_RPT_EQUATION">
+
+------------------------------------------------------------
+Design Equations
+------------------------------------------------------------
+    <CYPRESSTAG name="Pin listing">
+
+    ------------------------------------------------------------
+    Pin listing
+    ------------------------------------------------------------
+
+    Pin : Name = CY_CPUSS_SWJ_SWCLK_TCLK(0)
+        Attributes:
+            In Group/Port: True
+            In Sync Option: AUTO
+            Out Sync Option: AUTO
+            Interrupt generated: False
+            Interrupt mode: NONE
+            Drive mode: RES_PULL_DOWN
+            VTrip: CMOS
+            Slew: FAST
+            Input Sync needed: False
+            Output Sync needed: False
+            SC shield enabled: False
+            POR State: INP_DIS_HI_Z
+            LCD Mode: COMMON
+            Register Mode: RegComb
+            CaSense Mode: NEITHER
+            Treat as pin: True
+            Is OE Registered: False
+            Uses Analog: False
+            Can contain Digital: True
+            Is SIO: False
+            SIO Output Buf: NONREGULATED
+            SIO Input Buf: SINGLE_ENDED
+            SIO HiFreq: LOW
+            SIO Hyst: DISABLED
+            SIO Vtrip: MULTIPLIER_0_5
+            SIO Multiplier Index: 0
+            SIO RefSel: VCC_IO
+            Required Capabilities: DIGITAL
+            Initial Value: 0
+            IO Voltage: 0
+        PORT MAP (
+            pa_out => CY_CPUSS_SWJ_SWCLK_TCLK(0)__PA ,
+            fb => CPUSS_swj_swclk_tclk );
+
+    Pin : Name = CY_CPUSS_SWJ_SWDIO_TMS(0)
+        Attributes:
+            In Group/Port: True
+            In Sync Option: AUTO
+            Out Sync Option: AUTO
+            Interrupt generated: False
+            Interrupt mode: NONE
+            Drive mode: RES_PULL_UP
+            VTrip: CMOS
+            Slew: FAST
+            Input Sync needed: False
+            Output Sync needed: False
+            SC shield enabled: False
+            POR State: INP_DIS_HI_Z
+            LCD Mode: COMMON
+            Register Mode: RegComb
+            CaSense Mode: NEITHER
+            Treat as pin: True
+            Is OE Registered: False
+            Uses Analog: False
+            Can contain Digital: True
+            Is SIO: False
+            SIO Output Buf: NONREGULATED
+            SIO Input Buf: SINGLE_ENDED
+            SIO HiFreq: LOW
+            SIO Hyst: DISABLED
+            SIO Vtrip: MULTIPLIER_0_5
+            SIO Multiplier Index: 0
+            SIO RefSel: VCC_IO
+            Required Capabilities: DIGITAL
+            Initial Value: 0
+            IO Voltage: 0
+        PORT MAP (
+            pa_out => CY_CPUSS_SWJ_SWDIO_TMS(0)__PA ,
+            fb => CPUSS_swj_swdio_tms );
+
+    Pin : Name = Pin_Red(0)
+        Attributes:
+            In Group/Port: True
+            In Sync Option: AUTO
+            Out Sync Option: NOSYNC
+            Interrupt generated: False
+            Interrupt mode: NONE
+            Drive mode: CMOS_OUT
+            VTrip: CMOS
+            Slew: FAST
+            Input Sync needed: False
+            Output Sync needed: False
+            SC shield enabled: False
+            POR State: INP_DIS_HI_Z
+            LCD Mode: COMMON
+            Register Mode: RegComb
+            CaSense Mode: NEITHER
+            Treat as pin: True
+            Is OE Registered: False
+            Uses Analog: False
+            Can contain Digital: True
+            Is SIO: False
+            SIO Output Buf: NONREGULATED
+            SIO Input Buf: SINGLE_ENDED
+            SIO HiFreq: LOW
+            SIO Hyst: DISABLED
+            SIO Vtrip: MULTIPLIER_0_5
+            SIO Multiplier Index: 0
+            SIO RefSel: VCC_IO
+            Required Capabilities: DIGITAL, ROUTABLE
+            Initial Value: 1
+            IO Voltage: 0
+        PORT MAP (
+            pa_out => Pin_Red(0)__PA ,
+            pin_input => Net_110 ,
+            annotation => Net_81 ,
+            pad => Pin_Red(0)_PAD );
+        Properties:
+        {
+        }
+    </CYPRESSTAG>
+    <CYPRESSTAG name="Macrocell listing" icon="FILE_RPT_EQUATION">
+
+    ------------------------------------------------------------
+    Macrocell listing
+    ------------------------------------------------------------
+
+    MacroCell: Name=Net_110, Mode=(Combinatorial)
+        Total # of inputs        : 2
+        Total # of product terms : 2
+            Clock Enable: True
+        Main Equation            : 2 pterms
+        (
+              !Net_120 * Net_121
+            + Net_120 * !Net_121
+        );
+        Output = Net_110 (fanout=1)
+    </CYPRESSTAG>
+    <CYPRESSTAG name="Datapath listing">
+    </CYPRESSTAG>
+    <CYPRESSTAG name="Status register listing">
+    </CYPRESSTAG>
+    <CYPRESSTAG name="StatusI register listing">
+    </CYPRESSTAG>
+    <CYPRESSTAG name="Sync listing">
+    </CYPRESSTAG>
+    <CYPRESSTAG name="Control register listing">
+    </CYPRESSTAG>
+    <CYPRESSTAG name="Count7 listing">
+    </CYPRESSTAG>
+    <CYPRESSTAG name="DRQ listing">
+    </CYPRESSTAG>
+    <CYPRESSTAG name="Interrupt listing">
+    </CYPRESSTAG>
+</CYPRESSTAG>
+<CYPRESSTAG name="Technology mapping summary" expanded>
+
+------------------------------------------------------------
+Technology mapping summary
+------------------------------------------------------------
+
+Resource Type                 : Used : Free :  Max :  % Used
+============================================================
+Digital Clocks                :    0 :    8 :    8 :  0.00 %
+Crypto Accelerator            :    0 :    1 :    1 :  0.00 %
+Interrupts [CM0+]             :    5 :   27 :   32 : 15.63 %
+Interrupts [CM4]              :    0 :  147 :  147 :  0.00 %
+IO                            :    3 :   75 :   78 :  3.85 %
+Interprocessor Communication  :    0 :   16 :   16 :  0.00 %
+MCWDT                         :    0 :    2 :    2 :  0.00 %
+CapSense                      :    0 :    1 :    1 :  0.00 %
+Energy Profiler               :    0 :    1 :    1 :  0.00 %
+Real Time Clock               :    0 :    1 :    1 :  0.00 %
+Bluetooth Low Energy          :    0 :    1 :    1 :  0.00 %
+I2S                           :    0 :    1 :    1 :  0.00 %
+PDM/PCM                       :    0 :    1 :    1 :  0.00 %
+SCB                           :    0 :    9 :    9 :  0.00 %
+Serial Memory Interface       :    0 :    1 :    1 :  0.00 %
+DMA Channels                  :    0 :   32 :   32 :  0.00 %
+LCD                           :    0 :    1 :    1 :  0.00 %
+SmartIO                       :    0 :    2 :    2 :  0.00 %
+TCPWM                         :    2 :   30 :   32 :  6.25 %
+UDB                           :      :      :      :        
+  Macrocells                  :    1 :   95 :   96 :  1.04 %
+  Unique P-terms              :    2 :  190 :  192 :  1.04 %
+  Total P-terms               :    2 :      :      :        
+  Datapath Cells              :    0 :   12 :   12 :  0.00 %
+  Status Cells                :    0 :   12 :   12 :  0.00 %
+  Control Cells               :    0 :   12 :   12 :  0.00 %
+7-Bit IDAC                    :    0 :    2 :    2 :  0.00 %
+Continuous Time DAC           :    0 :    1 :    1 :  0.00 %
+LP Comparator                 :    0 :    2 :    2 :  0.00 %
+Opamp                         :    0 :    2 :    2 :  0.00 %
+Sample and Hold               :    0 :    1 :    1 :  0.00 %
+SAR ADC                       :    0 :    1 :    1 :  0.00 %
+DieTemp Sensor                :    0 :    1 :    1 :  0.00 %
+</CYPRESSTAG>
+Technology Mapping: Elapsed time ==> 0s.062ms
+Tech Mapping phase: Elapsed time ==> 0s.140ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Analog Placement">
+<CYPRESSTAG name="FFB & IO Pre Placement">
+<CYPRESSTAG name="Placement" icon="FILE_RPT_PLACEMENT">
+
+Cell                                : Block                              
+=========================================================================
+CY_CPUSS_SWJ_SWCLK_TCLK(0)          : [IOP=(6)][IoId=(7)]                
+CY_CPUSS_SWJ_SWDIO_TMS(0)           : [IOP=(6)][IoId=(6)]                
+Pin_Red(0)                          : [IOP=(0)][IoId=(3)]                
+ClockGenBlock                       : CLK_GEN_[FFB(CLK_GEN,0)]           
+CPUSS                               : CPUSS_[FFB(CPUSS,0)]               
+\PWM_1:TCPWM\                       : TCPWM_[FFB(TCPWM,0)]               
+\PWM_2:TCPWM\                       : TCPWM_[FFB(TCPWM,1)]               
+
+</CYPRESSTAG>
+</CYPRESSTAG>
+<CYPRESSTAG name="Real Analog Placement">
+Elapsed time ==> 0.2152173s
+</CYPRESSTAG>
+Analog Placement phase: Elapsed time ==> 0s.734ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Analog Routing">
+<CYPRESSTAG name="Analog Routing">
+Route success=True, Iterations=1 Elapsed=0.0007287 secs
+</CYPRESSTAG>
+Analog Routing phase: Elapsed time ==> 0s.000ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Analog Code Generation">
+============ Analog Final Answer Routes ============
+Dump of CyAnalogRoutingResultsDB
+Map of net to items {
+}
+Map of item to net {
+}
+Mux Info {
+}
+Analog Code Generation phase: Elapsed time ==> 0s.000ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Digital Placement">
+<CYPRESSTAG name="Detailed placement messages">
+I2659: No Constrained paths were found. The placer will run in non-timing driven mode.
+I2076: Total run-time: 0.3 sec.
+
+</CYPRESSTAG>
+<CYPRESSTAG name="PLD Packing">
+<CYPRESSTAG name="PLD Packing Summary" expanded>
+
+------------------------------------------------------------
+PLD Packing Summary
+------------------------------------------------------------
+            Resource Type : Used : Free :  Max :  % Used
+    ====================================================
+                     PLDs :    1 :   23 :   24 :   4.17%
+
+<CYPRESSTAG name="PLD Statistics">
+
+        PLD Resource Type :     Average/LAB
+    =======================================
+                   Inputs :            2.00
+                   Pterms :            2.00
+               Macrocells :            1.00
+</CYPRESSTAG>
+<CYPRESSTAG name="Packed PLD Contents">
+Packed PLD Contents not displayed at this verbose level.</CYPRESSTAG>
+</CYPRESSTAG>
+PLD Packing: Elapsed time ==> 0s.000ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Partitioning">
+<CYPRESSTAG name="Initial Partitioning Summary">
+Initial Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
+<CYPRESSTAG name="Final Partitioning Summary">
+Final Partitioning Summary not displayed at this verbose level.</CYPRESSTAG>
+Partitioning: Elapsed time ==> 0s.015ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Final Placement Summary">
+
+------------------------------------------------------------
+Final Placement Summary
+------------------------------------------------------------
+
+       Resource Type :      Count : Avg Inputs : Avg Outputs
+    ========================================================
+                 UDB :          1 :       2.00 :       1.00
+<CYPRESSTAG name="Final Placement Details">
+<CYPRESSTAG name="Component Details">
+
+------------------------------------------------------------
+Component Placement Details
+------------------------------------------------------------
+UDB [UDB=(0,0)] is empty.
+UDB [UDB=(0,1)] is empty.
+UDB [UDB=(0,2)] is empty.
+UDB [UDB=(0,3)] is empty.
+UDB [UDB=(0,4)] is empty.
+UDB [UDB=(0,5)] is empty.
+UDB [UDB=(1,0)] is empty.
+UDB [UDB=(1,1)] is empty.
+UDB [UDB=(1,2)] is empty.
+UDB [UDB=(1,3)] is empty.
+UDB [UDB=(1,4)] is empty.
+UDB [UDB=(1,5)] contents:
+LAB@[UDB=(1,5)][LB=0] #macrocells=1, #inputs=2, #pterms=2
+{
+    [McSlotId=0]:     MacroCell: Name=Net_110, Mode=(Combinatorial) @ [UDB=(1,5)][LB=0][MC=0]
+        Total # of inputs        : 2
+        Total # of product terms : 2
+            Clock Enable: True
+        Main Equation            : 2 pterms
+        (
+              !Net_120 * Net_121
+            + Net_120 * !Net_121
+        );
+        Output = Net_110 (fanout=1)
+        Properties               : 
+        {
+        }
+
+    [McSlotId=1]: (empty)
+    [McSlotId=2]: (empty)
+    [McSlotId=3]: (empty)
+}
+
+Intr container @ [IntrContainer=(0)]: empty
+Drq container @ [DrqContainer=(0)]: empty
+Port 0 contains the following IO cells:
+[IoId=3]: 
+Pin : Name = Pin_Red(0)
+    Attributes:
+        In Group/Port: True
+        In Sync Option: AUTO
+        Out Sync Option: NOSYNC
+        Interrupt generated: False
+        Interrupt mode: NONE
+        Drive mode: CMOS_OUT
+        VTrip: CMOS
+        Slew: FAST
+        Input Sync needed: False
+        Output Sync needed: False
+        SC shield enabled: False
+        POR State: INP_DIS_HI_Z
+        LCD Mode: COMMON
+        Register Mode: RegComb
+        CaSense Mode: NEITHER
+        Treat as pin: True
+        Is OE Registered: False
+        Uses Analog: False
+        Can contain Digital: True
+        Is SIO: False
+        SIO Output Buf: NONREGULATED
+        SIO Input Buf: SINGLE_ENDED
+        SIO HiFreq: LOW
+        SIO Hyst: DISABLED
+        SIO Vtrip: MULTIPLIER_0_5
+        SIO Multiplier Index: 0
+        SIO RefSel: VCC_IO
+        Required Capabilities: DIGITAL, ROUTABLE
+        Initial Value: 1
+        IO Voltage: 0
+    PORT MAP (
+        pa_out => Pin_Red(0)__PA ,
+        pin_input => Net_110 ,
+        annotation => Net_81 ,
+        pad => Pin_Red(0)_PAD );
+    Properties:
+    {
+    }
+
+Port 1 contains the following IO cells:
+Port 5 contains the following IO cells:
+Port 6 contains the following IO cells:
+[IoId=6]: 
+Pin : Name = CY_CPUSS_SWJ_SWDIO_TMS(0)
+    Attributes:
+        In Group/Port: True
+        In Sync Option: AUTO
+        Out Sync Option: AUTO
+        Interrupt generated: False
+        Interrupt mode: NONE
+        Drive mode: RES_PULL_UP
+        VTrip: CMOS
+        Slew: FAST
+        Input Sync needed: False
+        Output Sync needed: False
+        SC shield enabled: False
+        POR State: INP_DIS_HI_Z
+        LCD Mode: COMMON
+        Register Mode: RegComb
+        CaSense Mode: NEITHER
+        Treat as pin: True
+        Is OE Registered: False
+        Uses Analog: False
+        Can contain Digital: True
+        Is SIO: False
+        SIO Output Buf: NONREGULATED
+        SIO Input Buf: SINGLE_ENDED
+        SIO HiFreq: LOW
+        SIO Hyst: DISABLED
+        SIO Vtrip: MULTIPLIER_0_5
+        SIO Multiplier Index: 0
+        SIO RefSel: VCC_IO
+        Required Capabilities: DIGITAL
+        Initial Value: 0
+        IO Voltage: 0
+    PORT MAP (
+        pa_out => CY_CPUSS_SWJ_SWDIO_TMS(0)__PA ,
+        fb => CPUSS_swj_swdio_tms );
+    Properties:
+    {
+    }
+
+[IoId=7]: 
+Pin : Name = CY_CPUSS_SWJ_SWCLK_TCLK(0)
+    Attributes:
+        In Group/Port: True
+        In Sync Option: AUTO
+        Out Sync Option: AUTO
+        Interrupt generated: False
+        Interrupt mode: NONE
+        Drive mode: RES_PULL_DOWN
+        VTrip: CMOS
+        Slew: FAST
+        Input Sync needed: False
+        Output Sync needed: False
+        SC shield enabled: False
+        POR State: INP_DIS_HI_Z
+        LCD Mode: COMMON
+        Register Mode: RegComb
+        CaSense Mode: NEITHER
+        Treat as pin: True
+        Is OE Registered: False
+        Uses Analog: False
+        Can contain Digital: True
+        Is SIO: False
+        SIO Output Buf: NONREGULATED
+        SIO Input Buf: SINGLE_ENDED
+        SIO HiFreq: LOW
+        SIO Hyst: DISABLED
+        SIO Vtrip: MULTIPLIER_0_5
+        SIO Multiplier Index: 0
+        SIO RefSel: VCC_IO
+        Required Capabilities: DIGITAL
+        Initial Value: 0
+        IO Voltage: 0
+    PORT MAP (
+        pa_out => CY_CPUSS_SWJ_SWCLK_TCLK(0)__PA ,
+        fb => CPUSS_swj_swclk_tclk );
+    Properties:
+    {
+    }
+
+Port 7 contains the following IO cells:
+Port 8 contains the following IO cells:
+Port 9 contains the following IO cells:
+Port 10 contains the following IO cells:
+Port 11 contains the following IO cells:
+Port 12 contains the following IO cells:
+Port 13 contains the following IO cells:
+Clock group 0: 
+    Clock Block @ F(Clock,0): 
+    Clock: Name =ClockBlock
+        PORT MAP (
+            imo => ClockBlock_IMO ,
+            ext => ClockBlock_ExtClk ,
+            altHf => ClockBlock_AltHF ,
+            eco => ClockBlock_ECO ,
+            fll => ClockBlock_FLL ,
+            pll_0 => ClockBlock_PLL0 ,
+            hfclk_0 => ClockBlock_HFClk0 ,
+            hfclk_1 => ClockBlock_HFClk1 ,
+            hfclk_2 => ClockBlock_HFClk2 ,
+            hfclk_3 => ClockBlock_HFClk3 ,
+            hfclk_4 => ClockBlock_HFClk4 ,
+            fastclk => ClockBlock_FastClk ,
+            periclk => ClockBlock_PeriClk ,
+            slowclk => ClockBlock_SlowClk ,
+            ilo => ClockBlock_ILO ,
+            wco => ClockBlock_WCO ,
+            lfclk => ClockBlock_LFClk ,
+            ff_div_11 => Net_133_ff11 ,
+            ff_div_12 => Net_133_ff12 );
+        Properties:
+        {
+        }
+LCD group 0: empty
+Vref group 0: empty
+LPCOMP group 0: empty
+SCB group 0: empty
+CSD group 0: empty
+CSIDAC7 group 0: empty
+TCPWM group 0: 
+    TCPWM @ F(TCPWM,0): 
+    TCPWM: Name =\PWM_2:TCPWM\
+        PORT MAP (
+            clock => Net_133_ff12 ,
+            capture => \PWM_1:swap\ ,
+            count => one ,
+            reload => \PWM_1:swap\ ,
+            stop => \PWM_1:swap\ ,
+            start => \PWM_1:swap\ ,
+            tr_underflow => Net_40 ,
+            tr_compare_match => Net_41 ,
+            tr_overflow => Net_39 ,
+            line_compl => Net_42 ,
+            line => Net_121 ,
+            interrupt => Net_38 );
+        Properties:
+        {
+            cy_registers = ""
+            exact_width = 0
+            width = 16
+        }
+    TCPWM @ F(TCPWM,1): 
+    TCPWM: Name =\PWM_1:TCPWM\
+        PORT MAP (
+            clock => Net_133_ff11 ,
+            capture => \PWM_1:swap\ ,
+            count => one ,
+            reload => \PWM_1:swap\ ,
+            stop => \PWM_1:swap\ ,
+            start => \PWM_1:swap\ ,
+            tr_underflow => Net_29 ,
+            tr_compare_match => Net_30 ,
+            tr_overflow => Net_28 ,
+            line_compl => Net_31 ,
+            line => Net_120 ,
+            interrupt => Net_27 );
+        Properties:
+        {
+            cy_registers = ""
+            exact_width = 0
+            width = 16
+        }
+OA group 0: empty
+TEMP group 0: empty
+SARADC group 0: empty
+CLK_GEN group 0: 
+    MxS40 Clock Gen Block @ F(CLK_GEN,0): 
+    CLK_GEN: Name =ClockGenBlock
+        PORT MAP (
+             );
+        Properties:
+        {
+        }
+LPCOMPBLOCK group 0: empty
+PASSBLOCK group 0: empty
+BLE group 0: empty
+SMIF group 0: empty
+SmartIO group 0: empty
+CRYPTO group 0: empty
+PROFILE group 0: empty
+SRSS group 0: empty
+CPUSS group 0: 
+    CPUSS Block @ F(CPUSS,0): 
+    CPUSS: Name =CPUSS
+        PORT MAP (
+            swj_swclk_tclk => CPUSS_swj_swclk_tclk ,
+            swj_swdio_tms => CPUSS_swj_swdio_tms );
+        Properties:
+        {
+        }
+IOSS group 0: empty
+UDB group 0: empty
+IPC group 0: empty
+I2S group 0: empty
+PDM group 0: empty
+CTDAC group 0: empty
+SAMPLEHOLD group 0: empty
+MCWDT group 0: empty
+RTC group 0: empty
+</CYPRESSTAG>
+<CYPRESSTAG name="Port Configuration Details">
+
+------------------------------------------------------------
+Port Configuration report
+------------------------------------------------------------
+     |     |       | Interrupt |                  |                            | 
+Port | Pin | Fixed |      Type |       Drive Mode |                       Name | Connections
+-----+-----+-------+-----------+------------------+----------------------------+-------------------------
+   0 |   3 |     * |      NONE |         CMOS_OUT |                 Pin_Red(0) | In(Net_110)
+-----+-----+-------+-----------+------------------+----------------------------+-------------------------
+   6 |   6 |     * |      NONE |      RES_PULL_UP |  CY_CPUSS_SWJ_SWDIO_TMS(0) | FB(CPUSS_swj_swdio_tms)
+     |   7 |     * |      NONE |    RES_PULL_DOWN | CY_CPUSS_SWJ_SWCLK_TCLK(0) | FB(CPUSS_swj_swclk_tclk)
+---------------------------------------------------------------------------------------------------------
+</CYPRESSTAG>
+</CYPRESSTAG>
+</CYPRESSTAG>
+Digital component placer commit/Report: Elapsed time ==> 0s.000ms
+Digital Placement phase: Elapsed time ==> 4s.891ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Digital Routing">
+"C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\bin/sjrouter.exe" --xml-path "C:\Users\cypress\Documents\PSoC Creator\4.2\Devices\psoc6/0/route_arch-rrg.cydata" --vh2-path "lab4_1_r.vh2" --pcf-path "lab4_1.pco" --des-name "lab4_1" --dsf-path "lab4_1.dsf" --sdc-path "lab4_1.sdc" --lib-path "lab4_1_r.lib"
+Routing successful.
+Digital Routing phase: Elapsed time ==> 0s.968ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Bitstream Generation">
+Bitstream Generation phase: Elapsed time ==> 0s.421ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Bitstream Verification">
+Bitstream Verification phase: Elapsed time ==> 0s.000ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Static timing analysis">
+Timing report is in lab4_1_timing.html.
+Static timing analysis phase: Elapsed time ==> 7s.172ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Data reporting">
+Data reporting phase: Elapsed time ==> 0s.000ms
+</CYPRESSTAG>
+<CYPRESSTAG name="Database update...">
+Design database save phase: Elapsed time ==> 0s.109ms
+</CYPRESSTAG>
+cydsfit: Elapsed time ==> 14s.501ms
+</CYPRESSTAG>
+Fitter phase: Elapsed time ==> 14s.501ms
+API generation phase: Elapsed time ==> 0s.687ms
+Dependency generation phase: Elapsed time ==> 0s.000ms
+Cleanup phase: Elapsed time ==> 0s.000ms

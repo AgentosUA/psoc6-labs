@@ -1,0 +1,976 @@
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0plus
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"Status_SW2.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.Status_SW2_Read,"ax",%progbits
+  20              		.align	2
+  21              		.global	Status_SW2_Read
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	Status_SW2_Read, %function
+  25              	Status_SW2_Read:
+  26              	.LFB36:
+  27              		.file 1 "Generated_Source\\PSoC6\\Status_SW2.c"
+   1:Generated_Source\PSoC6/Status_SW2.c **** /*******************************************************************************
+   2:Generated_Source\PSoC6/Status_SW2.c **** * File Name: Status_SW2.c  
+   3:Generated_Source\PSoC6/Status_SW2.c **** * Version 1.90
+   4:Generated_Source\PSoC6/Status_SW2.c **** *
+   5:Generated_Source\PSoC6/Status_SW2.c **** * Description:
+   6:Generated_Source\PSoC6/Status_SW2.c **** *  This file contains API to enable firmware to read the value of a Status 
+   7:Generated_Source\PSoC6/Status_SW2.c **** *  Register.
+   8:Generated_Source\PSoC6/Status_SW2.c **** *
+   9:Generated_Source\PSoC6/Status_SW2.c **** * Note:
+  10:Generated_Source\PSoC6/Status_SW2.c **** *
+  11:Generated_Source\PSoC6/Status_SW2.c **** ********************************************************************************
+  12:Generated_Source\PSoC6/Status_SW2.c **** * Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
+  13:Generated_Source\PSoC6/Status_SW2.c **** * You may use this file only in accordance with the license, terms, conditions, 
+  14:Generated_Source\PSoC6/Status_SW2.c **** * disclaimers, and limitations in the end user license agreement accompanying 
+  15:Generated_Source\PSoC6/Status_SW2.c **** * the software package with which this file was provided.
+  16:Generated_Source\PSoC6/Status_SW2.c **** *******************************************************************************/
+  17:Generated_Source\PSoC6/Status_SW2.c **** 
+  18:Generated_Source\PSoC6/Status_SW2.c **** #include "Status_SW2.h"
+  19:Generated_Source\PSoC6/Status_SW2.c **** 
+  20:Generated_Source\PSoC6/Status_SW2.c **** #if !defined(Status_SW2_sts_sts_reg__REMOVED) /* Check for removal by optimization */
+  21:Generated_Source\PSoC6/Status_SW2.c **** 
+  22:Generated_Source\PSoC6/Status_SW2.c **** 
+  23:Generated_Source\PSoC6/Status_SW2.c **** /*******************************************************************************
+  24:Generated_Source\PSoC6/Status_SW2.c **** * Function Name: Status_SW2_Read
+  25:Generated_Source\PSoC6/Status_SW2.c **** ********************************************************************************
+  26:Generated_Source\PSoC6/Status_SW2.c **** *
+  27:Generated_Source\PSoC6/Status_SW2.c **** * Summary:
+  28:Generated_Source\PSoC6/Status_SW2.c **** *  Reads the current value assigned to the Status Register.
+  29:Generated_Source\PSoC6/Status_SW2.c **** *
+  30:Generated_Source\PSoC6/Status_SW2.c **** * Parameters:
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 2
+
+
+  31:Generated_Source\PSoC6/Status_SW2.c **** *  None.
+  32:Generated_Source\PSoC6/Status_SW2.c **** *
+  33:Generated_Source\PSoC6/Status_SW2.c **** * Return:
+  34:Generated_Source\PSoC6/Status_SW2.c **** *  The current value in the Status Register.
+  35:Generated_Source\PSoC6/Status_SW2.c **** *
+  36:Generated_Source\PSoC6/Status_SW2.c **** *******************************************************************************/
+  37:Generated_Source\PSoC6/Status_SW2.c **** uint8 Status_SW2_Read(void) 
+  38:Generated_Source\PSoC6/Status_SW2.c **** { 
+  28              		.loc 1 38 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  39:Generated_Source\PSoC6/Status_SW2.c ****     return Status_SW2_Status;
+  33              		.loc 1 39 0
+  34 0000 014B     		ldr	r3, .L2
+  35 0002 1878     		ldrb	r0, [r3]
+  36 0004 C0B2     		uxtb	r0, r0
+  40:Generated_Source\PSoC6/Status_SW2.c **** }
+  37              		.loc 1 40 0
+  38              		@ sp needed
+  39 0006 7047     		bx	lr
+  40              	.L3:
+  41              		.align	2
+  42              	.L2:
+  43 0008 04163440 		.word	1077155332
+  44              		.cfi_endproc
+  45              	.LFE36:
+  46              		.size	Status_SW2_Read, .-Status_SW2_Read
+  47              		.section	.text.Status_SW2_InterruptEnable,"ax",%progbits
+  48              		.align	2
+  49              		.global	Status_SW2_InterruptEnable
+  50              		.code	16
+  51              		.thumb_func
+  52              		.type	Status_SW2_InterruptEnable, %function
+  53              	Status_SW2_InterruptEnable:
+  54              	.LFB37:
+  41:Generated_Source\PSoC6/Status_SW2.c **** 
+  42:Generated_Source\PSoC6/Status_SW2.c **** 
+  43:Generated_Source\PSoC6/Status_SW2.c **** /*******************************************************************************
+  44:Generated_Source\PSoC6/Status_SW2.c **** * Function Name: Status_SW2_InterruptEnable
+  45:Generated_Source\PSoC6/Status_SW2.c **** ********************************************************************************
+  46:Generated_Source\PSoC6/Status_SW2.c **** *
+  47:Generated_Source\PSoC6/Status_SW2.c **** * Summary:
+  48:Generated_Source\PSoC6/Status_SW2.c **** *  Enables the Status Register interrupt.
+  49:Generated_Source\PSoC6/Status_SW2.c **** *
+  50:Generated_Source\PSoC6/Status_SW2.c **** * Parameters:
+  51:Generated_Source\PSoC6/Status_SW2.c **** *  None.
+  52:Generated_Source\PSoC6/Status_SW2.c **** *
+  53:Generated_Source\PSoC6/Status_SW2.c **** * Return:
+  54:Generated_Source\PSoC6/Status_SW2.c **** *  None.
+  55:Generated_Source\PSoC6/Status_SW2.c **** *
+  56:Generated_Source\PSoC6/Status_SW2.c **** *******************************************************************************/
+  57:Generated_Source\PSoC6/Status_SW2.c **** void Status_SW2_InterruptEnable(void) 
+  58:Generated_Source\PSoC6/Status_SW2.c **** {
+  55              		.loc 1 58 0
+  56              		.cfi_startproc
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 3
+
+
+  57              		@ args = 0, pretend = 0, frame = 0
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59 0000 10B5     		push	{r4, lr}
+  60              		.cfi_def_cfa_offset 8
+  61              		.cfi_offset 4, -8
+  62              		.cfi_offset 14, -4
+  59:Generated_Source\PSoC6/Status_SW2.c ****     uint8 interruptState;
+  60:Generated_Source\PSoC6/Status_SW2.c ****     interruptState = CyEnterCriticalSection();
+  63              		.loc 1 60 0
+  64 0002 FFF7FEFF 		bl	Cy_SysLib_EnterCriticalSection
+  65              	.LVL0:
+  61:Generated_Source\PSoC6/Status_SW2.c ****     Status_SW2_Status_Aux_Ctrl |= Status_SW2_STATUS_INTR_ENBL;
+  66              		.loc 1 61 0
+  67 0006 054A     		ldr	r2, .L5
+  68 0008 1178     		ldrb	r1, [r2]
+  69 000a 1023     		movs	r3, #16
+  70 000c 0B43     		orrs	r3, r1
+  71 000e DBB2     		uxtb	r3, r3
+  72 0010 1370     		strb	r3, [r2]
+  62:Generated_Source\PSoC6/Status_SW2.c ****     CyExitCriticalSection(interruptState);
+  73              		.loc 1 62 0
+  74 0012 FF23     		movs	r3, #255
+  75 0014 1840     		ands	r0, r3
+  76              	.LVL1:
+  77 0016 FFF7FEFF 		bl	Cy_SysLib_ExitCriticalSection
+  78              	.LVL2:
+  63:Generated_Source\PSoC6/Status_SW2.c **** }
+  79              		.loc 1 63 0
+  80              		@ sp needed
+  81 001a 10BD     		pop	{r4, pc}
+  82              	.L6:
+  83              		.align	2
+  84              	.L5:
+  85 001c 04193440 		.word	1077156100
+  86              		.cfi_endproc
+  87              	.LFE37:
+  88              		.size	Status_SW2_InterruptEnable, .-Status_SW2_InterruptEnable
+  89              		.section	.text.Status_SW2_InterruptDisable,"ax",%progbits
+  90              		.align	2
+  91              		.global	Status_SW2_InterruptDisable
+  92              		.code	16
+  93              		.thumb_func
+  94              		.type	Status_SW2_InterruptDisable, %function
+  95              	Status_SW2_InterruptDisable:
+  96              	.LFB38:
+  64:Generated_Source\PSoC6/Status_SW2.c **** 
+  65:Generated_Source\PSoC6/Status_SW2.c **** 
+  66:Generated_Source\PSoC6/Status_SW2.c **** /*******************************************************************************
+  67:Generated_Source\PSoC6/Status_SW2.c **** * Function Name: Status_SW2_InterruptDisable
+  68:Generated_Source\PSoC6/Status_SW2.c **** ********************************************************************************
+  69:Generated_Source\PSoC6/Status_SW2.c **** *
+  70:Generated_Source\PSoC6/Status_SW2.c **** * Summary:
+  71:Generated_Source\PSoC6/Status_SW2.c **** *  Disables the Status Register interrupt.
+  72:Generated_Source\PSoC6/Status_SW2.c **** *
+  73:Generated_Source\PSoC6/Status_SW2.c **** * Parameters:
+  74:Generated_Source\PSoC6/Status_SW2.c **** *  None.
+  75:Generated_Source\PSoC6/Status_SW2.c **** *
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 4
+
+
+  76:Generated_Source\PSoC6/Status_SW2.c **** * Return:
+  77:Generated_Source\PSoC6/Status_SW2.c **** *  None.
+  78:Generated_Source\PSoC6/Status_SW2.c **** *
+  79:Generated_Source\PSoC6/Status_SW2.c **** *******************************************************************************/
+  80:Generated_Source\PSoC6/Status_SW2.c **** void Status_SW2_InterruptDisable(void) 
+  81:Generated_Source\PSoC6/Status_SW2.c **** {
+  97              		.loc 1 81 0
+  98              		.cfi_startproc
+  99              		@ args = 0, pretend = 0, frame = 0
+ 100              		@ frame_needed = 0, uses_anonymous_args = 0
+ 101 0000 10B5     		push	{r4, lr}
+ 102              		.cfi_def_cfa_offset 8
+ 103              		.cfi_offset 4, -8
+ 104              		.cfi_offset 14, -4
+  82:Generated_Source\PSoC6/Status_SW2.c ****     uint8 interruptState;
+  83:Generated_Source\PSoC6/Status_SW2.c ****     interruptState = CyEnterCriticalSection();
+ 105              		.loc 1 83 0
+ 106 0002 FFF7FEFF 		bl	Cy_SysLib_EnterCriticalSection
+ 107              	.LVL3:
+  84:Generated_Source\PSoC6/Status_SW2.c ****     Status_SW2_Status_Aux_Ctrl &= (uint8)(~Status_SW2_STATUS_INTR_ENBL);
+ 108              		.loc 1 84 0
+ 109 0006 054A     		ldr	r2, .L8
+ 110 0008 1378     		ldrb	r3, [r2]
+ 111 000a 1021     		movs	r1, #16
+ 112 000c 8B43     		bics	r3, r1
+ 113 000e 1370     		strb	r3, [r2]
+  85:Generated_Source\PSoC6/Status_SW2.c ****     CyExitCriticalSection(interruptState);
+ 114              		.loc 1 85 0
+ 115 0010 FF23     		movs	r3, #255
+ 116 0012 1840     		ands	r0, r3
+ 117              	.LVL4:
+ 118 0014 FFF7FEFF 		bl	Cy_SysLib_ExitCriticalSection
+ 119              	.LVL5:
+  86:Generated_Source\PSoC6/Status_SW2.c **** }
+ 120              		.loc 1 86 0
+ 121              		@ sp needed
+ 122 0018 10BD     		pop	{r4, pc}
+ 123              	.L9:
+ 124 001a C046     		.align	2
+ 125              	.L8:
+ 126 001c 04193440 		.word	1077156100
+ 127              		.cfi_endproc
+ 128              	.LFE38:
+ 129              		.size	Status_SW2_InterruptDisable, .-Status_SW2_InterruptDisable
+ 130              		.section	.text.Status_SW2_WriteMask,"ax",%progbits
+ 131              		.align	2
+ 132              		.global	Status_SW2_WriteMask
+ 133              		.code	16
+ 134              		.thumb_func
+ 135              		.type	Status_SW2_WriteMask, %function
+ 136              	Status_SW2_WriteMask:
+ 137              	.LFB39:
+  87:Generated_Source\PSoC6/Status_SW2.c **** 
+  88:Generated_Source\PSoC6/Status_SW2.c **** 
+  89:Generated_Source\PSoC6/Status_SW2.c **** /*******************************************************************************
+  90:Generated_Source\PSoC6/Status_SW2.c **** * Function Name: Status_SW2_WriteMask
+  91:Generated_Source\PSoC6/Status_SW2.c **** ********************************************************************************
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 5
+
+
+  92:Generated_Source\PSoC6/Status_SW2.c **** *
+  93:Generated_Source\PSoC6/Status_SW2.c **** * Summary:
+  94:Generated_Source\PSoC6/Status_SW2.c **** *  Writes the current mask value assigned to the Status Register.
+  95:Generated_Source\PSoC6/Status_SW2.c **** *
+  96:Generated_Source\PSoC6/Status_SW2.c **** * Parameters:
+  97:Generated_Source\PSoC6/Status_SW2.c **** *  mask:  Value to write into the mask register.
+  98:Generated_Source\PSoC6/Status_SW2.c **** *
+  99:Generated_Source\PSoC6/Status_SW2.c **** * Return:
+ 100:Generated_Source\PSoC6/Status_SW2.c **** *  None.
+ 101:Generated_Source\PSoC6/Status_SW2.c **** *
+ 102:Generated_Source\PSoC6/Status_SW2.c **** *******************************************************************************/
+ 103:Generated_Source\PSoC6/Status_SW2.c **** void Status_SW2_WriteMask(uint8 mask) 
+ 104:Generated_Source\PSoC6/Status_SW2.c **** {
+ 138              		.loc 1 104 0
+ 139              		.cfi_startproc
+ 140              		@ args = 0, pretend = 0, frame = 0
+ 141              		@ frame_needed = 0, uses_anonymous_args = 0
+ 142              		@ link register save eliminated.
+ 143              	.LVL6:
+ 105:Generated_Source\PSoC6/Status_SW2.c ****     #if(Status_SW2_INPUTS < 8u)
+ 106:Generated_Source\PSoC6/Status_SW2.c ****     	mask &= ((uint8)(1u << Status_SW2_INPUTS) - 1u);
+ 144              		.loc 1 106 0
+ 145 0000 0123     		movs	r3, #1
+ 146 0002 1840     		ands	r0, r3
+ 147              	.LVL7:
+ 107:Generated_Source\PSoC6/Status_SW2.c **** 	#endif /* End Status_SW2_INPUTS < 8u */
+ 108:Generated_Source\PSoC6/Status_SW2.c ****     Status_SW2_Status_Mask = mask;
+ 148              		.loc 1 108 0
+ 149 0004 014B     		ldr	r3, .L11
+ 150 0006 1870     		strb	r0, [r3]
+ 109:Generated_Source\PSoC6/Status_SW2.c **** }
+ 151              		.loc 1 109 0
+ 152              		@ sp needed
+ 153 0008 7047     		bx	lr
+ 154              	.L12:
+ 155 000a C046     		.align	2
+ 156              	.L11:
+ 157 000c 04183440 		.word	1077155844
+ 158              		.cfi_endproc
+ 159              	.LFE39:
+ 160              		.size	Status_SW2_WriteMask, .-Status_SW2_WriteMask
+ 161              		.section	.text.Status_SW2_ReadMask,"ax",%progbits
+ 162              		.align	2
+ 163              		.global	Status_SW2_ReadMask
+ 164              		.code	16
+ 165              		.thumb_func
+ 166              		.type	Status_SW2_ReadMask, %function
+ 167              	Status_SW2_ReadMask:
+ 168              	.LFB40:
+ 110:Generated_Source\PSoC6/Status_SW2.c **** 
+ 111:Generated_Source\PSoC6/Status_SW2.c **** 
+ 112:Generated_Source\PSoC6/Status_SW2.c **** /*******************************************************************************
+ 113:Generated_Source\PSoC6/Status_SW2.c **** * Function Name: Status_SW2_ReadMask
+ 114:Generated_Source\PSoC6/Status_SW2.c **** ********************************************************************************
+ 115:Generated_Source\PSoC6/Status_SW2.c **** *
+ 116:Generated_Source\PSoC6/Status_SW2.c **** * Summary:
+ 117:Generated_Source\PSoC6/Status_SW2.c **** *  Reads the current interrupt mask assigned to the Status Register.
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 6
+
+
+ 118:Generated_Source\PSoC6/Status_SW2.c **** *
+ 119:Generated_Source\PSoC6/Status_SW2.c **** * Parameters:
+ 120:Generated_Source\PSoC6/Status_SW2.c **** *  None.
+ 121:Generated_Source\PSoC6/Status_SW2.c **** *
+ 122:Generated_Source\PSoC6/Status_SW2.c **** * Return:
+ 123:Generated_Source\PSoC6/Status_SW2.c **** *  The value of the interrupt mask of the Status Register.
+ 124:Generated_Source\PSoC6/Status_SW2.c **** *
+ 125:Generated_Source\PSoC6/Status_SW2.c **** *******************************************************************************/
+ 126:Generated_Source\PSoC6/Status_SW2.c **** uint8 Status_SW2_ReadMask(void) 
+ 127:Generated_Source\PSoC6/Status_SW2.c **** {
+ 169              		.loc 1 127 0
+ 170              		.cfi_startproc
+ 171              		@ args = 0, pretend = 0, frame = 0
+ 172              		@ frame_needed = 0, uses_anonymous_args = 0
+ 173              		@ link register save eliminated.
+ 128:Generated_Source\PSoC6/Status_SW2.c ****     return Status_SW2_Status_Mask;
+ 174              		.loc 1 128 0
+ 175 0000 014B     		ldr	r3, .L14
+ 176 0002 1878     		ldrb	r0, [r3]
+ 177 0004 C0B2     		uxtb	r0, r0
+ 129:Generated_Source\PSoC6/Status_SW2.c **** }
+ 178              		.loc 1 129 0
+ 179              		@ sp needed
+ 180 0006 7047     		bx	lr
+ 181              	.L15:
+ 182              		.align	2
+ 183              	.L14:
+ 184 0008 04183440 		.word	1077155844
+ 185              		.cfi_endproc
+ 186              	.LFE40:
+ 187              		.size	Status_SW2_ReadMask, .-Status_SW2_ReadMask
+ 188              		.text
+ 189              	.Letext0:
+ 190              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 191              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 192              		.file 4 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/syslib/cy_syslib.h"
+ 193              		.section	.debug_info,"",%progbits
+ 194              	.Ldebug_info0:
+ 195 0000 A2010000 		.4byte	0x1a2
+ 196 0004 0400     		.2byte	0x4
+ 197 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 198 000a 04       		.byte	0x4
+ 199 000b 01       		.uleb128 0x1
+ 200 000c F0010000 		.4byte	.LASF27
+ 201 0010 0C       		.byte	0xc
+ 202 0011 56000000 		.4byte	.LASF28
+ 203 0015 3B010000 		.4byte	.LASF29
+ 204 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 205 001d 00000000 		.4byte	0
+ 206 0021 00000000 		.4byte	.Ldebug_line0
+ 207 0025 02       		.uleb128 0x2
+ 208 0026 02       		.byte	0x2
+ 209 0027 05       		.byte	0x5
+ 210 0028 B3010000 		.4byte	.LASF0
+ 211 002c 02       		.uleb128 0x2
+ 212 002d 01       		.byte	0x1
+ 213 002e 08       		.byte	0x8
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 7
+
+
+ 214 002f 80000000 		.4byte	.LASF1
+ 215 0033 02       		.uleb128 0x2
+ 216 0034 01       		.byte	0x1
+ 217 0035 06       		.byte	0x6
+ 218 0036 82020000 		.4byte	.LASF2
+ 219 003a 03       		.uleb128 0x3
+ 220 003b 00000000 		.4byte	.LASF5
+ 221 003f 02       		.byte	0x2
+ 222 0040 1D       		.byte	0x1d
+ 223 0041 2C000000 		.4byte	0x2c
+ 224 0045 02       		.uleb128 0x2
+ 225 0046 02       		.byte	0x2
+ 226 0047 07       		.byte	0x7
+ 227 0048 28000000 		.4byte	.LASF3
+ 228 004c 02       		.uleb128 0x2
+ 229 004d 04       		.byte	0x4
+ 230 004e 05       		.byte	0x5
+ 231 004f E2010000 		.4byte	.LASF4
+ 232 0053 03       		.uleb128 0x3
+ 233 0054 D5000000 		.4byte	.LASF6
+ 234 0058 02       		.byte	0x2
+ 235 0059 41       		.byte	0x41
+ 236 005a 5E000000 		.4byte	0x5e
+ 237 005e 02       		.uleb128 0x2
+ 238 005f 04       		.byte	0x4
+ 239 0060 07       		.byte	0x7
+ 240 0061 A2000000 		.4byte	.LASF7
+ 241 0065 02       		.uleb128 0x2
+ 242 0066 08       		.byte	0x8
+ 243 0067 05       		.byte	0x5
+ 244 0068 A0010000 		.4byte	.LASF8
+ 245 006c 02       		.uleb128 0x2
+ 246 006d 08       		.byte	0x8
+ 247 006e 07       		.byte	0x7
+ 248 006f 1C010000 		.4byte	.LASF9
+ 249 0073 04       		.uleb128 0x4
+ 250 0074 04       		.byte	0x4
+ 251 0075 05       		.byte	0x5
+ 252 0076 696E7400 		.ascii	"int\000"
+ 253 007a 02       		.uleb128 0x2
+ 254 007b 04       		.byte	0x4
+ 255 007c 07       		.byte	0x7
+ 256 007d 0F010000 		.4byte	.LASF10
+ 257 0081 03       		.uleb128 0x3
+ 258 0082 33010000 		.4byte	.LASF11
+ 259 0086 03       		.byte	0x3
+ 260 0087 18       		.byte	0x18
+ 261 0088 3A000000 		.4byte	0x3a
+ 262 008c 03       		.uleb128 0x3
+ 263 008d D9010000 		.4byte	.LASF12
+ 264 0091 03       		.byte	0x3
+ 265 0092 30       		.byte	0x30
+ 266 0093 53000000 		.4byte	0x53
+ 267 0097 02       		.uleb128 0x2
+ 268 0098 04       		.byte	0x4
+ 269 0099 07       		.byte	0x7
+ 270 009a 97010000 		.4byte	.LASF13
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 8
+
+
+ 271 009e 05       		.uleb128 0x5
+ 272 009f 81000000 		.4byte	0x81
+ 273 00a3 02       		.uleb128 0x2
+ 274 00a4 01       		.byte	0x1
+ 275 00a5 08       		.byte	0x8
+ 276 00a6 EB010000 		.4byte	.LASF14
+ 277 00aa 02       		.uleb128 0x2
+ 278 00ab 04       		.byte	0x4
+ 279 00ac 04       		.byte	0x4
+ 280 00ad 7A000000 		.4byte	.LASF15
+ 281 00b1 02       		.uleb128 0x2
+ 282 00b2 08       		.byte	0x8
+ 283 00b3 04       		.byte	0x4
+ 284 00b4 CE000000 		.4byte	.LASF16
+ 285 00b8 06       		.uleb128 0x6
+ 286 00b9 B4000000 		.4byte	.LASF17
+ 287 00bd 04       		.byte	0x4
+ 288 00be 8503     		.2byte	0x385
+ 289 00c0 81000000 		.4byte	0x81
+ 290 00c4 06       		.uleb128 0x6
+ 291 00c5 8E000000 		.4byte	.LASF18
+ 292 00c9 04       		.byte	0x4
+ 293 00ca 9103     		.2byte	0x391
+ 294 00cc 9E000000 		.4byte	0x9e
+ 295 00d0 07       		.uleb128 0x7
+ 296 00d1 E0000000 		.4byte	.LASF23
+ 297 00d5 01       		.byte	0x1
+ 298 00d6 25       		.byte	0x25
+ 299 00d7 B8000000 		.4byte	0xb8
+ 300 00db 00000000 		.4byte	.LFB36
+ 301 00df 0C000000 		.4byte	.LFE36-.LFB36
+ 302 00e3 01       		.uleb128 0x1
+ 303 00e4 9C       		.byte	0x9c
+ 304 00e5 08       		.uleb128 0x8
+ 305 00e6 3B000000 		.4byte	.LASF19
+ 306 00ea 01       		.byte	0x1
+ 307 00eb 39       		.byte	0x39
+ 308 00ec 00000000 		.4byte	.LFB37
+ 309 00f0 20000000 		.4byte	.LFE37-.LFB37
+ 310 00f4 01       		.uleb128 0x1
+ 311 00f5 9C       		.byte	0x9c
+ 312 00f6 1C010000 		.4byte	0x11c
+ 313 00fa 09       		.uleb128 0x9
+ 314 00fb 93000000 		.4byte	.LASF21
+ 315 00ff 01       		.byte	0x1
+ 316 0100 3B       		.byte	0x3b
+ 317 0101 B8000000 		.4byte	0xb8
+ 318 0105 00000000 		.4byte	.LLST0
+ 319 0109 0A       		.uleb128 0xa
+ 320 010a 06000000 		.4byte	.LVL0
+ 321 010e 8D010000 		.4byte	0x18d
+ 322 0112 0A       		.uleb128 0xa
+ 323 0113 1A000000 		.4byte	.LVL2
+ 324 0117 99010000 		.4byte	0x199
+ 325 011b 00       		.byte	0
+ 326 011c 08       		.uleb128 0x8
+ 327 011d BD010000 		.4byte	.LASF20
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 9
+
+
+ 328 0121 01       		.byte	0x1
+ 329 0122 50       		.byte	0x50
+ 330 0123 00000000 		.4byte	.LFB38
+ 331 0127 20000000 		.4byte	.LFE38-.LFB38
+ 332 012b 01       		.uleb128 0x1
+ 333 012c 9C       		.byte	0x9c
+ 334 012d 53010000 		.4byte	0x153
+ 335 0131 09       		.uleb128 0x9
+ 336 0132 93000000 		.4byte	.LASF21
+ 337 0136 01       		.byte	0x1
+ 338 0137 52       		.byte	0x52
+ 339 0138 B8000000 		.4byte	0xb8
+ 340 013c 13000000 		.4byte	.LLST1
+ 341 0140 0A       		.uleb128 0xa
+ 342 0141 06000000 		.4byte	.LVL3
+ 343 0145 8D010000 		.4byte	0x18d
+ 344 0149 0A       		.uleb128 0xa
+ 345 014a 18000000 		.4byte	.LVL5
+ 346 014e 99010000 		.4byte	0x199
+ 347 0152 00       		.byte	0
+ 348 0153 08       		.uleb128 0x8
+ 349 0154 82010000 		.4byte	.LASF22
+ 350 0158 01       		.byte	0x1
+ 351 0159 67       		.byte	0x67
+ 352 015a 00000000 		.4byte	.LFB39
+ 353 015e 10000000 		.4byte	.LFE39-.LFB39
+ 354 0162 01       		.uleb128 0x1
+ 355 0163 9C       		.byte	0x9c
+ 356 0164 78010000 		.4byte	0x178
+ 357 0168 0B       		.uleb128 0xb
+ 358 0169 AE010000 		.4byte	.LASF30
+ 359 016d 01       		.byte	0x1
+ 360 016e 67       		.byte	0x67
+ 361 016f B8000000 		.4byte	0xb8
+ 362 0173 26000000 		.4byte	.LLST2
+ 363 0177 00       		.byte	0
+ 364 0178 07       		.uleb128 0x7
+ 365 0179 BA000000 		.4byte	.LASF24
+ 366 017d 01       		.byte	0x1
+ 367 017e 7E       		.byte	0x7e
+ 368 017f B8000000 		.4byte	0xb8
+ 369 0183 00000000 		.4byte	.LFB40
+ 370 0187 0C000000 		.4byte	.LFE40-.LFB40
+ 371 018b 01       		.uleb128 0x1
+ 372 018c 9C       		.byte	0x9c
+ 373 018d 0C       		.uleb128 0xc
+ 374 018e F0000000 		.4byte	.LASF25
+ 375 0192 F0000000 		.4byte	.LASF25
+ 376 0196 04       		.byte	0x4
+ 377 0197 4D03     		.2byte	0x34d
+ 378 0199 0C       		.uleb128 0xc
+ 379 019a 0A000000 		.4byte	.LASF26
+ 380 019e 0A000000 		.4byte	.LASF26
+ 381 01a2 04       		.byte	0x4
+ 382 01a3 5C03     		.2byte	0x35c
+ 383 01a5 00       		.byte	0
+ 384              		.section	.debug_abbrev,"",%progbits
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 10
+
+
+ 385              	.Ldebug_abbrev0:
+ 386 0000 01       		.uleb128 0x1
+ 387 0001 11       		.uleb128 0x11
+ 388 0002 01       		.byte	0x1
+ 389 0003 25       		.uleb128 0x25
+ 390 0004 0E       		.uleb128 0xe
+ 391 0005 13       		.uleb128 0x13
+ 392 0006 0B       		.uleb128 0xb
+ 393 0007 03       		.uleb128 0x3
+ 394 0008 0E       		.uleb128 0xe
+ 395 0009 1B       		.uleb128 0x1b
+ 396 000a 0E       		.uleb128 0xe
+ 397 000b 55       		.uleb128 0x55
+ 398 000c 17       		.uleb128 0x17
+ 399 000d 11       		.uleb128 0x11
+ 400 000e 01       		.uleb128 0x1
+ 401 000f 10       		.uleb128 0x10
+ 402 0010 17       		.uleb128 0x17
+ 403 0011 00       		.byte	0
+ 404 0012 00       		.byte	0
+ 405 0013 02       		.uleb128 0x2
+ 406 0014 24       		.uleb128 0x24
+ 407 0015 00       		.byte	0
+ 408 0016 0B       		.uleb128 0xb
+ 409 0017 0B       		.uleb128 0xb
+ 410 0018 3E       		.uleb128 0x3e
+ 411 0019 0B       		.uleb128 0xb
+ 412 001a 03       		.uleb128 0x3
+ 413 001b 0E       		.uleb128 0xe
+ 414 001c 00       		.byte	0
+ 415 001d 00       		.byte	0
+ 416 001e 03       		.uleb128 0x3
+ 417 001f 16       		.uleb128 0x16
+ 418 0020 00       		.byte	0
+ 419 0021 03       		.uleb128 0x3
+ 420 0022 0E       		.uleb128 0xe
+ 421 0023 3A       		.uleb128 0x3a
+ 422 0024 0B       		.uleb128 0xb
+ 423 0025 3B       		.uleb128 0x3b
+ 424 0026 0B       		.uleb128 0xb
+ 425 0027 49       		.uleb128 0x49
+ 426 0028 13       		.uleb128 0x13
+ 427 0029 00       		.byte	0
+ 428 002a 00       		.byte	0
+ 429 002b 04       		.uleb128 0x4
+ 430 002c 24       		.uleb128 0x24
+ 431 002d 00       		.byte	0
+ 432 002e 0B       		.uleb128 0xb
+ 433 002f 0B       		.uleb128 0xb
+ 434 0030 3E       		.uleb128 0x3e
+ 435 0031 0B       		.uleb128 0xb
+ 436 0032 03       		.uleb128 0x3
+ 437 0033 08       		.uleb128 0x8
+ 438 0034 00       		.byte	0
+ 439 0035 00       		.byte	0
+ 440 0036 05       		.uleb128 0x5
+ 441 0037 35       		.uleb128 0x35
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 11
+
+
+ 442 0038 00       		.byte	0
+ 443 0039 49       		.uleb128 0x49
+ 444 003a 13       		.uleb128 0x13
+ 445 003b 00       		.byte	0
+ 446 003c 00       		.byte	0
+ 447 003d 06       		.uleb128 0x6
+ 448 003e 16       		.uleb128 0x16
+ 449 003f 00       		.byte	0
+ 450 0040 03       		.uleb128 0x3
+ 451 0041 0E       		.uleb128 0xe
+ 452 0042 3A       		.uleb128 0x3a
+ 453 0043 0B       		.uleb128 0xb
+ 454 0044 3B       		.uleb128 0x3b
+ 455 0045 05       		.uleb128 0x5
+ 456 0046 49       		.uleb128 0x49
+ 457 0047 13       		.uleb128 0x13
+ 458 0048 00       		.byte	0
+ 459 0049 00       		.byte	0
+ 460 004a 07       		.uleb128 0x7
+ 461 004b 2E       		.uleb128 0x2e
+ 462 004c 00       		.byte	0
+ 463 004d 3F       		.uleb128 0x3f
+ 464 004e 19       		.uleb128 0x19
+ 465 004f 03       		.uleb128 0x3
+ 466 0050 0E       		.uleb128 0xe
+ 467 0051 3A       		.uleb128 0x3a
+ 468 0052 0B       		.uleb128 0xb
+ 469 0053 3B       		.uleb128 0x3b
+ 470 0054 0B       		.uleb128 0xb
+ 471 0055 27       		.uleb128 0x27
+ 472 0056 19       		.uleb128 0x19
+ 473 0057 49       		.uleb128 0x49
+ 474 0058 13       		.uleb128 0x13
+ 475 0059 11       		.uleb128 0x11
+ 476 005a 01       		.uleb128 0x1
+ 477 005b 12       		.uleb128 0x12
+ 478 005c 06       		.uleb128 0x6
+ 479 005d 40       		.uleb128 0x40
+ 480 005e 18       		.uleb128 0x18
+ 481 005f 9742     		.uleb128 0x2117
+ 482 0061 19       		.uleb128 0x19
+ 483 0062 00       		.byte	0
+ 484 0063 00       		.byte	0
+ 485 0064 08       		.uleb128 0x8
+ 486 0065 2E       		.uleb128 0x2e
+ 487 0066 01       		.byte	0x1
+ 488 0067 3F       		.uleb128 0x3f
+ 489 0068 19       		.uleb128 0x19
+ 490 0069 03       		.uleb128 0x3
+ 491 006a 0E       		.uleb128 0xe
+ 492 006b 3A       		.uleb128 0x3a
+ 493 006c 0B       		.uleb128 0xb
+ 494 006d 3B       		.uleb128 0x3b
+ 495 006e 0B       		.uleb128 0xb
+ 496 006f 27       		.uleb128 0x27
+ 497 0070 19       		.uleb128 0x19
+ 498 0071 11       		.uleb128 0x11
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 12
+
+
+ 499 0072 01       		.uleb128 0x1
+ 500 0073 12       		.uleb128 0x12
+ 501 0074 06       		.uleb128 0x6
+ 502 0075 40       		.uleb128 0x40
+ 503 0076 18       		.uleb128 0x18
+ 504 0077 9742     		.uleb128 0x2117
+ 505 0079 19       		.uleb128 0x19
+ 506 007a 01       		.uleb128 0x1
+ 507 007b 13       		.uleb128 0x13
+ 508 007c 00       		.byte	0
+ 509 007d 00       		.byte	0
+ 510 007e 09       		.uleb128 0x9
+ 511 007f 34       		.uleb128 0x34
+ 512 0080 00       		.byte	0
+ 513 0081 03       		.uleb128 0x3
+ 514 0082 0E       		.uleb128 0xe
+ 515 0083 3A       		.uleb128 0x3a
+ 516 0084 0B       		.uleb128 0xb
+ 517 0085 3B       		.uleb128 0x3b
+ 518 0086 0B       		.uleb128 0xb
+ 519 0087 49       		.uleb128 0x49
+ 520 0088 13       		.uleb128 0x13
+ 521 0089 02       		.uleb128 0x2
+ 522 008a 17       		.uleb128 0x17
+ 523 008b 00       		.byte	0
+ 524 008c 00       		.byte	0
+ 525 008d 0A       		.uleb128 0xa
+ 526 008e 898201   		.uleb128 0x4109
+ 527 0091 00       		.byte	0
+ 528 0092 11       		.uleb128 0x11
+ 529 0093 01       		.uleb128 0x1
+ 530 0094 31       		.uleb128 0x31
+ 531 0095 13       		.uleb128 0x13
+ 532 0096 00       		.byte	0
+ 533 0097 00       		.byte	0
+ 534 0098 0B       		.uleb128 0xb
+ 535 0099 05       		.uleb128 0x5
+ 536 009a 00       		.byte	0
+ 537 009b 03       		.uleb128 0x3
+ 538 009c 0E       		.uleb128 0xe
+ 539 009d 3A       		.uleb128 0x3a
+ 540 009e 0B       		.uleb128 0xb
+ 541 009f 3B       		.uleb128 0x3b
+ 542 00a0 0B       		.uleb128 0xb
+ 543 00a1 49       		.uleb128 0x49
+ 544 00a2 13       		.uleb128 0x13
+ 545 00a3 02       		.uleb128 0x2
+ 546 00a4 17       		.uleb128 0x17
+ 547 00a5 00       		.byte	0
+ 548 00a6 00       		.byte	0
+ 549 00a7 0C       		.uleb128 0xc
+ 550 00a8 2E       		.uleb128 0x2e
+ 551 00a9 00       		.byte	0
+ 552 00aa 3F       		.uleb128 0x3f
+ 553 00ab 19       		.uleb128 0x19
+ 554 00ac 3C       		.uleb128 0x3c
+ 555 00ad 19       		.uleb128 0x19
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 13
+
+
+ 556 00ae 6E       		.uleb128 0x6e
+ 557 00af 0E       		.uleb128 0xe
+ 558 00b0 03       		.uleb128 0x3
+ 559 00b1 0E       		.uleb128 0xe
+ 560 00b2 3A       		.uleb128 0x3a
+ 561 00b3 0B       		.uleb128 0xb
+ 562 00b4 3B       		.uleb128 0x3b
+ 563 00b5 05       		.uleb128 0x5
+ 564 00b6 00       		.byte	0
+ 565 00b7 00       		.byte	0
+ 566 00b8 00       		.byte	0
+ 567              		.section	.debug_loc,"",%progbits
+ 568              	.Ldebug_loc0:
+ 569              	.LLST0:
+ 570 0000 06000000 		.4byte	.LVL0
+ 571 0004 16000000 		.4byte	.LVL1
+ 572 0008 0100     		.2byte	0x1
+ 573 000a 50       		.byte	0x50
+ 574 000b 00000000 		.4byte	0
+ 575 000f 00000000 		.4byte	0
+ 576              	.LLST1:
+ 577 0013 06000000 		.4byte	.LVL3
+ 578 0017 14000000 		.4byte	.LVL4
+ 579 001b 0100     		.2byte	0x1
+ 580 001d 50       		.byte	0x50
+ 581 001e 00000000 		.4byte	0
+ 582 0022 00000000 		.4byte	0
+ 583              	.LLST2:
+ 584 0026 00000000 		.4byte	.LVL6
+ 585 002a 04000000 		.4byte	.LVL7
+ 586 002e 0100     		.2byte	0x1
+ 587 0030 50       		.byte	0x50
+ 588 0031 04000000 		.4byte	.LVL7
+ 589 0035 10000000 		.4byte	.LFE39
+ 590 0039 0100     		.2byte	0x1
+ 591 003b 50       		.byte	0x50
+ 592 003c 00000000 		.4byte	0
+ 593 0040 00000000 		.4byte	0
+ 594              		.section	.debug_aranges,"",%progbits
+ 595 0000 3C000000 		.4byte	0x3c
+ 596 0004 0200     		.2byte	0x2
+ 597 0006 00000000 		.4byte	.Ldebug_info0
+ 598 000a 04       		.byte	0x4
+ 599 000b 00       		.byte	0
+ 600 000c 0000     		.2byte	0
+ 601 000e 0000     		.2byte	0
+ 602 0010 00000000 		.4byte	.LFB36
+ 603 0014 0C000000 		.4byte	.LFE36-.LFB36
+ 604 0018 00000000 		.4byte	.LFB37
+ 605 001c 20000000 		.4byte	.LFE37-.LFB37
+ 606 0020 00000000 		.4byte	.LFB38
+ 607 0024 20000000 		.4byte	.LFE38-.LFB38
+ 608 0028 00000000 		.4byte	.LFB39
+ 609 002c 10000000 		.4byte	.LFE39-.LFB39
+ 610 0030 00000000 		.4byte	.LFB40
+ 611 0034 0C000000 		.4byte	.LFE40-.LFB40
+ 612 0038 00000000 		.4byte	0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 14
+
+
+ 613 003c 00000000 		.4byte	0
+ 614              		.section	.debug_ranges,"",%progbits
+ 615              	.Ldebug_ranges0:
+ 616 0000 00000000 		.4byte	.LFB36
+ 617 0004 0C000000 		.4byte	.LFE36
+ 618 0008 00000000 		.4byte	.LFB37
+ 619 000c 20000000 		.4byte	.LFE37
+ 620 0010 00000000 		.4byte	.LFB38
+ 621 0014 20000000 		.4byte	.LFE38
+ 622 0018 00000000 		.4byte	.LFB39
+ 623 001c 10000000 		.4byte	.LFE39
+ 624 0020 00000000 		.4byte	.LFB40
+ 625 0024 0C000000 		.4byte	.LFE40
+ 626 0028 00000000 		.4byte	0
+ 627 002c 00000000 		.4byte	0
+ 628              		.section	.debug_line,"",%progbits
+ 629              	.Ldebug_line0:
+ 630 0000 DE010000 		.section	.debug_str,"MS",%progbits,1
+ 630      02007B01 
+ 630      00000201 
+ 630      FB0E0D00 
+ 630      01010101 
+ 631              	.LASF5:
+ 632 0000 5F5F7569 		.ascii	"__uint8_t\000"
+ 632      6E74385F 
+ 632      7400
+ 633              	.LASF26:
+ 634 000a 43795F53 		.ascii	"Cy_SysLib_ExitCriticalSection\000"
+ 634      79734C69 
+ 634      625F4578 
+ 634      69744372 
+ 634      69746963 
+ 635              	.LASF3:
+ 636 0028 73686F72 		.ascii	"short unsigned int\000"
+ 636      7420756E 
+ 636      7369676E 
+ 636      65642069 
+ 636      6E7400
+ 637              	.LASF19:
+ 638 003b 53746174 		.ascii	"Status_SW2_InterruptEnable\000"
+ 638      75735F53 
+ 638      57325F49 
+ 638      6E746572 
+ 638      72757074 
+ 639              	.LASF28:
+ 640 0056 47656E65 		.ascii	"Generated_Source\\PSoC6\\Status_SW2.c\000"
+ 640      72617465 
+ 640      645F536F 
+ 640      75726365 
+ 640      5C50536F 
+ 641              	.LASF15:
+ 642 007a 666C6F61 		.ascii	"float\000"
+ 642      7400
+ 643              	.LASF1:
+ 644 0080 756E7369 		.ascii	"unsigned char\000"
+ 644      676E6564 
+ 644      20636861 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 15
+
+
+ 644      7200
+ 645              	.LASF18:
+ 646 008e 72656738 		.ascii	"reg8\000"
+ 646      00
+ 647              	.LASF21:
+ 648 0093 696E7465 		.ascii	"interruptState\000"
+ 648      72727570 
+ 648      74537461 
+ 648      746500
+ 649              	.LASF7:
+ 650 00a2 6C6F6E67 		.ascii	"long unsigned int\000"
+ 650      20756E73 
+ 650      69676E65 
+ 650      6420696E 
+ 650      7400
+ 651              	.LASF17:
+ 652 00b4 75696E74 		.ascii	"uint8\000"
+ 652      3800
+ 653              	.LASF24:
+ 654 00ba 53746174 		.ascii	"Status_SW2_ReadMask\000"
+ 654      75735F53 
+ 654      57325F52 
+ 654      6561644D 
+ 654      61736B00 
+ 655              	.LASF16:
+ 656 00ce 646F7562 		.ascii	"double\000"
+ 656      6C6500
+ 657              	.LASF6:
+ 658 00d5 5F5F7569 		.ascii	"__uint32_t\000"
+ 658      6E743332 
+ 658      5F7400
+ 659              	.LASF23:
+ 660 00e0 53746174 		.ascii	"Status_SW2_Read\000"
+ 660      75735F53 
+ 660      57325F52 
+ 660      65616400 
+ 661              	.LASF25:
+ 662 00f0 43795F53 		.ascii	"Cy_SysLib_EnterCriticalSection\000"
+ 662      79734C69 
+ 662      625F456E 
+ 662      74657243 
+ 662      72697469 
+ 663              	.LASF10:
+ 664 010f 756E7369 		.ascii	"unsigned int\000"
+ 664      676E6564 
+ 664      20696E74 
+ 664      00
+ 665              	.LASF9:
+ 666 011c 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 666      206C6F6E 
+ 666      6720756E 
+ 666      7369676E 
+ 666      65642069 
+ 667              	.LASF11:
+ 668 0133 75696E74 		.ascii	"uint8_t\000"
+ 668      385F7400 
+ 669              	.LASF29:
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 16
+
+
+ 670 013b 443A5C73 		.ascii	"D:\\student\\FeS-31\\Stepaniuk\\lab8\\lab_8_1\\lab_"
+ 670      74756465 
+ 670      6E745C46 
+ 670      65532D33 
+ 670      315C5374 
+ 671 0168 385F315C 		.ascii	"8_1\\lab_8_1\\lab_8_2.cydsn\000"
+ 671      6C61625F 
+ 671      385F315C 
+ 671      6C61625F 
+ 671      385F322E 
+ 672              	.LASF22:
+ 673 0182 53746174 		.ascii	"Status_SW2_WriteMask\000"
+ 673      75735F53 
+ 673      57325F57 
+ 673      72697465 
+ 673      4D61736B 
+ 674              	.LASF13:
+ 675 0197 73697A65 		.ascii	"sizetype\000"
+ 675      74797065 
+ 675      00
+ 676              	.LASF8:
+ 677 01a0 6C6F6E67 		.ascii	"long long int\000"
+ 677      206C6F6E 
+ 677      6720696E 
+ 677      7400
+ 678              	.LASF30:
+ 679 01ae 6D61736B 		.ascii	"mask\000"
+ 679      00
+ 680              	.LASF0:
+ 681 01b3 73686F72 		.ascii	"short int\000"
+ 681      7420696E 
+ 681      7400
+ 682              	.LASF20:
+ 683 01bd 53746174 		.ascii	"Status_SW2_InterruptDisable\000"
+ 683      75735F53 
+ 683      57325F49 
+ 683      6E746572 
+ 683      72757074 
+ 684              	.LASF12:
+ 685 01d9 75696E74 		.ascii	"uint32_t\000"
+ 685      33325F74 
+ 685      00
+ 686              	.LASF4:
+ 687 01e2 6C6F6E67 		.ascii	"long int\000"
+ 687      20696E74 
+ 687      00
+ 688              	.LASF14:
+ 689 01eb 63686172 		.ascii	"char\000"
+ 689      00
+ 690              	.LASF27:
+ 691 01f0 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 691      43313120 
+ 691      352E342E 
+ 691      31203230 
+ 691      31363036 
+ 692 0223 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 692      20726576 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\cc5yJhCB.s 			page 17
+
+
+ 692      6973696F 
+ 692      6E203233 
+ 692      37373135 
+ 693 0256 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 693      67202D66 
+ 693      66756E63 
+ 693      74696F6E 
+ 693      2D736563 
+ 694              	.LASF2:
+ 695 0282 7369676E 		.ascii	"signed char\000"
+ 695      65642063 
+ 695      68617200 
+ 696              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

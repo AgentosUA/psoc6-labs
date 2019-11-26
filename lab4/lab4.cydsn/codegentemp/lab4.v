@@ -1,6 +1,6 @@
 // ======================================================================
 // lab4.v generated from TopDesign.cysch
-// 10/02/2019 at 13:56
+// 11/26/2019 at 09:52
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -238,6 +238,8 @@ endmodule
 // top
 module top ;
 
+          wire  Net_230;
+          wire  Net_229;
           wire  Net_204;
           wire  Net_203;
           wire  Net_202;
@@ -269,6 +271,8 @@ module top ;
           wire  Net_84;
           wire  Net_83;
           wire  Net_71;
+          wire  Net_207;
+          wire  Net_206;
           wire  Net_184;
     electrical  Net_125;
           wire  Net_112;
@@ -422,7 +426,7 @@ module top ;
         .ovrflw(Net_191),
         .undrflw(Net_192),
         .compare(Net_193),
-        .clock(Net_184),
+        .clock(Net_206),
         .pwm(Net_94),
         .pwm_n(Net_194));
 
@@ -502,7 +506,7 @@ module top ;
         .ovrflw(Net_201),
         .undrflw(Net_202),
         .compare(Net_203),
-        .clock(Net_184),
+        .clock(Net_207),
         .pwm(Net_112),
         .pwm_n(Net_204));
 
@@ -534,6 +538,30 @@ module top ;
     defparam GND_3.comp_name = "Gnd_v1_0";
     defparam GND_3.port_names = "T1";
     defparam GND_3.width = 1;
+
+
+	cy_clock_v1_0
+		#(.id("b263e233-404e-4db1-99fc-4b1ba6a77c6b"),
+		  .source_clock_id("2FB4EC85-8328-4C5A-9ED9-8B63060178EB"),
+		  .divisor(0),
+		  .period("1000000000000"),
+		  .is_direct(0),
+		  .is_digital(0))
+		Clock_2
+		 (.clock_out(Net_206));
+
+
+
+	cy_clock_v1_0
+		#(.id("cbd7eef2-cf6a-4c3f-8f0d-1040a957b251"),
+		  .source_clock_id("2FB4EC85-8328-4C5A-9ED9-8B63060178EB"),
+		  .divisor(0),
+		  .period("1000000000000"),
+		  .is_direct(0),
+		  .is_digital(0))
+		Clock_3
+		 (.clock_out(Net_207));
+
 
 
 

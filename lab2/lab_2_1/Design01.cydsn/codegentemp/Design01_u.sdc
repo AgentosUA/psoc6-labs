@@ -1,3 +1,3 @@
-# Component constraints for D:\student\FeS-31\Stepaniuk\lab2\Workspace01\Design01.cydsn\TopDesign\TopDesign.cysch
-# Project: D:\student\FeS-31\Stepaniuk\lab2\Workspace01\Design01.cydsn\Design01.cyprj
-# Date: Wed, 11 Sep 2019 14:14:02 GMT
+# Component constraints for D:\student\FeS-31\Stepaniuk\lab2\lab_2_1\Design01.cydsn\TopDesign\TopDesign.cysch
+# Project: D:\student\FeS-31\Stepaniuk\lab2\lab_2_1\Design01.cydsn\Design01.cyprj
+# Date: Wed, 25 Sep 2019 13:40:50 GMT

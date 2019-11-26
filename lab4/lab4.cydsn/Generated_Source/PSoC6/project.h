@@ -86,6 +86,8 @@
 #include "PWM_1.h"
 #include "PWM_2.h"
 #include "PWM_3.h"
+#include "Clock_2.h"
+#include "Clock_3.h"
 
 /*[]*/
 

@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 1
 
 
    1              		.syntax unified
@@ -26,7 +26,7 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
   23              		.thumb_func
   24              		.type	main, %function
   25              	main:
-  26              	.LFB360:
+  26              	.LFB372:
   27              		.file 1 "main_cm0p.c"
    1:main_cm0p.c   **** /* ========================================
    2:main_cm0p.c   ****  *
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
    1:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /**************************************************************************//**
    2:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
    3:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 2
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 2
 
 
    4:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @version  V5.0.1
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
   58:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic pop
   59:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
   60:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 3
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 3
 
 
   61:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __ALIGNED
@@ -169,16 +169,16 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
   57              	.L3:
   58 000c 00000810 		.word	268959744
   59              		.cfi_endproc
-  60              	.LFE360:
+  60              	.LFE372:
   61              		.size	main, .-main
   62              		.text
   63              	.Letext0:
-  64              		.file 3 "d:\\programs\\psoc\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-ea
-  65              		.file 4 "d:\\programs\\psoc\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.1\\arm-none-ea
+  64              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  65              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
   66              		.file 5 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h"
   67              		.file 6 "Generated_Source\\PSoC6/PWM_1.h"
   68              		.file 7 "Generated_Source\\PSoC6/PWM_2.h"
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 4
 
 
   69              		.file 8 "Generated_Source\\PSoC6/PWM_3.h"
@@ -190,161 +190,161 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
   75 0006 00000000 		.4byte	.Ldebug_abbrev0
   76 000a 04       		.byte	0x4
   77 000b 01       		.uleb128 0x1
-  78 000c 7A020000 		.4byte	.LASF46
+  78 000c 58020000 		.4byte	.LASF46
   79 0010 0C       		.byte	0xc
-  80 0011 63010000 		.4byte	.LASF47
-  81 0015 36000000 		.4byte	.LASF48
+  80 0011 41010000 		.4byte	.LASF47
+  81 0015 00030000 		.4byte	.LASF48
   82 0019 00000000 		.4byte	.Ldebug_ranges0+0
   83 001d 00000000 		.4byte	0
   84 0021 00000000 		.4byte	.Ldebug_line0
   85 0025 02       		.uleb128 0x2
   86 0026 02       		.byte	0x2
   87 0027 05       		.byte	0x5
-  88 0028 2A020000 		.4byte	.LASF0
+  88 0028 08020000 		.4byte	.LASF0
   89 002c 02       		.uleb128 0x2
   90 002d 01       		.byte	0x1
   91 002e 08       		.byte	0x8
-  92 002f FC000000 		.4byte	.LASF1
+  92 002f DA000000 		.4byte	.LASF1
   93 0033 02       		.uleb128 0x2
   94 0034 01       		.byte	0x1
   95 0035 06       		.byte	0x6
-  96 0036 0C030000 		.4byte	.LASF2
+  96 0036 EA020000 		.4byte	.LASF2
   97 003a 02       		.uleb128 0x2
   98 003b 02       		.byte	0x2
   99 003c 07       		.byte	0x7
- 100 003d 38010000 		.4byte	.LASF3
+ 100 003d 16010000 		.4byte	.LASF3
  101 0041 02       		.uleb128 0x2
  102 0042 04       		.byte	0x4
  103 0043 05       		.byte	0x5
- 104 0044 57020000 		.4byte	.LASF4
+ 104 0044 35020000 		.4byte	.LASF4
  105 0048 03       		.uleb128 0x3
- 106 0049 6F010000 		.4byte	.LASF9
+ 106 0049 4D010000 		.4byte	.LASF9
  107 004d 03       		.byte	0x3
  108 004e 41       		.byte	0x41
  109 004f 53000000 		.4byte	0x53
  110 0053 02       		.uleb128 0x2
  111 0054 04       		.byte	0x4
  112 0055 07       		.byte	0x7
- 113 0056 26010000 		.4byte	.LASF5
+ 113 0056 04010000 		.4byte	.LASF5
  114 005a 02       		.uleb128 0x2
  115 005b 08       		.byte	0x8
  116 005c 05       		.byte	0x5
- 117 005d 07020000 		.4byte	.LASF6
+ 117 005d E5010000 		.4byte	.LASF6
  118 0061 02       		.uleb128 0x2
  119 0062 08       		.byte	0x8
  120 0063 07       		.byte	0x7
- 121 0064 CF010000 		.4byte	.LASF7
+ 121 0064 AD010000 		.4byte	.LASF7
  122 0068 04       		.uleb128 0x4
  123 0069 04       		.byte	0x4
  124 006a 05       		.byte	0x5
  125 006b 696E7400 		.ascii	"int\000"
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 5
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 5
 
 
  126 006f 02       		.uleb128 0x2
  127 0070 04       		.byte	0x4
  128 0071 07       		.byte	0x7
- 129 0072 B5010000 		.4byte	.LASF8
+ 129 0072 93010000 		.4byte	.LASF8
  130 0076 03       		.uleb128 0x3
- 131 0077 4E020000 		.4byte	.LASF10
+ 131 0077 2C020000 		.4byte	.LASF10
  132 007b 04       		.byte	0x4
  133 007c 30       		.byte	0x30
  134 007d 48000000 		.4byte	0x48
  135 0081 02       		.uleb128 0x2
  136 0082 04       		.byte	0x4
  137 0083 07       		.byte	0x7
- 138 0084 FE010000 		.4byte	.LASF11
+ 138 0084 DC010000 		.4byte	.LASF11
  139 0088 02       		.uleb128 0x2
  140 0089 08       		.byte	0x8
  141 008a 04       		.byte	0x4
- 142 008b 6E020000 		.4byte	.LASF12
+ 142 008b 4C020000 		.4byte	.LASF12
  143 008f 02       		.uleb128 0x2
  144 0090 01       		.byte	0x1
  145 0091 08       		.byte	0x8
- 146 0092 15020000 		.4byte	.LASF13
+ 146 0092 F3010000 		.4byte	.LASF13
  147 0096 02       		.uleb128 0x2
  148 0097 04       		.byte	0x4
  149 0098 04       		.byte	0x4
- 150 0099 CA000000 		.4byte	.LASF14
+ 150 0099 A8000000 		.4byte	.LASF14
  151 009d 02       		.uleb128 0x2
  152 009e 08       		.byte	0x8
  153 009f 04       		.byte	0x4
- 154 00a0 96010000 		.4byte	.LASF15
+ 154 00a0 74010000 		.4byte	.LASF15
  155 00a4 02       		.uleb128 0x2
  156 00a5 01       		.byte	0x1
  157 00a6 02       		.byte	0x2
- 158 00a7 22030000 		.4byte	.LASF16
+ 158 00a7 3D030000 		.4byte	.LASF16
  159 00ab 05       		.uleb128 0x5
- 160 00ac A2000000 		.4byte	.LASF49
+ 160 00ac 80000000 		.4byte	.LASF49
  161 00b0 64       		.byte	0x64
  162 00b1 05       		.byte	0x5
  163 00b2 2B       		.byte	0x2b
  164 00b3 E4010000 		.4byte	0x1e4
  165 00b7 06       		.uleb128 0x6
- 166 00b8 E6010000 		.4byte	.LASF17
+ 166 00b8 C4010000 		.4byte	.LASF17
  167 00bc 05       		.byte	0x5
  168 00bd 2D       		.byte	0x2d
  169 00be 76000000 		.4byte	0x76
  170 00c2 00       		.byte	0
  171 00c3 06       		.uleb128 0x6
- 172 00c4 93000000 		.4byte	.LASF18
+ 172 00c4 71000000 		.4byte	.LASF18
  173 00c8 05       		.byte	0x5
  174 00c9 2F       		.byte	0x2f
  175 00ca 76000000 		.4byte	0x76
  176 00ce 04       		.byte	0x4
  177 00cf 06       		.uleb128 0x6
- 178 00d0 C2010000 		.4byte	.LASF19
+ 178 00d0 A0010000 		.4byte	.LASF19
  179 00d4 05       		.byte	0x5
  180 00d5 30       		.byte	0x30
  181 00d6 76000000 		.4byte	0x76
  182 00da 08       		.byte	0x8
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 6
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 6
 
 
  183 00db 06       		.uleb128 0x6
- 184 00dc 17010000 		.4byte	.LASF20
+ 184 00dc F5000000 		.4byte	.LASF20
  185 00e0 05       		.byte	0x5
  186 00e1 31       		.byte	0x31
  187 00e2 76000000 		.4byte	0x76
  188 00e6 0C       		.byte	0xc
  189 00e7 06       		.uleb128 0x6
- 190 00e8 A2010000 		.4byte	.LASF21
+ 190 00e8 80010000 		.4byte	.LASF21
  191 00ec 05       		.byte	0x5
  192 00ed 32       		.byte	0x32
  193 00ee 76000000 		.4byte	0x76
  194 00f2 10       		.byte	0x10
  195 00f3 06       		.uleb128 0x6
- 196 00f4 EE010000 		.4byte	.LASF22
+ 196 00f4 CC010000 		.4byte	.LASF22
  197 00f8 05       		.byte	0x5
  198 00f9 33       		.byte	0x33
  199 00fa 76000000 		.4byte	0x76
  200 00fe 14       		.byte	0x14
  201 00ff 06       		.uleb128 0x6
- 202 0100 F6010000 		.4byte	.LASF23
+ 202 0100 D4010000 		.4byte	.LASF23
  203 0104 05       		.byte	0x5
  204 0105 34       		.byte	0x34
  205 0106 76000000 		.4byte	0x76
  206 010a 18       		.byte	0x18
  207 010b 06       		.uleb128 0x6
- 208 010c 7A010000 		.4byte	.LASF24
+ 208 010c 58010000 		.4byte	.LASF24
  209 0110 05       		.byte	0x5
  210 0111 35       		.byte	0x35
  211 0112 A4000000 		.4byte	0xa4
  212 0116 1C       		.byte	0x1c
  213 0117 06       		.uleb128 0x6
- 214 0118 81000000 		.4byte	.LASF25
+ 214 0118 5F000000 		.4byte	.LASF25
  215 011c 05       		.byte	0x5
  216 011d 36       		.byte	0x36
  217 011e 76000000 		.4byte	0x76
  218 0122 20       		.byte	0x20
  219 0123 06       		.uleb128 0x6
- 220 0124 8A000000 		.4byte	.LASF26
+ 220 0124 68000000 		.4byte	.LASF26
  221 0128 05       		.byte	0x5
  222 0129 37       		.byte	0x37
  223 012a 76000000 		.4byte	0x76
  224 012e 24       		.byte	0x24
  225 012f 06       		.uleb128 0x6
- 226 0130 D0000000 		.4byte	.LASF27
+ 226 0130 AE000000 		.4byte	.LASF27
  227 0134 05       		.byte	0x5
  228 0135 38       		.byte	0x38
  229 0136 A4000000 		.4byte	0xa4
@@ -358,14 +358,14 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
  237 0147 06       		.uleb128 0x6
  238 0148 1A000000 		.4byte	.LASF29
  239 014c 05       		.byte	0x5
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 7
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 7
 
 
  240 014d 3B       		.byte	0x3b
  241 014e 76000000 		.4byte	0x76
  242 0152 30       		.byte	0x30
  243 0153 06       		.uleb128 0x6
- 244 0154 60020000 		.4byte	.LASF30
+ 244 0154 3E020000 		.4byte	.LASF30
  245 0158 05       		.byte	0x5
  246 0159 3C       		.byte	0x3c
  247 015a 76000000 		.4byte	0x76
@@ -377,52 +377,52 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
  253 0166 76000000 		.4byte	0x76
  254 016a 38       		.byte	0x38
  255 016b 06       		.uleb128 0x6
- 256 016c 40020000 		.4byte	.LASF32
+ 256 016c 1E020000 		.4byte	.LASF32
  257 0170 05       		.byte	0x5
  258 0171 3E       		.byte	0x3e
  259 0172 76000000 		.4byte	0x76
  260 0176 3C       		.byte	0x3c
  261 0177 06       		.uleb128 0x6
- 262 0178 4B010000 		.4byte	.LASF33
+ 262 0178 29010000 		.4byte	.LASF33
  263 017c 05       		.byte	0x5
  264 017d 40       		.byte	0x40
  265 017e 76000000 		.4byte	0x76
  266 0182 40       		.byte	0x40
  267 0183 06       		.uleb128 0x6
- 268 0184 1A020000 		.4byte	.LASF34
+ 268 0184 F8010000 		.4byte	.LASF34
  269 0188 05       		.byte	0x5
  270 0189 41       		.byte	0x41
  271 018a 76000000 		.4byte	0x76
  272 018e 44       		.byte	0x44
  273 018f 06       		.uleb128 0x6
- 274 0190 34020000 		.4byte	.LASF35
+ 274 0190 12020000 		.4byte	.LASF35
  275 0194 05       		.byte	0x5
  276 0195 43       		.byte	0x43
  277 0196 76000000 		.4byte	0x76
  278 019a 48       		.byte	0x48
  279 019b 06       		.uleb128 0x6
- 280 019c 58000000 		.4byte	.LASF36
+ 280 019c 36000000 		.4byte	.LASF36
  281 01a0 05       		.byte	0x5
  282 01a1 44       		.byte	0x44
  283 01a2 76000000 		.4byte	0x76
  284 01a6 4C       		.byte	0x4c
  285 01a7 06       		.uleb128 0x6
- 286 01a8 8B010000 		.4byte	.LASF37
+ 286 01a8 69010000 		.4byte	.LASF37
  287 01ac 05       		.byte	0x5
  288 01ad 46       		.byte	0x46
  289 01ae 76000000 		.4byte	0x76
  290 01b2 50       		.byte	0x50
  291 01b3 06       		.uleb128 0x6
- 292 01b4 55010000 		.4byte	.LASF38
+ 292 01b4 33010000 		.4byte	.LASF38
  293 01b8 05       		.byte	0x5
  294 01b9 47       		.byte	0x47
  295 01ba 76000000 		.4byte	0x76
  296 01be 54       		.byte	0x54
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 8
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 8
 
 
  297 01bf 06       		.uleb128 0x6
- 298 01c0 18030000 		.4byte	.LASF39
+ 298 01c0 F6020000 		.4byte	.LASF39
  299 01c4 05       		.byte	0x5
  300 01c5 49       		.byte	0x49
  301 01c6 76000000 		.4byte	0x76
@@ -434,29 +434,29 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
  307 01d2 76000000 		.4byte	0x76
  308 01d6 5C       		.byte	0x5c
  309 01d7 06       		.uleb128 0x6
- 310 01d8 AA010000 		.4byte	.LASF41
+ 310 01d8 88010000 		.4byte	.LASF41
  311 01dc 05       		.byte	0x5
  312 01dd 4C       		.byte	0x4c
  313 01de 76000000 		.4byte	0x76
  314 01e2 60       		.byte	0x60
  315 01e3 00       		.byte	0
  316 01e4 03       		.uleb128 0x3
- 317 01e5 E2000000 		.4byte	.LASF42
+ 317 01e5 C0000000 		.4byte	.LASF42
  318 01e9 05       		.byte	0x5
  319 01ea 4D       		.byte	0x4d
  320 01eb AB000000 		.4byte	0xab
  321 01ef 07       		.uleb128 0x7
- 322 01f0 74000000 		.4byte	.LASF50
+ 322 01f0 52000000 		.4byte	.LASF50
  323 01f4 02       		.byte	0x2
  324 01f5 53       		.byte	0x53
  325 01f6 03       		.byte	0x3
  326 01f7 08       		.uleb128 0x8
- 327 01f8 9D010000 		.4byte	.LASF51
+ 327 01f8 7B010000 		.4byte	.LASF51
  328 01fc 01       		.byte	0x1
  329 01fd 0E       		.byte	0xe
  330 01fe 68000000 		.4byte	0x68
- 331 0202 00000000 		.4byte	.LFB360
- 332 0206 10000000 		.4byte	.LFE360-.LFB360
+ 331 0202 00000000 		.4byte	.LFB372
+ 332 0206 10000000 		.4byte	.LFE372-.LFB372
  333 020a 01       		.uleb128 0x1
  334 020b 9C       		.byte	0x9c
  335 020c 33020000 		.4byte	0x233
@@ -478,28 +478,28 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
  351 0231 00       		.byte	0
  352 0232 00       		.byte	0
  353 0233 0C       		.uleb128 0xc
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 9
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 9
 
 
- 354 0234 0A010000 		.4byte	.LASF43
+ 354 0234 E8000000 		.4byte	.LASF43
  355 0238 06       		.byte	0x6
  356 0239 1F       		.byte	0x1f
  357 023a 3E020000 		.4byte	0x23e
  358 023e 0D       		.uleb128 0xd
  359 023f E4010000 		.4byte	0x1e4
  360 0243 0C       		.uleb128 0xc
- 361 0244 67000000 		.4byte	.LASF44
+ 361 0244 45000000 		.4byte	.LASF44
  362 0248 07       		.byte	0x7
  363 0249 1F       		.byte	0x1f
  364 024a 3E020000 		.4byte	0x23e
  365 024e 0C       		.uleb128 0xc
- 366 024f 28030000 		.4byte	.LASF45
+ 366 024f 43030000 		.4byte	.LASF45
  367 0253 08       		.byte	0x8
  368 0254 1F       		.byte	0x1f
  369 0255 3E020000 		.4byte	0x23e
  370 0259 0E       		.uleb128 0xe
- 371 025a BA000000 		.4byte	.LASF52
- 372 025e BA000000 		.4byte	.LASF52
+ 371 025a 98000000 		.4byte	.LASF52
+ 372 025e 98000000 		.4byte	.LASF52
  373 0262 09       		.byte	0x9
  374 0263 FE01     		.2byte	0x1fe
  375 0265 00       		.byte	0
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
  408 001e 03       		.uleb128 0x3
  409 001f 16       		.uleb128 0x16
  410 0020 00       		.byte	0
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 10
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 10
 
 
  411 0021 03       		.uleb128 0x3
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
  465 0057 03       		.uleb128 0x3
  466 0058 0E       		.uleb128 0xe
  467 0059 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 11
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 11
 
 
  468 005a 0B       		.uleb128 0xb
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
  522 0092 898201   		.uleb128 0x4109
  523 0095 01       		.byte	0x1
  524 0096 11       		.uleb128 0x11
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 12
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 12
 
 
  525 0097 01       		.uleb128 0x1
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
  579 00d0 00       		.byte	0
  580 00d1 00       		.byte	0
  581              		.section	.debug_aranges,"",%progbits
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 13
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 13
 
 
  582 0000 1C000000 		.4byte	0x1c
@@ -728,20 +728,20 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
  586 000b 00       		.byte	0
  587 000c 0000     		.2byte	0
  588 000e 0000     		.2byte	0
- 589 0010 00000000 		.4byte	.LFB360
- 590 0014 10000000 		.4byte	.LFE360-.LFB360
+ 589 0010 00000000 		.4byte	.LFB372
+ 590 0014 10000000 		.4byte	.LFE372-.LFB372
  591 0018 00000000 		.4byte	0
  592 001c 00000000 		.4byte	0
  593              		.section	.debug_ranges,"",%progbits
  594              	.Ldebug_ranges0:
- 595 0000 00000000 		.4byte	.LFB360
- 596 0004 10000000 		.4byte	.LFE360
+ 595 0000 00000000 		.4byte	.LFB372
+ 596 0004 10000000 		.4byte	.LFE372
  597 0008 00000000 		.4byte	0
  598 000c 00000000 		.4byte	0
  599              		.section	.debug_line,"",%progbits
  600              	.Ldebug_line0:
- 601 0000 EF010000 		.section	.debug_str,"MS",%progbits,1
- 601      0200CE01 
+ 601 0000 0B020000 		.section	.debug_str,"MS",%progbits,1
+ 601      0200EA01 
  601      00000201 
  601      FB0E0D00 
  601      01010101 
@@ -765,247 +765,251 @@ ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 1
  609      74496E70 
  609      75744D6F 
  609      646500
- 610              	.LASF48:
- 611 0036 443A5C57 		.ascii	"D:\\Web\\psoc6-labs\\lab4\\lab4.cydsn\000"
- 611      65625C70 
- 611      736F6336 
- 611      2D6C6162 
- 611      735C6C61 
- 612              	.LASF36:
- 613 0058 73746172 		.ascii	"startInputMode\000"
- 613      74496E70 
- 613      75744D6F 
- 613      646500
- 614              	.LASF44:
- 615 0067 50574D5F 		.ascii	"PWM_2_config\000"
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 14
+ 610              	.LASF36:
+ 611 0036 73746172 		.ascii	"startInputMode\000"
+ 611      74496E70 
+ 611      75744D6F 
+ 611      646500
+ 612              	.LASF44:
+ 613 0045 50574D5F 		.ascii	"PWM_2_config\000"
+ 613      325F636F 
+ 613      6E666967 
+ 613      00
+ 614              	.LASF50:
+ 615 0052 5F5F656E 		.ascii	"__enable_irq\000"
+ 615      61626C65 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 14
 
 
- 615      325F636F 
- 615      6E666967 
+ 615      5F697271 
  615      00
- 616              	.LASF50:
- 617 0074 5F5F656E 		.ascii	"__enable_irq\000"
- 617      61626C65 
- 617      5F697271 
+ 616              	.LASF25:
+ 617 005f 636F6D70 		.ascii	"compare0\000"
+ 617      61726530 
  617      00
- 618              	.LASF25:
- 619 0081 636F6D70 		.ascii	"compare0\000"
- 619      61726530 
+ 618              	.LASF26:
+ 619 0068 636F6D70 		.ascii	"compare1\000"
+ 619      61726531 
  619      00
- 620              	.LASF26:
- 621 008a 636F6D70 		.ascii	"compare1\000"
- 621      61726531 
- 621      00
- 622              	.LASF18:
- 623 0093 636C6F63 		.ascii	"clockPrescaler\000"
- 623      6B507265 
- 623      7363616C 
- 623      657200
- 624              	.LASF49:
- 625 00a2 63795F73 		.ascii	"cy_stc_tcpwm_pwm_config\000"
- 625      74635F74 
- 625      6370776D 
- 625      5F70776D 
- 625      5F636F6E 
- 626              	.LASF52:
- 627 00ba 43795F53 		.ascii	"Cy_SysEnableCM4\000"
- 627      7973456E 
- 627      61626C65 
- 627      434D3400 
- 628              	.LASF14:
- 629 00ca 666C6F61 		.ascii	"float\000"
- 629      7400
- 630              	.LASF27:
- 631 00d0 656E6162 		.ascii	"enableCompareSwap\000"
- 631      6C65436F 
- 631      6D706172 
- 631      65537761 
- 631      7000
- 632              	.LASF42:
- 633 00e2 63795F73 		.ascii	"cy_stc_tcpwm_pwm_config_t\000"
- 633      74635F74 
- 633      6370776D 
- 633      5F70776D 
- 633      5F636F6E 
- 634              	.LASF1:
- 635 00fc 756E7369 		.ascii	"unsigned char\000"
- 635      676E6564 
- 635      20636861 
- 635      7200
- 636              	.LASF43:
- 637 010a 50574D5F 		.ascii	"PWM_1_config\000"
- 637      315F636F 
- 637      6E666967 
- 637      00
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 15
+ 620              	.LASF18:
+ 621 0071 636C6F63 		.ascii	"clockPrescaler\000"
+ 621      6B507265 
+ 621      7363616C 
+ 621      657200
+ 622              	.LASF49:
+ 623 0080 63795F73 		.ascii	"cy_stc_tcpwm_pwm_config\000"
+ 623      74635F74 
+ 623      6370776D 
+ 623      5F70776D 
+ 623      5F636F6E 
+ 624              	.LASF52:
+ 625 0098 43795F53 		.ascii	"Cy_SysEnableCM4\000"
+ 625      7973456E 
+ 625      61626C65 
+ 625      434D3400 
+ 626              	.LASF14:
+ 627 00a8 666C6F61 		.ascii	"float\000"
+ 627      7400
+ 628              	.LASF27:
+ 629 00ae 656E6162 		.ascii	"enableCompareSwap\000"
+ 629      6C65436F 
+ 629      6D706172 
+ 629      65537761 
+ 629      7000
+ 630              	.LASF42:
+ 631 00c0 63795F73 		.ascii	"cy_stc_tcpwm_pwm_config_t\000"
+ 631      74635F74 
+ 631      6370776D 
+ 631      5F70776D 
+ 631      5F636F6E 
+ 632              	.LASF1:
+ 633 00da 756E7369 		.ascii	"unsigned char\000"
+ 633      676E6564 
+ 633      20636861 
+ 633      7200
+ 634              	.LASF43:
+ 635 00e8 50574D5F 		.ascii	"PWM_1_config\000"
+ 635      315F636F 
+ 635      6E666967 
+ 635      00
+ 636              	.LASF20:
+ 637 00f5 64656164 		.ascii	"deadTimeClocks\000"
+ 637      54696D65 
+ 637      436C6F63 
+ 637      6B7300
+ 638              	.LASF5:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 15
 
 
- 638              	.LASF20:
- 639 0117 64656164 		.ascii	"deadTimeClocks\000"
- 639      54696D65 
- 639      436C6F63 
- 639      6B7300
- 640              	.LASF5:
- 641 0126 6C6F6E67 		.ascii	"long unsigned int\000"
- 641      20756E73 
- 641      69676E65 
- 641      6420696E 
- 641      7400
- 642              	.LASF3:
- 643 0138 73686F72 		.ascii	"short unsigned int\000"
- 643      7420756E 
- 643      7369676E 
- 643      65642069 
- 643      6E7400
- 644              	.LASF33:
- 645 014b 73776170 		.ascii	"swapInput\000"
+ 639 0104 6C6F6E67 		.ascii	"long unsigned int\000"
+ 639      20756E73 
+ 639      69676E65 
+ 639      6420696E 
+ 639      7400
+ 640              	.LASF3:
+ 641 0116 73686F72 		.ascii	"short unsigned int\000"
+ 641      7420756E 
+ 641      7369676E 
+ 641      65642069 
+ 641      6E7400
+ 642              	.LASF33:
+ 643 0129 73776170 		.ascii	"swapInput\000"
+ 643      496E7075 
+ 643      7400
+ 644              	.LASF38:
+ 645 0133 6B696C6C 		.ascii	"killInputMode\000"
  645      496E7075 
- 645      7400
- 646              	.LASF38:
- 647 0155 6B696C6C 		.ascii	"killInputMode\000"
- 647      496E7075 
- 647      744D6F64 
- 647      6500
- 648              	.LASF47:
- 649 0163 6D61696E 		.ascii	"main_cm0p.c\000"
- 649      5F636D30 
- 649      702E6300 
- 650              	.LASF9:
- 651 016f 5F5F7569 		.ascii	"__uint32_t\000"
- 651      6E743332 
- 651      5F7400
- 652              	.LASF24:
- 653 017a 656E6162 		.ascii	"enablePeriodSwap\000"
- 653      6C655065 
- 653      72696F64 
- 653      53776170 
- 653      00
- 654              	.LASF37:
- 655 018b 73746172 		.ascii	"startInput\000"
- 655      74496E70 
- 655      757400
- 656              	.LASF15:
- 657 0196 646F7562 		.ascii	"double\000"
- 657      6C6500
- 658              	.LASF51:
- 659 019d 6D61696E 		.ascii	"main\000"
- 659      00
- 660              	.LASF21:
- 661 01a2 72756E4D 		.ascii	"runMode\000"
- 661      6F646500 
- 662              	.LASF41:
- 663 01aa 636F756E 		.ascii	"countInput\000"
- 663      74496E70 
- 663      757400
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 16
+ 645      744D6F64 
+ 645      6500
+ 646              	.LASF47:
+ 647 0141 6D61696E 		.ascii	"main_cm0p.c\000"
+ 647      5F636D30 
+ 647      702E6300 
+ 648              	.LASF9:
+ 649 014d 5F5F7569 		.ascii	"__uint32_t\000"
+ 649      6E743332 
+ 649      5F7400
+ 650              	.LASF24:
+ 651 0158 656E6162 		.ascii	"enablePeriodSwap\000"
+ 651      6C655065 
+ 651      72696F64 
+ 651      53776170 
+ 651      00
+ 652              	.LASF37:
+ 653 0169 73746172 		.ascii	"startInput\000"
+ 653      74496E70 
+ 653      757400
+ 654              	.LASF15:
+ 655 0174 646F7562 		.ascii	"double\000"
+ 655      6C6500
+ 656              	.LASF51:
+ 657 017b 6D61696E 		.ascii	"main\000"
+ 657      00
+ 658              	.LASF21:
+ 659 0180 72756E4D 		.ascii	"runMode\000"
+ 659      6F646500 
+ 660              	.LASF41:
+ 661 0188 636F756E 		.ascii	"countInput\000"
+ 661      74496E70 
+ 661      757400
+ 662              	.LASF8:
+ 663 0193 756E7369 		.ascii	"unsigned int\000"
+ 663      676E6564 
+ 663      20696E74 
+ 663      00
+ 664              	.LASF19:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 16
 
 
- 664              	.LASF8:
- 665 01b5 756E7369 		.ascii	"unsigned int\000"
- 665      676E6564 
- 665      20696E74 
+ 665 01a0 70776D41 		.ascii	"pwmAlignment\000"
+ 665      6C69676E 
+ 665      6D656E74 
  665      00
- 666              	.LASF19:
- 667 01c2 70776D41 		.ascii	"pwmAlignment\000"
- 667      6C69676E 
- 667      6D656E74 
- 667      00
- 668              	.LASF7:
- 669 01cf 6C6F6E67 		.ascii	"long long unsigned int\000"
- 669      206C6F6E 
- 669      6720756E 
- 669      7369676E 
- 669      65642069 
- 670              	.LASF17:
- 671 01e6 70776D4D 		.ascii	"pwmMode\000"
- 671      6F646500 
- 672              	.LASF22:
- 673 01ee 70657269 		.ascii	"period0\000"
- 673      6F643000 
- 674              	.LASF23:
- 675 01f6 70657269 		.ascii	"period1\000"
- 675      6F643100 
- 676              	.LASF11:
- 677 01fe 73697A65 		.ascii	"sizetype\000"
- 677      74797065 
- 677      00
- 678              	.LASF6:
- 679 0207 6C6F6E67 		.ascii	"long long int\000"
- 679      206C6F6E 
- 679      6720696E 
- 679      7400
- 680              	.LASF13:
- 681 0215 63686172 		.ascii	"char\000"
- 681      00
- 682              	.LASF34:
- 683 021a 72656C6F 		.ascii	"reloadInputMode\000"
- 683      6164496E 
- 683      7075744D 
- 683      6F646500 
- 684              	.LASF0:
- 685 022a 73686F72 		.ascii	"short int\000"
- 685      7420696E 
- 685      7400
- 686              	.LASF35:
- 687 0234 72656C6F 		.ascii	"reloadInput\000"
- 687      6164496E 
- 687      70757400 
- 688              	.LASF32:
- 689 0240 73776170 		.ascii	"swapInputMode\000"
- 689      496E7075 
- 689      744D6F64 
- 689      6500
- 690              	.LASF10:
- 691 024e 75696E74 		.ascii	"uint32_t\000"
-ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cceUsYhf.s 			page 17
-
-
- 691      33325F74 
+ 666              	.LASF7:
+ 667 01ad 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 667      206C6F6E 
+ 667      6720756E 
+ 667      7369676E 
+ 667      65642069 
+ 668              	.LASF17:
+ 669 01c4 70776D4D 		.ascii	"pwmMode\000"
+ 669      6F646500 
+ 670              	.LASF22:
+ 671 01cc 70657269 		.ascii	"period0\000"
+ 671      6F643000 
+ 672              	.LASF23:
+ 673 01d4 70657269 		.ascii	"period1\000"
+ 673      6F643100 
+ 674              	.LASF11:
+ 675 01dc 73697A65 		.ascii	"sizetype\000"
+ 675      74797065 
+ 675      00
+ 676              	.LASF6:
+ 677 01e5 6C6F6E67 		.ascii	"long long int\000"
+ 677      206C6F6E 
+ 677      6720696E 
+ 677      7400
+ 678              	.LASF13:
+ 679 01f3 63686172 		.ascii	"char\000"
+ 679      00
+ 680              	.LASF34:
+ 681 01f8 72656C6F 		.ascii	"reloadInputMode\000"
+ 681      6164496E 
+ 681      7075744D 
+ 681      6F646500 
+ 682              	.LASF0:
+ 683 0208 73686F72 		.ascii	"short int\000"
+ 683      7420696E 
+ 683      7400
+ 684              	.LASF35:
+ 685 0212 72656C6F 		.ascii	"reloadInput\000"
+ 685      6164496E 
+ 685      70757400 
+ 686              	.LASF32:
+ 687 021e 73776170 		.ascii	"swapInputMode\000"
+ 687      496E7075 
+ 687      744D6F64 
+ 687      6500
+ 688              	.LASF10:
+ 689 022c 75696E74 		.ascii	"uint32_t\000"
+ 689      33325F74 
+ 689      00
+ 690              	.LASF4:
+ 691 0235 6C6F6E67 		.ascii	"long int\000"
+ 691      20696E74 
  691      00
- 692              	.LASF4:
- 693 0257 6C6F6E67 		.ascii	"long int\000"
- 693      20696E74 
- 693      00
- 694              	.LASF30:
- 695 0260 696E7665 		.ascii	"invertPWMOutN\000"
- 695      72745057 
- 695      4D4F7574 
- 695      4E00
- 696              	.LASF12:
- 697 026e 6C6F6E67 		.ascii	"long double\000"
- 697      20646F75 
- 697      626C6500 
- 698              	.LASF46:
- 699 027a 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
- 699      43313120 
- 699      352E342E 
- 699      31203230 
- 699      31363036 
- 700 02ad 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
- 700      20726576 
- 700      6973696F 
- 700      6E203233 
- 700      37373135 
- 701 02e0 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
- 701      67202D66 
- 701      66756E63 
- 701      74696F6E 
- 701      2D736563 
- 702              	.LASF2:
- 703 030c 7369676E 		.ascii	"signed char\000"
- 703      65642063 
- 703      68617200 
- 704              	.LASF39:
- 705 0318 6B696C6C 		.ascii	"killInput\000"
- 705      496E7075 
- 705      7400
- 706              	.LASF16:
- 707 0322 5F426F6F 		.ascii	"_Bool\000"
- 707      6C00
- 708              	.LASF45:
- 709 0328 50574D5F 		.ascii	"PWM_3_config\000"
- 709      335F636F 
- 709      6E666967 
- 709      00
- 710              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccgLHixn.s 			page 17
+
+
+ 692              	.LASF30:
+ 693 023e 696E7665 		.ascii	"invertPWMOutN\000"
+ 693      72745057 
+ 693      4D4F7574 
+ 693      4E00
+ 694              	.LASF12:
+ 695 024c 6C6F6E67 		.ascii	"long double\000"
+ 695      20646F75 
+ 695      626C6500 
+ 696              	.LASF46:
+ 697 0258 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 697      43313120 
+ 697      352E342E 
+ 697      31203230 
+ 697      31363036 
+ 698 028b 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 698      20726576 
+ 698      6973696F 
+ 698      6E203233 
+ 698      37373135 
+ 699 02be 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 699      67202D66 
+ 699      66756E63 
+ 699      74696F6E 
+ 699      2D736563 
+ 700              	.LASF2:
+ 701 02ea 7369676E 		.ascii	"signed char\000"
+ 701      65642063 
+ 701      68617200 
+ 702              	.LASF39:
+ 703 02f6 6B696C6C 		.ascii	"killInput\000"
+ 703      496E7075 
+ 703      7400
+ 704              	.LASF48:
+ 705 0300 433A5C55 		.ascii	"C:\\Users\\Agentos\\Documents\\Univer\\psoc6-labs\\"
+ 705      73657273 
+ 705      5C416765 
+ 705      6E746F73 
+ 705      5C446F63 
+ 706 032d 6C616234 		.ascii	"lab4\\lab4.cydsn\000"
+ 706      5C6C6162 
+ 706      342E6379 
+ 706      64736E00 
+ 707              	.LASF16:
+ 708 033d 5F426F6F 		.ascii	"_Bool\000"
+ 708      6C00
+ 709              	.LASF45:
+ 710 0343 50574D5F 		.ascii	"PWM_3_config\000"
+ 710      335F636F 
+ 710      6E666967 
+ 710      00
+ 711              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

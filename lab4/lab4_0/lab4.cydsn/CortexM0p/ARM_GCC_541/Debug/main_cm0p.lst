@@ -1,0 +1,1013 @@
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0plus
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main_cm0p.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.main,"ax",%progbits
+  20              		.align	2
+  21              		.global	main
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	main, %function
+  25              	main:
+  26              	.LFB360:
+  27              		.file 1 "main_cm0p.c"
+   1:main_cm0p.c   **** /* ========================================
+   2:main_cm0p.c   ****  *
+   3:main_cm0p.c   ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main_cm0p.c   ****  * All Rights Reserved
+   5:main_cm0p.c   ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main_cm0p.c   ****  *
+   7:main_cm0p.c   ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main_cm0p.c   ****  * WHICH IS THE PROPERTY OF your company.
+   9:main_cm0p.c   ****  *
+  10:main_cm0p.c   ****  * ========================================
+  11:main_cm0p.c   **** */
+  12:main_cm0p.c   **** #include "project.h"
+  13:main_cm0p.c   **** 
+  14:main_cm0p.c   **** int main(void)
+  15:main_cm0p.c   **** {
+  28              		.loc 1 15 0
+  29              		.cfi_startproc
+  30              		@ Volatile: function does not return.
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 10B5     		push	{r4, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  37              	.LBB4:
+  38              	.LBB5:
+  39              		.file 2 "Generated_Source\\PSoC6\\pdl\\cmsis/include/cmsis_gcc.h"
+   1:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /**************************************************************************//**
+   2:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 2
+
+
+   4:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @version  V5.0.1
+   5:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @date     02. February 2017
+   6:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /*
+   8:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+   9:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  10:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
+  11:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  12:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+  13:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * not use this file except in compliance with the License.
+  14:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * You may obtain a copy of the License at
+  15:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  16:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+  17:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  18:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
+  19:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  20:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * See the License for the specific language governing permissions and
+  22:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * limitations under the License.
+  23:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  */
+  24:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  25:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  26:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  27:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  28:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  29:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  30:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  31:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  32:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  33:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  34:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
+  35:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __ASM
+  36:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __ASM                     __asm
+  37:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  38:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __INLINE
+  39:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __INLINE                  inline
+  40:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  41:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
+  42:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __STATIC_INLINE           static inline
+  43:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  44:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __NO_RETURN
+  45:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __NO_RETURN               __attribute__((noreturn))
+  46:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  47:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __USED
+  48:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __USED                    __attribute__((used))
+  49:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  50:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __WEAK
+  51:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __WEAK                    __attribute__((weak))
+  52:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  53:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32
+  54:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  55:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wpacked"
+  56:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wattributes"
+  57:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+  58:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic pop
+  59:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+  60:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 3
+
+
+  61:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __ALIGNED
+  62:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __ALIGNED(x)              __attribute__((aligned(x)))
+  63:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  64:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __PACKED
+  65:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __PACKED                  __attribute__((packed, aligned(1)))
+  66:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  67:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
+  68:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __PACKED_STRUCT           struct __attribute__((packed, aligned(1)))
+  69:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  70:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  71:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  72:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  73:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  74:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  75:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   @{
+  76:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  */
+  77:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  78:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /**
+  79:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  80:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  81:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  82:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  */
+  83:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __enable_irq(void)
+  84:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** {
+  85:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  40              		.loc 2 85 0
+  41              		.syntax divided
+  42              	@ 85 "Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h" 1
+  43 0002 62B6     		cpsie i
+  44              	@ 0 "" 2
+  45              		.thumb
+  46              		.syntax unified
+  47              	.LBE5:
+  48              	.LBE4:
+  16:main_cm0p.c   ****     __enable_irq(); /* Enable global interrupts. */
+  17:main_cm0p.c   ****     /* Enable CM4.  CY_CORTEX_M4_APPL_ADDR must be updated if CM4 memory layout is changed. */
+  18:main_cm0p.c   ****     Cy_SysEnableCM4(CY_CORTEX_M4_APPL_ADDR); 
+  49              		.loc 1 18 0
+  50 0004 0148     		ldr	r0, .L3
+  51 0006 FFF7FEFF 		bl	Cy_SysEnableCM4
+  52              	.LVL0:
+  53              	.L2:
+  54 000a FEE7     		b	.L2
+  55              	.L4:
+  56              		.align	2
+  57              	.L3:
+  58 000c 00000810 		.word	268959744
+  59              		.cfi_endproc
+  60              	.LFE360:
+  61              		.size	main, .-main
+  62              		.text
+  63              	.Letext0:
+  64              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  65              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  66              		.file 5 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/tcpwm/cy_tcpwm_pwm.h"
+  67              		.file 6 "Generated_Source\\PSoC6/PWM_1.h"
+  68              		.file 7 "Generated_Source\\PSoC6/PWM_2.h"
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 4
+
+
+  69              		.file 8 "Generated_Source\\PSoC6/PWM_3.h"
+  70              		.file 9 "./system_psoc63.h"
+  71              		.section	.debug_info,"",%progbits
+  72              	.Ldebug_info0:
+  73 0000 62020000 		.4byte	0x262
+  74 0004 0400     		.2byte	0x4
+  75 0006 00000000 		.4byte	.Ldebug_abbrev0
+  76 000a 04       		.byte	0x4
+  77 000b 01       		.uleb128 0x1
+  78 000c 8B020000 		.4byte	.LASF46
+  79 0010 0C       		.byte	0xc
+  80 0011 74010000 		.4byte	.LASF47
+  81 0015 09000000 		.4byte	.LASF48
+  82 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  83 001d 00000000 		.4byte	0
+  84 0021 00000000 		.4byte	.Ldebug_line0
+  85 0025 02       		.uleb128 0x2
+  86 0026 02       		.byte	0x2
+  87 0027 05       		.byte	0x5
+  88 0028 3B020000 		.4byte	.LASF0
+  89 002c 02       		.uleb128 0x2
+  90 002d 01       		.byte	0x1
+  91 002e 08       		.byte	0x8
+  92 002f 0D010000 		.4byte	.LASF1
+  93 0033 02       		.uleb128 0x2
+  94 0034 01       		.byte	0x1
+  95 0035 06       		.byte	0x6
+  96 0036 1D030000 		.4byte	.LASF2
+  97 003a 02       		.uleb128 0x2
+  98 003b 02       		.byte	0x2
+  99 003c 07       		.byte	0x7
+ 100 003d 49010000 		.4byte	.LASF3
+ 101 0041 02       		.uleb128 0x2
+ 102 0042 04       		.byte	0x4
+ 103 0043 05       		.byte	0x5
+ 104 0044 68020000 		.4byte	.LASF4
+ 105 0048 03       		.uleb128 0x3
+ 106 0049 80010000 		.4byte	.LASF9
+ 107 004d 03       		.byte	0x3
+ 108 004e 41       		.byte	0x41
+ 109 004f 53000000 		.4byte	0x53
+ 110 0053 02       		.uleb128 0x2
+ 111 0054 04       		.byte	0x4
+ 112 0055 07       		.byte	0x7
+ 113 0056 37010000 		.4byte	.LASF5
+ 114 005a 02       		.uleb128 0x2
+ 115 005b 08       		.byte	0x8
+ 116 005c 05       		.byte	0x5
+ 117 005d 18020000 		.4byte	.LASF6
+ 118 0061 02       		.uleb128 0x2
+ 119 0062 08       		.byte	0x8
+ 120 0063 07       		.byte	0x7
+ 121 0064 E0010000 		.4byte	.LASF7
+ 122 0068 04       		.uleb128 0x4
+ 123 0069 04       		.byte	0x4
+ 124 006a 05       		.byte	0x5
+ 125 006b 696E7400 		.ascii	"int\000"
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 5
+
+
+ 126 006f 02       		.uleb128 0x2
+ 127 0070 04       		.byte	0x4
+ 128 0071 07       		.byte	0x7
+ 129 0072 C6010000 		.4byte	.LASF8
+ 130 0076 03       		.uleb128 0x3
+ 131 0077 5F020000 		.4byte	.LASF10
+ 132 007b 04       		.byte	0x4
+ 133 007c 30       		.byte	0x30
+ 134 007d 48000000 		.4byte	0x48
+ 135 0081 02       		.uleb128 0x2
+ 136 0082 04       		.byte	0x4
+ 137 0083 07       		.byte	0x7
+ 138 0084 0F020000 		.4byte	.LASF11
+ 139 0088 02       		.uleb128 0x2
+ 140 0089 08       		.byte	0x8
+ 141 008a 04       		.byte	0x4
+ 142 008b 7F020000 		.4byte	.LASF12
+ 143 008f 02       		.uleb128 0x2
+ 144 0090 01       		.byte	0x1
+ 145 0091 08       		.byte	0x8
+ 146 0092 26020000 		.4byte	.LASF13
+ 147 0096 02       		.uleb128 0x2
+ 148 0097 04       		.byte	0x4
+ 149 0098 04       		.byte	0x4
+ 150 0099 DB000000 		.4byte	.LASF14
+ 151 009d 02       		.uleb128 0x2
+ 152 009e 08       		.byte	0x8
+ 153 009f 04       		.byte	0x4
+ 154 00a0 A7010000 		.4byte	.LASF15
+ 155 00a4 02       		.uleb128 0x2
+ 156 00a5 01       		.byte	0x1
+ 157 00a6 02       		.byte	0x2
+ 158 00a7 33030000 		.4byte	.LASF16
+ 159 00ab 05       		.uleb128 0x5
+ 160 00ac B3000000 		.4byte	.LASF49
+ 161 00b0 64       		.byte	0x64
+ 162 00b1 05       		.byte	0x5
+ 163 00b2 2B       		.byte	0x2b
+ 164 00b3 E4010000 		.4byte	0x1e4
+ 165 00b7 06       		.uleb128 0x6
+ 166 00b8 F7010000 		.4byte	.LASF17
+ 167 00bc 05       		.byte	0x5
+ 168 00bd 2D       		.byte	0x2d
+ 169 00be 76000000 		.4byte	0x76
+ 170 00c2 00       		.byte	0
+ 171 00c3 06       		.uleb128 0x6
+ 172 00c4 A4000000 		.4byte	.LASF18
+ 173 00c8 05       		.byte	0x5
+ 174 00c9 2F       		.byte	0x2f
+ 175 00ca 76000000 		.4byte	0x76
+ 176 00ce 04       		.byte	0x4
+ 177 00cf 06       		.uleb128 0x6
+ 178 00d0 D3010000 		.4byte	.LASF19
+ 179 00d4 05       		.byte	0x5
+ 180 00d5 30       		.byte	0x30
+ 181 00d6 76000000 		.4byte	0x76
+ 182 00da 08       		.byte	0x8
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 6
+
+
+ 183 00db 06       		.uleb128 0x6
+ 184 00dc 28010000 		.4byte	.LASF20
+ 185 00e0 05       		.byte	0x5
+ 186 00e1 31       		.byte	0x31
+ 187 00e2 76000000 		.4byte	0x76
+ 188 00e6 0C       		.byte	0xc
+ 189 00e7 06       		.uleb128 0x6
+ 190 00e8 B3010000 		.4byte	.LASF21
+ 191 00ec 05       		.byte	0x5
+ 192 00ed 32       		.byte	0x32
+ 193 00ee 76000000 		.4byte	0x76
+ 194 00f2 10       		.byte	0x10
+ 195 00f3 06       		.uleb128 0x6
+ 196 00f4 FF010000 		.4byte	.LASF22
+ 197 00f8 05       		.byte	0x5
+ 198 00f9 33       		.byte	0x33
+ 199 00fa 76000000 		.4byte	0x76
+ 200 00fe 14       		.byte	0x14
+ 201 00ff 06       		.uleb128 0x6
+ 202 0100 07020000 		.4byte	.LASF23
+ 203 0104 05       		.byte	0x5
+ 204 0105 34       		.byte	0x34
+ 205 0106 76000000 		.4byte	0x76
+ 206 010a 18       		.byte	0x18
+ 207 010b 06       		.uleb128 0x6
+ 208 010c 8B010000 		.4byte	.LASF24
+ 209 0110 05       		.byte	0x5
+ 210 0111 35       		.byte	0x35
+ 211 0112 A4000000 		.4byte	0xa4
+ 212 0116 1C       		.byte	0x1c
+ 213 0117 06       		.uleb128 0x6
+ 214 0118 92000000 		.4byte	.LASF25
+ 215 011c 05       		.byte	0x5
+ 216 011d 36       		.byte	0x36
+ 217 011e 76000000 		.4byte	0x76
+ 218 0122 20       		.byte	0x20
+ 219 0123 06       		.uleb128 0x6
+ 220 0124 9B000000 		.4byte	.LASF26
+ 221 0128 05       		.byte	0x5
+ 222 0129 37       		.byte	0x37
+ 223 012a 76000000 		.4byte	0x76
+ 224 012e 24       		.byte	0x24
+ 225 012f 06       		.uleb128 0x6
+ 226 0130 E1000000 		.4byte	.LASF27
+ 227 0134 05       		.byte	0x5
+ 228 0135 38       		.byte	0x38
+ 229 0136 A4000000 		.4byte	0xa4
+ 230 013a 28       		.byte	0x28
+ 231 013b 06       		.uleb128 0x6
+ 232 013c 3C000000 		.4byte	.LASF28
+ 233 0140 05       		.byte	0x5
+ 234 0141 3A       		.byte	0x3a
+ 235 0142 76000000 		.4byte	0x76
+ 236 0146 2C       		.byte	0x2c
+ 237 0147 06       		.uleb128 0x6
+ 238 0148 4D000000 		.4byte	.LASF29
+ 239 014c 05       		.byte	0x5
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 7
+
+
+ 240 014d 3B       		.byte	0x3b
+ 241 014e 76000000 		.4byte	0x76
+ 242 0152 30       		.byte	0x30
+ 243 0153 06       		.uleb128 0x6
+ 244 0154 71020000 		.4byte	.LASF30
+ 245 0158 05       		.byte	0x5
+ 246 0159 3C       		.byte	0x3c
+ 247 015a 76000000 		.4byte	0x76
+ 248 015e 34       		.byte	0x34
+ 249 015f 06       		.uleb128 0x6
+ 250 0160 00000000 		.4byte	.LASF31
+ 251 0164 05       		.byte	0x5
+ 252 0165 3D       		.byte	0x3d
+ 253 0166 76000000 		.4byte	0x76
+ 254 016a 38       		.byte	0x38
+ 255 016b 06       		.uleb128 0x6
+ 256 016c 51020000 		.4byte	.LASF32
+ 257 0170 05       		.byte	0x5
+ 258 0171 3E       		.byte	0x3e
+ 259 0172 76000000 		.4byte	0x76
+ 260 0176 3C       		.byte	0x3c
+ 261 0177 06       		.uleb128 0x6
+ 262 0178 5C010000 		.4byte	.LASF33
+ 263 017c 05       		.byte	0x5
+ 264 017d 40       		.byte	0x40
+ 265 017e 76000000 		.4byte	0x76
+ 266 0182 40       		.byte	0x40
+ 267 0183 06       		.uleb128 0x6
+ 268 0184 2B020000 		.4byte	.LASF34
+ 269 0188 05       		.byte	0x5
+ 270 0189 41       		.byte	0x41
+ 271 018a 76000000 		.4byte	0x76
+ 272 018e 44       		.byte	0x44
+ 273 018f 06       		.uleb128 0x6
+ 274 0190 45020000 		.4byte	.LASF35
+ 275 0194 05       		.byte	0x5
+ 276 0195 43       		.byte	0x43
+ 277 0196 76000000 		.4byte	0x76
+ 278 019a 48       		.byte	0x48
+ 279 019b 06       		.uleb128 0x6
+ 280 019c 69000000 		.4byte	.LASF36
+ 281 01a0 05       		.byte	0x5
+ 282 01a1 44       		.byte	0x44
+ 283 01a2 76000000 		.4byte	0x76
+ 284 01a6 4C       		.byte	0x4c
+ 285 01a7 06       		.uleb128 0x6
+ 286 01a8 9C010000 		.4byte	.LASF37
+ 287 01ac 05       		.byte	0x5
+ 288 01ad 46       		.byte	0x46
+ 289 01ae 76000000 		.4byte	0x76
+ 290 01b2 50       		.byte	0x50
+ 291 01b3 06       		.uleb128 0x6
+ 292 01b4 66010000 		.4byte	.LASF38
+ 293 01b8 05       		.byte	0x5
+ 294 01b9 47       		.byte	0x47
+ 295 01ba 76000000 		.4byte	0x76
+ 296 01be 54       		.byte	0x54
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 8
+
+
+ 297 01bf 06       		.uleb128 0x6
+ 298 01c0 29030000 		.4byte	.LASF39
+ 299 01c4 05       		.byte	0x5
+ 300 01c5 49       		.byte	0x49
+ 301 01c6 76000000 		.4byte	0x76
+ 302 01ca 58       		.byte	0x58
+ 303 01cb 06       		.uleb128 0x6
+ 304 01cc 5A000000 		.4byte	.LASF40
+ 305 01d0 05       		.byte	0x5
+ 306 01d1 4A       		.byte	0x4a
+ 307 01d2 76000000 		.4byte	0x76
+ 308 01d6 5C       		.byte	0x5c
+ 309 01d7 06       		.uleb128 0x6
+ 310 01d8 BB010000 		.4byte	.LASF41
+ 311 01dc 05       		.byte	0x5
+ 312 01dd 4C       		.byte	0x4c
+ 313 01de 76000000 		.4byte	0x76
+ 314 01e2 60       		.byte	0x60
+ 315 01e3 00       		.byte	0
+ 316 01e4 03       		.uleb128 0x3
+ 317 01e5 F3000000 		.4byte	.LASF42
+ 318 01e9 05       		.byte	0x5
+ 319 01ea 4D       		.byte	0x4d
+ 320 01eb AB000000 		.4byte	0xab
+ 321 01ef 07       		.uleb128 0x7
+ 322 01f0 85000000 		.4byte	.LASF50
+ 323 01f4 02       		.byte	0x2
+ 324 01f5 53       		.byte	0x53
+ 325 01f6 03       		.byte	0x3
+ 326 01f7 08       		.uleb128 0x8
+ 327 01f8 AE010000 		.4byte	.LASF51
+ 328 01fc 01       		.byte	0x1
+ 329 01fd 0E       		.byte	0xe
+ 330 01fe 68000000 		.4byte	0x68
+ 331 0202 00000000 		.4byte	.LFB360
+ 332 0206 10000000 		.4byte	.LFE360-.LFB360
+ 333 020a 01       		.uleb128 0x1
+ 334 020b 9C       		.byte	0x9c
+ 335 020c 33020000 		.4byte	0x233
+ 336 0210 09       		.uleb128 0x9
+ 337 0211 EF010000 		.4byte	0x1ef
+ 338 0215 02000000 		.4byte	.LBB4
+ 339 0219 02000000 		.4byte	.LBE4-.LBB4
+ 340 021d 01       		.byte	0x1
+ 341 021e 10       		.byte	0x10
+ 342 021f 0A       		.uleb128 0xa
+ 343 0220 0A000000 		.4byte	.LVL0
+ 344 0224 59020000 		.4byte	0x259
+ 345 0228 0B       		.uleb128 0xb
+ 346 0229 01       		.uleb128 0x1
+ 347 022a 50       		.byte	0x50
+ 348 022b 05       		.uleb128 0x5
+ 349 022c 0C       		.byte	0xc
+ 350 022d 00000810 		.4byte	0x10080000
+ 351 0231 00       		.byte	0
+ 352 0232 00       		.byte	0
+ 353 0233 0C       		.uleb128 0xc
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 9
+
+
+ 354 0234 1B010000 		.4byte	.LASF43
+ 355 0238 06       		.byte	0x6
+ 356 0239 1F       		.byte	0x1f
+ 357 023a 3E020000 		.4byte	0x23e
+ 358 023e 0D       		.uleb128 0xd
+ 359 023f E4010000 		.4byte	0x1e4
+ 360 0243 0C       		.uleb128 0xc
+ 361 0244 78000000 		.4byte	.LASF44
+ 362 0248 07       		.byte	0x7
+ 363 0249 1F       		.byte	0x1f
+ 364 024a 3E020000 		.4byte	0x23e
+ 365 024e 0C       		.uleb128 0xc
+ 366 024f 39030000 		.4byte	.LASF45
+ 367 0253 08       		.byte	0x8
+ 368 0254 1F       		.byte	0x1f
+ 369 0255 3E020000 		.4byte	0x23e
+ 370 0259 0E       		.uleb128 0xe
+ 371 025a CB000000 		.4byte	.LASF52
+ 372 025e CB000000 		.4byte	.LASF52
+ 373 0262 09       		.byte	0x9
+ 374 0263 FE01     		.2byte	0x1fe
+ 375 0265 00       		.byte	0
+ 376              		.section	.debug_abbrev,"",%progbits
+ 377              	.Ldebug_abbrev0:
+ 378 0000 01       		.uleb128 0x1
+ 379 0001 11       		.uleb128 0x11
+ 380 0002 01       		.byte	0x1
+ 381 0003 25       		.uleb128 0x25
+ 382 0004 0E       		.uleb128 0xe
+ 383 0005 13       		.uleb128 0x13
+ 384 0006 0B       		.uleb128 0xb
+ 385 0007 03       		.uleb128 0x3
+ 386 0008 0E       		.uleb128 0xe
+ 387 0009 1B       		.uleb128 0x1b
+ 388 000a 0E       		.uleb128 0xe
+ 389 000b 55       		.uleb128 0x55
+ 390 000c 17       		.uleb128 0x17
+ 391 000d 11       		.uleb128 0x11
+ 392 000e 01       		.uleb128 0x1
+ 393 000f 10       		.uleb128 0x10
+ 394 0010 17       		.uleb128 0x17
+ 395 0011 00       		.byte	0
+ 396 0012 00       		.byte	0
+ 397 0013 02       		.uleb128 0x2
+ 398 0014 24       		.uleb128 0x24
+ 399 0015 00       		.byte	0
+ 400 0016 0B       		.uleb128 0xb
+ 401 0017 0B       		.uleb128 0xb
+ 402 0018 3E       		.uleb128 0x3e
+ 403 0019 0B       		.uleb128 0xb
+ 404 001a 03       		.uleb128 0x3
+ 405 001b 0E       		.uleb128 0xe
+ 406 001c 00       		.byte	0
+ 407 001d 00       		.byte	0
+ 408 001e 03       		.uleb128 0x3
+ 409 001f 16       		.uleb128 0x16
+ 410 0020 00       		.byte	0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 10
+
+
+ 411 0021 03       		.uleb128 0x3
+ 412 0022 0E       		.uleb128 0xe
+ 413 0023 3A       		.uleb128 0x3a
+ 414 0024 0B       		.uleb128 0xb
+ 415 0025 3B       		.uleb128 0x3b
+ 416 0026 0B       		.uleb128 0xb
+ 417 0027 49       		.uleb128 0x49
+ 418 0028 13       		.uleb128 0x13
+ 419 0029 00       		.byte	0
+ 420 002a 00       		.byte	0
+ 421 002b 04       		.uleb128 0x4
+ 422 002c 24       		.uleb128 0x24
+ 423 002d 00       		.byte	0
+ 424 002e 0B       		.uleb128 0xb
+ 425 002f 0B       		.uleb128 0xb
+ 426 0030 3E       		.uleb128 0x3e
+ 427 0031 0B       		.uleb128 0xb
+ 428 0032 03       		.uleb128 0x3
+ 429 0033 08       		.uleb128 0x8
+ 430 0034 00       		.byte	0
+ 431 0035 00       		.byte	0
+ 432 0036 05       		.uleb128 0x5
+ 433 0037 13       		.uleb128 0x13
+ 434 0038 01       		.byte	0x1
+ 435 0039 03       		.uleb128 0x3
+ 436 003a 0E       		.uleb128 0xe
+ 437 003b 0B       		.uleb128 0xb
+ 438 003c 0B       		.uleb128 0xb
+ 439 003d 3A       		.uleb128 0x3a
+ 440 003e 0B       		.uleb128 0xb
+ 441 003f 3B       		.uleb128 0x3b
+ 442 0040 0B       		.uleb128 0xb
+ 443 0041 01       		.uleb128 0x1
+ 444 0042 13       		.uleb128 0x13
+ 445 0043 00       		.byte	0
+ 446 0044 00       		.byte	0
+ 447 0045 06       		.uleb128 0x6
+ 448 0046 0D       		.uleb128 0xd
+ 449 0047 00       		.byte	0
+ 450 0048 03       		.uleb128 0x3
+ 451 0049 0E       		.uleb128 0xe
+ 452 004a 3A       		.uleb128 0x3a
+ 453 004b 0B       		.uleb128 0xb
+ 454 004c 3B       		.uleb128 0x3b
+ 455 004d 0B       		.uleb128 0xb
+ 456 004e 49       		.uleb128 0x49
+ 457 004f 13       		.uleb128 0x13
+ 458 0050 38       		.uleb128 0x38
+ 459 0051 0B       		.uleb128 0xb
+ 460 0052 00       		.byte	0
+ 461 0053 00       		.byte	0
+ 462 0054 07       		.uleb128 0x7
+ 463 0055 2E       		.uleb128 0x2e
+ 464 0056 00       		.byte	0
+ 465 0057 03       		.uleb128 0x3
+ 466 0058 0E       		.uleb128 0xe
+ 467 0059 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 11
+
+
+ 468 005a 0B       		.uleb128 0xb
+ 469 005b 3B       		.uleb128 0x3b
+ 470 005c 0B       		.uleb128 0xb
+ 471 005d 27       		.uleb128 0x27
+ 472 005e 19       		.uleb128 0x19
+ 473 005f 20       		.uleb128 0x20
+ 474 0060 0B       		.uleb128 0xb
+ 475 0061 00       		.byte	0
+ 476 0062 00       		.byte	0
+ 477 0063 08       		.uleb128 0x8
+ 478 0064 2E       		.uleb128 0x2e
+ 479 0065 01       		.byte	0x1
+ 480 0066 3F       		.uleb128 0x3f
+ 481 0067 19       		.uleb128 0x19
+ 482 0068 03       		.uleb128 0x3
+ 483 0069 0E       		.uleb128 0xe
+ 484 006a 3A       		.uleb128 0x3a
+ 485 006b 0B       		.uleb128 0xb
+ 486 006c 3B       		.uleb128 0x3b
+ 487 006d 0B       		.uleb128 0xb
+ 488 006e 27       		.uleb128 0x27
+ 489 006f 19       		.uleb128 0x19
+ 490 0070 49       		.uleb128 0x49
+ 491 0071 13       		.uleb128 0x13
+ 492 0072 8701     		.uleb128 0x87
+ 493 0074 19       		.uleb128 0x19
+ 494 0075 11       		.uleb128 0x11
+ 495 0076 01       		.uleb128 0x1
+ 496 0077 12       		.uleb128 0x12
+ 497 0078 06       		.uleb128 0x6
+ 498 0079 40       		.uleb128 0x40
+ 499 007a 18       		.uleb128 0x18
+ 500 007b 9742     		.uleb128 0x2117
+ 501 007d 19       		.uleb128 0x19
+ 502 007e 01       		.uleb128 0x1
+ 503 007f 13       		.uleb128 0x13
+ 504 0080 00       		.byte	0
+ 505 0081 00       		.byte	0
+ 506 0082 09       		.uleb128 0x9
+ 507 0083 1D       		.uleb128 0x1d
+ 508 0084 00       		.byte	0
+ 509 0085 31       		.uleb128 0x31
+ 510 0086 13       		.uleb128 0x13
+ 511 0087 11       		.uleb128 0x11
+ 512 0088 01       		.uleb128 0x1
+ 513 0089 12       		.uleb128 0x12
+ 514 008a 06       		.uleb128 0x6
+ 515 008b 58       		.uleb128 0x58
+ 516 008c 0B       		.uleb128 0xb
+ 517 008d 59       		.uleb128 0x59
+ 518 008e 0B       		.uleb128 0xb
+ 519 008f 00       		.byte	0
+ 520 0090 00       		.byte	0
+ 521 0091 0A       		.uleb128 0xa
+ 522 0092 898201   		.uleb128 0x4109
+ 523 0095 01       		.byte	0x1
+ 524 0096 11       		.uleb128 0x11
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 12
+
+
+ 525 0097 01       		.uleb128 0x1
+ 526 0098 31       		.uleb128 0x31
+ 527 0099 13       		.uleb128 0x13
+ 528 009a 00       		.byte	0
+ 529 009b 00       		.byte	0
+ 530 009c 0B       		.uleb128 0xb
+ 531 009d 8A8201   		.uleb128 0x410a
+ 532 00a0 00       		.byte	0
+ 533 00a1 02       		.uleb128 0x2
+ 534 00a2 18       		.uleb128 0x18
+ 535 00a3 9142     		.uleb128 0x2111
+ 536 00a5 18       		.uleb128 0x18
+ 537 00a6 00       		.byte	0
+ 538 00a7 00       		.byte	0
+ 539 00a8 0C       		.uleb128 0xc
+ 540 00a9 34       		.uleb128 0x34
+ 541 00aa 00       		.byte	0
+ 542 00ab 03       		.uleb128 0x3
+ 543 00ac 0E       		.uleb128 0xe
+ 544 00ad 3A       		.uleb128 0x3a
+ 545 00ae 0B       		.uleb128 0xb
+ 546 00af 3B       		.uleb128 0x3b
+ 547 00b0 0B       		.uleb128 0xb
+ 548 00b1 49       		.uleb128 0x49
+ 549 00b2 13       		.uleb128 0x13
+ 550 00b3 3F       		.uleb128 0x3f
+ 551 00b4 19       		.uleb128 0x19
+ 552 00b5 3C       		.uleb128 0x3c
+ 553 00b6 19       		.uleb128 0x19
+ 554 00b7 00       		.byte	0
+ 555 00b8 00       		.byte	0
+ 556 00b9 0D       		.uleb128 0xd
+ 557 00ba 26       		.uleb128 0x26
+ 558 00bb 00       		.byte	0
+ 559 00bc 49       		.uleb128 0x49
+ 560 00bd 13       		.uleb128 0x13
+ 561 00be 00       		.byte	0
+ 562 00bf 00       		.byte	0
+ 563 00c0 0E       		.uleb128 0xe
+ 564 00c1 2E       		.uleb128 0x2e
+ 565 00c2 00       		.byte	0
+ 566 00c3 3F       		.uleb128 0x3f
+ 567 00c4 19       		.uleb128 0x19
+ 568 00c5 3C       		.uleb128 0x3c
+ 569 00c6 19       		.uleb128 0x19
+ 570 00c7 6E       		.uleb128 0x6e
+ 571 00c8 0E       		.uleb128 0xe
+ 572 00c9 03       		.uleb128 0x3
+ 573 00ca 0E       		.uleb128 0xe
+ 574 00cb 3A       		.uleb128 0x3a
+ 575 00cc 0B       		.uleb128 0xb
+ 576 00cd 3B       		.uleb128 0x3b
+ 577 00ce 05       		.uleb128 0x5
+ 578 00cf 00       		.byte	0
+ 579 00d0 00       		.byte	0
+ 580 00d1 00       		.byte	0
+ 581              		.section	.debug_aranges,"",%progbits
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 13
+
+
+ 582 0000 1C000000 		.4byte	0x1c
+ 583 0004 0200     		.2byte	0x2
+ 584 0006 00000000 		.4byte	.Ldebug_info0
+ 585 000a 04       		.byte	0x4
+ 586 000b 00       		.byte	0
+ 587 000c 0000     		.2byte	0
+ 588 000e 0000     		.2byte	0
+ 589 0010 00000000 		.4byte	.LFB360
+ 590 0014 10000000 		.4byte	.LFE360-.LFB360
+ 591 0018 00000000 		.4byte	0
+ 592 001c 00000000 		.4byte	0
+ 593              		.section	.debug_ranges,"",%progbits
+ 594              	.Ldebug_ranges0:
+ 595 0000 00000000 		.4byte	.LFB360
+ 596 0004 10000000 		.4byte	.LFE360
+ 597 0008 00000000 		.4byte	0
+ 598 000c 00000000 		.4byte	0
+ 599              		.section	.debug_line,"",%progbits
+ 600              	.Ldebug_line0:
+ 601 0000 0B020000 		.section	.debug_str,"MS",%progbits,1
+ 601      0200EA01 
+ 601      00000201 
+ 601      FB0E0D00 
+ 601      01010101 
+ 602              	.LASF31:
+ 603 0000 6B696C6C 		.ascii	"killMode\000"
+ 603      4D6F6465 
+ 603      00
+ 604              	.LASF48:
+ 605 0009 443A5C73 		.ascii	"D:\\student\\FeS-31\\Stepaniuk\\lab4\\lab4_0\\lab4."
+ 605      74756465 
+ 605      6E745C46 
+ 605      65532D33 
+ 605      315C5374 
+ 606 0036 63796473 		.ascii	"cydsn\000"
+ 606      6E00
+ 607              	.LASF28:
+ 608 003c 696E7465 		.ascii	"interruptSources\000"
+ 608      72727570 
+ 608      74536F75 
+ 608      72636573 
+ 608      00
+ 609              	.LASF29:
+ 610 004d 696E7665 		.ascii	"invertPWMOut\000"
+ 610      72745057 
+ 610      4D4F7574 
+ 610      00
+ 611              	.LASF40:
+ 612 005a 636F756E 		.ascii	"countInputMode\000"
+ 612      74496E70 
+ 612      75744D6F 
+ 612      646500
+ 613              	.LASF36:
+ 614 0069 73746172 		.ascii	"startInputMode\000"
+ 614      74496E70 
+ 614      75744D6F 
+ 614      646500
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 14
+
+
+ 615              	.LASF44:
+ 616 0078 50574D5F 		.ascii	"PWM_2_config\000"
+ 616      325F636F 
+ 616      6E666967 
+ 616      00
+ 617              	.LASF50:
+ 618 0085 5F5F656E 		.ascii	"__enable_irq\000"
+ 618      61626C65 
+ 618      5F697271 
+ 618      00
+ 619              	.LASF25:
+ 620 0092 636F6D70 		.ascii	"compare0\000"
+ 620      61726530 
+ 620      00
+ 621              	.LASF26:
+ 622 009b 636F6D70 		.ascii	"compare1\000"
+ 622      61726531 
+ 622      00
+ 623              	.LASF18:
+ 624 00a4 636C6F63 		.ascii	"clockPrescaler\000"
+ 624      6B507265 
+ 624      7363616C 
+ 624      657200
+ 625              	.LASF49:
+ 626 00b3 63795F73 		.ascii	"cy_stc_tcpwm_pwm_config\000"
+ 626      74635F74 
+ 626      6370776D 
+ 626      5F70776D 
+ 626      5F636F6E 
+ 627              	.LASF52:
+ 628 00cb 43795F53 		.ascii	"Cy_SysEnableCM4\000"
+ 628      7973456E 
+ 628      61626C65 
+ 628      434D3400 
+ 629              	.LASF14:
+ 630 00db 666C6F61 		.ascii	"float\000"
+ 630      7400
+ 631              	.LASF27:
+ 632 00e1 656E6162 		.ascii	"enableCompareSwap\000"
+ 632      6C65436F 
+ 632      6D706172 
+ 632      65537761 
+ 632      7000
+ 633              	.LASF42:
+ 634 00f3 63795F73 		.ascii	"cy_stc_tcpwm_pwm_config_t\000"
+ 634      74635F74 
+ 634      6370776D 
+ 634      5F70776D 
+ 634      5F636F6E 
+ 635              	.LASF1:
+ 636 010d 756E7369 		.ascii	"unsigned char\000"
+ 636      676E6564 
+ 636      20636861 
+ 636      7200
+ 637              	.LASF43:
+ 638 011b 50574D5F 		.ascii	"PWM_1_config\000"
+ 638      315F636F 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 15
+
+
+ 638      6E666967 
+ 638      00
+ 639              	.LASF20:
+ 640 0128 64656164 		.ascii	"deadTimeClocks\000"
+ 640      54696D65 
+ 640      436C6F63 
+ 640      6B7300
+ 641              	.LASF5:
+ 642 0137 6C6F6E67 		.ascii	"long unsigned int\000"
+ 642      20756E73 
+ 642      69676E65 
+ 642      6420696E 
+ 642      7400
+ 643              	.LASF3:
+ 644 0149 73686F72 		.ascii	"short unsigned int\000"
+ 644      7420756E 
+ 644      7369676E 
+ 644      65642069 
+ 644      6E7400
+ 645              	.LASF33:
+ 646 015c 73776170 		.ascii	"swapInput\000"
+ 646      496E7075 
+ 646      7400
+ 647              	.LASF38:
+ 648 0166 6B696C6C 		.ascii	"killInputMode\000"
+ 648      496E7075 
+ 648      744D6F64 
+ 648      6500
+ 649              	.LASF47:
+ 650 0174 6D61696E 		.ascii	"main_cm0p.c\000"
+ 650      5F636D30 
+ 650      702E6300 
+ 651              	.LASF9:
+ 652 0180 5F5F7569 		.ascii	"__uint32_t\000"
+ 652      6E743332 
+ 652      5F7400
+ 653              	.LASF24:
+ 654 018b 656E6162 		.ascii	"enablePeriodSwap\000"
+ 654      6C655065 
+ 654      72696F64 
+ 654      53776170 
+ 654      00
+ 655              	.LASF37:
+ 656 019c 73746172 		.ascii	"startInput\000"
+ 656      74496E70 
+ 656      757400
+ 657              	.LASF15:
+ 658 01a7 646F7562 		.ascii	"double\000"
+ 658      6C6500
+ 659              	.LASF51:
+ 660 01ae 6D61696E 		.ascii	"main\000"
+ 660      00
+ 661              	.LASF21:
+ 662 01b3 72756E4D 		.ascii	"runMode\000"
+ 662      6F646500 
+ 663              	.LASF41:
+ 664 01bb 636F756E 		.ascii	"countInput\000"
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 16
+
+
+ 664      74496E70 
+ 664      757400
+ 665              	.LASF8:
+ 666 01c6 756E7369 		.ascii	"unsigned int\000"
+ 666      676E6564 
+ 666      20696E74 
+ 666      00
+ 667              	.LASF19:
+ 668 01d3 70776D41 		.ascii	"pwmAlignment\000"
+ 668      6C69676E 
+ 668      6D656E74 
+ 668      00
+ 669              	.LASF7:
+ 670 01e0 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 670      206C6F6E 
+ 670      6720756E 
+ 670      7369676E 
+ 670      65642069 
+ 671              	.LASF17:
+ 672 01f7 70776D4D 		.ascii	"pwmMode\000"
+ 672      6F646500 
+ 673              	.LASF22:
+ 674 01ff 70657269 		.ascii	"period0\000"
+ 674      6F643000 
+ 675              	.LASF23:
+ 676 0207 70657269 		.ascii	"period1\000"
+ 676      6F643100 
+ 677              	.LASF11:
+ 678 020f 73697A65 		.ascii	"sizetype\000"
+ 678      74797065 
+ 678      00
+ 679              	.LASF6:
+ 680 0218 6C6F6E67 		.ascii	"long long int\000"
+ 680      206C6F6E 
+ 680      6720696E 
+ 680      7400
+ 681              	.LASF13:
+ 682 0226 63686172 		.ascii	"char\000"
+ 682      00
+ 683              	.LASF34:
+ 684 022b 72656C6F 		.ascii	"reloadInputMode\000"
+ 684      6164496E 
+ 684      7075744D 
+ 684      6F646500 
+ 685              	.LASF0:
+ 686 023b 73686F72 		.ascii	"short int\000"
+ 686      7420696E 
+ 686      7400
+ 687              	.LASF35:
+ 688 0245 72656C6F 		.ascii	"reloadInput\000"
+ 688      6164496E 
+ 688      70757400 
+ 689              	.LASF32:
+ 690 0251 73776170 		.ascii	"swapInputMode\000"
+ 690      496E7075 
+ 690      744D6F64 
+ 690      6500
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccnGz2Pi.s 			page 17
+
+
+ 691              	.LASF10:
+ 692 025f 75696E74 		.ascii	"uint32_t\000"
+ 692      33325F74 
+ 692      00
+ 693              	.LASF4:
+ 694 0268 6C6F6E67 		.ascii	"long int\000"
+ 694      20696E74 
+ 694      00
+ 695              	.LASF30:
+ 696 0271 696E7665 		.ascii	"invertPWMOutN\000"
+ 696      72745057 
+ 696      4D4F7574 
+ 696      4E00
+ 697              	.LASF12:
+ 698 027f 6C6F6E67 		.ascii	"long double\000"
+ 698      20646F75 
+ 698      626C6500 
+ 699              	.LASF46:
+ 700 028b 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 700      43313120 
+ 700      352E342E 
+ 700      31203230 
+ 700      31363036 
+ 701 02be 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 701      20726576 
+ 701      6973696F 
+ 701      6E203233 
+ 701      37373135 
+ 702 02f1 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 702      67202D66 
+ 702      66756E63 
+ 702      74696F6E 
+ 702      2D736563 
+ 703              	.LASF2:
+ 704 031d 7369676E 		.ascii	"signed char\000"
+ 704      65642063 
+ 704      68617200 
+ 705              	.LASF39:
+ 706 0329 6B696C6C 		.ascii	"killInput\000"
+ 706      496E7075 
+ 706      7400
+ 707              	.LASF16:
+ 708 0333 5F426F6F 		.ascii	"_Bool\000"
+ 708      6C00
+ 709              	.LASF45:
+ 710 0339 50574D5F 		.ascii	"PWM_3_config\000"
+ 710      335F636F 
+ 710      6E666967 
+ 710      00
+ 711              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

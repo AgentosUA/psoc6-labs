@@ -1,0 +1,2078 @@
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"LCDConf.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.LCD_X_Config,"ax",%progbits
+  21              		.align	2
+  22              		.global	LCD_X_Config
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	LCD_X_Config, %function
+  26              	LCD_X_Config:
+  27              	.LFB0:
+  28              		.file 1 "LCDConf.c"
+   1:LCDConf.c     **** /*********************************************************************
+   2:LCDConf.c     **** *                SEGGER Microcontroller GmbH & Co. KG                *
+   3:LCDConf.c     **** *        Solutions for real time microcontroller applications        *
+   4:LCDConf.c     **** **********************************************************************
+   5:LCDConf.c     **** *                                                                    *
+   6:LCDConf.c     **** *        (c) 1996 - 2017  SEGGER Microcontroller GmbH & Co. KG       *
+   7:LCDConf.c     **** *                                                                    *
+   8:LCDConf.c     **** *        Internet: www.segger.com    Support:  support@segger.com    *
+   9:LCDConf.c     **** *                                                                    *
+  10:LCDConf.c     **** **********************************************************************
+  11:LCDConf.c     **** 
+  12:LCDConf.c     **** ** emWin V5.46 - Graphical user interface for embedded applications **
+  13:LCDConf.c     **** All  Intellectual Property rights  in the Software belongs to  SEGGER.
+  14:LCDConf.c     **** emWin is protected by  international copyright laws.  Knowledge of the
+  15:LCDConf.c     **** source code may not be used to write a similar product.  This file may
+  16:LCDConf.c     **** only be used in accordance with the following terms:
+  17:LCDConf.c     **** 
+  18:LCDConf.c     **** The software  has been licensed to  Cypress Semiconductor Corporation,
+  19:LCDConf.c     **** whose registered  office is situated  at 198 Champion Ct. San Jose, CA 
+  20:LCDConf.c     **** 95134 USA  solely for the  purposes of creating  libraries for Cypress
+  21:LCDConf.c     **** PSoC3 and  PSoC5 processor-based devices,  sublicensed and distributed
+  22:LCDConf.c     **** under  the  terms  and  conditions  of  the  Cypress  End User License
+  23:LCDConf.c     **** Agreement.
+  24:LCDConf.c     **** Full source code is available at: www.segger.com
+  25:LCDConf.c     **** 
+  26:LCDConf.c     **** We appreciate your understanding and fairness.
+  27:LCDConf.c     **** ----------------------------------------------------------------------
+  28:LCDConf.c     **** Licensing information
+  29:LCDConf.c     **** Licensor:                 SEGGER Microcontroller Systems LLC
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 2
+
+
+  30:LCDConf.c     **** Licensed to:              Cypress Semiconductor Corp, 198 Champion Ct., San Jose, CA 95134, USA
+  31:LCDConf.c     **** Licensed SEGGER software: emWin
+  32:LCDConf.c     **** License number:           GUI-00319
+  33:LCDConf.c     **** License model:            Services and License Agreement, signed June 10th, 2009
+  34:LCDConf.c     **** Licensed platform:        Any Cypress platform (Initial targets are: PSoC3, PSoC5)
+  35:LCDConf.c     **** ----------------------------------------------------------------------
+  36:LCDConf.c     **** Support and Update Agreement (SUA)
+  37:LCDConf.c     **** SUA period:               2009-06-12 - 2022-07-27
+  38:LCDConf.c     **** Contact to extend SUA:    sales@segger.com
+  39:LCDConf.c     **** ----------------------------------------------------------------------
+  40:LCDConf.c     **** File        : LCDConf.c
+  41:LCDConf.c     **** Purpose     : Display configuration file for GUIDRV_Bitplains to be
+  42:LCDConf.c     ****               used without any display controller. This implementation
+  43:LCDConf.c     ****               has been written and tested with the RSKR32C111 with
+  44:LCDConf.c     ****               Visualization Add On.
+  45:LCDConf.c     **** ---------------------------END-OF-HEADER------------------------------
+  46:LCDConf.c     **** */
+  47:LCDConf.c     **** 
+  48:LCDConf.c     **** #include <stddef.h>
+  49:LCDConf.c     **** 
+  50:LCDConf.c     **** #include "GUI.h"
+  51:LCDConf.c     **** 
+  52:LCDConf.c     **** #include "GUIDRV_BitPlains.h"
+  53:LCDConf.c     **** 
+  54:LCDConf.c     **** /*********************************************************************
+  55:LCDConf.c     **** *
+  56:LCDConf.c     **** *       Layer configuration
+  57:LCDConf.c     **** *
+  58:LCDConf.c     **** **********************************************************************
+  59:LCDConf.c     **** */
+  60:LCDConf.c     **** //
+  61:LCDConf.c     **** // Physical display size
+  62:LCDConf.c     **** //
+  63:LCDConf.c     **** #define XSIZE_PHYS 320
+  64:LCDConf.c     **** #define YSIZE_PHYS 240
+  65:LCDConf.c     **** 
+  66:LCDConf.c     **** //
+  67:LCDConf.c     **** // Color conversion
+  68:LCDConf.c     **** //
+  69:LCDConf.c     **** #define COLOR_CONVERSION GUICC_1
+  70:LCDConf.c     **** 
+  71:LCDConf.c     **** /*********************************************************************
+  72:LCDConf.c     **** *
+  73:LCDConf.c     **** *       Configuration checking
+  74:LCDConf.c     **** *
+  75:LCDConf.c     **** **********************************************************************
+  76:LCDConf.c     **** */
+  77:LCDConf.c     **** //
+  78:LCDConf.c     **** // Checking display driver configuration
+  79:LCDConf.c     **** //
+  80:LCDConf.c     **** #ifndef   XSIZE_PHYS
+  81:LCDConf.c     ****   #error Physical X size of display is not defined!
+  82:LCDConf.c     **** #endif
+  83:LCDConf.c     **** #ifndef   YSIZE_PHYS
+  84:LCDConf.c     ****   #error Physical Y size of display is not defined!
+  85:LCDConf.c     **** #endif
+  86:LCDConf.c     **** #ifndef   COLOR_CONVERSION
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 3
+
+
+  87:LCDConf.c     ****   #error Color conversion not defined!
+  88:LCDConf.c     **** #endif
+  89:LCDConf.c     **** 
+  90:LCDConf.c     **** //
+  91:LCDConf.c     **** // Number of bytes per line
+  92:LCDConf.c     **** //
+  93:LCDConf.c     **** #define BYTES_PER_LINE ((XSIZE_PHYS + 7) / 8)
+  94:LCDConf.c     **** 
+  95:LCDConf.c     **** /*********************************************************************
+  96:LCDConf.c     **** *
+  97:LCDConf.c     **** *       Static data
+  98:LCDConf.c     **** *
+  99:LCDConf.c     **** **********************************************************************
+ 100:LCDConf.c     **** */
+ 101:LCDConf.c     **** //
+ 102:LCDConf.c     **** // Data arrays to be used by the display driver
+ 103:LCDConf.c     **** //
+ 104:LCDConf.c     **** static U8 _aPlain_0[BYTES_PER_LINE * YSIZE_PHYS];
+ 105:LCDConf.c     **** 
+ 106:LCDConf.c     **** //
+ 107:LCDConf.c     **** // Structure to be passed to the driver
+ 108:LCDConf.c     **** //
+ 109:LCDConf.c     **** static struct {
+ 110:LCDConf.c     ****   U8 * apVRAM[8];
+ 111:LCDConf.c     **** } _VRAM_Desc = {{
+ 112:LCDConf.c     ****   _aPlain_0,
+ 113:LCDConf.c     **** }};
+ 114:LCDConf.c     **** 
+ 115:LCDConf.c     **** /*********************************************************************
+ 116:LCDConf.c     **** *
+ 117:LCDConf.c     **** *       Public code
+ 118:LCDConf.c     **** *
+ 119:LCDConf.c     **** **********************************************************************
+ 120:LCDConf.c     **** */
+ 121:LCDConf.c     **** /*********************************************************************
+ 122:LCDConf.c     **** *
+ 123:LCDConf.c     **** *       LCD_X_Config
+ 124:LCDConf.c     **** *
+ 125:LCDConf.c     **** * Purpose:
+ 126:LCDConf.c     **** *   Called during the initialization process in order to set up the
+ 127:LCDConf.c     **** *   display driver configuration.
+ 128:LCDConf.c     **** *   
+ 129:LCDConf.c     **** */
+ 130:LCDConf.c     **** void LCD_X_Config(void) {
+  29              		.loc 1 130 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+ 131:LCDConf.c     ****   //
+ 132:LCDConf.c     ****   // Set display driver and color conversion for 1st layer
+ 133:LCDConf.c     ****   //
+ 134:LCDConf.c     ****   GUI_DEVICE_CreateAndLink(GUIDRV_BITPLAINS, COLOR_CONVERSION, 0, 0);
+  37              		.loc 1 134 0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 4
+
+
+  38 0002 0023     		movs	r3, #0
+  39 0004 1A46     		mov	r2, r3
+  40 0006 1249     		ldr	r1, .L5
+  41 0008 1248     		ldr	r0, .L5+4
+  42 000a FFF7FEFF 		bl	GUI_DEVICE_CreateAndLink
+  43              	.LVL0:
+ 135:LCDConf.c     ****   //
+ 136:LCDConf.c     ****   // Display driver configuration
+ 137:LCDConf.c     ****   //
+ 138:LCDConf.c     ****   if (LCD_GetSwapXY()) {
+  44              		.loc 1 138 0
+  45 000e FFF7FEFF 		bl	LCD_GetSwapXY
+  46              	.LVL1:
+  47 0012 60B1     		cbz	r0, .L2
+ 139:LCDConf.c     ****     LCD_SetSizeEx (0, YSIZE_PHYS, XSIZE_PHYS);
+  48              		.loc 1 139 0
+  49 0014 4FF4A072 		mov	r2, #320
+  50 0018 F021     		movs	r1, #240
+  51 001a 0020     		movs	r0, #0
+  52 001c FFF7FEFF 		bl	LCD_SetSizeEx
+  53              	.LVL2:
+ 140:LCDConf.c     ****     LCD_SetVSizeEx(0, YSIZE_PHYS, XSIZE_PHYS);
+  54              		.loc 1 140 0
+  55 0020 4FF4A072 		mov	r2, #320
+  56 0024 F021     		movs	r1, #240
+  57 0026 0020     		movs	r0, #0
+  58 0028 FFF7FEFF 		bl	LCD_SetVSizeEx
+  59              	.LVL3:
+  60 002c 0BE0     		b	.L3
+  61              	.L2:
+ 141:LCDConf.c     ****   } else {
+ 142:LCDConf.c     ****     LCD_SetSizeEx (0, XSIZE_PHYS, YSIZE_PHYS);
+  62              		.loc 1 142 0
+  63 002e F022     		movs	r2, #240
+  64 0030 4FF4A071 		mov	r1, #320
+  65 0034 0020     		movs	r0, #0
+  66 0036 FFF7FEFF 		bl	LCD_SetSizeEx
+  67              	.LVL4:
+ 143:LCDConf.c     ****     LCD_SetVSizeEx(0, XSIZE_PHYS, YSIZE_PHYS);
+  68              		.loc 1 143 0
+  69 003a F022     		movs	r2, #240
+  70 003c 4FF4A071 		mov	r1, #320
+  71 0040 0020     		movs	r0, #0
+  72 0042 FFF7FEFF 		bl	LCD_SetVSizeEx
+  73              	.LVL5:
+  74              	.L3:
+ 144:LCDConf.c     ****   }
+ 145:LCDConf.c     ****   //
+ 146:LCDConf.c     ****   // Initialize VRAM access off driver
+ 147:LCDConf.c     ****   //
+ 148:LCDConf.c     ****   LCD_SetVRAMAddrEx(0, (void *)&_VRAM_Desc);
+  75              		.loc 1 148 0
+  76 0046 0449     		ldr	r1, .L5+8
+  77 0048 0020     		movs	r0, #0
+  78 004a FFF7FEFF 		bl	LCD_SetVRAMAddrEx
+  79              	.LVL6:
+  80 004e 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 5
+
+
+  81              	.L6:
+  82              		.align	2
+  83              	.L5:
+  84 0050 00000000 		.word	LCD_API_ColorConv_1
+  85 0054 00000000 		.word	GUIDRV_BitPlains_API
+  86 0058 00000000 		.word	.LANCHOR0
+  87              		.cfi_endproc
+  88              	.LFE0:
+  89              		.size	LCD_X_Config, .-LCD_X_Config
+  90              		.section	.text.LCD_X_DisplayDriver,"ax",%progbits
+  91              		.align	2
+  92              		.global	LCD_X_DisplayDriver
+  93              		.thumb
+  94              		.thumb_func
+  95              		.type	LCD_X_DisplayDriver, %function
+  96              	LCD_X_DisplayDriver:
+  97              	.LFB1:
+ 149:LCDConf.c     **** }
+ 150:LCDConf.c     **** 
+ 151:LCDConf.c     **** /*********************************************************************
+ 152:LCDConf.c     **** *
+ 153:LCDConf.c     **** *       LCD_X_DisplayDriver
+ 154:LCDConf.c     **** *
+ 155:LCDConf.c     **** * Purpose:
+ 156:LCDConf.c     **** *   This function is called by the display driver for several purposes.
+ 157:LCDConf.c     **** *   To support the according task, the routine needs to be adapted to
+ 158:LCDConf.c     **** *   the display controller. Note that the commands marked
+ 159:LCDConf.c     **** *   "optional" are not cogently required and should only be adapted if 
+ 160:LCDConf.c     **** *   the display controller supports these features.
+ 161:LCDConf.c     **** *
+ 162:LCDConf.c     **** * Parameter:
+ 163:LCDConf.c     **** *   LayerIndex - Zero based layer index
+ 164:LCDConf.c     **** *   Cmd        - Command to be executed
+ 165:LCDConf.c     **** *   pData      - Pointer to a data structure.
+ 166:LCDConf.c     **** * 
+ 167:LCDConf.c     **** * Return Value:
+ 168:LCDConf.c     **** *   < -1 - Error
+ 169:LCDConf.c     **** *     -1 - The command is not handled.
+ 170:LCDConf.c     **** *      0 - OK.
+ 171:LCDConf.c     **** */
+ 172:LCDConf.c     **** int LCD_X_DisplayDriver(unsigned LayerIndex, unsigned Cmd, void * pData) {
+  98              		.loc 1 172 0
+  99              		.cfi_startproc
+ 100              		@ args = 0, pretend = 0, frame = 0
+ 101              		@ frame_needed = 0, uses_anonymous_args = 0
+ 102              		@ link register save eliminated.
+ 103              	.LVL7:
+ 173:LCDConf.c     ****   int r;
+ 174:LCDConf.c     ****   
+ 175:LCDConf.c     ****   GUI_USE_PARA(LayerIndex);
+ 176:LCDConf.c     ****   GUI_USE_PARA(pData);
+ 177:LCDConf.c     ****   
+ 178:LCDConf.c     ****   switch (Cmd) {
+ 104              		.loc 1 178 0
+ 105 0000 0129     		cmp	r1, #1
+ 106 0002 01D1     		bne	.L11
+ 179:LCDConf.c     ****   case LCD_X_INITCONTROLLER: {
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 6
+
+
+ 180:LCDConf.c     ****     //
+ 181:LCDConf.c     ****     // Called during the initialization process in order to set up the
+ 182:LCDConf.c     ****     // display controller and put it into operation. If the display
+ 183:LCDConf.c     ****     // controller is not initialized by any external routine, this needs
+ 184:LCDConf.c     ****     // to be adapted by the customer...
+ 185:LCDConf.c     ****     //
+ 186:LCDConf.c     ****     // ...
+ 187:LCDConf.c     ****     return 0;
+ 107              		.loc 1 187 0
+ 108 0004 0020     		movs	r0, #0
+ 109              	.LVL8:
+ 110 0006 7047     		bx	lr
+ 111              	.LVL9:
+ 112              	.L11:
+ 188:LCDConf.c     ****   }
+ 189:LCDConf.c     ****   default:
+ 190:LCDConf.c     ****     r = -1;
+ 191:LCDConf.c     ****   }
+ 192:LCDConf.c     ****   return r;
+ 113              		.loc 1 192 0
+ 114 0008 4FF0FF30 		mov	r0, #-1
+ 115              	.LVL10:
+ 193:LCDConf.c     **** }
+ 116              		.loc 1 193 0
+ 117 000c 7047     		bx	lr
+ 118              		.cfi_endproc
+ 119              	.LFE1:
+ 120              		.size	LCD_X_DisplayDriver, .-LCD_X_DisplayDriver
+ 121 000e 00BF     		.data
+ 122              		.align	2
+ 123              		.set	.LANCHOR0,. + 0
+ 124              		.type	_VRAM_Desc, %object
+ 125              		.size	_VRAM_Desc, 32
+ 126              	_VRAM_Desc:
+ 127 0000 00000000 		.word	_aPlain_0
+ 128 0004 00000000 		.space	28
+ 128      00000000 
+ 128      00000000 
+ 128      00000000 
+ 128      00000000 
+ 129              		.bss
+ 130              		.align	2
+ 131              		.type	_aPlain_0, %object
+ 132              		.size	_aPlain_0, 9600
+ 133              	_aPlain_0:
+ 134 0000 00000000 		.space	9600
+ 134      00000000 
+ 134      00000000 
+ 134      00000000 
+ 134      00000000 
+ 135              		.text
+ 136              	.Letext0:
+ 137              		.file 2 "Generated_Source\\PSoC6\\pdl\\middleware/emWin/code/include/LCD.h"
+ 138              		.file 3 "Generated_Source\\PSoC6\\pdl\\middleware/emWin/code/include/GUI.h"
+ 139              		.file 4 "Generated_Source\\PSoC6\\pdl\\middleware/emWin/code/drivers/BitPlains/GUIDRV_BitPlains.h"
+ 140              		.section	.debug_info,"",%progbits
+ 141              	.Ldebug_info0:
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 7
+
+
+ 142 0000 61060000 		.4byte	0x661
+ 143 0004 0400     		.2byte	0x4
+ 144 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 145 000a 04       		.byte	0x4
+ 146 000b 01       		.uleb128 0x1
+ 147 000c 73000000 		.4byte	.LASF59
+ 148 0010 0C       		.byte	0xc
+ 149 0011 7F020000 		.4byte	.LASF60
+ 150 0015 C3030000 		.4byte	.LASF61
+ 151 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 152 001d 00000000 		.4byte	0
+ 153 0021 00000000 		.4byte	.Ldebug_line0
+ 154 0025 02       		.uleb128 0x2
+ 155 0026 04       		.byte	0x4
+ 156 0027 05       		.byte	0x5
+ 157 0028 696E7400 		.ascii	"int\000"
+ 158 002c 03       		.uleb128 0x3
+ 159 002d 04       		.byte	0x4
+ 160 002e 07       		.byte	0x7
+ 161 002f CC020000 		.4byte	.LASF0
+ 162 0033 03       		.uleb128 0x3
+ 163 0034 08       		.byte	0x8
+ 164 0035 05       		.byte	0x5
+ 165 0036 CB010000 		.4byte	.LASF1
+ 166 003a 03       		.uleb128 0x3
+ 167 003b 08       		.byte	0x8
+ 168 003c 04       		.byte	0x4
+ 169 003d 9F010000 		.4byte	.LASF2
+ 170 0041 04       		.uleb128 0x4
+ 171 0042 4A010000 		.4byte	.LASF5
+ 172 0046 02       		.byte	0x2
+ 173 0047 6A       		.byte	0x6a
+ 174 0048 4C000000 		.4byte	0x4c
+ 175 004c 03       		.uleb128 0x3
+ 176 004d 04       		.byte	0x4
+ 177 004e 07       		.byte	0x7
+ 178 004f 85030000 		.4byte	.LASF3
+ 179 0053 03       		.uleb128 0x3
+ 180 0054 02       		.byte	0x2
+ 181 0055 05       		.byte	0x5
+ 182 0056 47000000 		.4byte	.LASF4
+ 183 005a 05       		.uleb128 0x5
+ 184 005b 08       		.byte	0x8
+ 185 005c 02       		.byte	0x2
+ 186 005d 71       		.byte	0x71
+ 187 005e 8F000000 		.4byte	0x8f
+ 188 0062 06       		.uleb128 0x6
+ 189 0063 783000   		.ascii	"x0\000"
+ 190 0066 02       		.byte	0x2
+ 191 0067 71       		.byte	0x71
+ 192 0068 53000000 		.4byte	0x53
+ 193 006c 00       		.byte	0
+ 194 006d 06       		.uleb128 0x6
+ 195 006e 793000   		.ascii	"y0\000"
+ 196 0071 02       		.byte	0x2
+ 197 0072 71       		.byte	0x71
+ 198 0073 53000000 		.4byte	0x53
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 8
+
+
+ 199 0077 02       		.byte	0x2
+ 200 0078 06       		.uleb128 0x6
+ 201 0079 783100   		.ascii	"x1\000"
+ 202 007c 02       		.byte	0x2
+ 203 007d 71       		.byte	0x71
+ 204 007e 53000000 		.4byte	0x53
+ 205 0082 04       		.byte	0x4
+ 206 0083 06       		.uleb128 0x6
+ 207 0084 793100   		.ascii	"y1\000"
+ 208 0087 02       		.byte	0x2
+ 209 0088 71       		.byte	0x71
+ 210 0089 53000000 		.4byte	0x53
+ 211 008d 06       		.byte	0x6
+ 212 008e 00       		.byte	0
+ 213 008f 04       		.uleb128 0x4
+ 214 0090 89020000 		.4byte	.LASF6
+ 215 0094 02       		.byte	0x2
+ 216 0095 71       		.byte	0x71
+ 217 0096 5A000000 		.4byte	0x5a
+ 218 009a 03       		.uleb128 0x3
+ 219 009b 01       		.byte	0x1
+ 220 009c 08       		.byte	0x8
+ 221 009d F7020000 		.4byte	.LASF7
+ 222 00a1 03       		.uleb128 0x3
+ 223 00a2 01       		.byte	0x1
+ 224 00a3 08       		.byte	0x8
+ 225 00a4 54020000 		.4byte	.LASF8
+ 226 00a8 04       		.uleb128 0x4
+ 227 00a9 0A040000 		.4byte	.LASF9
+ 228 00ad 02       		.byte	0x2
+ 229 00ae 88       		.byte	0x88
+ 230 00af B3000000 		.4byte	0xb3
+ 231 00b3 07       		.uleb128 0x7
+ 232 00b4 41000000 		.4byte	0x41
+ 233 00b8 C2000000 		.4byte	0xc2
+ 234 00bc 08       		.uleb128 0x8
+ 235 00bd 4C000000 		.4byte	0x4c
+ 236 00c1 00       		.byte	0
+ 237 00c2 04       		.uleb128 0x4
+ 238 00c3 2B040000 		.4byte	.LASF10
+ 239 00c7 02       		.byte	0x2
+ 240 00c8 89       		.byte	0x89
+ 241 00c9 CD000000 		.4byte	0xcd
+ 242 00cd 07       		.uleb128 0x7
+ 243 00ce 4C000000 		.4byte	0x4c
+ 244 00d2 DC000000 		.4byte	0xdc
+ 245 00d6 08       		.uleb128 0x8
+ 246 00d7 41000000 		.4byte	0x41
+ 247 00db 00       		.byte	0
+ 248 00dc 04       		.uleb128 0x4
+ 249 00dd DF010000 		.4byte	.LASF11
+ 250 00e1 02       		.byte	0x2
+ 251 00e2 8A       		.byte	0x8a
+ 252 00e3 E7000000 		.4byte	0xe7
+ 253 00e7 09       		.uleb128 0x9
+ 254 00e8 4C000000 		.4byte	0x4c
+ 255 00ec 04       		.uleb128 0x4
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 9
+
+
+ 256 00ed AB030000 		.4byte	.LASF12
+ 257 00f1 02       		.byte	0x2
+ 258 00f2 8C       		.byte	0x8c
+ 259 00f3 F7000000 		.4byte	0xf7
+ 260 00f7 0A       		.uleb128 0xa
+ 261 00f8 11010000 		.4byte	0x111
+ 262 00fc 08       		.uleb128 0x8
+ 263 00fd 11010000 		.4byte	0x111
+ 264 0101 08       		.uleb128 0x8
+ 265 0102 13010000 		.4byte	0x113
+ 266 0106 08       		.uleb128 0x8
+ 267 0107 4C000000 		.4byte	0x4c
+ 268 010b 08       		.uleb128 0x8
+ 269 010c A1000000 		.4byte	0xa1
+ 270 0110 00       		.byte	0
+ 271 0111 0B       		.uleb128 0xb
+ 272 0112 04       		.byte	0x4
+ 273 0113 0C       		.uleb128 0xc
+ 274 0114 04       		.byte	0x4
+ 275 0115 41000000 		.4byte	0x41
+ 276 0119 04       		.uleb128 0x4
+ 277 011a 92020000 		.4byte	.LASF13
+ 278 011e 02       		.byte	0x2
+ 279 011f 8D       		.byte	0x8d
+ 280 0120 24010000 		.4byte	0x124
+ 281 0124 0A       		.uleb128 0xa
+ 282 0125 3E010000 		.4byte	0x13e
+ 283 0129 08       		.uleb128 0x8
+ 284 012a 13010000 		.4byte	0x113
+ 285 012e 08       		.uleb128 0x8
+ 286 012f 11010000 		.4byte	0x111
+ 287 0133 08       		.uleb128 0x8
+ 288 0134 4C000000 		.4byte	0x4c
+ 289 0138 08       		.uleb128 0x8
+ 290 0139 A1000000 		.4byte	0xa1
+ 291 013d 00       		.byte	0
+ 292 013e 05       		.uleb128 0x5
+ 293 013f 18       		.byte	0x18
+ 294 0140 02       		.byte	0x2
+ 295 0141 93       		.byte	0x93
+ 296 0142 8F010000 		.4byte	0x18f
+ 297 0146 0D       		.uleb128 0xd
+ 298 0147 E9020000 		.4byte	.LASF14
+ 299 014b 02       		.byte	0x2
+ 300 014c 94       		.byte	0x94
+ 301 014d 8F010000 		.4byte	0x18f
+ 302 0151 00       		.byte	0
+ 303 0152 0D       		.uleb128 0xd
+ 304 0153 BE020000 		.4byte	.LASF15
+ 305 0157 02       		.byte	0x2
+ 306 0158 95       		.byte	0x95
+ 307 0159 95010000 		.4byte	0x195
+ 308 015d 04       		.byte	0x4
+ 309 015e 0D       		.uleb128 0xd
+ 310 015f 54010000 		.4byte	.LASF16
+ 311 0163 02       		.byte	0x2
+ 312 0164 96       		.byte	0x96
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 10
+
+
+ 313 0165 9B010000 		.4byte	0x19b
+ 314 0169 08       		.byte	0x8
+ 315 016a 0D       		.uleb128 0xd
+ 316 016b B6020000 		.4byte	.LASF17
+ 317 016f 02       		.byte	0x2
+ 318 0170 97       		.byte	0x97
+ 319 0171 25000000 		.4byte	0x25
+ 320 0175 0C       		.byte	0xc
+ 321 0176 0D       		.uleb128 0xd
+ 322 0177 63010000 		.4byte	.LASF18
+ 323 017b 02       		.byte	0x2
+ 324 017c 98       		.byte	0x98
+ 325 017d A1010000 		.4byte	0x1a1
+ 326 0181 10       		.byte	0x10
+ 327 0182 0D       		.uleb128 0xd
+ 328 0183 32030000 		.4byte	.LASF19
+ 329 0187 02       		.byte	0x2
+ 330 0188 99       		.byte	0x99
+ 331 0189 A7010000 		.4byte	0x1a7
+ 332 018d 14       		.byte	0x14
+ 333 018e 00       		.byte	0
+ 334 018f 0C       		.uleb128 0xc
+ 335 0190 04       		.byte	0x4
+ 336 0191 C2000000 		.4byte	0xc2
+ 337 0195 0C       		.uleb128 0xc
+ 338 0196 04       		.byte	0x4
+ 339 0197 A8000000 		.4byte	0xa8
+ 340 019b 0C       		.uleb128 0xc
+ 341 019c 04       		.byte	0x4
+ 342 019d DC000000 		.4byte	0xdc
+ 343 01a1 0C       		.uleb128 0xc
+ 344 01a2 04       		.byte	0x4
+ 345 01a3 19010000 		.4byte	0x119
+ 346 01a7 0C       		.uleb128 0xc
+ 347 01a8 04       		.byte	0x4
+ 348 01a9 EC000000 		.4byte	0xec
+ 349 01ad 04       		.uleb128 0x4
+ 350 01ae 0D020000 		.4byte	.LASF20
+ 351 01b2 02       		.byte	0x2
+ 352 01b3 9A       		.byte	0x9a
+ 353 01b4 3E010000 		.4byte	0x13e
+ 354 01b8 0C       		.uleb128 0xc
+ 355 01b9 04       		.byte	0x4
+ 356 01ba 8F000000 		.4byte	0x8f
+ 357 01be 0E       		.uleb128 0xe
+ 358 01bf 03       		.uleb128 0x3
+ 359 01c0 04       		.byte	0x4
+ 360 01c1 05       		.byte	0x5
+ 361 01c2 F4010000 		.4byte	.LASF21
+ 362 01c6 0F       		.uleb128 0xf
+ 363 01c7 27030000 		.4byte	.LASF22
+ 364 01cb 02       		.byte	0x2
+ 365 01cc 4301     		.2byte	0x143
+ 366 01ce D2010000 		.4byte	0x1d2
+ 367 01d2 10       		.uleb128 0x10
+ 368 01d3 27030000 		.4byte	.LASF22
+ 369 01d7 1C       		.byte	0x1c
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 11
+
+
+ 370 01d8 03       		.byte	0x3
+ 371 01d9 B0       		.byte	0xb0
+ 372 01da 31020000 		.4byte	0x231
+ 373 01de 0D       		.uleb128 0xd
+ 374 01df D9010000 		.4byte	.LASF23
+ 375 01e3 03       		.byte	0x3
+ 376 01e4 B4       		.byte	0xb4
+ 377 01e5 55030000 		.4byte	0x355
+ 378 01e9 00       		.byte	0
+ 379 01ea 0D       		.uleb128 0xd
+ 380 01eb 87010000 		.4byte	.LASF24
+ 381 01ef 03       		.byte	0x3
+ 382 01f0 B5       		.byte	0xb5
+ 383 01f1 55030000 		.4byte	0x355
+ 384 01f5 04       		.byte	0x4
+ 385 01f6 06       		.uleb128 0x6
+ 386 01f7 7500     		.ascii	"u\000"
+ 387 01f9 03       		.byte	0x3
+ 388 01fa BC       		.byte	0xbc
+ 389 01fb 75040000 		.4byte	0x475
+ 390 01ff 08       		.byte	0x8
+ 391 0200 0D       		.uleb128 0xd
+ 392 0201 30010000 		.4byte	.LASF25
+ 393 0205 03       		.byte	0x3
+ 394 0206 C0       		.byte	0xc0
+ 395 0207 94040000 		.4byte	0x494
+ 396 020b 0C       		.byte	0xc
+ 397 020c 0D       		.uleb128 0xd
+ 398 020d 00000000 		.4byte	.LASF26
+ 399 0211 03       		.byte	0x3
+ 400 0212 C1       		.byte	0xc1
+ 401 0213 F7020000 		.4byte	0x2f7
+ 402 0217 10       		.byte	0x10
+ 403 0218 0D       		.uleb128 0xd
+ 404 0219 99010000 		.4byte	.LASF27
+ 405 021d 03       		.byte	0x3
+ 406 021e C2       		.byte	0xc2
+ 407 021f 02030000 		.4byte	0x302
+ 408 0223 14       		.byte	0x14
+ 409 0224 0D       		.uleb128 0xd
+ 410 0225 C0010000 		.4byte	.LASF28
+ 411 0229 03       		.byte	0x3
+ 412 022a C3       		.byte	0xc3
+ 413 022b 25000000 		.4byte	0x25
+ 414 022f 18       		.byte	0x18
+ 415 0230 00       		.byte	0
+ 416 0231 0F       		.uleb128 0xf
+ 417 0232 3B010000 		.4byte	.LASF29
+ 418 0236 02       		.byte	0x2
+ 419 0237 4401     		.2byte	0x144
+ 420 0239 3D020000 		.4byte	0x23d
+ 421 023d 10       		.uleb128 0x10
+ 422 023e 3B010000 		.4byte	.LASF29
+ 423 0242 34       		.byte	0x34
+ 424 0243 03       		.byte	0x3
+ 425 0244 6A       		.byte	0x6a
+ 426 0245 E6020000 		.4byte	0x2e6
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 12
+
+
+ 427 0249 0D       		.uleb128 0xd
+ 428 024a 0B030000 		.4byte	.LASF30
+ 429 024e 03       		.byte	0x3
+ 430 024f 6E       		.byte	0x6e
+ 431 0250 25000000 		.4byte	0x25
+ 432 0254 00       		.byte	0
+ 433 0255 0D       		.uleb128 0xd
+ 434 0256 4D030000 		.4byte	.LASF31
+ 435 025a 03       		.byte	0x3
+ 436 025b 72       		.byte	0x72
+ 437 025c 66030000 		.4byte	0x366
+ 438 0260 04       		.byte	0x4
+ 439 0261 0D       		.uleb128 0xd
+ 440 0262 8D010000 		.4byte	.LASF32
+ 441 0266 03       		.byte	0x3
+ 442 0267 73       		.byte	0x73
+ 443 0268 86030000 		.4byte	0x386
+ 444 026c 08       		.byte	0x8
+ 445 026d 0D       		.uleb128 0xd
+ 446 026e 67000000 		.4byte	.LASF33
+ 447 0272 03       		.byte	0x3
+ 448 0273 74       		.byte	0x74
+ 449 0274 86030000 		.4byte	0x386
+ 450 0278 0C       		.byte	0xc
+ 451 0279 0D       		.uleb128 0xd
+ 452 027a 1C030000 		.4byte	.LASF34
+ 453 027e 03       		.byte	0x3
+ 454 027f 75       		.byte	0x75
+ 455 0280 AB030000 		.4byte	0x3ab
+ 456 0284 10       		.byte	0x10
+ 457 0285 0D       		.uleb128 0xd
+ 458 0286 FD010000 		.4byte	.LASF35
+ 459 028a 03       		.byte	0x3
+ 460 028b 76       		.byte	0x76
+ 461 028c CA030000 		.4byte	0x3ca
+ 462 0290 14       		.byte	0x14
+ 463 0291 0D       		.uleb128 0xd
+ 464 0292 D9020000 		.4byte	.LASF36
+ 465 0296 03       		.byte	0x3
+ 466 0297 77       		.byte	0x77
+ 467 0298 EA030000 		.4byte	0x3ea
+ 468 029c 18       		.byte	0x18
+ 469 029d 0D       		.uleb128 0xd
+ 470 029e 97030000 		.4byte	.LASF37
+ 471 02a2 03       		.byte	0x3
+ 472 02a3 78       		.byte	0x78
+ 473 02a4 05040000 		.4byte	0x405
+ 474 02a8 1C       		.byte	0x1c
+ 475 02a9 0D       		.uleb128 0xd
+ 476 02aa A2030000 		.4byte	.LASF38
+ 477 02ae 03       		.byte	0x3
+ 478 02af 7C       		.byte	0x7c
+ 479 02b0 05040000 		.4byte	0x405
+ 480 02b4 20       		.byte	0x20
+ 481 02b5 0D       		.uleb128 0xd
+ 482 02b6 6D030000 		.4byte	.LASF39
+ 483 02ba 03       		.byte	0x3
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 13
+
+
+ 484 02bb 80       		.byte	0x80
+ 485 02bc 25040000 		.4byte	0x425
+ 486 02c0 24       		.byte	0x24
+ 487 02c1 0D       		.uleb128 0xd
+ 488 02c2 1E040000 		.4byte	.LASF40
+ 489 02c6 03       		.byte	0x3
+ 490 02c7 81       		.byte	0x81
+ 491 02c8 3F040000 		.4byte	0x43f
+ 492 02cc 28       		.byte	0x28
+ 493 02cd 0D       		.uleb128 0xd
+ 494 02ce 5A000000 		.4byte	.LASF41
+ 495 02d2 03       		.byte	0x3
+ 496 02d3 82       		.byte	0x82
+ 497 02d4 59040000 		.4byte	0x459
+ 498 02d8 2C       		.byte	0x2c
+ 499 02d9 0D       		.uleb128 0xd
+ 500 02da 26010000 		.4byte	.LASF42
+ 501 02de 03       		.byte	0x3
+ 502 02df 83       		.byte	0x83
+ 503 02e0 6F040000 		.4byte	0x46f
+ 504 02e4 30       		.byte	0x30
+ 505 02e5 00       		.byte	0
+ 506 02e6 0C       		.uleb128 0xc
+ 507 02e7 04       		.byte	0x4
+ 508 02e8 EC020000 		.4byte	0x2ec
+ 509 02ec 11       		.uleb128 0x11
+ 510 02ed A1000000 		.4byte	0xa1
+ 511 02f1 0C       		.uleb128 0xc
+ 512 02f2 04       		.byte	0x4
+ 513 02f3 BE010000 		.4byte	0x1be
+ 514 02f7 0C       		.uleb128 0xc
+ 515 02f8 04       		.byte	0x4
+ 516 02f9 FD020000 		.4byte	0x2fd
+ 517 02fd 11       		.uleb128 0x11
+ 518 02fe AD010000 		.4byte	0x1ad
+ 519 0302 03       		.uleb128 0x3
+ 520 0303 02       		.byte	0x2
+ 521 0304 07       		.byte	0x7
+ 522 0305 5A030000 		.4byte	.LASF43
+ 523 0309 03       		.uleb128 0x3
+ 524 030a 01       		.byte	0x1
+ 525 030b 06       		.byte	0x6
+ 526 030c AA020000 		.4byte	.LASF44
+ 527 0310 03       		.uleb128 0x3
+ 528 0311 04       		.byte	0x4
+ 529 0312 07       		.byte	0x7
+ 530 0313 51000000 		.4byte	.LASF45
+ 531 0317 0C       		.uleb128 0xc
+ 532 0318 04       		.byte	0x4
+ 533 0319 A1000000 		.4byte	0xa1
+ 534 031d 0A       		.uleb128 0xa
+ 535 031e 55030000 		.4byte	0x355
+ 536 0322 08       		.uleb128 0x8
+ 537 0323 55030000 		.4byte	0x355
+ 538 0327 08       		.uleb128 0x8
+ 539 0328 25000000 		.4byte	0x25
+ 540 032c 08       		.uleb128 0x8
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 14
+
+
+ 541 032d 25000000 		.4byte	0x25
+ 542 0331 08       		.uleb128 0x8
+ 543 0332 25000000 		.4byte	0x25
+ 544 0336 08       		.uleb128 0x8
+ 545 0337 25000000 		.4byte	0x25
+ 546 033b 08       		.uleb128 0x8
+ 547 033c 25000000 		.4byte	0x25
+ 548 0340 08       		.uleb128 0x8
+ 549 0341 25000000 		.4byte	0x25
+ 550 0345 08       		.uleb128 0x8
+ 551 0346 E6020000 		.4byte	0x2e6
+ 552 034a 08       		.uleb128 0x8
+ 553 034b 25000000 		.4byte	0x25
+ 554 034f 08       		.uleb128 0x8
+ 555 0350 5B030000 		.4byte	0x35b
+ 556 0354 00       		.byte	0
+ 557 0355 0C       		.uleb128 0xc
+ 558 0356 04       		.byte	0x4
+ 559 0357 C6010000 		.4byte	0x1c6
+ 560 035b 0C       		.uleb128 0xc
+ 561 035c 04       		.byte	0x4
+ 562 035d 61030000 		.4byte	0x361
+ 563 0361 11       		.uleb128 0x11
+ 564 0362 4C000000 		.4byte	0x4c
+ 565 0366 0C       		.uleb128 0xc
+ 566 0367 04       		.byte	0x4
+ 567 0368 1D030000 		.4byte	0x31d
+ 568 036c 0A       		.uleb128 0xa
+ 569 036d 86030000 		.4byte	0x386
+ 570 0371 08       		.uleb128 0x8
+ 571 0372 55030000 		.4byte	0x355
+ 572 0376 08       		.uleb128 0x8
+ 573 0377 25000000 		.4byte	0x25
+ 574 037b 08       		.uleb128 0x8
+ 575 037c 25000000 		.4byte	0x25
+ 576 0380 08       		.uleb128 0x8
+ 577 0381 25000000 		.4byte	0x25
+ 578 0385 00       		.byte	0
+ 579 0386 0C       		.uleb128 0xc
+ 580 0387 04       		.byte	0x4
+ 581 0388 6C030000 		.4byte	0x36c
+ 582 038c 0A       		.uleb128 0xa
+ 583 038d AB030000 		.4byte	0x3ab
+ 584 0391 08       		.uleb128 0x8
+ 585 0392 55030000 		.4byte	0x355
+ 586 0396 08       		.uleb128 0x8
+ 587 0397 25000000 		.4byte	0x25
+ 588 039b 08       		.uleb128 0x8
+ 589 039c 25000000 		.4byte	0x25
+ 590 03a0 08       		.uleb128 0x8
+ 591 03a1 25000000 		.4byte	0x25
+ 592 03a5 08       		.uleb128 0x8
+ 593 03a6 25000000 		.4byte	0x25
+ 594 03aa 00       		.byte	0
+ 595 03ab 0C       		.uleb128 0xc
+ 596 03ac 04       		.byte	0x4
+ 597 03ad 8C030000 		.4byte	0x38c
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 15
+
+
+ 598 03b1 07       		.uleb128 0x7
+ 599 03b2 4C000000 		.4byte	0x4c
+ 600 03b6 CA030000 		.4byte	0x3ca
+ 601 03ba 08       		.uleb128 0x8
+ 602 03bb 55030000 		.4byte	0x355
+ 603 03bf 08       		.uleb128 0x8
+ 604 03c0 25000000 		.4byte	0x25
+ 605 03c4 08       		.uleb128 0x8
+ 606 03c5 25000000 		.4byte	0x25
+ 607 03c9 00       		.byte	0
+ 608 03ca 0C       		.uleb128 0xc
+ 609 03cb 04       		.byte	0x4
+ 610 03cc B1030000 		.4byte	0x3b1
+ 611 03d0 0A       		.uleb128 0xa
+ 612 03d1 EA030000 		.4byte	0x3ea
+ 613 03d5 08       		.uleb128 0x8
+ 614 03d6 55030000 		.4byte	0x355
+ 615 03da 08       		.uleb128 0x8
+ 616 03db 25000000 		.4byte	0x25
+ 617 03df 08       		.uleb128 0x8
+ 618 03e0 25000000 		.4byte	0x25
+ 619 03e4 08       		.uleb128 0x8
+ 620 03e5 4C000000 		.4byte	0x4c
+ 621 03e9 00       		.byte	0
+ 622 03ea 0C       		.uleb128 0xc
+ 623 03eb 04       		.byte	0x4
+ 624 03ec D0030000 		.4byte	0x3d0
+ 625 03f0 0A       		.uleb128 0xa
+ 626 03f1 05040000 		.4byte	0x405
+ 627 03f5 08       		.uleb128 0x8
+ 628 03f6 55030000 		.4byte	0x355
+ 629 03fa 08       		.uleb128 0x8
+ 630 03fb 25000000 		.4byte	0x25
+ 631 03ff 08       		.uleb128 0x8
+ 632 0400 25000000 		.4byte	0x25
+ 633 0404 00       		.byte	0
+ 634 0405 0C       		.uleb128 0xc
+ 635 0406 04       		.byte	0x4
+ 636 0407 F0030000 		.4byte	0x3f0
+ 637 040b 07       		.uleb128 0x7
+ 638 040c F1020000 		.4byte	0x2f1
+ 639 0410 1F040000 		.4byte	0x41f
+ 640 0414 08       		.uleb128 0x8
+ 641 0415 1F040000 		.4byte	0x41f
+ 642 0419 08       		.uleb128 0x8
+ 643 041a 25000000 		.4byte	0x25
+ 644 041e 00       		.byte	0
+ 645 041f 0C       		.uleb128 0xc
+ 646 0420 04       		.byte	0x4
+ 647 0421 55030000 		.4byte	0x355
+ 648 0425 0C       		.uleb128 0xc
+ 649 0426 04       		.byte	0x4
+ 650 0427 0B040000 		.4byte	0x40b
+ 651 042b 07       		.uleb128 0x7
+ 652 042c BF010000 		.4byte	0x1bf
+ 653 0430 3F040000 		.4byte	0x43f
+ 654 0434 08       		.uleb128 0x8
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 16
+
+
+ 655 0435 55030000 		.4byte	0x355
+ 656 0439 08       		.uleb128 0x8
+ 657 043a 25000000 		.4byte	0x25
+ 658 043e 00       		.byte	0
+ 659 043f 0C       		.uleb128 0xc
+ 660 0440 04       		.byte	0x4
+ 661 0441 2B040000 		.4byte	0x42b
+ 662 0445 07       		.uleb128 0x7
+ 663 0446 11010000 		.4byte	0x111
+ 664 044a 59040000 		.4byte	0x459
+ 665 044e 08       		.uleb128 0x8
+ 666 044f 55030000 		.4byte	0x355
+ 667 0453 08       		.uleb128 0x8
+ 668 0454 25000000 		.4byte	0x25
+ 669 0458 00       		.byte	0
+ 670 0459 0C       		.uleb128 0xc
+ 671 045a 04       		.byte	0x4
+ 672 045b 45040000 		.4byte	0x445
+ 673 045f 0A       		.uleb128 0xa
+ 674 0460 6F040000 		.4byte	0x46f
+ 675 0464 08       		.uleb128 0x8
+ 676 0465 55030000 		.4byte	0x355
+ 677 0469 08       		.uleb128 0x8
+ 678 046a B8010000 		.4byte	0x1b8
+ 679 046e 00       		.byte	0
+ 680 046f 0C       		.uleb128 0xc
+ 681 0470 04       		.byte	0x4
+ 682 0471 5F040000 		.4byte	0x45f
+ 683 0475 12       		.uleb128 0x12
+ 684 0476 04       		.byte	0x4
+ 685 0477 03       		.byte	0x3
+ 686 0478 B9       		.byte	0xb9
+ 687 0479 94040000 		.4byte	0x494
+ 688 047d 13       		.uleb128 0x13
+ 689 047e 62020000 		.4byte	.LASF46
+ 690 0482 03       		.byte	0x3
+ 691 0483 BA       		.byte	0xba
+ 692 0484 BF010000 		.4byte	0x1bf
+ 693 0488 13       		.uleb128 0x13
+ 694 0489 44030000 		.4byte	.LASF47
+ 695 048d 03       		.byte	0x3
+ 696 048e BB       		.byte	0xbb
+ 697 048f 11010000 		.4byte	0x111
+ 698 0493 00       		.byte	0
+ 699 0494 0C       		.uleb128 0xc
+ 700 0495 04       		.byte	0x4
+ 701 0496 9A040000 		.4byte	0x49a
+ 702 049a 11       		.uleb128 0x11
+ 703 049b 31020000 		.4byte	0x231
+ 704 049f 14       		.uleb128 0x14
+ 705 04a0 17030000 		.4byte	0x317
+ 706 04a4 AF040000 		.4byte	0x4af
+ 707 04a8 15       		.uleb128 0x15
+ 708 04a9 10030000 		.4byte	0x310
+ 709 04ad 07       		.byte	0x7
+ 710 04ae 00       		.byte	0
+ 711 04af 05       		.uleb128 0x5
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 17
+
+
+ 712 04b0 20       		.byte	0x20
+ 713 04b1 01       		.byte	0x1
+ 714 04b2 6D       		.byte	0x6d
+ 715 04b3 C4040000 		.4byte	0x4c4
+ 716 04b7 0D       		.uleb128 0xd
+ 717 04b8 34020000 		.4byte	.LASF48
+ 718 04bc 01       		.byte	0x1
+ 719 04bd 6E       		.byte	0x6e
+ 720 04be 9F040000 		.4byte	0x49f
+ 721 04c2 00       		.byte	0
+ 722 04c3 00       		.byte	0
+ 723 04c4 16       		.uleb128 0x16
+ 724 04c5 1C000000 		.4byte	.LASF62
+ 725 04c9 01       		.byte	0x1
+ 726 04ca 82       		.byte	0x82
+ 727 04cb 00000000 		.4byte	.LFB0
+ 728 04cf 5C000000 		.4byte	.LFE0-.LFB0
+ 729 04d3 01       		.uleb128 0x1
+ 730 04d4 9C       		.byte	0x9c
+ 731 04d5 93050000 		.4byte	0x593
+ 732 04d9 17       		.uleb128 0x17
+ 733 04da 0E000000 		.4byte	.LVL0
+ 734 04de 28060000 		.4byte	0x628
+ 735 04e2 F1040000 		.4byte	0x4f1
+ 736 04e6 18       		.uleb128 0x18
+ 737 04e7 01       		.uleb128 0x1
+ 738 04e8 52       		.byte	0x52
+ 739 04e9 01       		.uleb128 0x1
+ 740 04ea 30       		.byte	0x30
+ 741 04eb 18       		.uleb128 0x18
+ 742 04ec 01       		.uleb128 0x1
+ 743 04ed 53       		.byte	0x53
+ 744 04ee 01       		.uleb128 0x1
+ 745 04ef 30       		.byte	0x30
+ 746 04f0 00       		.byte	0
+ 747 04f1 19       		.uleb128 0x19
+ 748 04f2 12000000 		.4byte	.LVL1
+ 749 04f6 34060000 		.4byte	0x634
+ 750 04fa 17       		.uleb128 0x17
+ 751 04fb 20000000 		.4byte	.LVL2
+ 752 04ff 40060000 		.4byte	0x640
+ 753 0503 1A050000 		.4byte	0x51a
+ 754 0507 18       		.uleb128 0x18
+ 755 0508 01       		.uleb128 0x1
+ 756 0509 50       		.byte	0x50
+ 757 050a 01       		.uleb128 0x1
+ 758 050b 30       		.byte	0x30
+ 759 050c 18       		.uleb128 0x18
+ 760 050d 01       		.uleb128 0x1
+ 761 050e 51       		.byte	0x51
+ 762 050f 02       		.uleb128 0x2
+ 763 0510 08       		.byte	0x8
+ 764 0511 F0       		.byte	0xf0
+ 765 0512 18       		.uleb128 0x18
+ 766 0513 01       		.uleb128 0x1
+ 767 0514 52       		.byte	0x52
+ 768 0515 03       		.uleb128 0x3
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 18
+
+
+ 769 0516 0A       		.byte	0xa
+ 770 0517 4001     		.2byte	0x140
+ 771 0519 00       		.byte	0
+ 772 051a 17       		.uleb128 0x17
+ 773 051b 2C000000 		.4byte	.LVL3
+ 774 051f 4C060000 		.4byte	0x64c
+ 775 0523 3A050000 		.4byte	0x53a
+ 776 0527 18       		.uleb128 0x18
+ 777 0528 01       		.uleb128 0x1
+ 778 0529 50       		.byte	0x50
+ 779 052a 01       		.uleb128 0x1
+ 780 052b 30       		.byte	0x30
+ 781 052c 18       		.uleb128 0x18
+ 782 052d 01       		.uleb128 0x1
+ 783 052e 51       		.byte	0x51
+ 784 052f 02       		.uleb128 0x2
+ 785 0530 08       		.byte	0x8
+ 786 0531 F0       		.byte	0xf0
+ 787 0532 18       		.uleb128 0x18
+ 788 0533 01       		.uleb128 0x1
+ 789 0534 52       		.byte	0x52
+ 790 0535 03       		.uleb128 0x3
+ 791 0536 0A       		.byte	0xa
+ 792 0537 4001     		.2byte	0x140
+ 793 0539 00       		.byte	0
+ 794 053a 17       		.uleb128 0x17
+ 795 053b 3A000000 		.4byte	.LVL4
+ 796 053f 40060000 		.4byte	0x640
+ 797 0543 5A050000 		.4byte	0x55a
+ 798 0547 18       		.uleb128 0x18
+ 799 0548 01       		.uleb128 0x1
+ 800 0549 50       		.byte	0x50
+ 801 054a 01       		.uleb128 0x1
+ 802 054b 30       		.byte	0x30
+ 803 054c 18       		.uleb128 0x18
+ 804 054d 01       		.uleb128 0x1
+ 805 054e 51       		.byte	0x51
+ 806 054f 03       		.uleb128 0x3
+ 807 0550 0A       		.byte	0xa
+ 808 0551 4001     		.2byte	0x140
+ 809 0553 18       		.uleb128 0x18
+ 810 0554 01       		.uleb128 0x1
+ 811 0555 52       		.byte	0x52
+ 812 0556 02       		.uleb128 0x2
+ 813 0557 08       		.byte	0x8
+ 814 0558 F0       		.byte	0xf0
+ 815 0559 00       		.byte	0
+ 816 055a 17       		.uleb128 0x17
+ 817 055b 46000000 		.4byte	.LVL5
+ 818 055f 4C060000 		.4byte	0x64c
+ 819 0563 7A050000 		.4byte	0x57a
+ 820 0567 18       		.uleb128 0x18
+ 821 0568 01       		.uleb128 0x1
+ 822 0569 50       		.byte	0x50
+ 823 056a 01       		.uleb128 0x1
+ 824 056b 30       		.byte	0x30
+ 825 056c 18       		.uleb128 0x18
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 19
+
+
+ 826 056d 01       		.uleb128 0x1
+ 827 056e 51       		.byte	0x51
+ 828 056f 03       		.uleb128 0x3
+ 829 0570 0A       		.byte	0xa
+ 830 0571 4001     		.2byte	0x140
+ 831 0573 18       		.uleb128 0x18
+ 832 0574 01       		.uleb128 0x1
+ 833 0575 52       		.byte	0x52
+ 834 0576 02       		.uleb128 0x2
+ 835 0577 08       		.byte	0x8
+ 836 0578 F0       		.byte	0xf0
+ 837 0579 00       		.byte	0
+ 838 057a 1A       		.uleb128 0x1a
+ 839 057b 4E000000 		.4byte	.LVL6
+ 840 057f 58060000 		.4byte	0x658
+ 841 0583 18       		.uleb128 0x18
+ 842 0584 01       		.uleb128 0x1
+ 843 0585 50       		.byte	0x50
+ 844 0586 01       		.uleb128 0x1
+ 845 0587 30       		.byte	0x30
+ 846 0588 18       		.uleb128 0x18
+ 847 0589 01       		.uleb128 0x1
+ 848 058a 51       		.byte	0x51
+ 849 058b 05       		.uleb128 0x5
+ 850 058c 03       		.byte	0x3
+ 851 058d 00000000 		.4byte	.LANCHOR0
+ 852 0591 00       		.byte	0
+ 853 0592 00       		.byte	0
+ 854 0593 1B       		.uleb128 0x1b
+ 855 0594 6B020000 		.4byte	.LASF63
+ 856 0598 01       		.byte	0x1
+ 857 0599 AC       		.byte	0xac
+ 858 059a 25000000 		.4byte	0x25
+ 859 059e 00000000 		.4byte	.LFB1
+ 860 05a2 0E000000 		.4byte	.LFE1-.LFB1
+ 861 05a6 01       		.uleb128 0x1
+ 862 05a7 9C       		.byte	0x9c
+ 863 05a8 DF050000 		.4byte	0x5df
+ 864 05ac 1C       		.uleb128 0x1c
+ 865 05ad C0010000 		.4byte	.LASF28
+ 866 05b1 01       		.byte	0x1
+ 867 05b2 AC       		.byte	0xac
+ 868 05b3 2C000000 		.4byte	0x2c
+ 869 05b7 00000000 		.4byte	.LLST0
+ 870 05bb 1D       		.uleb128 0x1d
+ 871 05bc 436D6400 		.ascii	"Cmd\000"
+ 872 05c0 01       		.byte	0x1
+ 873 05c1 AC       		.byte	0xac
+ 874 05c2 2C000000 		.4byte	0x2c
+ 875 05c6 01       		.uleb128 0x1
+ 876 05c7 51       		.byte	0x51
+ 877 05c8 1E       		.uleb128 0x1e
+ 878 05c9 37000000 		.4byte	.LASF49
+ 879 05cd 01       		.byte	0x1
+ 880 05ce AC       		.byte	0xac
+ 881 05cf 11010000 		.4byte	0x111
+ 882 05d3 01       		.uleb128 0x1
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 20
+
+
+ 883 05d4 52       		.byte	0x52
+ 884 05d5 1F       		.uleb128 0x1f
+ 885 05d6 7200     		.ascii	"r\000"
+ 886 05d8 01       		.byte	0x1
+ 887 05d9 AD       		.byte	0xad
+ 888 05da 25000000 		.4byte	0x25
+ 889 05de 00       		.byte	0
+ 890 05df 14       		.uleb128 0x14
+ 891 05e0 A1000000 		.4byte	0xa1
+ 892 05e4 F0050000 		.4byte	0x5f0
+ 893 05e8 20       		.uleb128 0x20
+ 894 05e9 10030000 		.4byte	0x310
+ 895 05ed 7F25     		.2byte	0x257f
+ 896 05ef 00       		.byte	0
+ 897 05f0 21       		.uleb128 0x21
+ 898 05f1 3D000000 		.4byte	.LASF50
+ 899 05f5 01       		.byte	0x1
+ 900 05f6 68       		.byte	0x68
+ 901 05f7 DF050000 		.4byte	0x5df
+ 902 05fb 05       		.uleb128 0x5
+ 903 05fc 03       		.byte	0x3
+ 904 05fd 00000000 		.4byte	_aPlain_0
+ 905 0601 21       		.uleb128 0x21
+ 906 0602 7A030000 		.4byte	.LASF51
+ 907 0606 01       		.byte	0x1
+ 908 0607 6F       		.byte	0x6f
+ 909 0608 AF040000 		.4byte	0x4af
+ 910 060c 05       		.uleb128 0x5
+ 911 060d 03       		.byte	0x3
+ 912 060e 00000000 		.4byte	_VRAM_Desc
+ 913 0612 22       		.uleb128 0x22
+ 914 0613 20020000 		.4byte	.LASF52
+ 915 0617 02       		.byte	0x2
+ 916 0618 9D       		.byte	0x9d
+ 917 0619 FD020000 		.4byte	0x2fd
+ 918 061d 22       		.uleb128 0x22
+ 919 061e AB010000 		.4byte	.LASF53
+ 920 0622 04       		.byte	0x4
+ 921 0623 49       		.byte	0x49
+ 922 0624 9A040000 		.4byte	0x49a
+ 923 0628 23       		.uleb128 0x23
+ 924 0629 3B020000 		.4byte	.LASF54
+ 925 062d 3B020000 		.4byte	.LASF54
+ 926 0631 03       		.byte	0x3
+ 927 0632 2201     		.2byte	0x122
+ 928 0634 23       		.uleb128 0x23
+ 929 0635 29000000 		.4byte	.LASF55
+ 930 0639 29000000 		.4byte	.LASF55
+ 931 063d 02       		.byte	0x2
+ 932 063e 8F01     		.2byte	0x18f
+ 933 0640 23       		.uleb128 0x23
+ 934 0641 0E000000 		.4byte	.LASF56
+ 935 0645 0E000000 		.4byte	.LASF56
+ 936 0649 02       		.byte	0x2
+ 937 064a 4902     		.2byte	0x249
+ 938 064c 23       		.uleb128 0x23
+ 939 064d FC020000 		.4byte	.LASF57
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 21
+
+
+ 940 0651 FC020000 		.4byte	.LASF57
+ 941 0655 02       		.byte	0x2
+ 942 0656 4C02     		.2byte	0x24c
+ 943 0658 23       		.uleb128 0x23
+ 944 0659 75010000 		.4byte	.LASF58
+ 945 065d 75010000 		.4byte	.LASF58
+ 946 0661 02       		.byte	0x2
+ 947 0662 4B02     		.2byte	0x24b
+ 948 0664 00       		.byte	0
+ 949              		.section	.debug_abbrev,"",%progbits
+ 950              	.Ldebug_abbrev0:
+ 951 0000 01       		.uleb128 0x1
+ 952 0001 11       		.uleb128 0x11
+ 953 0002 01       		.byte	0x1
+ 954 0003 25       		.uleb128 0x25
+ 955 0004 0E       		.uleb128 0xe
+ 956 0005 13       		.uleb128 0x13
+ 957 0006 0B       		.uleb128 0xb
+ 958 0007 03       		.uleb128 0x3
+ 959 0008 0E       		.uleb128 0xe
+ 960 0009 1B       		.uleb128 0x1b
+ 961 000a 0E       		.uleb128 0xe
+ 962 000b 55       		.uleb128 0x55
+ 963 000c 17       		.uleb128 0x17
+ 964 000d 11       		.uleb128 0x11
+ 965 000e 01       		.uleb128 0x1
+ 966 000f 10       		.uleb128 0x10
+ 967 0010 17       		.uleb128 0x17
+ 968 0011 00       		.byte	0
+ 969 0012 00       		.byte	0
+ 970 0013 02       		.uleb128 0x2
+ 971 0014 24       		.uleb128 0x24
+ 972 0015 00       		.byte	0
+ 973 0016 0B       		.uleb128 0xb
+ 974 0017 0B       		.uleb128 0xb
+ 975 0018 3E       		.uleb128 0x3e
+ 976 0019 0B       		.uleb128 0xb
+ 977 001a 03       		.uleb128 0x3
+ 978 001b 08       		.uleb128 0x8
+ 979 001c 00       		.byte	0
+ 980 001d 00       		.byte	0
+ 981 001e 03       		.uleb128 0x3
+ 982 001f 24       		.uleb128 0x24
+ 983 0020 00       		.byte	0
+ 984 0021 0B       		.uleb128 0xb
+ 985 0022 0B       		.uleb128 0xb
+ 986 0023 3E       		.uleb128 0x3e
+ 987 0024 0B       		.uleb128 0xb
+ 988 0025 03       		.uleb128 0x3
+ 989 0026 0E       		.uleb128 0xe
+ 990 0027 00       		.byte	0
+ 991 0028 00       		.byte	0
+ 992 0029 04       		.uleb128 0x4
+ 993 002a 16       		.uleb128 0x16
+ 994 002b 00       		.byte	0
+ 995 002c 03       		.uleb128 0x3
+ 996 002d 0E       		.uleb128 0xe
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 22
+
+
+ 997 002e 3A       		.uleb128 0x3a
+ 998 002f 0B       		.uleb128 0xb
+ 999 0030 3B       		.uleb128 0x3b
+ 1000 0031 0B       		.uleb128 0xb
+ 1001 0032 49       		.uleb128 0x49
+ 1002 0033 13       		.uleb128 0x13
+ 1003 0034 00       		.byte	0
+ 1004 0035 00       		.byte	0
+ 1005 0036 05       		.uleb128 0x5
+ 1006 0037 13       		.uleb128 0x13
+ 1007 0038 01       		.byte	0x1
+ 1008 0039 0B       		.uleb128 0xb
+ 1009 003a 0B       		.uleb128 0xb
+ 1010 003b 3A       		.uleb128 0x3a
+ 1011 003c 0B       		.uleb128 0xb
+ 1012 003d 3B       		.uleb128 0x3b
+ 1013 003e 0B       		.uleb128 0xb
+ 1014 003f 01       		.uleb128 0x1
+ 1015 0040 13       		.uleb128 0x13
+ 1016 0041 00       		.byte	0
+ 1017 0042 00       		.byte	0
+ 1018 0043 06       		.uleb128 0x6
+ 1019 0044 0D       		.uleb128 0xd
+ 1020 0045 00       		.byte	0
+ 1021 0046 03       		.uleb128 0x3
+ 1022 0047 08       		.uleb128 0x8
+ 1023 0048 3A       		.uleb128 0x3a
+ 1024 0049 0B       		.uleb128 0xb
+ 1025 004a 3B       		.uleb128 0x3b
+ 1026 004b 0B       		.uleb128 0xb
+ 1027 004c 49       		.uleb128 0x49
+ 1028 004d 13       		.uleb128 0x13
+ 1029 004e 38       		.uleb128 0x38
+ 1030 004f 0B       		.uleb128 0xb
+ 1031 0050 00       		.byte	0
+ 1032 0051 00       		.byte	0
+ 1033 0052 07       		.uleb128 0x7
+ 1034 0053 15       		.uleb128 0x15
+ 1035 0054 01       		.byte	0x1
+ 1036 0055 27       		.uleb128 0x27
+ 1037 0056 19       		.uleb128 0x19
+ 1038 0057 49       		.uleb128 0x49
+ 1039 0058 13       		.uleb128 0x13
+ 1040 0059 01       		.uleb128 0x1
+ 1041 005a 13       		.uleb128 0x13
+ 1042 005b 00       		.byte	0
+ 1043 005c 00       		.byte	0
+ 1044 005d 08       		.uleb128 0x8
+ 1045 005e 05       		.uleb128 0x5
+ 1046 005f 00       		.byte	0
+ 1047 0060 49       		.uleb128 0x49
+ 1048 0061 13       		.uleb128 0x13
+ 1049 0062 00       		.byte	0
+ 1050 0063 00       		.byte	0
+ 1051 0064 09       		.uleb128 0x9
+ 1052 0065 15       		.uleb128 0x15
+ 1053 0066 00       		.byte	0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 23
+
+
+ 1054 0067 27       		.uleb128 0x27
+ 1055 0068 19       		.uleb128 0x19
+ 1056 0069 49       		.uleb128 0x49
+ 1057 006a 13       		.uleb128 0x13
+ 1058 006b 00       		.byte	0
+ 1059 006c 00       		.byte	0
+ 1060 006d 0A       		.uleb128 0xa
+ 1061 006e 15       		.uleb128 0x15
+ 1062 006f 01       		.byte	0x1
+ 1063 0070 27       		.uleb128 0x27
+ 1064 0071 19       		.uleb128 0x19
+ 1065 0072 01       		.uleb128 0x1
+ 1066 0073 13       		.uleb128 0x13
+ 1067 0074 00       		.byte	0
+ 1068 0075 00       		.byte	0
+ 1069 0076 0B       		.uleb128 0xb
+ 1070 0077 0F       		.uleb128 0xf
+ 1071 0078 00       		.byte	0
+ 1072 0079 0B       		.uleb128 0xb
+ 1073 007a 0B       		.uleb128 0xb
+ 1074 007b 00       		.byte	0
+ 1075 007c 00       		.byte	0
+ 1076 007d 0C       		.uleb128 0xc
+ 1077 007e 0F       		.uleb128 0xf
+ 1078 007f 00       		.byte	0
+ 1079 0080 0B       		.uleb128 0xb
+ 1080 0081 0B       		.uleb128 0xb
+ 1081 0082 49       		.uleb128 0x49
+ 1082 0083 13       		.uleb128 0x13
+ 1083 0084 00       		.byte	0
+ 1084 0085 00       		.byte	0
+ 1085 0086 0D       		.uleb128 0xd
+ 1086 0087 0D       		.uleb128 0xd
+ 1087 0088 00       		.byte	0
+ 1088 0089 03       		.uleb128 0x3
+ 1089 008a 0E       		.uleb128 0xe
+ 1090 008b 3A       		.uleb128 0x3a
+ 1091 008c 0B       		.uleb128 0xb
+ 1092 008d 3B       		.uleb128 0x3b
+ 1093 008e 0B       		.uleb128 0xb
+ 1094 008f 49       		.uleb128 0x49
+ 1095 0090 13       		.uleb128 0x13
+ 1096 0091 38       		.uleb128 0x38
+ 1097 0092 0B       		.uleb128 0xb
+ 1098 0093 00       		.byte	0
+ 1099 0094 00       		.byte	0
+ 1100 0095 0E       		.uleb128 0xe
+ 1101 0096 15       		.uleb128 0x15
+ 1102 0097 00       		.byte	0
+ 1103 0098 27       		.uleb128 0x27
+ 1104 0099 19       		.uleb128 0x19
+ 1105 009a 00       		.byte	0
+ 1106 009b 00       		.byte	0
+ 1107 009c 0F       		.uleb128 0xf
+ 1108 009d 16       		.uleb128 0x16
+ 1109 009e 00       		.byte	0
+ 1110 009f 03       		.uleb128 0x3
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 24
+
+
+ 1111 00a0 0E       		.uleb128 0xe
+ 1112 00a1 3A       		.uleb128 0x3a
+ 1113 00a2 0B       		.uleb128 0xb
+ 1114 00a3 3B       		.uleb128 0x3b
+ 1115 00a4 05       		.uleb128 0x5
+ 1116 00a5 49       		.uleb128 0x49
+ 1117 00a6 13       		.uleb128 0x13
+ 1118 00a7 00       		.byte	0
+ 1119 00a8 00       		.byte	0
+ 1120 00a9 10       		.uleb128 0x10
+ 1121 00aa 13       		.uleb128 0x13
+ 1122 00ab 01       		.byte	0x1
+ 1123 00ac 03       		.uleb128 0x3
+ 1124 00ad 0E       		.uleb128 0xe
+ 1125 00ae 0B       		.uleb128 0xb
+ 1126 00af 0B       		.uleb128 0xb
+ 1127 00b0 3A       		.uleb128 0x3a
+ 1128 00b1 0B       		.uleb128 0xb
+ 1129 00b2 3B       		.uleb128 0x3b
+ 1130 00b3 0B       		.uleb128 0xb
+ 1131 00b4 01       		.uleb128 0x1
+ 1132 00b5 13       		.uleb128 0x13
+ 1133 00b6 00       		.byte	0
+ 1134 00b7 00       		.byte	0
+ 1135 00b8 11       		.uleb128 0x11
+ 1136 00b9 26       		.uleb128 0x26
+ 1137 00ba 00       		.byte	0
+ 1138 00bb 49       		.uleb128 0x49
+ 1139 00bc 13       		.uleb128 0x13
+ 1140 00bd 00       		.byte	0
+ 1141 00be 00       		.byte	0
+ 1142 00bf 12       		.uleb128 0x12
+ 1143 00c0 17       		.uleb128 0x17
+ 1144 00c1 01       		.byte	0x1
+ 1145 00c2 0B       		.uleb128 0xb
+ 1146 00c3 0B       		.uleb128 0xb
+ 1147 00c4 3A       		.uleb128 0x3a
+ 1148 00c5 0B       		.uleb128 0xb
+ 1149 00c6 3B       		.uleb128 0x3b
+ 1150 00c7 0B       		.uleb128 0xb
+ 1151 00c8 01       		.uleb128 0x1
+ 1152 00c9 13       		.uleb128 0x13
+ 1153 00ca 00       		.byte	0
+ 1154 00cb 00       		.byte	0
+ 1155 00cc 13       		.uleb128 0x13
+ 1156 00cd 0D       		.uleb128 0xd
+ 1157 00ce 00       		.byte	0
+ 1158 00cf 03       		.uleb128 0x3
+ 1159 00d0 0E       		.uleb128 0xe
+ 1160 00d1 3A       		.uleb128 0x3a
+ 1161 00d2 0B       		.uleb128 0xb
+ 1162 00d3 3B       		.uleb128 0x3b
+ 1163 00d4 0B       		.uleb128 0xb
+ 1164 00d5 49       		.uleb128 0x49
+ 1165 00d6 13       		.uleb128 0x13
+ 1166 00d7 00       		.byte	0
+ 1167 00d8 00       		.byte	0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 25
+
+
+ 1168 00d9 14       		.uleb128 0x14
+ 1169 00da 01       		.uleb128 0x1
+ 1170 00db 01       		.byte	0x1
+ 1171 00dc 49       		.uleb128 0x49
+ 1172 00dd 13       		.uleb128 0x13
+ 1173 00de 01       		.uleb128 0x1
+ 1174 00df 13       		.uleb128 0x13
+ 1175 00e0 00       		.byte	0
+ 1176 00e1 00       		.byte	0
+ 1177 00e2 15       		.uleb128 0x15
+ 1178 00e3 21       		.uleb128 0x21
+ 1179 00e4 00       		.byte	0
+ 1180 00e5 49       		.uleb128 0x49
+ 1181 00e6 13       		.uleb128 0x13
+ 1182 00e7 2F       		.uleb128 0x2f
+ 1183 00e8 0B       		.uleb128 0xb
+ 1184 00e9 00       		.byte	0
+ 1185 00ea 00       		.byte	0
+ 1186 00eb 16       		.uleb128 0x16
+ 1187 00ec 2E       		.uleb128 0x2e
+ 1188 00ed 01       		.byte	0x1
+ 1189 00ee 3F       		.uleb128 0x3f
+ 1190 00ef 19       		.uleb128 0x19
+ 1191 00f0 03       		.uleb128 0x3
+ 1192 00f1 0E       		.uleb128 0xe
+ 1193 00f2 3A       		.uleb128 0x3a
+ 1194 00f3 0B       		.uleb128 0xb
+ 1195 00f4 3B       		.uleb128 0x3b
+ 1196 00f5 0B       		.uleb128 0xb
+ 1197 00f6 27       		.uleb128 0x27
+ 1198 00f7 19       		.uleb128 0x19
+ 1199 00f8 11       		.uleb128 0x11
+ 1200 00f9 01       		.uleb128 0x1
+ 1201 00fa 12       		.uleb128 0x12
+ 1202 00fb 06       		.uleb128 0x6
+ 1203 00fc 40       		.uleb128 0x40
+ 1204 00fd 18       		.uleb128 0x18
+ 1205 00fe 9742     		.uleb128 0x2117
+ 1206 0100 19       		.uleb128 0x19
+ 1207 0101 01       		.uleb128 0x1
+ 1208 0102 13       		.uleb128 0x13
+ 1209 0103 00       		.byte	0
+ 1210 0104 00       		.byte	0
+ 1211 0105 17       		.uleb128 0x17
+ 1212 0106 898201   		.uleb128 0x4109
+ 1213 0109 01       		.byte	0x1
+ 1214 010a 11       		.uleb128 0x11
+ 1215 010b 01       		.uleb128 0x1
+ 1216 010c 31       		.uleb128 0x31
+ 1217 010d 13       		.uleb128 0x13
+ 1218 010e 01       		.uleb128 0x1
+ 1219 010f 13       		.uleb128 0x13
+ 1220 0110 00       		.byte	0
+ 1221 0111 00       		.byte	0
+ 1222 0112 18       		.uleb128 0x18
+ 1223 0113 8A8201   		.uleb128 0x410a
+ 1224 0116 00       		.byte	0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 26
+
+
+ 1225 0117 02       		.uleb128 0x2
+ 1226 0118 18       		.uleb128 0x18
+ 1227 0119 9142     		.uleb128 0x2111
+ 1228 011b 18       		.uleb128 0x18
+ 1229 011c 00       		.byte	0
+ 1230 011d 00       		.byte	0
+ 1231 011e 19       		.uleb128 0x19
+ 1232 011f 898201   		.uleb128 0x4109
+ 1233 0122 00       		.byte	0
+ 1234 0123 11       		.uleb128 0x11
+ 1235 0124 01       		.uleb128 0x1
+ 1236 0125 31       		.uleb128 0x31
+ 1237 0126 13       		.uleb128 0x13
+ 1238 0127 00       		.byte	0
+ 1239 0128 00       		.byte	0
+ 1240 0129 1A       		.uleb128 0x1a
+ 1241 012a 898201   		.uleb128 0x4109
+ 1242 012d 01       		.byte	0x1
+ 1243 012e 11       		.uleb128 0x11
+ 1244 012f 01       		.uleb128 0x1
+ 1245 0130 31       		.uleb128 0x31
+ 1246 0131 13       		.uleb128 0x13
+ 1247 0132 00       		.byte	0
+ 1248 0133 00       		.byte	0
+ 1249 0134 1B       		.uleb128 0x1b
+ 1250 0135 2E       		.uleb128 0x2e
+ 1251 0136 01       		.byte	0x1
+ 1252 0137 3F       		.uleb128 0x3f
+ 1253 0138 19       		.uleb128 0x19
+ 1254 0139 03       		.uleb128 0x3
+ 1255 013a 0E       		.uleb128 0xe
+ 1256 013b 3A       		.uleb128 0x3a
+ 1257 013c 0B       		.uleb128 0xb
+ 1258 013d 3B       		.uleb128 0x3b
+ 1259 013e 0B       		.uleb128 0xb
+ 1260 013f 27       		.uleb128 0x27
+ 1261 0140 19       		.uleb128 0x19
+ 1262 0141 49       		.uleb128 0x49
+ 1263 0142 13       		.uleb128 0x13
+ 1264 0143 11       		.uleb128 0x11
+ 1265 0144 01       		.uleb128 0x1
+ 1266 0145 12       		.uleb128 0x12
+ 1267 0146 06       		.uleb128 0x6
+ 1268 0147 40       		.uleb128 0x40
+ 1269 0148 18       		.uleb128 0x18
+ 1270 0149 9742     		.uleb128 0x2117
+ 1271 014b 19       		.uleb128 0x19
+ 1272 014c 01       		.uleb128 0x1
+ 1273 014d 13       		.uleb128 0x13
+ 1274 014e 00       		.byte	0
+ 1275 014f 00       		.byte	0
+ 1276 0150 1C       		.uleb128 0x1c
+ 1277 0151 05       		.uleb128 0x5
+ 1278 0152 00       		.byte	0
+ 1279 0153 03       		.uleb128 0x3
+ 1280 0154 0E       		.uleb128 0xe
+ 1281 0155 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 27
+
+
+ 1282 0156 0B       		.uleb128 0xb
+ 1283 0157 3B       		.uleb128 0x3b
+ 1284 0158 0B       		.uleb128 0xb
+ 1285 0159 49       		.uleb128 0x49
+ 1286 015a 13       		.uleb128 0x13
+ 1287 015b 02       		.uleb128 0x2
+ 1288 015c 17       		.uleb128 0x17
+ 1289 015d 00       		.byte	0
+ 1290 015e 00       		.byte	0
+ 1291 015f 1D       		.uleb128 0x1d
+ 1292 0160 05       		.uleb128 0x5
+ 1293 0161 00       		.byte	0
+ 1294 0162 03       		.uleb128 0x3
+ 1295 0163 08       		.uleb128 0x8
+ 1296 0164 3A       		.uleb128 0x3a
+ 1297 0165 0B       		.uleb128 0xb
+ 1298 0166 3B       		.uleb128 0x3b
+ 1299 0167 0B       		.uleb128 0xb
+ 1300 0168 49       		.uleb128 0x49
+ 1301 0169 13       		.uleb128 0x13
+ 1302 016a 02       		.uleb128 0x2
+ 1303 016b 18       		.uleb128 0x18
+ 1304 016c 00       		.byte	0
+ 1305 016d 00       		.byte	0
+ 1306 016e 1E       		.uleb128 0x1e
+ 1307 016f 05       		.uleb128 0x5
+ 1308 0170 00       		.byte	0
+ 1309 0171 03       		.uleb128 0x3
+ 1310 0172 0E       		.uleb128 0xe
+ 1311 0173 3A       		.uleb128 0x3a
+ 1312 0174 0B       		.uleb128 0xb
+ 1313 0175 3B       		.uleb128 0x3b
+ 1314 0176 0B       		.uleb128 0xb
+ 1315 0177 49       		.uleb128 0x49
+ 1316 0178 13       		.uleb128 0x13
+ 1317 0179 02       		.uleb128 0x2
+ 1318 017a 18       		.uleb128 0x18
+ 1319 017b 00       		.byte	0
+ 1320 017c 00       		.byte	0
+ 1321 017d 1F       		.uleb128 0x1f
+ 1322 017e 34       		.uleb128 0x34
+ 1323 017f 00       		.byte	0
+ 1324 0180 03       		.uleb128 0x3
+ 1325 0181 08       		.uleb128 0x8
+ 1326 0182 3A       		.uleb128 0x3a
+ 1327 0183 0B       		.uleb128 0xb
+ 1328 0184 3B       		.uleb128 0x3b
+ 1329 0185 0B       		.uleb128 0xb
+ 1330 0186 49       		.uleb128 0x49
+ 1331 0187 13       		.uleb128 0x13
+ 1332 0188 00       		.byte	0
+ 1333 0189 00       		.byte	0
+ 1334 018a 20       		.uleb128 0x20
+ 1335 018b 21       		.uleb128 0x21
+ 1336 018c 00       		.byte	0
+ 1337 018d 49       		.uleb128 0x49
+ 1338 018e 13       		.uleb128 0x13
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 28
+
+
+ 1339 018f 2F       		.uleb128 0x2f
+ 1340 0190 05       		.uleb128 0x5
+ 1341 0191 00       		.byte	0
+ 1342 0192 00       		.byte	0
+ 1343 0193 21       		.uleb128 0x21
+ 1344 0194 34       		.uleb128 0x34
+ 1345 0195 00       		.byte	0
+ 1346 0196 03       		.uleb128 0x3
+ 1347 0197 0E       		.uleb128 0xe
+ 1348 0198 3A       		.uleb128 0x3a
+ 1349 0199 0B       		.uleb128 0xb
+ 1350 019a 3B       		.uleb128 0x3b
+ 1351 019b 0B       		.uleb128 0xb
+ 1352 019c 49       		.uleb128 0x49
+ 1353 019d 13       		.uleb128 0x13
+ 1354 019e 02       		.uleb128 0x2
+ 1355 019f 18       		.uleb128 0x18
+ 1356 01a0 00       		.byte	0
+ 1357 01a1 00       		.byte	0
+ 1358 01a2 22       		.uleb128 0x22
+ 1359 01a3 34       		.uleb128 0x34
+ 1360 01a4 00       		.byte	0
+ 1361 01a5 03       		.uleb128 0x3
+ 1362 01a6 0E       		.uleb128 0xe
+ 1363 01a7 3A       		.uleb128 0x3a
+ 1364 01a8 0B       		.uleb128 0xb
+ 1365 01a9 3B       		.uleb128 0x3b
+ 1366 01aa 0B       		.uleb128 0xb
+ 1367 01ab 49       		.uleb128 0x49
+ 1368 01ac 13       		.uleb128 0x13
+ 1369 01ad 3F       		.uleb128 0x3f
+ 1370 01ae 19       		.uleb128 0x19
+ 1371 01af 3C       		.uleb128 0x3c
+ 1372 01b0 19       		.uleb128 0x19
+ 1373 01b1 00       		.byte	0
+ 1374 01b2 00       		.byte	0
+ 1375 01b3 23       		.uleb128 0x23
+ 1376 01b4 2E       		.uleb128 0x2e
+ 1377 01b5 00       		.byte	0
+ 1378 01b6 3F       		.uleb128 0x3f
+ 1379 01b7 19       		.uleb128 0x19
+ 1380 01b8 3C       		.uleb128 0x3c
+ 1381 01b9 19       		.uleb128 0x19
+ 1382 01ba 6E       		.uleb128 0x6e
+ 1383 01bb 0E       		.uleb128 0xe
+ 1384 01bc 03       		.uleb128 0x3
+ 1385 01bd 0E       		.uleb128 0xe
+ 1386 01be 3A       		.uleb128 0x3a
+ 1387 01bf 0B       		.uleb128 0xb
+ 1388 01c0 3B       		.uleb128 0x3b
+ 1389 01c1 05       		.uleb128 0x5
+ 1390 01c2 00       		.byte	0
+ 1391 01c3 00       		.byte	0
+ 1392 01c4 00       		.byte	0
+ 1393              		.section	.debug_loc,"",%progbits
+ 1394              	.Ldebug_loc0:
+ 1395              	.LLST0:
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 29
+
+
+ 1396 0000 00000000 		.4byte	.LVL7
+ 1397 0004 06000000 		.4byte	.LVL8
+ 1398 0008 0100     		.2byte	0x1
+ 1399 000a 50       		.byte	0x50
+ 1400 000b 06000000 		.4byte	.LVL8
+ 1401 000f 08000000 		.4byte	.LVL9
+ 1402 0013 0400     		.2byte	0x4
+ 1403 0015 F3       		.byte	0xf3
+ 1404 0016 01       		.uleb128 0x1
+ 1405 0017 50       		.byte	0x50
+ 1406 0018 9F       		.byte	0x9f
+ 1407 0019 08000000 		.4byte	.LVL9
+ 1408 001d 0C000000 		.4byte	.LVL10
+ 1409 0021 0100     		.2byte	0x1
+ 1410 0023 50       		.byte	0x50
+ 1411 0024 0C000000 		.4byte	.LVL10
+ 1412 0028 0E000000 		.4byte	.LFE1
+ 1413 002c 0400     		.2byte	0x4
+ 1414 002e F3       		.byte	0xf3
+ 1415 002f 01       		.uleb128 0x1
+ 1416 0030 50       		.byte	0x50
+ 1417 0031 9F       		.byte	0x9f
+ 1418 0032 00000000 		.4byte	0
+ 1419 0036 00000000 		.4byte	0
+ 1420              		.section	.debug_aranges,"",%progbits
+ 1421 0000 24000000 		.4byte	0x24
+ 1422 0004 0200     		.2byte	0x2
+ 1423 0006 00000000 		.4byte	.Ldebug_info0
+ 1424 000a 04       		.byte	0x4
+ 1425 000b 00       		.byte	0
+ 1426 000c 0000     		.2byte	0
+ 1427 000e 0000     		.2byte	0
+ 1428 0010 00000000 		.4byte	.LFB0
+ 1429 0014 5C000000 		.4byte	.LFE0-.LFB0
+ 1430 0018 00000000 		.4byte	.LFB1
+ 1431 001c 0E000000 		.4byte	.LFE1-.LFB1
+ 1432 0020 00000000 		.4byte	0
+ 1433 0024 00000000 		.4byte	0
+ 1434              		.section	.debug_ranges,"",%progbits
+ 1435              	.Ldebug_ranges0:
+ 1436 0000 00000000 		.4byte	.LFB0
+ 1437 0004 5C000000 		.4byte	.LFE0
+ 1438 0008 00000000 		.4byte	.LFB1
+ 1439 000c 0E000000 		.4byte	.LFE1
+ 1440 0010 00000000 		.4byte	0
+ 1441 0014 00000000 		.4byte	0
+ 1442              		.section	.debug_line,"",%progbits
+ 1443              	.Ldebug_line0:
+ 1444 0000 F7000000 		.section	.debug_str,"MS",%progbits,1
+ 1444      0200C400 
+ 1444      00000201 
+ 1444      FB0E0D00 
+ 1444      01010101 
+ 1445              	.LASF26:
+ 1446 0000 70436F6C 		.ascii	"pColorConvAPI\000"
+ 1446      6F72436F 
+ 1446      6E764150 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 30
+
+
+ 1446      4900
+ 1447              	.LASF56:
+ 1448 000e 4C43445F 		.ascii	"LCD_SetSizeEx\000"
+ 1448      53657453 
+ 1448      697A6545 
+ 1448      7800
+ 1449              	.LASF62:
+ 1450 001c 4C43445F 		.ascii	"LCD_X_Config\000"
+ 1450      585F436F 
+ 1450      6E666967 
+ 1450      00
+ 1451              	.LASF55:
+ 1452 0029 4C43445F 		.ascii	"LCD_GetSwapXY\000"
+ 1452      47657453 
+ 1452      77617058 
+ 1452      5900
+ 1453              	.LASF49:
+ 1454 0037 70446174 		.ascii	"pData\000"
+ 1454      6100
+ 1455              	.LASF50:
+ 1456 003d 5F61506C 		.ascii	"_aPlain_0\000"
+ 1456      61696E5F 
+ 1456      3000
+ 1457              	.LASF4:
+ 1458 0047 73686F72 		.ascii	"short int\000"
+ 1458      7420696E 
+ 1458      7400
+ 1459              	.LASF45:
+ 1460 0051 73697A65 		.ascii	"sizetype\000"
+ 1460      74797065 
+ 1460      00
+ 1461              	.LASF41:
+ 1462 005a 70664765 		.ascii	"pfGetDevData\000"
+ 1462      74446576 
+ 1462      44617461 
+ 1462      00
+ 1463              	.LASF33:
+ 1464 0067 70664472 		.ascii	"pfDrawVLine\000"
+ 1464      6177564C 
+ 1464      696E6500 
+ 1465              	.LASF59:
+ 1466 0073 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1466      43313120 
+ 1466      352E342E 
+ 1466      31203230 
+ 1466      31363036 
+ 1467 00a6 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 1467      20726576 
+ 1467      6973696F 
+ 1467      6E203233 
+ 1467      37373135 
+ 1468 00d9 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -Og -ffunction-s"
+ 1468      70202D6D 
+ 1468      6670753D 
+ 1468      66707634 
+ 1468      2D73702D 
+ 1469 010c 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 31
+
+
+ 1469      6F6E7320 
+ 1469      2D666661 
+ 1469      742D6C74 
+ 1469      6F2D6F62 
+ 1470              	.LASF42:
+ 1471 0126 70664765 		.ascii	"pfGetRect\000"
+ 1471      74526563 
+ 1471      7400
+ 1472              	.LASF25:
+ 1473 0130 70446576 		.ascii	"pDeviceAPI\000"
+ 1473      69636541 
+ 1473      504900
+ 1474              	.LASF29:
+ 1475 013b 4755495F 		.ascii	"GUI_DEVICE_API\000"
+ 1475      44455649 
+ 1475      43455F41 
+ 1475      504900
+ 1476              	.LASF5:
+ 1477 014a 4C43445F 		.ascii	"LCD_COLOR\000"
+ 1477      434F4C4F 
+ 1477      5200
+ 1478              	.LASF16:
+ 1479 0154 70664765 		.ascii	"pfGetIndexMask\000"
+ 1479      74496E64 
+ 1479      65784D61 
+ 1479      736B00
+ 1480              	.LASF18:
+ 1481 0163 7066436F 		.ascii	"pfColor2IndexBulk\000"
+ 1481      6C6F7232 
+ 1481      496E6465 
+ 1481      7842756C 
+ 1481      6B00
+ 1482              	.LASF58:
+ 1483 0175 4C43445F 		.ascii	"LCD_SetVRAMAddrEx\000"
+ 1483      53657456 
+ 1483      52414D41 
+ 1483      64647245 
+ 1483      7800
+ 1484              	.LASF24:
+ 1485 0187 70507265 		.ascii	"pPrev\000"
+ 1485      7600
+ 1486              	.LASF32:
+ 1487 018d 70664472 		.ascii	"pfDrawHLine\000"
+ 1487      6177484C 
+ 1487      696E6500 
+ 1488              	.LASF27:
+ 1489 0199 466C6167 		.ascii	"Flags\000"
+ 1489      7300
+ 1490              	.LASF2:
+ 1491 019f 6C6F6E67 		.ascii	"long double\000"
+ 1491      20646F75 
+ 1491      626C6500 
+ 1492              	.LASF53:
+ 1493 01ab 47554944 		.ascii	"GUIDRV_BitPlains_API\000"
+ 1493      52565F42 
+ 1493      6974506C 
+ 1493      61696E73 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 32
+
+
+ 1493      5F415049 
+ 1494              	.LASF28:
+ 1495 01c0 4C617965 		.ascii	"LayerIndex\000"
+ 1495      72496E64 
+ 1495      657800
+ 1496              	.LASF1:
+ 1497 01cb 6C6F6E67 		.ascii	"long long int\000"
+ 1497      206C6F6E 
+ 1497      6720696E 
+ 1497      7400
+ 1498              	.LASF23:
+ 1499 01d9 704E6578 		.ascii	"pNext\000"
+ 1499      7400
+ 1500              	.LASF11:
+ 1501 01df 744C4344 		.ascii	"tLCDDEV_GetIndexMask\000"
+ 1501      4445565F 
+ 1501      47657449 
+ 1501      6E646578 
+ 1501      4D61736B 
+ 1502              	.LASF21:
+ 1503 01f4 6C6F6E67 		.ascii	"long int\000"
+ 1503      20696E74 
+ 1503      00
+ 1504              	.LASF35:
+ 1505 01fd 70664765 		.ascii	"pfGetPixelIndex\000"
+ 1505      74506978 
+ 1505      656C496E 
+ 1505      64657800 
+ 1506              	.LASF20:
+ 1507 020d 4C43445F 		.ascii	"LCD_API_COLOR_CONV\000"
+ 1507      4150495F 
+ 1507      434F4C4F 
+ 1507      525F434F 
+ 1507      4E5600
+ 1508              	.LASF52:
+ 1509 0220 4C43445F 		.ascii	"LCD_API_ColorConv_1\000"
+ 1509      4150495F 
+ 1509      436F6C6F 
+ 1509      72436F6E 
+ 1509      765F3100 
+ 1510              	.LASF48:
+ 1511 0234 61705652 		.ascii	"apVRAM\000"
+ 1511      414D00
+ 1512              	.LASF54:
+ 1513 023b 4755495F 		.ascii	"GUI_DEVICE_CreateAndLink\000"
+ 1513      44455649 
+ 1513      43455F43 
+ 1513      72656174 
+ 1513      65416E64 
+ 1514              	.LASF8:
+ 1515 0254 756E7369 		.ascii	"unsigned char\000"
+ 1515      676E6564 
+ 1515      20636861 
+ 1515      7200
+ 1516              	.LASF46:
+ 1517 0262 68436F6E 		.ascii	"hContext\000"
+ 1517      74657874 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 33
+
+
+ 1517      00
+ 1518              	.LASF63:
+ 1519 026b 4C43445F 		.ascii	"LCD_X_DisplayDriver\000"
+ 1519      585F4469 
+ 1519      73706C61 
+ 1519      79447269 
+ 1519      76657200 
+ 1520              	.LASF60:
+ 1521 027f 4C434443 		.ascii	"LCDConf.c\000"
+ 1521      6F6E662E 
+ 1521      6300
+ 1522              	.LASF6:
+ 1523 0289 4C43445F 		.ascii	"LCD_RECT\000"
+ 1523      52454354 
+ 1523      00
+ 1524              	.LASF13:
+ 1525 0292 744C4344 		.ascii	"tLCDDEV_Color2IndexBulk\000"
+ 1525      4445565F 
+ 1525      436F6C6F 
+ 1525      7232496E 
+ 1525      64657842 
+ 1526              	.LASF44:
+ 1527 02aa 7369676E 		.ascii	"signed char\000"
+ 1527      65642063 
+ 1527      68617200 
+ 1528              	.LASF17:
+ 1529 02b6 4E6F416C 		.ascii	"NoAlpha\000"
+ 1529      70686100 
+ 1530              	.LASF15:
+ 1531 02be 7066496E 		.ascii	"pfIndex2Color\000"
+ 1531      64657832 
+ 1531      436F6C6F 
+ 1531      7200
+ 1532              	.LASF0:
+ 1533 02cc 756E7369 		.ascii	"unsigned int\000"
+ 1533      676E6564 
+ 1533      20696E74 
+ 1533      00
+ 1534              	.LASF36:
+ 1535 02d9 70665365 		.ascii	"pfSetPixelIndex\000"
+ 1535      74506978 
+ 1535      656C496E 
+ 1535      64657800 
+ 1536              	.LASF14:
+ 1537 02e9 7066436F 		.ascii	"pfColor2Index\000"
+ 1537      6C6F7232 
+ 1537      496E6465 
+ 1537      7800
+ 1538              	.LASF7:
+ 1539 02f7 63686172 		.ascii	"char\000"
+ 1539      00
+ 1540              	.LASF57:
+ 1541 02fc 4C43445F 		.ascii	"LCD_SetVSizeEx\000"
+ 1541      53657456 
+ 1541      53697A65 
+ 1541      457800
+ 1542              	.LASF30:
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 34
+
+
+ 1543 030b 44657669 		.ascii	"DeviceClassIndex\000"
+ 1543      6365436C 
+ 1543      61737349 
+ 1543      6E646578 
+ 1543      00
+ 1544              	.LASF34:
+ 1545 031c 70664669 		.ascii	"pfFillRect\000"
+ 1545      6C6C5265 
+ 1545      637400
+ 1546              	.LASF22:
+ 1547 0327 4755495F 		.ascii	"GUI_DEVICE\000"
+ 1547      44455649 
+ 1547      434500
+ 1548              	.LASF19:
+ 1549 0332 7066496E 		.ascii	"pfIndex2ColorBulk\000"
+ 1549      64657832 
+ 1549      436F6C6F 
+ 1549      7242756C 
+ 1549      6B00
+ 1550              	.LASF47:
+ 1551 0344 70436F6E 		.ascii	"pContext\000"
+ 1551      74657874 
+ 1551      00
+ 1552              	.LASF31:
+ 1553 034d 70664472 		.ascii	"pfDrawBitmap\000"
+ 1553      61774269 
+ 1553      746D6170 
+ 1553      00
+ 1554              	.LASF43:
+ 1555 035a 73686F72 		.ascii	"short unsigned int\000"
+ 1555      7420756E 
+ 1555      7369676E 
+ 1555      65642069 
+ 1555      6E7400
+ 1556              	.LASF39:
+ 1557 036d 70664765 		.ascii	"pfGetDevFunc\000"
+ 1557      74446576 
+ 1557      46756E63 
+ 1557      00
+ 1558              	.LASF51:
+ 1559 037a 5F565241 		.ascii	"_VRAM_Desc\000"
+ 1559      4D5F4465 
+ 1559      736300
+ 1560              	.LASF3:
+ 1561 0385 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1561      20756E73 
+ 1561      69676E65 
+ 1561      6420696E 
+ 1561      7400
+ 1562              	.LASF37:
+ 1563 0397 7066586F 		.ascii	"pfXorPixel\000"
+ 1563      72506978 
+ 1563      656C00
+ 1564              	.LASF38:
+ 1565 03a2 70665365 		.ascii	"pfSetOrg\000"
+ 1565      744F7267 
+ 1565      00
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccGOXuE3.s 			page 35
+
+
+ 1566              	.LASF12:
+ 1567 03ab 744C4344 		.ascii	"tLCDDEV_Index2ColorBulk\000"
+ 1567      4445565F 
+ 1567      496E6465 
+ 1567      7832436F 
+ 1567      6C6F7242 
+ 1568              	.LASF61:
+ 1569 03c3 443A5C73 		.ascii	"D:\\student\\FeS-31\\Stepaniuk\\lab8\\lab_8_1\\lab_"
+ 1569      74756465 
+ 1569      6E745C46 
+ 1569      65532D33 
+ 1569      315C5374 
+ 1570 03f0 385F315C 		.ascii	"8_1\\lab_8_1\\lab_8_2.cydsn\000"
+ 1570      6C61625F 
+ 1570      385F315C 
+ 1570      6C61625F 
+ 1570      385F322E 
+ 1571              	.LASF9:
+ 1572 040a 744C4344 		.ascii	"tLCDDEV_Index2Color\000"
+ 1572      4445565F 
+ 1572      496E6465 
+ 1572      7832436F 
+ 1572      6C6F7200 
+ 1573              	.LASF40:
+ 1574 041e 70664765 		.ascii	"pfGetDevProp\000"
+ 1574      74446576 
+ 1574      50726F70 
+ 1574      00
+ 1575              	.LASF10:
+ 1576 042b 744C4344 		.ascii	"tLCDDEV_Color2Index\000"
+ 1576      4445565F 
+ 1576      436F6C6F 
+ 1576      7232496E 
+ 1576      64657800 
+ 1577              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

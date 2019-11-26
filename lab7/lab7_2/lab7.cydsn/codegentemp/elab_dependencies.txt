@@ -1,4 +1,4 @@
-D:\student\FeS-31\Stepaniuk\lab7\lab7\lab7.cydsn\TopDesign\TopDesign.cysch
+D:\student\FeS-31\Stepaniuk\lab7\lab7_2\lab7.cydsn\TopDesign\TopDesign.cysch
 C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\SysClk_PDL_v1_0\SysClk_PDL_v1_0.cyprimitive
 C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\SysClk_PDL_v1_0\SysClk_PDL_v1_0.cysym
 C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\SysClk_PDL_v1_0\SysClk_PDL_v1_0.pdf
@@ -106,4 +106,4 @@ C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrim
 C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_mxs40_scb_v1_10\cy_mxs40_scb_v1_10.cysym
 C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_mxs40_scb_v1_10\version.cypatch
 C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_mxs40_scb_v1_10\PSoC6\cy_mxs40_scb_v1_10.cyprimitive
-D:\student\FeS-31\Stepaniuk\lab7\lab7\lab7.cydsn\lab7.cydwr
+D:\student\FeS-31\Stepaniuk\lab7\lab7_2\lab7.cydsn\lab7.cydwr

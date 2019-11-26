@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CyXmlSerializer>
+<!--This file is machine generated and read. It is not intended to be edited by hand.-->
+<!--Due to this, there is no schema for this file.-->
+<CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspcCustomData" version="4">
+<CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997 type_name="CyDesigner.Common.Base.CyCustomData" version="2">
+<userData>
+<dataGuid v="1b906a0f-a7b6-4e4d-a428-82f98b53cb35">
+<CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35 type_name="CyDesigner.Common.ProjMgmt.GUI.CyExplorerWindow+CyExplorerWindowState" version="3" SelectedTab="Source">
+<TreeKeys>
+<v>Source</v>
+<v>Components</v>
+<v>Output</v>
+</TreeKeys>
+<TreeStates>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>lab4_1</v>
+<v>lab4_1\lab4_1</v>
+<v>lab4_1\lab4_1\TopDesign</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\Pins</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\Analog</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\DMA</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\Clocks</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\Interrupts</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\System</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\Directives</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\ARM GCC Generic</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\ARM GCC Generic\cy8c6xx7_cm0plus.ld</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\ARM IAR Generic</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\ARM IAR Generic\cy8c6xx7_cm0plus.icf</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\ARM MDK Generic</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\ARM MDK Generic\cy8c6xx7_cm0plus.scat</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Header Files</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\ARM GCC Generic</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\ARM GCC Generic\startup_psoc63_cm0plus.S</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\ARM IAR Generic</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\ARM IAR Generic\startup_psoc63_cm0plus.s</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\ARM MDK Generic</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\ARM MDK Generic\startup_psoc63_cm0plus.s</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\main_cm0p.c</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\system_psoc63_cm0plus.c</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\ARM GCC Generic</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\ARM GCC Generic\cy8c6xx7_cm4_dual.ld</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\ARM IAR Generic</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\ARM IAR Generic\cy8c6xx7_cm4_dual.icf</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\ARM MDK Generic</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\ARM MDK Generic\cy8c6xx7_cm4_dual.scat</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Header Files</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\ARM GCC Generic</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\ARM GCC Generic\startup_psoc63_cm4.S</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\ARM IAR Generic</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\ARM IAR Generic\startup_psoc63_cm4.s</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\ARM MDK Generic</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\ARM MDK Generic\startup_psoc63_cm4.s</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\main_cm4.c</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\system_psoc63_cm4.c</v>
+<v>lab4_1\lab4_1\Shared Files</v>
+<v>lab4_1\lab4_1\Shared Files\cy_ble_config.h</v>
+<v>lab4_1\lab4_1\Shared Files\cy_ipc_config.c</v>
+<v>lab4_1\lab4_1\Shared Files\cy_ipc_config.h</v>
+<v>lab4_1\lab4_1\Shared Files\cyapicallbacks.h</v>
+<v>lab4_1\lab4_1\Shared Files\system_psoc63.h</v>
+<v>lab4_1\lab4_1\Generated_Source</v>
+<v>lab4_1\lab4_1\Generated_Source\PSoC6</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>lab4_1</v>
+<v>lab4_1\lab4_1</v>
+<v>lab4_1\lab4_1\TopDesign</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\Pins</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\Analog</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\DMA</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\Clocks</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\Interrupts</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\System</v>
+<v>lab4_1\lab4_1\lab4_1.cydwr\Directives</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\ARM GCC Generic</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\ARM GCC Generic\cy8c6xx7_cm0plus.ld</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\ARM IAR Generic</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\ARM IAR Generic\cy8c6xx7_cm0plus.icf</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\ARM MDK Generic</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\ARM MDK Generic\cy8c6xx7_cm0plus.scat</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Header Files</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\ARM GCC Generic</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\ARM GCC Generic\startup_psoc63_cm0plus.S</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\ARM IAR Generic</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\ARM IAR Generic\startup_psoc63_cm0plus.s</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\ARM MDK Generic</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\ARM MDK Generic\startup_psoc63_cm0plus.s</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\main_cm0p.c</v>
+<v>lab4_1\lab4_1\CM0p (Core 0)\Source Files\system_psoc63_cm0plus.c</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\ARM GCC Generic</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\ARM GCC Generic\cy8c6xx7_cm4_dual.ld</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\ARM IAR Generic</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\ARM IAR Generic\cy8c6xx7_cm4_dual.icf</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\ARM MDK Generic</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\ARM MDK Generic\cy8c6xx7_cm4_dual.scat</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Header Files</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\ARM GCC Generic</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\ARM GCC Generic\startup_psoc63_cm4.S</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\ARM IAR Generic</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\ARM IAR Generic\startup_psoc63_cm4.s</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\ARM MDK Generic</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\ARM MDK Generic\startup_psoc63_cm4.s</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\main_cm4.c</v>
+<v>lab4_1\lab4_1\CM4 (Core 1)\Source Files\system_psoc63_cm4.c</v>
+<v>lab4_1\lab4_1\Shared Files</v>
+<v>lab4_1\lab4_1\Shared Files\cy_ble_config.h</v>
+<v>lab4_1\lab4_1\Shared Files\cy_ipc_config.c</v>
+<v>lab4_1\lab4_1\Shared Files\cy_ipc_config.h</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>lab4_1</v>
+<v>lab4_1\lab4_1</v>
+<v>lab4_1\lab4_1\TopDesign</v>
+<v>lab4_1\lab4_1\TopDesign\TopDesign.cysch</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>lab4_1</v>
+<v>lab4_1\lab4_1</v>
+<v>lab4_1\lab4_1\TopDesign</v>
+<v>lab4_1\lab4_1\TopDesign\TopDesign.cysch</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>lab4_1</v>
+<v>lab4_1\lab4_1</v>
+<v>lab4_1\lab4_1\CortexM0p</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ble_clk.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_efuse.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_flash.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_gpio.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_config.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_drv.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_pipe.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_sema.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_lvd.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_profile.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_prot.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_sysanalog.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_sysclk.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_sysint.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_syslib.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_syslib_gcc.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_syspm.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_systick.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_tcpwm_counter.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_tcpwm_pwm.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_tcpwm_quaddec.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_trigmux.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_wdt.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cyfitter_sysint_cfg.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\main_cm0p.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\PWM_1.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\PWM_2.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\startup_psoc63_cm0plus.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\system_psoc63_cm0plus.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\lab4_1.elf</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\lab4_1.hex</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\lab4_1.map</v>
+<v>lab4_1\lab4_1\CortexM4</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ble_clk.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_efuse.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_flash.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_gpio.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_config.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_drv.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_pipe.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_sema.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_lvd.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_profile.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_prot.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_sysanalog.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_sysclk.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_sysint.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_syslib.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_syslib_gcc.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_syspm.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_systick.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_tcpwm_counter.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_tcpwm_pwm.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_tcpwm_quaddec.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_trigmux.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_wdt.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cyfitter_sysint_cfg.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\main_cm4.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\PWM_1.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\PWM_2.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\startup_psoc63_cm4.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\system_psoc63_cm4.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\lab4_1.elf</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\lab4_1.hex</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\lab4_1.map</v>
+<v>lab4_1\lab4_1\lab4_1.gpdsc</v>
+<v>lab4_1\lab4_1\lab4_1.rpt</v>
+<v>lab4_1\lab4_1\lab4_1_timing.html</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>lab4_1</v>
+<v>lab4_1\lab4_1</v>
+<v>lab4_1\lab4_1\CortexM0p</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ble_clk.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_efuse.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_flash.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_gpio.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_config.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_drv.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_pipe.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_sema.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_lvd.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_profile.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_prot.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_sysanalog.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_sysclk.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_sysint.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_syslib.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_syslib_gcc.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_syspm.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_systick.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_tcpwm_counter.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_tcpwm_pwm.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_tcpwm_quaddec.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_trigmux.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_wdt.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cyfitter_sysint_cfg.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\main_cm0p.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\PWM_1.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\PWM_2.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\startup_psoc63_cm0plus.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\Listing Files\system_psoc63_cm0plus.lst</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\lab4_1.elf</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\lab4_1.hex</v>
+<v>lab4_1\lab4_1\CortexM0p\ARM_GCC_541\Debug\lab4_1.map</v>
+<v>lab4_1\lab4_1\CortexM4</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ble_clk.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_efuse.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_flash.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_gpio.lst</v>
+<v>lab4_1\lab4_1\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_config.lst</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStates>
+<TreeKeysV2>
+<v>Datasheet</v>
+</TreeKeysV2>
+<TreeStatesV2>
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<ExpandedNodeIds>
+<v>lab4_1</v>
+<v>lab4_1\lab4_1</v>
+<v>lab4_1\lab4_1\PSoC 6 Architecture TRM</v>
+<v>lab4_1\lab4_1\PSoC 63 Family Datasheet</v>
+<v>lab4_1\lab4_1\Peripheral Driver Library</v>
+<v>lab4_1\lab4_1\System Reference Guides</v>
+<v>lab4_1\lab4_1\Gnd_v1_0.pdf</v>
+<v>lab4_1\lab4_1\GPIO_PDL_v1_0.pdf</v>
+<v>lab4_1\lab4_1\LED_v1_0.pdf</v>
+<v>lab4_1\lab4_1\Resistor_v1_0.pdf</v>
+<v>lab4_1\lab4_1\SysClk_PDL_v1_0.pdf</v>
+<v>lab4_1\lab4_1\TCPWM_PWM_PDL_v1_0</v>
+<v>lab4_1\lab4_1\TCPWM_PWM_PDL_v1_0\TCPWM_PWM_PDL_v1_0.pdf</v>
+<v>lab4_1\lab4_1\xor_v1_0.pdf</v>
+</ExpandedNodeIds>
+<VisibleNodeIds>
+<v>lab4_1</v>
+<v>lab4_1\lab4_1</v>
+<v>lab4_1\lab4_1\PSoC 6 Architecture TRM</v>
+<v>lab4_1\lab4_1\PSoC 63 Family Datasheet</v>
+<v>lab4_1\lab4_1\Peripheral Driver Library</v>
+<v>lab4_1\lab4_1\System Reference Guides</v>
+<v>lab4_1\lab4_1\Gnd_v1_0.pdf</v>
+<v>lab4_1\lab4_1\GPIO_PDL_v1_0.pdf</v>
+<v>lab4_1\lab4_1\LED_v1_0.pdf</v>
+<v>lab4_1\lab4_1\Resistor_v1_0.pdf</v>
+<v>lab4_1\lab4_1\SysClk_PDL_v1_0.pdf</v>
+<v>lab4_1\lab4_1\TCPWM_PWM_PDL_v1_0</v>
+<v>lab4_1\lab4_1\TCPWM_PWM_PDL_v1_0\TCPWM_PWM_PDL_v1_0.pdf</v>
+<v>lab4_1\lab4_1\xor_v1_0.pdf</v>
+</VisibleNodeIds>
+</CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
+</TreeStatesV2>
+</CyGuid_1b906a0f-a7b6-4e4d-a428-82f98b53cb35>
+</dataGuid>
+</userData>
+</CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
+<Unloaded />
+<OpenDocs>
+<name v=".\lab4_1.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\lab4_1.cydsn\main_cm4.c" />
+<name v=".\lab4_1.cydsn\lab4_1.cydwr" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1400, 915" SelectedTabbedMdiWindow="a2927261-b2a9-47a2-8361-22330236e499"><ToolWindow Key="Output Window Plugin:7305390e-eabe-4963-b21f-3a0f11b4b1d5:Output Window" Guid="7e9b0da0-e664-42c6-be77-80f7fd8f1b6a" /><ToolWindow Key="CyNoticeWindow:44d3d453-9474-4f2b-b928-4356f496bef0:Notice Window" Guid="5fce2f72-8ccd-4794-8453-74ede0d2b43b" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="5310f859-90b9-4e1b-b1f9-5c9a44eb91bd" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\TopDesign\TopDesign.cysch" Guid="f02f3073-86be-4170-9053-7f48130f2d84" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\main_cm4.c" Guid="a2927261-b2a9-47a2-8361-22330236e499" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\lab4_1.cydwr" Guid="c1f55d38-1428-4e2f-bb3c-ef2b76de7c0f" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+<config v="" />
+<AutoUpdate v="true" />
+</CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
+</CyXmlSerializer>

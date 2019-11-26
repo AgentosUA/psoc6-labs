@@ -13,7 +13,7 @@
 <v>Output</v>
 </TreeKeys>
 <TreeStates>
-<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
+<CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="lab7\lab7\TopDesign">
 <ExpandedNodeIds>
 <v>lab7</v>
 <v>lab7\lab7</v>
@@ -70,6 +70,29 @@
 <v>lab7\lab7\Generated_Source\PSoC6</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
+<v>lab7</v>
+<v>lab7\lab7</v>
+<v>lab7\lab7\TopDesign</v>
+<v>lab7\lab7\lab7.cydwr</v>
+<v>lab7\lab7\lab7.cydwr\Pins</v>
+<v>lab7\lab7\lab7.cydwr\Analog</v>
+<v>lab7\lab7\lab7.cydwr\DMA</v>
+<v>lab7\lab7\lab7.cydwr\Clocks</v>
+<v>lab7\lab7\lab7.cydwr\Interrupts</v>
+<v>lab7\lab7\lab7.cydwr\System</v>
+<v>lab7\lab7\lab7.cydwr\Directives</v>
+<v>lab7\lab7\CM0p (Core 0)</v>
+<v>lab7\lab7\CM0p (Core 0)\ARM GCC Generic</v>
+<v>lab7\lab7\CM0p (Core 0)\ARM GCC Generic\cy8c6xx7_cm0plus.ld</v>
+<v>lab7\lab7\CM0p (Core 0)\ARM IAR Generic</v>
+<v>lab7\lab7\CM0p (Core 0)\ARM IAR Generic\cy8c6xx7_cm0plus.icf</v>
+<v>lab7\lab7\CM0p (Core 0)\ARM MDK Generic</v>
+<v>lab7\lab7\CM0p (Core 0)\ARM MDK Generic\cy8c6xx7_cm0plus.scat</v>
+<v>lab7\lab7\CM0p (Core 0)\Header Files</v>
+<v>lab7\lab7\CM0p (Core 0)\Source Files</v>
+<v>lab7\lab7\CM0p (Core 0)\Source Files\ARM GCC Generic</v>
+<v>lab7\lab7\CM0p (Core 0)\Source Files\ARM GCC Generic\startup_psoc63_cm0plus.S</v>
+<v>lab7\lab7\CM0p (Core 0)\Source Files\ARM IAR Generic</v>
 <v>lab7\lab7\CM0p (Core 0)\Source Files\ARM IAR Generic\startup_psoc63_cm0plus.s</v>
 <v>lab7\lab7\CM0p (Core 0)\Source Files\ARM MDK Generic</v>
 <v>lab7\lab7\CM0p (Core 0)\Source Files\ARM MDK Generic\startup_psoc63_cm0plus.s</v>
@@ -96,29 +119,6 @@
 <v>lab7\lab7\Shared Files\cy_ble_config.h</v>
 <v>lab7\lab7\Shared Files\cy_ipc_config.c</v>
 <v>lab7\lab7\Shared Files\cy_ipc_config.h</v>
-<v>lab7\lab7\Shared Files\cyapicallbacks.h</v>
-<v>lab7\lab7\Shared Files\system_psoc63.h</v>
-<v>lab7\lab7\Generated_Source</v>
-<v>lab7\lab7\Generated_Source\PSoC6</v>
-<v>lab7\lab7\Generated_Source\PSoC6\pdl</v>
-<v>lab7\lab7\Generated_Source\PSoC6\Clock</v>
-<v>lab7\lab7\Generated_Source\PSoC6\Pins and Interrupts</v>
-<v>lab7\lab7\Generated_Source\PSoC6\Timer</v>
-<v>lab7\lab7\Generated_Source\PSoC6\UART</v>
-<v>lab7\lab7\Generated_Source\PSoC6\UART_SCBCLK</v>
-<v>lab7\lab7\Generated_Source\PSoC6\cycodeshareexport.ld</v>
-<v>lab7\lab7\Generated_Source\PSoC6\cycodeshareimport.ld</v>
-<v>lab7\lab7\Generated_Source\PSoC6\cycodeshareimport.scat</v>
-<v>lab7\lab7\Generated_Source\PSoC6\cydevice_trm.h</v>
-<v>lab7\lab7\Generated_Source\PSoC6\cydevicegnu_trm.inc</v>
-<v>lab7\lab7\Generated_Source\PSoC6\cydeviceiar_trm.inc</v>
-<v>lab7\lab7\Generated_Source\PSoC6\cydevicerv_trm.inc</v>
-<v>lab7\lab7\Generated_Source\PSoC6\cydisabledsheets.h</v>
-<v>lab7\lab7\Generated_Source\PSoC6\cyfitter.h</v>
-<v>lab7\lab7\Generated_Source\PSoC6\cyfitter_cfg.c</v>
-<v>lab7\lab7\Generated_Source\PSoC6\cyfitter_cfg.h</v>
-<v>lab7\lab7\Generated_Source\PSoC6\cymetadata.c</v>
-<v>lab7\lab7\Generated_Source\PSoC6\project.h</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 <CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237 type_name="CyDesigner.Common.Base.Controls.CyTreeViewState" version="1" SelectedNodeId="">
@@ -325,14 +325,18 @@
 </userData>
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
-<OpenDocs />
+<OpenDocs>
+<name v=".\lab7.cydsn\main_cm4.c" />
+<name v=".\lab7.cydsn\lab7.cydwr" />
+<name v=".\lab7.cydsn\TopDesign\TopDesign.cysch" />
+</OpenDocs>
 <OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
 
   Actipro Docking/MDI for WinForms
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1527, 711" SelectedTabbedMdiWindow="6d2ea5cb-a242-4c28-9076-e1f67c25afcc"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="6d2ea5cb-a242-4c28-9076-e1f67c25afcc" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1273, 711" SelectedTabbedMdiWindow="5bcfb681-61db-4a0a-bc2e-95c0fa528448"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="6d2ea5cb-a242-4c28-9076-e1f67c25afcc" /><DocumentWindow Key="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab7\lab7_2\lab7.cydsn\main_cm4.c" Guid="32735e03-c6b4-475d-b046-6033bdbc7425" /><DocumentWindow Key="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab7\lab7_2\lab7.cydsn\lab7.cydwr" Guid="6547ace9-d7dc-4f30-99ed-72d25cbb45dc" /><DocumentWindow Key="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab7\lab7_2\lab7.cydsn\TopDesign\TopDesign.cysch" Guid="5bcfb681-61db-4a0a-bc2e-95c0fa528448" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>

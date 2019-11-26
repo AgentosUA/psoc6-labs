@@ -2,7 +2,7 @@
 --	Conversion of lab7.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Wed Oct 23 16:46:19 2019
+--	Wed Oct 30 17:17:59 2019
 --
 
 USE cypress.cypress.all;
@@ -65,6 +65,18 @@ SIGNAL Net_54 : bit;
 SIGNAL Net_55 : bit;
 SIGNAL Net_60 : bit;
 SIGNAL Net_61 : bit;
+TERMINAL Net_96 : bit;
+TERMINAL Net_97 : bit;
+SIGNAL tmpFB_0__Pin_BlueLED_net_0 : bit;
+SIGNAL tmpIO_0__Pin_BlueLED_net_0 : bit;
+TERMINAL tmpSIOVREF__Pin_BlueLED_net_0 : bit;
+TERMINAL Net_98 : bit;
+TERMINAL Net_99 : bit;
+TERMINAL Net_100 : bit;
+SIGNAL tmpFB_0__Pin_RedLED_net_0 : bit;
+SIGNAL tmpIO_0__Pin_RedLED_net_0 : bit;
+TERMINAL tmpSIOVREF__Pin_RedLED_net_0 : bit;
+TERMINAL Net_101 : bit;
 BEGIN
 
 one <=  ('1') ;
@@ -253,5 +265,99 @@ Pin_GreenLED:cy_mxs40_gpio_v1_0
 		tr_tx_req=>Net_58,
 		tr_rx_req=>Net_57,
 		tr_i2c_scl_filtered=>\UART:Net_161\);
+R_1:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Resistor_v1_0",
+		port_names=>"T1, T2",
+		width=>2)
+	PORT MAP(connect=>(Net_96, Net_97));
+Pin_BlueLED:cy_mxs40_gpio_v1_0
+	GENERIC MAP(cy_registers=>"",
+		width=>1,
+		sio_grp_cnt=>0,
+		id=>"0529ff2c-2923-45eb-861b-0f788867e849",
+		drive_mode=>"2",
+		ibuf_enabled=>"0",
+		init_dr_st=>"1",
+		input_sync=>"0",
+		intr_mode=>"0",
+		io_voltage=>"",
+		output_conn=>"0",
+		oe_conn=>"0",
+		output_sync=>"0",
+		oe_sync=>"0",
+		drive_strength=>"0",
+		max_frequency=>"100",
+		output_current_cap=>"8",
+		i2c_mode=>"0",
+		pin_aliases=>"",
+		pin_mode=>"O",
+		slew_rate=>"0",
+		vtrip=>"0",
+		use_annotation=>"1",
+		hotswap_needed=>"0")
+	PORT MAP(oe=>(one),
+		y=>(zero),
+		fb=>(tmpFB_0__Pin_BlueLED_net_0),
+		analog=>(open),
+		io=>(tmpIO_0__Pin_BlueLED_net_0),
+		annotation=>Net_96,
+		siovref=>(tmpSIOVREF__Pin_BlueLED_net_0));
+LED_1:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"LED_v1_0",
+		port_names=>"A, K",
+		width=>2)
+	PORT MAP(connect=>(Net_98, Net_97));
+P6_VDD_1:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Power_v1_0",
+		port_names=>"T1",
+		width=>1)
+	PORT MAP(connect=>Net_98);
+R_3:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Resistor_v1_0",
+		port_names=>"T1, T2",
+		width=>2)
+	PORT MAP(connect=>(Net_99, Net_100));
+Pin_RedLED:cy_mxs40_gpio_v1_0
+	GENERIC MAP(cy_registers=>"",
+		width=>1,
+		sio_grp_cnt=>0,
+		id=>"92209655-5e1a-4c8f-a042-754ad0b55145",
+		drive_mode=>"2",
+		ibuf_enabled=>"0",
+		init_dr_st=>"1",
+		input_sync=>"0",
+		intr_mode=>"0",
+		io_voltage=>"",
+		output_conn=>"0",
+		oe_conn=>"0",
+		output_sync=>"0",
+		oe_sync=>"0",
+		drive_strength=>"0",
+		max_frequency=>"100",
+		output_current_cap=>"8",
+		i2c_mode=>"0",
+		pin_aliases=>"",
+		pin_mode=>"O",
+		slew_rate=>"0",
+		vtrip=>"0",
+		use_annotation=>"1",
+		hotswap_needed=>"0")
+	PORT MAP(oe=>(one),
+		y=>(zero),
+		fb=>(tmpFB_0__Pin_RedLED_net_0),
+		analog=>(open),
+		io=>(tmpIO_0__Pin_RedLED_net_0),
+		annotation=>Net_99,
+		siovref=>(tmpSIOVREF__Pin_RedLED_net_0));
+LED_2:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"LED_v1_0",
+		port_names=>"A, K",
+		width=>2)
+	PORT MAP(connect=>(Net_101, Net_100));
+P6_VDD_2:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Power_v1_0",
+		port_names=>"T1",
+		width=>1)
+	PORT MAP(connect=>Net_101);
 
 END R_T_L;

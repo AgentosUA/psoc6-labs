@@ -2,7 +2,7 @@
 --	Conversion of lab4.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Wed Oct 02 13:56:42 2019
+--	Tue Nov 26 09:52:01 2019
 --
 
 USE cypress.cypress.all;
@@ -36,6 +36,7 @@ SIGNAL tmpFB_0__Pin_Blue_net_0 : bit;
 SIGNAL tmpIO_0__Pin_Blue_net_0 : bit;
 TERMINAL Net_93 : bit;
 TERMINAL tmpSIOVREF__Pin_Blue_net_0 : bit;
+SIGNAL Net_206 : bit;
 SIGNAL \PWM_2:swap\ : bit;
 SIGNAL \PWM_2:count\ : bit;
 SIGNAL \PWM_2:reload\ : bit;
@@ -53,6 +54,7 @@ SIGNAL tmpFB_0__Pin_Green_net_0 : bit;
 SIGNAL tmpIO_0__Pin_Green_net_0 : bit;
 TERMINAL Net_111 : bit;
 TERMINAL tmpSIOVREF__Pin_Green_net_0 : bit;
+SIGNAL Net_207 : bit;
 SIGNAL \PWM_3:swap\ : bit;
 SIGNAL \PWM_3:count\ : bit;
 SIGNAL \PWM_3:reload\ : bit;
@@ -180,7 +182,7 @@ Pin_Blue:cy_mxs40_gpio_v1_0
 	GENERIC MAP(cy_registers=>"",
 		width=>16,
 		exact_width=>'0')
-	PORT MAP(clock=>Net_184,
+	PORT MAP(clock=>Net_206,
 		capture=>\PWM_1:swap\,
 		count=>one,
 		reload=>\PWM_1:swap\,
@@ -243,7 +245,7 @@ Pin_Green:cy_mxs40_gpio_v1_0
 	GENERIC MAP(cy_registers=>"",
 		width=>16,
 		exact_width=>'0')
-	PORT MAP(clock=>Net_184,
+	PORT MAP(clock=>Net_207,
 		capture=>\PWM_1:swap\,
 		count=>one,
 		reload=>\PWM_1:swap\,
@@ -270,5 +272,25 @@ GND_3:cy_annotation_universal_v1_0
 		port_names=>"T1",
 		width=>1)
 	PORT MAP(connect=>Net_125);
+Clock_2:cy_clock_v1_0
+	GENERIC MAP(cy_registers=>"",
+		id=>"b263e233-404e-4db1-99fc-4b1ba6a77c6b",
+		source_clock_id=>"2FB4EC85-8328-4C5A-9ED9-8B63060178EB",
+		divisor=>0,
+		period=>"1000000000000",
+		is_direct=>'0',
+		is_digital=>'0')
+	PORT MAP(clock_out=>Net_206,
+		dig_domain_out=>open);
+Clock_3:cy_clock_v1_0
+	GENERIC MAP(cy_registers=>"",
+		id=>"cbd7eef2-cf6a-4c3f-8f0d-1040a957b251",
+		source_clock_id=>"2FB4EC85-8328-4C5A-9ED9-8B63060178EB",
+		divisor=>0,
+		period=>"1000000000000",
+		is_direct=>'0',
+		is_digital=>'0')
+	PORT MAP(clock_out=>Net_207,
+		dig_domain_out=>open);
 
 END R_T_L;

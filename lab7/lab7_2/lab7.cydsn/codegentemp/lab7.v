@@ -1,6 +1,6 @@
 // ======================================================================
 // lab7.v generated from TopDesign.cysch
-// 10/23/2019 at 16:46
+// 10/30/2019 at 17:17
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -395,7 +395,13 @@ module top ;
           wire  Net_4;
           wire  Net_3;
           wire  Net_2;
-          wire  Net_76;
+          wire  Net_95;
+    electrical  Net_100;
+    electrical  Net_101;
+    electrical  Net_99;
+    electrical  Net_97;
+    electrical  Net_98;
+    electrical  Net_96;
     electrical  Net_66;
     electrical  Net_15;
     electrical  Net_25;
@@ -511,6 +517,138 @@ module top ;
         .rx_in(1'b0),
         .rx_tx_out(Net_60),
         .tx_en_out(Net_61));
+
+    cy_annotation_universal_v1_0 R_1 (
+        .connect({
+            Net_96,
+            Net_97
+        })
+    );
+    defparam R_1.comp_name = "Resistor_v1_0";
+    defparam R_1.port_names = "T1, T2";
+    defparam R_1.width = 2;
+
+	wire [0:0] tmpFB_0__Pin_BlueLED_net;
+	wire [0:0] tmpIO_0__Pin_BlueLED_net;
+	electrical [0:0] tmpSIOVREF__Pin_BlueLED_net;
+
+	cy_mxs40_gpio_v1_0
+		#(.id("0529ff2c-2923-45eb-861b-0f788867e849"),
+		  .width(1),
+		  .sio_grp_cnt(0),
+		  .drive_mode("2"),
+		  .ibuf_enabled("0"),
+		  .init_dr_st("1"),
+		  .input_sync("0"),
+		  .intr_mode("0"),
+		  .io_voltage(""),
+		  .output_conn("0"),
+		  .oe_conn("0"),
+		  .output_sync("0"),
+		  .oe_sync("0"),
+		  .drive_strength("0"),
+		  .max_frequency("100"),
+		  .i2c_mode("0"),
+		  .output_current_cap("8"),
+		  .pin_aliases(""),
+		  .pin_mode("O"),
+		  .slew_rate("0"),
+		  .vtrip("0"),
+		  .use_annotation("1"),
+		  .hotswap_needed("0"))
+		Pin_BlueLED
+		 (.oe({1'b1}),
+		  .y({1'b0}),
+		  .fb({tmpFB_0__Pin_BlueLED_net[0:0]}),
+		  .io({tmpIO_0__Pin_BlueLED_net[0:0]}),
+		  .siovref(tmpSIOVREF__Pin_BlueLED_net),
+		  .annotation({Net_96}));
+
+
+    cy_annotation_universal_v1_0 LED_1 (
+        .connect({
+            Net_98,
+            Net_97
+        })
+    );
+    defparam LED_1.comp_name = "LED_v1_0";
+    defparam LED_1.port_names = "A, K";
+    defparam LED_1.width = 2;
+
+    cy_annotation_universal_v1_0 P6_VDD_1 (
+        .connect({
+            Net_98
+        })
+    );
+    defparam P6_VDD_1.comp_name = "Power_v1_0";
+    defparam P6_VDD_1.port_names = "T1";
+    defparam P6_VDD_1.width = 1;
+
+    cy_annotation_universal_v1_0 R_3 (
+        .connect({
+            Net_99,
+            Net_100
+        })
+    );
+    defparam R_3.comp_name = "Resistor_v1_0";
+    defparam R_3.port_names = "T1, T2";
+    defparam R_3.width = 2;
+
+	wire [0:0] tmpFB_0__Pin_RedLED_net;
+	wire [0:0] tmpIO_0__Pin_RedLED_net;
+	electrical [0:0] tmpSIOVREF__Pin_RedLED_net;
+
+	cy_mxs40_gpio_v1_0
+		#(.id("92209655-5e1a-4c8f-a042-754ad0b55145"),
+		  .width(1),
+		  .sio_grp_cnt(0),
+		  .drive_mode("2"),
+		  .ibuf_enabled("0"),
+		  .init_dr_st("1"),
+		  .input_sync("0"),
+		  .intr_mode("0"),
+		  .io_voltage(""),
+		  .output_conn("0"),
+		  .oe_conn("0"),
+		  .output_sync("0"),
+		  .oe_sync("0"),
+		  .drive_strength("0"),
+		  .max_frequency("100"),
+		  .i2c_mode("0"),
+		  .output_current_cap("8"),
+		  .pin_aliases(""),
+		  .pin_mode("O"),
+		  .slew_rate("0"),
+		  .vtrip("0"),
+		  .use_annotation("1"),
+		  .hotswap_needed("0"))
+		Pin_RedLED
+		 (.oe({1'b1}),
+		  .y({1'b0}),
+		  .fb({tmpFB_0__Pin_RedLED_net[0:0]}),
+		  .io({tmpIO_0__Pin_RedLED_net[0:0]}),
+		  .siovref(tmpSIOVREF__Pin_RedLED_net),
+		  .annotation({Net_99}));
+
+
+    cy_annotation_universal_v1_0 LED_2 (
+        .connect({
+            Net_101,
+            Net_100
+        })
+    );
+    defparam LED_2.comp_name = "LED_v1_0";
+    defparam LED_2.port_names = "A, K";
+    defparam LED_2.width = 2;
+
+    cy_annotation_universal_v1_0 P6_VDD_2 (
+        .connect({
+            Net_101
+        })
+    );
+    defparam P6_VDD_2.comp_name = "Power_v1_0";
+    defparam P6_VDD_2.port_names = "T1";
+    defparam P6_VDD_2.width = 1;
 
 
 

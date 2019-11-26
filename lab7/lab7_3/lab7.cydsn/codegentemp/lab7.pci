@@ -1,0 +1,14 @@
+# lab7
+# 2019-11-06 15:39:22Z
+
+dont_use_location p4usbcell -1 -1 0
+dont_use_location USB -1 -1 0
+dont_use_location usbcell -1 -1 0
+set_location "ClockGenBlock" CLK_GEN -1 -1 0
+set_io "CY_CPUSS_SWJ_SWCLK_TCLK(0)" iocell 6 7
+set_io "CY_CPUSS_SWJ_SWDIO_TMS(0)" iocell 6 6
+set_io "Pin_GreenLED(0)" iocell 1 1
+set_io "\UART:tx(0)\" iocell 5 1
+set_io "\UART:rx(0)\" iocell 5 0
+set_io "Pin_RedLED(0)" iocell 0 3
+set_io "Pin_BlueLED(0)" iocell 11 1

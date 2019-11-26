@@ -1,0 +1,1568 @@
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"GUI_X.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.GUI_X_Systick_Intr,"ax",%progbits
+  21              		.align	2
+  22              		.global	GUI_X_Systick_Intr
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	GUI_X_Systick_Intr, %function
+  26              	GUI_X_Systick_Intr:
+  27              	.LFB139:
+  28              		.file 1 "GUI_X.c"
+   1:GUI_X.c       **** /*********************************************************************
+   2:GUI_X.c       **** *                SEGGER Microcontroller GmbH & Co. KG                *
+   3:GUI_X.c       **** *        Solutions for real time microcontroller applications        *
+   4:GUI_X.c       **** **********************************************************************
+   5:GUI_X.c       **** *                                                                    *
+   6:GUI_X.c       **** *        (c) 1996 - 2017  SEGGER Microcontroller GmbH & Co. KG       *
+   7:GUI_X.c       **** *                                                                    *
+   8:GUI_X.c       **** *        Internet: www.segger.com    Support:  support@segger.com    *
+   9:GUI_X.c       **** *                                                                    *
+  10:GUI_X.c       **** **********************************************************************
+  11:GUI_X.c       **** 
+  12:GUI_X.c       **** ** emWin V5.46 - Graphical user interface for embedded applications **
+  13:GUI_X.c       **** All  Intellectual Property rights  in the Software belongs to  SEGGER.
+  14:GUI_X.c       **** emWin is protected by  international copyright laws.  Knowledge of the
+  15:GUI_X.c       **** source code may not be used to write a similar product.  This file may
+  16:GUI_X.c       **** only be used in accordance with the following terms:
+  17:GUI_X.c       **** 
+  18:GUI_X.c       **** The software  has been licensed to  Cypress Semiconductor Corporation,
+  19:GUI_X.c       **** whose registered  office is situated  at 198 Champion Ct. San Jose, CA 
+  20:GUI_X.c       **** 95134 USA  solely for the  purposes of creating  libraries for Cypress
+  21:GUI_X.c       **** PSoC3 and  PSoC5 processor-based devices,  sublicensed and distributed
+  22:GUI_X.c       **** under  the  terms  and  conditions  of  the  Cypress  End User License
+  23:GUI_X.c       **** Agreement.
+  24:GUI_X.c       **** Full source code is available at: www.segger.com
+  25:GUI_X.c       **** 
+  26:GUI_X.c       **** We appreciate your understanding and fairness.
+  27:GUI_X.c       **** ----------------------------------------------------------------------
+  28:GUI_X.c       **** Licensing information
+  29:GUI_X.c       **** Licensor:                 SEGGER Microcontroller Systems LLC
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 2
+
+
+  30:GUI_X.c       **** Licensed to:              Cypress Semiconductor Corp, 198 Champion Ct., San Jose, CA 95134, USA
+  31:GUI_X.c       **** Licensed SEGGER software: emWin
+  32:GUI_X.c       **** License number:           GUI-00319
+  33:GUI_X.c       **** License model:            Services and License Agreement, signed June 10th, 2009
+  34:GUI_X.c       **** Licensed platform:        Any Cypress platform (Initial targets are: PSoC3, PSoC5)
+  35:GUI_X.c       **** ----------------------------------------------------------------------
+  36:GUI_X.c       **** Support and Update Agreement (SUA)
+  37:GUI_X.c       **** SUA period:               2009-06-12 - 2022-07-27
+  38:GUI_X.c       **** Contact to extend SUA:    sales@segger.com
+  39:GUI_X.c       **** ----------------------------------------------------------------------
+  40:GUI_X.c       **** File        : GUI_X.C
+  41:GUI_X.c       **** Purpose     : Config / System dependent externals for GUI
+  42:GUI_X.c       **** ---------------------------END-OF-HEADER------------------------------
+  43:GUI_X.c       **** */
+  44:GUI_X.c       **** 
+  45:GUI_X.c       **** #include "syslib/cy_syslib.h"   
+  46:GUI_X.c       **** #include "systick/cy_systick.h"
+  47:GUI_X.c       **** 
+  48:GUI_X.c       **** #include "GUI.h"
+  49:GUI_X.c       **** 
+  50:GUI_X.c       **** /*********************************************************************
+  51:GUI_X.c       **** *
+  52:GUI_X.c       **** *       Function Prototypes
+  53:GUI_X.c       **** */
+  54:GUI_X.c       **** void GUI_X_Systick_Init(void);
+  55:GUI_X.c       **** 
+  56:GUI_X.c       **** /*********************************************************************
+  57:GUI_X.c       **** *
+  58:GUI_X.c       **** *       Global data
+  59:GUI_X.c       **** */
+  60:GUI_X.c       **** volatile GUI_TIMER_TIME OS_TimeMS;
+  61:GUI_X.c       **** 
+  62:GUI_X.c       **** /*********************************************************************
+  63:GUI_X.c       **** *
+  64:GUI_X.c       **** *      Timing:
+  65:GUI_X.c       **** *                 GUI_X_GetTime()
+  66:GUI_X.c       **** *                 GUI_X_Delay(int)
+  67:GUI_X.c       **** *
+  68:GUI_X.c       **** *   Some timing dependent routines require a GetTime
+  69:GUI_X.c       **** *   and delay function. Default time unit (tick), normally is
+  70:GUI_X.c       **** *   1 ms.
+  71:GUI_X.c       **** */
+  72:GUI_X.c       **** GUI_TIMER_TIME GUI_X_GetTime(void) { 
+  73:GUI_X.c       ****   return OS_TimeMS; 
+  74:GUI_X.c       **** }
+  75:GUI_X.c       **** 
+  76:GUI_X.c       **** void GUI_X_Delay(int ms) { 
+  77:GUI_X.c       ****   int tEnd = OS_TimeMS + ms;
+  78:GUI_X.c       ****   while ((tEnd - OS_TimeMS) > 0);
+  79:GUI_X.c       **** }
+  80:GUI_X.c       **** 
+  81:GUI_X.c       **** /*********************************************************************
+  82:GUI_X.c       **** *
+  83:GUI_X.c       **** *       GUI_X_Init()
+  84:GUI_X.c       **** *
+  85:GUI_X.c       **** * Note:
+  86:GUI_X.c       **** *     GUI_X_Init() is called from GUI_Init is a possibility to init
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 3
+
+
+  87:GUI_X.c       **** *     some hardware which needs to be up and running before the GUI.
+  88:GUI_X.c       **** */
+  89:GUI_X.c       **** void GUI_X_Init(void) {
+  90:GUI_X.c       ****   GUI_X_Systick_Init();
+  91:GUI_X.c       **** }
+  92:GUI_X.c       **** 
+  93:GUI_X.c       **** 
+  94:GUI_X.c       **** /*********************************************************************
+  95:GUI_X.c       **** *
+  96:GUI_X.c       **** *       GUI_X_ExecIdle
+  97:GUI_X.c       **** *
+  98:GUI_X.c       **** * Note:
+  99:GUI_X.c       **** *  Called if WM is in idle state
+ 100:GUI_X.c       **** */
+ 101:GUI_X.c       **** void GUI_X_ExecIdle(void) {}
+ 102:GUI_X.c       **** 
+ 103:GUI_X.c       **** /*********************************************************************
+ 104:GUI_X.c       **** *
+ 105:GUI_X.c       **** *      Logging: OS dependent
+ 106:GUI_X.c       **** * 
+ 107:GUI_X.c       **** * Note:
+ 108:GUI_X.c       **** *   Logging is used in higher debug levels only. The typical target
+ 109:GUI_X.c       **** *   build does not use logging and does therefor not require any of
+ 110:GUI_X.c       **** *   the logging routines below. For a release build without logging
+ 111:GUI_X.c       **** *   the routines below may be eliminated to save some space.
+ 112:GUI_X.c       **** *   (If the linker is not function aware and eliminates unreferenced
+ 113:GUI_X.c       **** *   functions automatically)
+ 114:GUI_X.c       **** */
+ 115:GUI_X.c       **** void GUI_X_Log     (const char *s) { GUI_USE_PARA(s); }
+ 116:GUI_X.c       **** void GUI_X_Warn    (const char *s) { GUI_USE_PARA(s); }
+ 117:GUI_X.c       **** void GUI_X_ErrorOut(const char *s) { GUI_USE_PARA(s); }
+ 118:GUI_X.c       **** 
+ 119:GUI_X.c       **** /*********************************************************************
+ 120:GUI_X.c       **** *
+ 121:GUI_X.c       **** *         Setup Systick for timing
+ 122:GUI_X.c       **** *
+ 123:GUI_X.c       **** */
+ 124:GUI_X.c       **** /*********************************************************************
+ 125:GUI_X.c       **** *
+ 126:GUI_X.c       **** *       GUI_X_Systick_Intr
+ 127:GUI_X.c       **** *
+ 128:GUI_X.c       **** * Purpose:
+ 129:GUI_X.c       **** *   Interrupt Service Routine for Systick.
+ 130:GUI_X.c       **** */
+ 131:GUI_X.c       **** void GUI_X_Systick_Intr(void){    
+  29              		.loc 1 131 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+ 132:GUI_X.c       ****   OS_TimeMS++;
+  34              		.loc 1 132 0
+  35 0000 024A     		ldr	r2, .L2
+  36 0002 1368     		ldr	r3, [r2]
+  37 0004 0133     		adds	r3, r3, #1
+  38 0006 1360     		str	r3, [r2]
+  39 0008 7047     		bx	lr
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 4
+
+
+  40              	.L3:
+  41 000a 00BF     		.align	2
+  42              	.L2:
+  43 000c 00000000 		.word	OS_TimeMS
+  44              		.cfi_endproc
+  45              	.LFE139:
+  46              		.size	GUI_X_Systick_Intr, .-GUI_X_Systick_Intr
+  47              		.section	.text.GUI_X_GetTime,"ax",%progbits
+  48              		.align	2
+  49              		.global	GUI_X_GetTime
+  50              		.thumb
+  51              		.thumb_func
+  52              		.type	GUI_X_GetTime, %function
+  53              	GUI_X_GetTime:
+  54              	.LFB132:
+  72:GUI_X.c       ****   return OS_TimeMS; 
+  55              		.loc 1 72 0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 0
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              		@ link register save eliminated.
+  73:GUI_X.c       **** }
+  60              		.loc 1 73 0
+  61 0000 014B     		ldr	r3, .L5
+  62 0002 1868     		ldr	r0, [r3]
+  74:GUI_X.c       **** 
+  63              		.loc 1 74 0
+  64 0004 7047     		bx	lr
+  65              	.L6:
+  66 0006 00BF     		.align	2
+  67              	.L5:
+  68 0008 00000000 		.word	OS_TimeMS
+  69              		.cfi_endproc
+  70              	.LFE132:
+  71              		.size	GUI_X_GetTime, .-GUI_X_GetTime
+  72              		.section	.text.GUI_X_Delay,"ax",%progbits
+  73              		.align	2
+  74              		.global	GUI_X_Delay
+  75              		.thumb
+  76              		.thumb_func
+  77              		.type	GUI_X_Delay, %function
+  78              	GUI_X_Delay:
+  79              	.LFB133:
+  76:GUI_X.c       ****   int tEnd = OS_TimeMS + ms;
+  80              		.loc 1 76 0
+  81              		.cfi_startproc
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+  84              		@ link register save eliminated.
+  85              	.LVL0:
+  77:GUI_X.c       ****   while ((tEnd - OS_TimeMS) > 0);
+  86              		.loc 1 77 0
+  87 0000 044B     		ldr	r3, .L9
+  88 0002 1B68     		ldr	r3, [r3]
+  89 0004 1844     		add	r0, r0, r3
+  90              	.LVL1:
+  91              	.L8:
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 5
+
+
+  78:GUI_X.c       **** }
+  92              		.loc 1 78 0 discriminator 1
+  93 0006 034B     		ldr	r3, .L9
+  94 0008 1B68     		ldr	r3, [r3]
+  95 000a C31A     		subs	r3, r0, r3
+  96 000c 002B     		cmp	r3, #0
+  97 000e FADC     		bgt	.L8
+  79:GUI_X.c       **** 
+  98              		.loc 1 79 0
+  99 0010 7047     		bx	lr
+ 100              	.L10:
+ 101 0012 00BF     		.align	2
+ 102              	.L9:
+ 103 0014 00000000 		.word	OS_TimeMS
+ 104              		.cfi_endproc
+ 105              	.LFE133:
+ 106              		.size	GUI_X_Delay, .-GUI_X_Delay
+ 107              		.section	.text.GUI_X_ExecIdle,"ax",%progbits
+ 108              		.align	2
+ 109              		.global	GUI_X_ExecIdle
+ 110              		.thumb
+ 111              		.thumb_func
+ 112              		.type	GUI_X_ExecIdle, %function
+ 113              	GUI_X_ExecIdle:
+ 114              	.LFB135:
+ 101:GUI_X.c       **** 
+ 115              		.loc 1 101 0
+ 116              		.cfi_startproc
+ 117              		@ args = 0, pretend = 0, frame = 0
+ 118              		@ frame_needed = 0, uses_anonymous_args = 0
+ 119              		@ link register save eliminated.
+ 120 0000 7047     		bx	lr
+ 121              		.cfi_endproc
+ 122              	.LFE135:
+ 123              		.size	GUI_X_ExecIdle, .-GUI_X_ExecIdle
+ 124 0002 00BF     		.section	.text.GUI_X_Log,"ax",%progbits
+ 125              		.align	2
+ 126              		.global	GUI_X_Log
+ 127              		.thumb
+ 128              		.thumb_func
+ 129              		.type	GUI_X_Log, %function
+ 130              	GUI_X_Log:
+ 131              	.LFB136:
+ 115:GUI_X.c       **** void GUI_X_Warn    (const char *s) { GUI_USE_PARA(s); }
+ 132              		.loc 1 115 0
+ 133              		.cfi_startproc
+ 134              		@ args = 0, pretend = 0, frame = 0
+ 135              		@ frame_needed = 0, uses_anonymous_args = 0
+ 136              		@ link register save eliminated.
+ 137              	.LVL2:
+ 138 0000 7047     		bx	lr
+ 139              		.cfi_endproc
+ 140              	.LFE136:
+ 141              		.size	GUI_X_Log, .-GUI_X_Log
+ 142 0002 00BF     		.section	.text.GUI_X_Warn,"ax",%progbits
+ 143              		.align	2
+ 144              		.global	GUI_X_Warn
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 6
+
+
+ 145              		.thumb
+ 146              		.thumb_func
+ 147              		.type	GUI_X_Warn, %function
+ 148              	GUI_X_Warn:
+ 149              	.LFB137:
+ 116:GUI_X.c       **** void GUI_X_ErrorOut(const char *s) { GUI_USE_PARA(s); }
+ 150              		.loc 1 116 0
+ 151              		.cfi_startproc
+ 152              		@ args = 0, pretend = 0, frame = 0
+ 153              		@ frame_needed = 0, uses_anonymous_args = 0
+ 154              		@ link register save eliminated.
+ 155              	.LVL3:
+ 156 0000 7047     		bx	lr
+ 157              		.cfi_endproc
+ 158              	.LFE137:
+ 159              		.size	GUI_X_Warn, .-GUI_X_Warn
+ 160 0002 00BF     		.section	.text.GUI_X_ErrorOut,"ax",%progbits
+ 161              		.align	2
+ 162              		.global	GUI_X_ErrorOut
+ 163              		.thumb
+ 164              		.thumb_func
+ 165              		.type	GUI_X_ErrorOut, %function
+ 166              	GUI_X_ErrorOut:
+ 167              	.LFB138:
+ 117:GUI_X.c       **** 
+ 168              		.loc 1 117 0
+ 169              		.cfi_startproc
+ 170              		@ args = 0, pretend = 0, frame = 0
+ 171              		@ frame_needed = 0, uses_anonymous_args = 0
+ 172              		@ link register save eliminated.
+ 173              	.LVL4:
+ 174 0000 7047     		bx	lr
+ 175              		.cfi_endproc
+ 176              	.LFE138:
+ 177              		.size	GUI_X_ErrorOut, .-GUI_X_ErrorOut
+ 178 0002 00BF     		.section	.text.GUI_X_Systick_Init,"ax",%progbits
+ 179              		.align	2
+ 180              		.global	GUI_X_Systick_Init
+ 181              		.thumb
+ 182              		.thumb_func
+ 183              		.type	GUI_X_Systick_Init, %function
+ 184              	GUI_X_Systick_Init:
+ 185              	.LFB140:
+ 133:GUI_X.c       **** }
+ 134:GUI_X.c       **** 
+ 135:GUI_X.c       **** /*********************************************************************
+ 136:GUI_X.c       **** *
+ 137:GUI_X.c       **** *       GUI_X_Systick_Init
+ 138:GUI_X.c       **** *
+ 139:GUI_X.c       **** * Purpose:
+ 140:GUI_X.c       **** *   Set up the Systick interrupt and enable it.
+ 141:GUI_X.c       **** */
+ 142:GUI_X.c       **** void GUI_X_Systick_Init(void){ 
+ 186              		.loc 1 142 0
+ 187              		.cfi_startproc
+ 188              		@ args = 0, pretend = 0, frame = 0
+ 189              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 7
+
+
+ 190              		.loc 1 142 0
+ 191 0000 10B5     		push	{r4, lr}
+ 192              		.cfi_def_cfa_offset 8
+ 193              		.cfi_offset 4, -8
+ 194              		.cfi_offset 14, -4
+ 143:GUI_X.c       ****   uint32_t i;
+ 144:GUI_X.c       ****   //
+ 145:GUI_X.c       ****   // Configure the SysTick timer to generate interrupt every 1 ms 
+ 146:GUI_X.c       ****   // and start its operation.
+ 147:GUI_X.c       ****   //
+ 148:GUI_X.c       ****   Cy_SysTick_Init(CY_SYSTICK_CLOCK_SOURCE_CLK_LF, 32U);
+ 195              		.loc 1 148 0
+ 196 0002 2021     		movs	r1, #32
+ 197 0004 0020     		movs	r0, #0
+ 198 0006 FFF7FEFF 		bl	Cy_SysTick_Init
+ 199              	.LVL5:
+ 149:GUI_X.c       ****   //
+ 150:GUI_X.c       ****   // Find unused callback slot.
+ 151:GUI_X.c       ****   //
+ 152:GUI_X.c       ****   for (i = 0u; i < CY_SYS_SYST_NUM_OF_CALLBACKS; i++){
+ 200              		.loc 1 152 0
+ 201 000a 0024     		movs	r4, #0
+ 202 000c 09E0     		b	.L16
+ 203              	.LVL6:
+ 204              	.L19:
+ 153:GUI_X.c       ****     if (Cy_SysTick_GetCallback(i) == NULL){
+ 205              		.loc 1 153 0
+ 206 000e 2046     		mov	r0, r4
+ 207 0010 FFF7FEFF 		bl	Cy_SysTick_GetCallback
+ 208              	.LVL7:
+ 209 0014 20B9     		cbnz	r0, .L17
+ 154:GUI_X.c       ****       //
+ 155:GUI_X.c       ****       // Set callback
+ 156:GUI_X.c       ****       //
+ 157:GUI_X.c       ****       (void)Cy_SysTick_SetCallback(i, GUI_X_Systick_Intr);
+ 210              		.loc 1 157 0
+ 211 0016 0849     		ldr	r1, .L22
+ 212 0018 2046     		mov	r0, r4
+ 213 001a FFF7FEFF 		bl	Cy_SysTick_SetCallback
+ 214              	.LVL8:
+ 158:GUI_X.c       ****       break;
+ 215              		.loc 1 158 0
+ 216 001e 02E0     		b	.L18
+ 217              	.L17:
+ 152:GUI_X.c       ****     if (Cy_SysTick_GetCallback(i) == NULL){
+ 218              		.loc 1 152 0 discriminator 2
+ 219 0020 0134     		adds	r4, r4, #1
+ 220              	.LVL9:
+ 221              	.L16:
+ 152:GUI_X.c       ****     if (Cy_SysTick_GetCallback(i) == NULL){
+ 222              		.loc 1 152 0 is_stmt 0 discriminator 1
+ 223 0022 042C     		cmp	r4, #4
+ 224 0024 F3D9     		bls	.L19
+ 225              	.L18:
+ 159:GUI_X.c       ****     }
+ 160:GUI_X.c       ****   }
+ 161:GUI_X.c       ****   //
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 8
+
+
+ 162:GUI_X.c       ****   // Assert when callback slot not found
+ 163:GUI_X.c       ****   //
+ 164:GUI_X.c       ****   CY_ASSERT(i < CY_SYS_SYST_NUM_OF_CALLBACKS);
+ 226              		.loc 1 164 0 is_stmt 1
+ 227 0026 042C     		cmp	r4, #4
+ 228 0028 03D9     		bls	.L20
+ 229              		.loc 1 164 0 is_stmt 0 discriminator 1
+ 230 002a A421     		movs	r1, #164
+ 231 002c 0348     		ldr	r0, .L22+4
+ 232 002e FFF7FEFF 		bl	Cy_SysLib_AssertFailed
+ 233              	.LVL10:
+ 234              	.L20:
+ 165:GUI_X.c       ****   
+ 166:GUI_X.c       ****   Cy_SysTick_Enable();
+ 235              		.loc 1 166 0 is_stmt 1
+ 236 0032 FFF7FEFF 		bl	Cy_SysTick_Enable
+ 237              	.LVL11:
+ 238 0036 10BD     		pop	{r4, pc}
+ 239              	.LVL12:
+ 240              	.L23:
+ 241              		.align	2
+ 242              	.L22:
+ 243 0038 00000000 		.word	GUI_X_Systick_Intr
+ 244 003c 00000000 		.word	.LC0
+ 245              		.cfi_endproc
+ 246              	.LFE140:
+ 247              		.size	GUI_X_Systick_Init, .-GUI_X_Systick_Init
+ 248              		.section	.text.GUI_X_Init,"ax",%progbits
+ 249              		.align	2
+ 250              		.global	GUI_X_Init
+ 251              		.thumb
+ 252              		.thumb_func
+ 253              		.type	GUI_X_Init, %function
+ 254              	GUI_X_Init:
+ 255              	.LFB134:
+  89:GUI_X.c       ****   GUI_X_Systick_Init();
+ 256              		.loc 1 89 0
+ 257              		.cfi_startproc
+ 258              		@ args = 0, pretend = 0, frame = 0
+ 259              		@ frame_needed = 0, uses_anonymous_args = 0
+ 260 0000 08B5     		push	{r3, lr}
+ 261              		.cfi_def_cfa_offset 8
+ 262              		.cfi_offset 3, -8
+ 263              		.cfi_offset 14, -4
+  90:GUI_X.c       **** }
+ 264              		.loc 1 90 0
+ 265 0002 FFF7FEFF 		bl	GUI_X_Systick_Init
+ 266              	.LVL13:
+ 267 0006 08BD     		pop	{r3, pc}
+ 268              		.cfi_endproc
+ 269              	.LFE134:
+ 270              		.size	GUI_X_Init, .-GUI_X_Init
+ 271              		.comm	OS_TimeMS,4,4
+ 272              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 273              		.align	2
+ 274              	.LC0:
+ 275 0000 4755495F 		.ascii	"GUI_X.c\000"
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 9
+
+
+ 275      582E6300 
+ 276              		.text
+ 277              	.Letext0:
+ 278              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 279              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 280              		.file 4 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/syslib/cy_syslib.h"
+ 281              		.file 5 "Generated_Source\\PSoC6\\pdl\\cmsis/include/core_cm4.h"
+ 282              		.file 6 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/systick/cy_systick.h"
+ 283              		.section	.debug_info,"",%progbits
+ 284              	.Ldebug_info0:
+ 285 0000 D5020000 		.4byte	0x2d5
+ 286 0004 0400     		.2byte	0x4
+ 287 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 288 000a 04       		.byte	0x4
+ 289 000b 01       		.uleb128 0x1
+ 290 000c CD010000 		.4byte	.LASF40
+ 291 0010 0C       		.byte	0xc
+ 292 0011 36030000 		.4byte	.LASF41
+ 293 0015 86010000 		.4byte	.LASF42
+ 294 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 295 001d 00000000 		.4byte	0
+ 296 0021 00000000 		.4byte	.Ldebug_line0
+ 297 0025 02       		.uleb128 0x2
+ 298 0026 01       		.byte	0x1
+ 299 0027 06       		.byte	0x6
+ 300 0028 00000000 		.4byte	.LASF0
+ 301 002c 02       		.uleb128 0x2
+ 302 002d 01       		.byte	0x1
+ 303 002e 08       		.byte	0x8
+ 304 002f 8C000000 		.4byte	.LASF1
+ 305 0033 02       		.uleb128 0x2
+ 306 0034 02       		.byte	0x2
+ 307 0035 05       		.byte	0x5
+ 308 0036 E3020000 		.4byte	.LASF2
+ 309 003a 02       		.uleb128 0x2
+ 310 003b 02       		.byte	0x2
+ 311 003c 07       		.byte	0x7
+ 312 003d AC000000 		.4byte	.LASF3
+ 313 0041 03       		.uleb128 0x3
+ 314 0042 27000000 		.4byte	.LASF5
+ 315 0046 02       		.byte	0x2
+ 316 0047 3F       		.byte	0x3f
+ 317 0048 4C000000 		.4byte	0x4c
+ 318 004c 02       		.uleb128 0x2
+ 319 004d 04       		.byte	0x4
+ 320 004e 05       		.byte	0x5
+ 321 004f 3B000000 		.4byte	.LASF4
+ 322 0053 03       		.uleb128 0x3
+ 323 0054 FE000000 		.4byte	.LASF6
+ 324 0058 02       		.byte	0x2
+ 325 0059 41       		.byte	0x41
+ 326 005a 5E000000 		.4byte	0x5e
+ 327 005e 02       		.uleb128 0x2
+ 328 005f 04       		.byte	0x4
+ 329 0060 07       		.byte	0x7
+ 330 0061 9A000000 		.4byte	.LASF7
+ 331 0065 02       		.uleb128 0x2
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 10
+
+
+ 332 0066 08       		.byte	0x8
+ 333 0067 05       		.byte	0x5
+ 334 0068 A0020000 		.4byte	.LASF8
+ 335 006c 02       		.uleb128 0x2
+ 336 006d 08       		.byte	0x8
+ 337 006e 07       		.byte	0x7
+ 338 006f 6F010000 		.4byte	.LASF9
+ 339 0073 04       		.uleb128 0x4
+ 340 0074 04       		.byte	0x4
+ 341 0075 05       		.byte	0x5
+ 342 0076 696E7400 		.ascii	"int\000"
+ 343 007a 02       		.uleb128 0x2
+ 344 007b 04       		.byte	0x4
+ 345 007c 07       		.byte	0x7
+ 346 007d 4B010000 		.4byte	.LASF10
+ 347 0081 03       		.uleb128 0x3
+ 348 0082 8A020000 		.4byte	.LASF11
+ 349 0086 03       		.byte	0x3
+ 350 0087 2C       		.byte	0x2c
+ 351 0088 41000000 		.4byte	0x41
+ 352 008c 03       		.uleb128 0x3
+ 353 008d FF020000 		.4byte	.LASF12
+ 354 0091 03       		.byte	0x3
+ 355 0092 30       		.byte	0x30
+ 356 0093 53000000 		.4byte	0x53
+ 357 0097 02       		.uleb128 0x2
+ 358 0098 04       		.byte	0x4
+ 359 0099 07       		.byte	0x7
+ 360 009a 92020000 		.4byte	.LASF13
+ 361 009e 05       		.uleb128 0x5
+ 362 009f 55030000 		.4byte	.LASF14
+ 363 00a3 04       		.byte	0x4
+ 364 00a4 C401     		.2byte	0x1c4
+ 365 00a6 AA000000 		.4byte	0xaa
+ 366 00aa 02       		.uleb128 0x2
+ 367 00ab 01       		.byte	0x1
+ 368 00ac 08       		.byte	0x8
+ 369 00ad AE020000 		.4byte	.LASF15
+ 370 00b1 02       		.uleb128 0x2
+ 371 00b2 04       		.byte	0x4
+ 372 00b3 04       		.byte	0x4
+ 373 00b4 44000000 		.4byte	.LASF16
+ 374 00b8 02       		.uleb128 0x2
+ 375 00b9 08       		.byte	0x8
+ 376 00ba 04       		.byte	0x4
+ 377 00bb F7000000 		.4byte	.LASF17
+ 378 00bf 06       		.uleb128 0x6
+ 379 00c0 01       		.byte	0x1
+ 380 00c1 2C000000 		.4byte	0x2c
+ 381 00c5 06       		.byte	0x6
+ 382 00c6 6A       		.byte	0x6a
+ 383 00c7 EA000000 		.4byte	0xea
+ 384 00cb 07       		.uleb128 0x7
+ 385 00cc CB000000 		.4byte	.LASF18
+ 386 00d0 00       		.byte	0
+ 387 00d1 07       		.uleb128 0x7
+ 388 00d2 5C030000 		.4byte	.LASF19
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 11
+
+
+ 389 00d6 01       		.byte	0x1
+ 390 00d7 07       		.uleb128 0x7
+ 391 00d8 6C000000 		.4byte	.LASF20
+ 392 00dc 02       		.byte	0x2
+ 393 00dd 07       		.uleb128 0x7
+ 394 00de 08030000 		.4byte	.LASF21
+ 395 00e2 03       		.byte	0x3
+ 396 00e3 07       		.uleb128 0x7
+ 397 00e4 09010000 		.4byte	.LASF22
+ 398 00e8 04       		.byte	0x4
+ 399 00e9 00       		.byte	0
+ 400 00ea 02       		.uleb128 0x2
+ 401 00eb 08       		.byte	0x8
+ 402 00ec 04       		.byte	0x4
+ 403 00ed 2A030000 		.4byte	.LASF23
+ 404 00f1 08       		.uleb128 0x8
+ 405 00f2 04       		.byte	0x4
+ 406 00f3 F7000000 		.4byte	0xf7
+ 407 00f7 09       		.uleb128 0x9
+ 408 00f8 AA000000 		.4byte	0xaa
+ 409 00fc 0A       		.uleb128 0xa
+ 410 00fd 29010000 		.4byte	.LASF24
+ 411 0101 01       		.byte	0x1
+ 412 0102 83       		.byte	0x83
+ 413 0103 00000000 		.4byte	.LFB139
+ 414 0107 10000000 		.4byte	.LFE139-.LFB139
+ 415 010b 01       		.uleb128 0x1
+ 416 010c 9C       		.byte	0x9c
+ 417 010d 0B       		.uleb128 0xb
+ 418 010e D5020000 		.4byte	.LASF43
+ 419 0112 01       		.byte	0x1
+ 420 0113 48       		.byte	0x48
+ 421 0114 73000000 		.4byte	0x73
+ 422 0118 00000000 		.4byte	.LFB132
+ 423 011c 0C000000 		.4byte	.LFE132-.LFB132
+ 424 0120 01       		.uleb128 0x1
+ 425 0121 9C       		.byte	0x9c
+ 426 0122 0C       		.uleb128 0xc
+ 427 0123 BF000000 		.4byte	.LASF26
+ 428 0127 01       		.byte	0x1
+ 429 0128 4C       		.byte	0x4c
+ 430 0129 00000000 		.4byte	.LFB133
+ 431 012d 18000000 		.4byte	.LFE133-.LFB133
+ 432 0131 01       		.uleb128 0x1
+ 433 0132 9C       		.byte	0x9c
+ 434 0133 53010000 		.4byte	0x153
+ 435 0137 0D       		.uleb128 0xd
+ 436 0138 6D7300   		.ascii	"ms\000"
+ 437 013b 01       		.byte	0x1
+ 438 013c 4C       		.byte	0x4c
+ 439 013d 73000000 		.4byte	0x73
+ 440 0141 00000000 		.4byte	.LLST0
+ 441 0145 0E       		.uleb128 0xe
+ 442 0146 9B020000 		.4byte	.LASF31
+ 443 014a 01       		.byte	0x1
+ 444 014b 4D       		.byte	0x4d
+ 445 014c 73000000 		.4byte	0x73
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 12
+
+
+ 446 0150 01       		.uleb128 0x1
+ 447 0151 50       		.byte	0x50
+ 448 0152 00       		.byte	0
+ 449 0153 0A       		.uleb128 0xa
+ 450 0154 C6020000 		.4byte	.LASF25
+ 451 0158 01       		.byte	0x1
+ 452 0159 65       		.byte	0x65
+ 453 015a 00000000 		.4byte	.LFB135
+ 454 015e 02000000 		.4byte	.LFE135-.LFB135
+ 455 0162 01       		.uleb128 0x1
+ 456 0163 9C       		.byte	0x9c
+ 457 0164 0C       		.uleb128 0xc
+ 458 0165 31000000 		.4byte	.LASF27
+ 459 0169 01       		.byte	0x1
+ 460 016a 73       		.byte	0x73
+ 461 016b 00000000 		.4byte	.LFB136
+ 462 016f 02000000 		.4byte	.LFE136-.LFB136
+ 463 0173 01       		.uleb128 0x1
+ 464 0174 9C       		.byte	0x9c
+ 465 0175 85010000 		.4byte	0x185
+ 466 0179 0F       		.uleb128 0xf
+ 467 017a 7300     		.ascii	"s\000"
+ 468 017c 01       		.byte	0x1
+ 469 017d 73       		.byte	0x73
+ 470 017e F1000000 		.4byte	0xf1
+ 471 0182 01       		.uleb128 0x1
+ 472 0183 50       		.byte	0x50
+ 473 0184 00       		.byte	0
+ 474 0185 0C       		.uleb128 0xc
+ 475 0186 4A000000 		.4byte	.LASF28
+ 476 018a 01       		.byte	0x1
+ 477 018b 74       		.byte	0x74
+ 478 018c 00000000 		.4byte	.LFB137
+ 479 0190 02000000 		.4byte	.LFE137-.LFB137
+ 480 0194 01       		.uleb128 0x1
+ 481 0195 9C       		.byte	0x9c
+ 482 0196 A6010000 		.4byte	0x1a6
+ 483 019a 0F       		.uleb128 0xf
+ 484 019b 7300     		.ascii	"s\000"
+ 485 019d 01       		.byte	0x1
+ 486 019e 74       		.byte	0x74
+ 487 019f F1000000 		.4byte	0xf1
+ 488 01a3 01       		.uleb128 0x1
+ 489 01a4 50       		.byte	0x50
+ 490 01a5 00       		.byte	0
+ 491 01a6 0C       		.uleb128 0xc
+ 492 01a7 3C010000 		.4byte	.LASF29
+ 493 01ab 01       		.byte	0x1
+ 494 01ac 75       		.byte	0x75
+ 495 01ad 00000000 		.4byte	.LFB138
+ 496 01b1 02000000 		.4byte	.LFE138-.LFB138
+ 497 01b5 01       		.uleb128 0x1
+ 498 01b6 9C       		.byte	0x9c
+ 499 01b7 C7010000 		.4byte	0x1c7
+ 500 01bb 0F       		.uleb128 0xf
+ 501 01bc 7300     		.ascii	"s\000"
+ 502 01be 01       		.byte	0x1
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 13
+
+
+ 503 01bf 75       		.byte	0x75
+ 504 01c0 F1000000 		.4byte	0xf1
+ 505 01c4 01       		.uleb128 0x1
+ 506 01c5 50       		.byte	0x50
+ 507 01c6 00       		.byte	0
+ 508 01c7 0C       		.uleb128 0xc
+ 509 01c8 B3020000 		.4byte	.LASF30
+ 510 01cc 01       		.byte	0x1
+ 511 01cd 8E       		.byte	0x8e
+ 512 01ce 00000000 		.4byte	.LFB140
+ 513 01d2 40000000 		.4byte	.LFE140-.LFB140
+ 514 01d6 01       		.uleb128 0x1
+ 515 01d7 9C       		.byte	0x9c
+ 516 01d8 5A020000 		.4byte	0x25a
+ 517 01dc 10       		.uleb128 0x10
+ 518 01dd 6900     		.ascii	"i\000"
+ 519 01df 01       		.byte	0x1
+ 520 01e0 8F       		.byte	0x8f
+ 521 01e1 8C000000 		.4byte	0x8c
+ 522 01e5 21000000 		.4byte	.LLST1
+ 523 01e9 11       		.uleb128 0x11
+ 524 01ea 0A000000 		.4byte	.LVL5
+ 525 01ee A0020000 		.4byte	0x2a0
+ 526 01f2 02020000 		.4byte	0x202
+ 527 01f6 12       		.uleb128 0x12
+ 528 01f7 01       		.uleb128 0x1
+ 529 01f8 50       		.byte	0x50
+ 530 01f9 01       		.uleb128 0x1
+ 531 01fa 30       		.byte	0x30
+ 532 01fb 12       		.uleb128 0x12
+ 533 01fc 01       		.uleb128 0x1
+ 534 01fd 51       		.byte	0x51
+ 535 01fe 02       		.uleb128 0x2
+ 536 01ff 08       		.byte	0x8
+ 537 0200 20       		.byte	0x20
+ 538 0201 00       		.byte	0
+ 539 0202 11       		.uleb128 0x11
+ 540 0203 14000000 		.4byte	.LVL7
+ 541 0207 AB020000 		.4byte	0x2ab
+ 542 020b 16020000 		.4byte	0x216
+ 543 020f 12       		.uleb128 0x12
+ 544 0210 01       		.uleb128 0x1
+ 545 0211 50       		.byte	0x50
+ 546 0212 02       		.uleb128 0x2
+ 547 0213 74       		.byte	0x74
+ 548 0214 00       		.sleb128 0
+ 549 0215 00       		.byte	0
+ 550 0216 11       		.uleb128 0x11
+ 551 0217 1E000000 		.4byte	.LVL8
+ 552 021b B6020000 		.4byte	0x2b6
+ 553 021f 33020000 		.4byte	0x233
+ 554 0223 12       		.uleb128 0x12
+ 555 0224 01       		.uleb128 0x1
+ 556 0225 50       		.byte	0x50
+ 557 0226 02       		.uleb128 0x2
+ 558 0227 74       		.byte	0x74
+ 559 0228 00       		.sleb128 0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 14
+
+
+ 560 0229 12       		.uleb128 0x12
+ 561 022a 01       		.uleb128 0x1
+ 562 022b 51       		.byte	0x51
+ 563 022c 05       		.uleb128 0x5
+ 564 022d 03       		.byte	0x3
+ 565 022e 00000000 		.4byte	GUI_X_Systick_Intr
+ 566 0232 00       		.byte	0
+ 567 0233 11       		.uleb128 0x11
+ 568 0234 32000000 		.4byte	.LVL10
+ 569 0238 C1020000 		.4byte	0x2c1
+ 570 023c 50020000 		.4byte	0x250
+ 571 0240 12       		.uleb128 0x12
+ 572 0241 01       		.uleb128 0x1
+ 573 0242 50       		.byte	0x50
+ 574 0243 05       		.uleb128 0x5
+ 575 0244 03       		.byte	0x3
+ 576 0245 00000000 		.4byte	.LC0
+ 577 0249 12       		.uleb128 0x12
+ 578 024a 01       		.uleb128 0x1
+ 579 024b 51       		.byte	0x51
+ 580 024c 02       		.uleb128 0x2
+ 581 024d 08       		.byte	0x8
+ 582 024e A4       		.byte	0xa4
+ 583 024f 00       		.byte	0
+ 584 0250 13       		.uleb128 0x13
+ 585 0251 36000000 		.4byte	.LVL11
+ 586 0255 CD020000 		.4byte	0x2cd
+ 587 0259 00       		.byte	0
+ 588 025a 0C       		.uleb128 0xc
+ 589 025b 1C000000 		.4byte	.LASF32
+ 590 025f 01       		.byte	0x1
+ 591 0260 59       		.byte	0x59
+ 592 0261 00000000 		.4byte	.LFB134
+ 593 0265 08000000 		.4byte	.LFE134-.LFB134
+ 594 0269 01       		.uleb128 0x1
+ 595 026a 9C       		.byte	0x9c
+ 596 026b 79020000 		.4byte	0x279
+ 597 026f 13       		.uleb128 0x13
+ 598 0270 06000000 		.4byte	.LVL13
+ 599 0274 C7010000 		.4byte	0x1c7
+ 600 0278 00       		.byte	0
+ 601 0279 14       		.uleb128 0x14
+ 602 027a EA000000 		.4byte	.LASF33
+ 603 027e 05       		.byte	0x5
+ 604 027f EA07     		.2byte	0x7ea
+ 605 0281 85020000 		.4byte	0x285
+ 606 0285 15       		.uleb128 0x15
+ 607 0286 81000000 		.4byte	0x81
+ 608 028a 16       		.uleb128 0x16
+ 609 028b 80020000 		.4byte	.LASF34
+ 610 028f 01       		.byte	0x1
+ 611 0290 3C       		.byte	0x3c
+ 612 0291 9B020000 		.4byte	0x29b
+ 613 0295 05       		.uleb128 0x5
+ 614 0296 03       		.byte	0x3
+ 615 0297 00000000 		.4byte	OS_TimeMS
+ 616 029b 15       		.uleb128 0x15
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 15
+
+
+ 617 029c 73000000 		.4byte	0x73
+ 618 02a0 17       		.uleb128 0x17
+ 619 02a1 0C000000 		.4byte	.LASF35
+ 620 02a5 0C000000 		.4byte	.LASF35
+ 621 02a9 06       		.byte	0x6
+ 622 02aa 7A       		.byte	0x7a
+ 623 02ab 17       		.uleb128 0x17
+ 624 02ac 58010000 		.4byte	.LASF36
+ 625 02b0 58010000 		.4byte	.LASF36
+ 626 02b4 06       		.byte	0x6
+ 627 02b5 7E       		.byte	0x7e
+ 628 02b6 17       		.uleb128 0x17
+ 629 02b7 55000000 		.4byte	.LASF37
+ 630 02bb 55000000 		.4byte	.LASF37
+ 631 02bf 06       		.byte	0x6
+ 632 02c0 7D       		.byte	0x7d
+ 633 02c1 18       		.uleb128 0x18
+ 634 02c2 3E030000 		.4byte	.LASF38
+ 635 02c6 3E030000 		.4byte	.LASF38
+ 636 02ca 04       		.byte	0x4
+ 637 02cb 2A03     		.2byte	0x32a
+ 638 02cd 17       		.uleb128 0x17
+ 639 02ce ED020000 		.4byte	.LASF39
+ 640 02d2 ED020000 		.4byte	.LASF39
+ 641 02d6 06       		.byte	0x6
+ 642 02d7 7B       		.byte	0x7b
+ 643 02d8 00       		.byte	0
+ 644              		.section	.debug_abbrev,"",%progbits
+ 645              	.Ldebug_abbrev0:
+ 646 0000 01       		.uleb128 0x1
+ 647 0001 11       		.uleb128 0x11
+ 648 0002 01       		.byte	0x1
+ 649 0003 25       		.uleb128 0x25
+ 650 0004 0E       		.uleb128 0xe
+ 651 0005 13       		.uleb128 0x13
+ 652 0006 0B       		.uleb128 0xb
+ 653 0007 03       		.uleb128 0x3
+ 654 0008 0E       		.uleb128 0xe
+ 655 0009 1B       		.uleb128 0x1b
+ 656 000a 0E       		.uleb128 0xe
+ 657 000b 55       		.uleb128 0x55
+ 658 000c 17       		.uleb128 0x17
+ 659 000d 11       		.uleb128 0x11
+ 660 000e 01       		.uleb128 0x1
+ 661 000f 10       		.uleb128 0x10
+ 662 0010 17       		.uleb128 0x17
+ 663 0011 00       		.byte	0
+ 664 0012 00       		.byte	0
+ 665 0013 02       		.uleb128 0x2
+ 666 0014 24       		.uleb128 0x24
+ 667 0015 00       		.byte	0
+ 668 0016 0B       		.uleb128 0xb
+ 669 0017 0B       		.uleb128 0xb
+ 670 0018 3E       		.uleb128 0x3e
+ 671 0019 0B       		.uleb128 0xb
+ 672 001a 03       		.uleb128 0x3
+ 673 001b 0E       		.uleb128 0xe
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 16
+
+
+ 674 001c 00       		.byte	0
+ 675 001d 00       		.byte	0
+ 676 001e 03       		.uleb128 0x3
+ 677 001f 16       		.uleb128 0x16
+ 678 0020 00       		.byte	0
+ 679 0021 03       		.uleb128 0x3
+ 680 0022 0E       		.uleb128 0xe
+ 681 0023 3A       		.uleb128 0x3a
+ 682 0024 0B       		.uleb128 0xb
+ 683 0025 3B       		.uleb128 0x3b
+ 684 0026 0B       		.uleb128 0xb
+ 685 0027 49       		.uleb128 0x49
+ 686 0028 13       		.uleb128 0x13
+ 687 0029 00       		.byte	0
+ 688 002a 00       		.byte	0
+ 689 002b 04       		.uleb128 0x4
+ 690 002c 24       		.uleb128 0x24
+ 691 002d 00       		.byte	0
+ 692 002e 0B       		.uleb128 0xb
+ 693 002f 0B       		.uleb128 0xb
+ 694 0030 3E       		.uleb128 0x3e
+ 695 0031 0B       		.uleb128 0xb
+ 696 0032 03       		.uleb128 0x3
+ 697 0033 08       		.uleb128 0x8
+ 698 0034 00       		.byte	0
+ 699 0035 00       		.byte	0
+ 700 0036 05       		.uleb128 0x5
+ 701 0037 16       		.uleb128 0x16
+ 702 0038 00       		.byte	0
+ 703 0039 03       		.uleb128 0x3
+ 704 003a 0E       		.uleb128 0xe
+ 705 003b 3A       		.uleb128 0x3a
+ 706 003c 0B       		.uleb128 0xb
+ 707 003d 3B       		.uleb128 0x3b
+ 708 003e 05       		.uleb128 0x5
+ 709 003f 49       		.uleb128 0x49
+ 710 0040 13       		.uleb128 0x13
+ 711 0041 00       		.byte	0
+ 712 0042 00       		.byte	0
+ 713 0043 06       		.uleb128 0x6
+ 714 0044 04       		.uleb128 0x4
+ 715 0045 01       		.byte	0x1
+ 716 0046 0B       		.uleb128 0xb
+ 717 0047 0B       		.uleb128 0xb
+ 718 0048 49       		.uleb128 0x49
+ 719 0049 13       		.uleb128 0x13
+ 720 004a 3A       		.uleb128 0x3a
+ 721 004b 0B       		.uleb128 0xb
+ 722 004c 3B       		.uleb128 0x3b
+ 723 004d 0B       		.uleb128 0xb
+ 724 004e 01       		.uleb128 0x1
+ 725 004f 13       		.uleb128 0x13
+ 726 0050 00       		.byte	0
+ 727 0051 00       		.byte	0
+ 728 0052 07       		.uleb128 0x7
+ 729 0053 28       		.uleb128 0x28
+ 730 0054 00       		.byte	0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 17
+
+
+ 731 0055 03       		.uleb128 0x3
+ 732 0056 0E       		.uleb128 0xe
+ 733 0057 1C       		.uleb128 0x1c
+ 734 0058 0B       		.uleb128 0xb
+ 735 0059 00       		.byte	0
+ 736 005a 00       		.byte	0
+ 737 005b 08       		.uleb128 0x8
+ 738 005c 0F       		.uleb128 0xf
+ 739 005d 00       		.byte	0
+ 740 005e 0B       		.uleb128 0xb
+ 741 005f 0B       		.uleb128 0xb
+ 742 0060 49       		.uleb128 0x49
+ 743 0061 13       		.uleb128 0x13
+ 744 0062 00       		.byte	0
+ 745 0063 00       		.byte	0
+ 746 0064 09       		.uleb128 0x9
+ 747 0065 26       		.uleb128 0x26
+ 748 0066 00       		.byte	0
+ 749 0067 49       		.uleb128 0x49
+ 750 0068 13       		.uleb128 0x13
+ 751 0069 00       		.byte	0
+ 752 006a 00       		.byte	0
+ 753 006b 0A       		.uleb128 0xa
+ 754 006c 2E       		.uleb128 0x2e
+ 755 006d 00       		.byte	0
+ 756 006e 3F       		.uleb128 0x3f
+ 757 006f 19       		.uleb128 0x19
+ 758 0070 03       		.uleb128 0x3
+ 759 0071 0E       		.uleb128 0xe
+ 760 0072 3A       		.uleb128 0x3a
+ 761 0073 0B       		.uleb128 0xb
+ 762 0074 3B       		.uleb128 0x3b
+ 763 0075 0B       		.uleb128 0xb
+ 764 0076 27       		.uleb128 0x27
+ 765 0077 19       		.uleb128 0x19
+ 766 0078 11       		.uleb128 0x11
+ 767 0079 01       		.uleb128 0x1
+ 768 007a 12       		.uleb128 0x12
+ 769 007b 06       		.uleb128 0x6
+ 770 007c 40       		.uleb128 0x40
+ 771 007d 18       		.uleb128 0x18
+ 772 007e 9742     		.uleb128 0x2117
+ 773 0080 19       		.uleb128 0x19
+ 774 0081 00       		.byte	0
+ 775 0082 00       		.byte	0
+ 776 0083 0B       		.uleb128 0xb
+ 777 0084 2E       		.uleb128 0x2e
+ 778 0085 00       		.byte	0
+ 779 0086 3F       		.uleb128 0x3f
+ 780 0087 19       		.uleb128 0x19
+ 781 0088 03       		.uleb128 0x3
+ 782 0089 0E       		.uleb128 0xe
+ 783 008a 3A       		.uleb128 0x3a
+ 784 008b 0B       		.uleb128 0xb
+ 785 008c 3B       		.uleb128 0x3b
+ 786 008d 0B       		.uleb128 0xb
+ 787 008e 27       		.uleb128 0x27
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 18
+
+
+ 788 008f 19       		.uleb128 0x19
+ 789 0090 49       		.uleb128 0x49
+ 790 0091 13       		.uleb128 0x13
+ 791 0092 11       		.uleb128 0x11
+ 792 0093 01       		.uleb128 0x1
+ 793 0094 12       		.uleb128 0x12
+ 794 0095 06       		.uleb128 0x6
+ 795 0096 40       		.uleb128 0x40
+ 796 0097 18       		.uleb128 0x18
+ 797 0098 9742     		.uleb128 0x2117
+ 798 009a 19       		.uleb128 0x19
+ 799 009b 00       		.byte	0
+ 800 009c 00       		.byte	0
+ 801 009d 0C       		.uleb128 0xc
+ 802 009e 2E       		.uleb128 0x2e
+ 803 009f 01       		.byte	0x1
+ 804 00a0 3F       		.uleb128 0x3f
+ 805 00a1 19       		.uleb128 0x19
+ 806 00a2 03       		.uleb128 0x3
+ 807 00a3 0E       		.uleb128 0xe
+ 808 00a4 3A       		.uleb128 0x3a
+ 809 00a5 0B       		.uleb128 0xb
+ 810 00a6 3B       		.uleb128 0x3b
+ 811 00a7 0B       		.uleb128 0xb
+ 812 00a8 27       		.uleb128 0x27
+ 813 00a9 19       		.uleb128 0x19
+ 814 00aa 11       		.uleb128 0x11
+ 815 00ab 01       		.uleb128 0x1
+ 816 00ac 12       		.uleb128 0x12
+ 817 00ad 06       		.uleb128 0x6
+ 818 00ae 40       		.uleb128 0x40
+ 819 00af 18       		.uleb128 0x18
+ 820 00b0 9742     		.uleb128 0x2117
+ 821 00b2 19       		.uleb128 0x19
+ 822 00b3 01       		.uleb128 0x1
+ 823 00b4 13       		.uleb128 0x13
+ 824 00b5 00       		.byte	0
+ 825 00b6 00       		.byte	0
+ 826 00b7 0D       		.uleb128 0xd
+ 827 00b8 05       		.uleb128 0x5
+ 828 00b9 00       		.byte	0
+ 829 00ba 03       		.uleb128 0x3
+ 830 00bb 08       		.uleb128 0x8
+ 831 00bc 3A       		.uleb128 0x3a
+ 832 00bd 0B       		.uleb128 0xb
+ 833 00be 3B       		.uleb128 0x3b
+ 834 00bf 0B       		.uleb128 0xb
+ 835 00c0 49       		.uleb128 0x49
+ 836 00c1 13       		.uleb128 0x13
+ 837 00c2 02       		.uleb128 0x2
+ 838 00c3 17       		.uleb128 0x17
+ 839 00c4 00       		.byte	0
+ 840 00c5 00       		.byte	0
+ 841 00c6 0E       		.uleb128 0xe
+ 842 00c7 34       		.uleb128 0x34
+ 843 00c8 00       		.byte	0
+ 844 00c9 03       		.uleb128 0x3
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 19
+
+
+ 845 00ca 0E       		.uleb128 0xe
+ 846 00cb 3A       		.uleb128 0x3a
+ 847 00cc 0B       		.uleb128 0xb
+ 848 00cd 3B       		.uleb128 0x3b
+ 849 00ce 0B       		.uleb128 0xb
+ 850 00cf 49       		.uleb128 0x49
+ 851 00d0 13       		.uleb128 0x13
+ 852 00d1 02       		.uleb128 0x2
+ 853 00d2 18       		.uleb128 0x18
+ 854 00d3 00       		.byte	0
+ 855 00d4 00       		.byte	0
+ 856 00d5 0F       		.uleb128 0xf
+ 857 00d6 05       		.uleb128 0x5
+ 858 00d7 00       		.byte	0
+ 859 00d8 03       		.uleb128 0x3
+ 860 00d9 08       		.uleb128 0x8
+ 861 00da 3A       		.uleb128 0x3a
+ 862 00db 0B       		.uleb128 0xb
+ 863 00dc 3B       		.uleb128 0x3b
+ 864 00dd 0B       		.uleb128 0xb
+ 865 00de 49       		.uleb128 0x49
+ 866 00df 13       		.uleb128 0x13
+ 867 00e0 02       		.uleb128 0x2
+ 868 00e1 18       		.uleb128 0x18
+ 869 00e2 00       		.byte	0
+ 870 00e3 00       		.byte	0
+ 871 00e4 10       		.uleb128 0x10
+ 872 00e5 34       		.uleb128 0x34
+ 873 00e6 00       		.byte	0
+ 874 00e7 03       		.uleb128 0x3
+ 875 00e8 08       		.uleb128 0x8
+ 876 00e9 3A       		.uleb128 0x3a
+ 877 00ea 0B       		.uleb128 0xb
+ 878 00eb 3B       		.uleb128 0x3b
+ 879 00ec 0B       		.uleb128 0xb
+ 880 00ed 49       		.uleb128 0x49
+ 881 00ee 13       		.uleb128 0x13
+ 882 00ef 02       		.uleb128 0x2
+ 883 00f0 17       		.uleb128 0x17
+ 884 00f1 00       		.byte	0
+ 885 00f2 00       		.byte	0
+ 886 00f3 11       		.uleb128 0x11
+ 887 00f4 898201   		.uleb128 0x4109
+ 888 00f7 01       		.byte	0x1
+ 889 00f8 11       		.uleb128 0x11
+ 890 00f9 01       		.uleb128 0x1
+ 891 00fa 31       		.uleb128 0x31
+ 892 00fb 13       		.uleb128 0x13
+ 893 00fc 01       		.uleb128 0x1
+ 894 00fd 13       		.uleb128 0x13
+ 895 00fe 00       		.byte	0
+ 896 00ff 00       		.byte	0
+ 897 0100 12       		.uleb128 0x12
+ 898 0101 8A8201   		.uleb128 0x410a
+ 899 0104 00       		.byte	0
+ 900 0105 02       		.uleb128 0x2
+ 901 0106 18       		.uleb128 0x18
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 20
+
+
+ 902 0107 9142     		.uleb128 0x2111
+ 903 0109 18       		.uleb128 0x18
+ 904 010a 00       		.byte	0
+ 905 010b 00       		.byte	0
+ 906 010c 13       		.uleb128 0x13
+ 907 010d 898201   		.uleb128 0x4109
+ 908 0110 00       		.byte	0
+ 909 0111 11       		.uleb128 0x11
+ 910 0112 01       		.uleb128 0x1
+ 911 0113 31       		.uleb128 0x31
+ 912 0114 13       		.uleb128 0x13
+ 913 0115 00       		.byte	0
+ 914 0116 00       		.byte	0
+ 915 0117 14       		.uleb128 0x14
+ 916 0118 34       		.uleb128 0x34
+ 917 0119 00       		.byte	0
+ 918 011a 03       		.uleb128 0x3
+ 919 011b 0E       		.uleb128 0xe
+ 920 011c 3A       		.uleb128 0x3a
+ 921 011d 0B       		.uleb128 0xb
+ 922 011e 3B       		.uleb128 0x3b
+ 923 011f 05       		.uleb128 0x5
+ 924 0120 49       		.uleb128 0x49
+ 925 0121 13       		.uleb128 0x13
+ 926 0122 3F       		.uleb128 0x3f
+ 927 0123 19       		.uleb128 0x19
+ 928 0124 3C       		.uleb128 0x3c
+ 929 0125 19       		.uleb128 0x19
+ 930 0126 00       		.byte	0
+ 931 0127 00       		.byte	0
+ 932 0128 15       		.uleb128 0x15
+ 933 0129 35       		.uleb128 0x35
+ 934 012a 00       		.byte	0
+ 935 012b 49       		.uleb128 0x49
+ 936 012c 13       		.uleb128 0x13
+ 937 012d 00       		.byte	0
+ 938 012e 00       		.byte	0
+ 939 012f 16       		.uleb128 0x16
+ 940 0130 34       		.uleb128 0x34
+ 941 0131 00       		.byte	0
+ 942 0132 03       		.uleb128 0x3
+ 943 0133 0E       		.uleb128 0xe
+ 944 0134 3A       		.uleb128 0x3a
+ 945 0135 0B       		.uleb128 0xb
+ 946 0136 3B       		.uleb128 0x3b
+ 947 0137 0B       		.uleb128 0xb
+ 948 0138 49       		.uleb128 0x49
+ 949 0139 13       		.uleb128 0x13
+ 950 013a 3F       		.uleb128 0x3f
+ 951 013b 19       		.uleb128 0x19
+ 952 013c 02       		.uleb128 0x2
+ 953 013d 18       		.uleb128 0x18
+ 954 013e 00       		.byte	0
+ 955 013f 00       		.byte	0
+ 956 0140 17       		.uleb128 0x17
+ 957 0141 2E       		.uleb128 0x2e
+ 958 0142 00       		.byte	0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 21
+
+
+ 959 0143 3F       		.uleb128 0x3f
+ 960 0144 19       		.uleb128 0x19
+ 961 0145 3C       		.uleb128 0x3c
+ 962 0146 19       		.uleb128 0x19
+ 963 0147 6E       		.uleb128 0x6e
+ 964 0148 0E       		.uleb128 0xe
+ 965 0149 03       		.uleb128 0x3
+ 966 014a 0E       		.uleb128 0xe
+ 967 014b 3A       		.uleb128 0x3a
+ 968 014c 0B       		.uleb128 0xb
+ 969 014d 3B       		.uleb128 0x3b
+ 970 014e 0B       		.uleb128 0xb
+ 971 014f 00       		.byte	0
+ 972 0150 00       		.byte	0
+ 973 0151 18       		.uleb128 0x18
+ 974 0152 2E       		.uleb128 0x2e
+ 975 0153 00       		.byte	0
+ 976 0154 3F       		.uleb128 0x3f
+ 977 0155 19       		.uleb128 0x19
+ 978 0156 3C       		.uleb128 0x3c
+ 979 0157 19       		.uleb128 0x19
+ 980 0158 6E       		.uleb128 0x6e
+ 981 0159 0E       		.uleb128 0xe
+ 982 015a 03       		.uleb128 0x3
+ 983 015b 0E       		.uleb128 0xe
+ 984 015c 3A       		.uleb128 0x3a
+ 985 015d 0B       		.uleb128 0xb
+ 986 015e 3B       		.uleb128 0x3b
+ 987 015f 05       		.uleb128 0x5
+ 988 0160 00       		.byte	0
+ 989 0161 00       		.byte	0
+ 990 0162 00       		.byte	0
+ 991              		.section	.debug_loc,"",%progbits
+ 992              	.Ldebug_loc0:
+ 993              	.LLST0:
+ 994 0000 00000000 		.4byte	.LVL0
+ 995 0004 06000000 		.4byte	.LVL1
+ 996 0008 0100     		.2byte	0x1
+ 997 000a 50       		.byte	0x50
+ 998 000b 06000000 		.4byte	.LVL1
+ 999 000f 18000000 		.4byte	.LFE133
+ 1000 0013 0400     		.2byte	0x4
+ 1001 0015 F3       		.byte	0xf3
+ 1002 0016 01       		.uleb128 0x1
+ 1003 0017 50       		.byte	0x50
+ 1004 0018 9F       		.byte	0x9f
+ 1005 0019 00000000 		.4byte	0
+ 1006 001d 00000000 		.4byte	0
+ 1007              	.LLST1:
+ 1008 0021 0A000000 		.4byte	.LVL5
+ 1009 0025 0E000000 		.4byte	.LVL6
+ 1010 0029 0200     		.2byte	0x2
+ 1011 002b 30       		.byte	0x30
+ 1012 002c 9F       		.byte	0x9f
+ 1013 002d 0E000000 		.4byte	.LVL6
+ 1014 0031 38000000 		.4byte	.LVL12
+ 1015 0035 0100     		.2byte	0x1
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 22
+
+
+ 1016 0037 54       		.byte	0x54
+ 1017 0038 00000000 		.4byte	0
+ 1018 003c 00000000 		.4byte	0
+ 1019              		.section	.debug_aranges,"",%progbits
+ 1020 0000 5C000000 		.4byte	0x5c
+ 1021 0004 0200     		.2byte	0x2
+ 1022 0006 00000000 		.4byte	.Ldebug_info0
+ 1023 000a 04       		.byte	0x4
+ 1024 000b 00       		.byte	0
+ 1025 000c 0000     		.2byte	0
+ 1026 000e 0000     		.2byte	0
+ 1027 0010 00000000 		.4byte	.LFB139
+ 1028 0014 10000000 		.4byte	.LFE139-.LFB139
+ 1029 0018 00000000 		.4byte	.LFB132
+ 1030 001c 0C000000 		.4byte	.LFE132-.LFB132
+ 1031 0020 00000000 		.4byte	.LFB133
+ 1032 0024 18000000 		.4byte	.LFE133-.LFB133
+ 1033 0028 00000000 		.4byte	.LFB135
+ 1034 002c 02000000 		.4byte	.LFE135-.LFB135
+ 1035 0030 00000000 		.4byte	.LFB136
+ 1036 0034 02000000 		.4byte	.LFE136-.LFB136
+ 1037 0038 00000000 		.4byte	.LFB137
+ 1038 003c 02000000 		.4byte	.LFE137-.LFB137
+ 1039 0040 00000000 		.4byte	.LFB138
+ 1040 0044 02000000 		.4byte	.LFE138-.LFB138
+ 1041 0048 00000000 		.4byte	.LFB140
+ 1042 004c 40000000 		.4byte	.LFE140-.LFB140
+ 1043 0050 00000000 		.4byte	.LFB134
+ 1044 0054 08000000 		.4byte	.LFE134-.LFB134
+ 1045 0058 00000000 		.4byte	0
+ 1046 005c 00000000 		.4byte	0
+ 1047              		.section	.debug_ranges,"",%progbits
+ 1048              	.Ldebug_ranges0:
+ 1049 0000 00000000 		.4byte	.LFB139
+ 1050 0004 10000000 		.4byte	.LFE139
+ 1051 0008 00000000 		.4byte	.LFB132
+ 1052 000c 0C000000 		.4byte	.LFE132
+ 1053 0010 00000000 		.4byte	.LFB133
+ 1054 0014 18000000 		.4byte	.LFE133
+ 1055 0018 00000000 		.4byte	.LFB135
+ 1056 001c 02000000 		.4byte	.LFE135
+ 1057 0020 00000000 		.4byte	.LFB136
+ 1058 0024 02000000 		.4byte	.LFE136
+ 1059 0028 00000000 		.4byte	.LFB137
+ 1060 002c 02000000 		.4byte	.LFE137
+ 1061 0030 00000000 		.4byte	.LFB138
+ 1062 0034 02000000 		.4byte	.LFE138
+ 1063 0038 00000000 		.4byte	.LFB140
+ 1064 003c 40000000 		.4byte	.LFE140
+ 1065 0040 00000000 		.4byte	.LFB134
+ 1066 0044 08000000 		.4byte	.LFE134
+ 1067 0048 00000000 		.4byte	0
+ 1068 004c 00000000 		.4byte	0
+ 1069              		.section	.debug_line,"",%progbits
+ 1070              	.Ldebug_line0:
+ 1071 0000 9C020000 		.section	.debug_str,"MS",%progbits,1
+ 1071      0200DC01 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 23
+
+
+ 1071      00000201 
+ 1071      FB0E0D00 
+ 1071      01010101 
+ 1072              	.LASF0:
+ 1073 0000 7369676E 		.ascii	"signed char\000"
+ 1073      65642063 
+ 1073      68617200 
+ 1074              	.LASF35:
+ 1075 000c 43795F53 		.ascii	"Cy_SysTick_Init\000"
+ 1075      79735469 
+ 1075      636B5F49 
+ 1075      6E697400 
+ 1076              	.LASF32:
+ 1077 001c 4755495F 		.ascii	"GUI_X_Init\000"
+ 1077      585F496E 
+ 1077      697400
+ 1078              	.LASF5:
+ 1079 0027 5F5F696E 		.ascii	"__int32_t\000"
+ 1079      7433325F 
+ 1079      7400
+ 1080              	.LASF27:
+ 1081 0031 4755495F 		.ascii	"GUI_X_Log\000"
+ 1081      585F4C6F 
+ 1081      6700
+ 1082              	.LASF4:
+ 1083 003b 6C6F6E67 		.ascii	"long int\000"
+ 1083      20696E74 
+ 1083      00
+ 1084              	.LASF16:
+ 1085 0044 666C6F61 		.ascii	"float\000"
+ 1085      7400
+ 1086              	.LASF28:
+ 1087 004a 4755495F 		.ascii	"GUI_X_Warn\000"
+ 1087      585F5761 
+ 1087      726E00
+ 1088              	.LASF37:
+ 1089 0055 43795F53 		.ascii	"Cy_SysTick_SetCallback\000"
+ 1089      79735469 
+ 1089      636B5F53 
+ 1089      65744361 
+ 1089      6C6C6261 
+ 1090              	.LASF20:
+ 1091 006c 43595F53 		.ascii	"CY_SYSTICK_CLOCK_SOURCE_CLK_ECO\000"
+ 1091      59535449 
+ 1091      434B5F43 
+ 1091      4C4F434B 
+ 1091      5F534F55 
+ 1092              	.LASF1:
+ 1093 008c 756E7369 		.ascii	"unsigned char\000"
+ 1093      676E6564 
+ 1093      20636861 
+ 1093      7200
+ 1094              	.LASF7:
+ 1095 009a 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1095      20756E73 
+ 1095      69676E65 
+ 1095      6420696E 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 24
+
+
+ 1095      7400
+ 1096              	.LASF3:
+ 1097 00ac 73686F72 		.ascii	"short unsigned int\000"
+ 1097      7420756E 
+ 1097      7369676E 
+ 1097      65642069 
+ 1097      6E7400
+ 1098              	.LASF26:
+ 1099 00bf 4755495F 		.ascii	"GUI_X_Delay\000"
+ 1099      585F4465 
+ 1099      6C617900 
+ 1100              	.LASF18:
+ 1101 00cb 43595F53 		.ascii	"CY_SYSTICK_CLOCK_SOURCE_CLK_LF\000"
+ 1101      59535449 
+ 1101      434B5F43 
+ 1101      4C4F434B 
+ 1101      5F534F55 
+ 1102              	.LASF33:
+ 1103 00ea 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 1103      52784275 
+ 1103      66666572 
+ 1103      00
+ 1104              	.LASF17:
+ 1105 00f7 646F7562 		.ascii	"double\000"
+ 1105      6C6500
+ 1106              	.LASF6:
+ 1107 00fe 5F5F7569 		.ascii	"__uint32_t\000"
+ 1107      6E743332 
+ 1107      5F7400
+ 1108              	.LASF22:
+ 1109 0109 43595F53 		.ascii	"CY_SYSTICK_CLOCK_SOURCE_CLK_CPU\000"
+ 1109      59535449 
+ 1109      434B5F43 
+ 1109      4C4F434B 
+ 1109      5F534F55 
+ 1110              	.LASF24:
+ 1111 0129 4755495F 		.ascii	"GUI_X_Systick_Intr\000"
+ 1111      585F5379 
+ 1111      73746963 
+ 1111      6B5F496E 
+ 1111      747200
+ 1112              	.LASF29:
+ 1113 013c 4755495F 		.ascii	"GUI_X_ErrorOut\000"
+ 1113      585F4572 
+ 1113      726F724F 
+ 1113      757400
+ 1114              	.LASF10:
+ 1115 014b 756E7369 		.ascii	"unsigned int\000"
+ 1115      676E6564 
+ 1115      20696E74 
+ 1115      00
+ 1116              	.LASF36:
+ 1117 0158 43795F53 		.ascii	"Cy_SysTick_GetCallback\000"
+ 1117      79735469 
+ 1117      636B5F47 
+ 1117      65744361 
+ 1117      6C6C6261 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 25
+
+
+ 1118              	.LASF9:
+ 1119 016f 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1119      206C6F6E 
+ 1119      6720756E 
+ 1119      7369676E 
+ 1119      65642069 
+ 1120              	.LASF42:
+ 1121 0186 443A5C73 		.ascii	"D:\\student\\FeS-31\\Stepaniuk\\lab8\\lab_8_1\\lab_"
+ 1121      74756465 
+ 1121      6E745C46 
+ 1121      65532D33 
+ 1121      315C5374 
+ 1122 01b3 385F315C 		.ascii	"8_1\\lab_8_1\\lab_8_2.cydsn\000"
+ 1122      6C61625F 
+ 1122      385F315C 
+ 1122      6C61625F 
+ 1122      385F322E 
+ 1123              	.LASF40:
+ 1124 01cd 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1124      43313120 
+ 1124      352E342E 
+ 1124      31203230 
+ 1124      31363036 
+ 1125 0200 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 1125      20726576 
+ 1125      6973696F 
+ 1125      6E203233 
+ 1125      37373135 
+ 1126 0233 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -Og -ffunction-s"
+ 1126      70202D6D 
+ 1126      6670753D 
+ 1126      66707634 
+ 1126      2D73702D 
+ 1127 0266 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 1127      6F6E7320 
+ 1127      2D666661 
+ 1127      742D6C74 
+ 1127      6F2D6F62 
+ 1128              	.LASF34:
+ 1129 0280 4F535F54 		.ascii	"OS_TimeMS\000"
+ 1129      696D654D 
+ 1129      5300
+ 1130              	.LASF11:
+ 1131 028a 696E7433 		.ascii	"int32_t\000"
+ 1131      325F7400 
+ 1132              	.LASF13:
+ 1133 0292 73697A65 		.ascii	"sizetype\000"
+ 1133      74797065 
+ 1133      00
+ 1134              	.LASF31:
+ 1135 029b 74456E64 		.ascii	"tEnd\000"
+ 1135      00
+ 1136              	.LASF8:
+ 1137 02a0 6C6F6E67 		.ascii	"long long int\000"
+ 1137      206C6F6E 
+ 1137      6720696E 
+ 1137      7400
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 26
+
+
+ 1138              	.LASF15:
+ 1139 02ae 63686172 		.ascii	"char\000"
+ 1139      00
+ 1140              	.LASF30:
+ 1141 02b3 4755495F 		.ascii	"GUI_X_Systick_Init\000"
+ 1141      585F5379 
+ 1141      73746963 
+ 1141      6B5F496E 
+ 1141      697400
+ 1142              	.LASF25:
+ 1143 02c6 4755495F 		.ascii	"GUI_X_ExecIdle\000"
+ 1143      585F4578 
+ 1143      65634964 
+ 1143      6C6500
+ 1144              	.LASF43:
+ 1145 02d5 4755495F 		.ascii	"GUI_X_GetTime\000"
+ 1145      585F4765 
+ 1145      7454696D 
+ 1145      6500
+ 1146              	.LASF2:
+ 1147 02e3 73686F72 		.ascii	"short int\000"
+ 1147      7420696E 
+ 1147      7400
+ 1148              	.LASF39:
+ 1149 02ed 43795F53 		.ascii	"Cy_SysTick_Enable\000"
+ 1149      79735469 
+ 1149      636B5F45 
+ 1149      6E61626C 
+ 1149      6500
+ 1150              	.LASF12:
+ 1151 02ff 75696E74 		.ascii	"uint32_t\000"
+ 1151      33325F74 
+ 1151      00
+ 1152              	.LASF21:
+ 1153 0308 43595F53 		.ascii	"CY_SYSTICK_CLOCK_SOURCE_CLK_TIMER\000"
+ 1153      59535449 
+ 1153      434B5F43 
+ 1153      4C4F434B 
+ 1153      5F534F55 
+ 1154              	.LASF23:
+ 1155 032a 6C6F6E67 		.ascii	"long double\000"
+ 1155      20646F75 
+ 1155      626C6500 
+ 1156              	.LASF41:
+ 1157 0336 4755495F 		.ascii	"GUI_X.c\000"
+ 1157      582E6300 
+ 1158              	.LASF38:
+ 1159 033e 43795F53 		.ascii	"Cy_SysLib_AssertFailed\000"
+ 1159      79734C69 
+ 1159      625F4173 
+ 1159      73657274 
+ 1159      4661696C 
+ 1160              	.LASF14:
+ 1161 0355 63686172 		.ascii	"char_t\000"
+ 1161      5F7400
+ 1162              	.LASF19:
+ 1163 035c 43595F53 		.ascii	"CY_SYSTICK_CLOCK_SOURCE_CLK_IMO\000"
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccUzPEVS.s 			page 27
+
+
+ 1163      59535449 
+ 1163      434B5F43 
+ 1163      4C4F434B 
+ 1163      5F534F55 
+ 1164              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

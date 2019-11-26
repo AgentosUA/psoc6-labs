@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<fileSet version="1" anchorPath="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp" xsi:schemaLocation="http://cypress.com/xsd/cypathdictionary cypathdictionary.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://cypress.com/xsd/cypathdictionary">
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cyfitter_cfg.h" value="HEADER;;;;;" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cyfitter_sysint_cfg.h" value="HEADER;;;;;Pins and Interrupts" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cyfitter_sysint_cfg.c" value="SOURCE_C;CortexM0p,CortexM4;;;;Pins and Interrupts" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cyfitter_cfg.c" value="SOURCE_C;CortexM0p;;;;" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cymetadata.c" value="SOURCE_C;CortexM0p,CortexM4;;;;" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cydevice_trm.h" value="HEADER;;;;;" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cydevicegnu_trm.inc" value="HEADER;;;;;" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cydevicerv_trm.inc" value="HEADER;;;;;" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cydeviceiar_trm.inc" value="HEADER;;;;;" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cyfitter.h" value="HEADER;;;;;" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cyfitter_gpio.h" value="HEADER;;;;;Pins and Interrupts" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cyfitter_sysint.h" value="HEADER;;;;;Pins and Interrupts" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cydisabledsheets.h" value="HEADER;;;;;" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\CY_EINK_SPIM.c" value="SOURCE_C;CortexM0p,CortexM4;;;;CY_EINK_SPIM" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\CY_EINK_SPIM.h" value="HEADER;;;;;CY_EINK_SPIM" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\Cy_EINK_Timer.c" value="SOURCE_C;CortexM0p,CortexM4;;;;Cy_EINK_Timer" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\Cy_EINK_Timer.h" value="HEADER;;;;;Cy_EINK_Timer" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\EINK_Clock.h" value="HEADER;;;;;EINK_Clock" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\Status_SW2.c" value="SOURCE_C;CortexM0p,CortexM4;;;;Status_SW2" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\Status_SW2.h" value="HEADER;;;;;Status_SW2" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\Clock_2.h" value="HEADER;;;;;Clock_2" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\CY_EINK_SPIM_SCBCLK.h" value="HEADER;;;;;CY_EINK_SPIM_SCBCLK" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\project.h" value="OTHER;;;;;" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cycodeshareimport.ld" value="OTHER;;;;;" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cycodeshareexport.ld" value="OTHER;;;;;" />
+  <file name="D:\student\FeS-31\Stepaniuk\lab8\lab_8_1\lab_8_1\lab_8_1\lab_8_2.cydsn\codegentemp\cycodeshareimport.scat" value="OTHER;;;;;" />
+</fileSet>

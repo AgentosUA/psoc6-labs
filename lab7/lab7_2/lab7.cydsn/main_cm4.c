@@ -28,27 +28,40 @@ int main(void)
     
     __enable_irq(); /* Enable global interrupts. */
     
-    // Cy_SCB_UART_PutString(UART_HW, "\x1b[2J\x1b[;H");
-    Cy_SCB_UART_PutString(UART_HW, "Hello world from PSoc 6! \r\n\n");
+    Cy_SCB_UART_PutString(UART_HW, "\x1b[2J\x1b[;H");
     
-    Cy_SCB_UART_PutString(UART_HW, "Press enter key to start blinking the LED\r\n\n");
+    Cy_SCB_UART_PutString(UART_HW, "Lab #7 by Stepaniuk Oleg from FES-31 \r\n\n");
     
-    while(Cy_SCB_UART_Get(UART_HW) != 'r');
-    
+    Cy_SCB_UART_PutString(UART_HW, "Press r for red, b for blue and g for green led\r\n\n");
+
     TimerInit();
-    
-    Cy_SCB_UART_PutString(UART_HW, "Observe the LED blinking on the kit!\r\n");
+        
 
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
 
     for(;;)
     {
-        if(LEDupdateFlag)
+        
+       
+        switch(Cy_SCB_UART_Get(UART_HW))
         {
-            LEDupdateFlag = false;
-            
-            Cy_GPIO_Inv(Pin_GreenLED_0_PORT, Pin_GreenLED_0_NUM);
+            case 'r':
+                Cy_GPIO_Write(Pin_GreenLED_0_PORT, Pin_GreenLED_0_NUM, 1);
+                Cy_GPIO_Write(Pin_BlueLED_0_PORT, Pin_BlueLED_0_NUM, 1);
+                Cy_GPIO_Inv(Pin_RedLED_0_PORT, Pin_RedLED_0_NUM);
+                break;
+            case 'g':
+                Cy_GPIO_Write(Pin_RedLED_0_PORT, Pin_RedLED_0_NUM, 1);
+                Cy_GPIO_Write(Pin_BlueLED_0_PORT, Pin_BlueLED_0_NUM, 1);
+                Cy_GPIO_Inv(Pin_GreenLED_0_PORT, Pin_GreenLED_0_NUM);
+                break;
+            case 'b':
+                Cy_GPIO_Write(Pin_RedLED_0_PORT, Pin_RedLED_0_NUM, 1);
+                Cy_GPIO_Write(Pin_GreenLED_0_PORT, Pin_GreenLED_0_NUM, 1);
+                Cy_GPIO_Inv(Pin_BlueLED_0_PORT, Pin_BlueLED_0_NUM);
+                break;
         }
+        
     }
 }
 

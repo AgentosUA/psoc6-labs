@@ -1,0 +1,7 @@
+D:\student\FeS-31\Stepaniuk\lab4\lab4_1\lab4_1.cydsn\lab4_1.cyprj|0edf5467-5fd8-49e9-8ee5-ba37735e6db9
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|b2d7b25f-eaad-4dba-9932-ef068a27799b
+C:\Users\cypress\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|e1f9c291-4c1d-40ba-8555-01779930ad2a
+C:\Users\cypress\Documents\PSoC Creator\4.1\Downloads ( 4.1).cylib\Downloads ( 4.1).cyprj|9c3b3ff1-a807-4c05-a4f7-33a3c4eaa176
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|ef8a59dd-2c12-4e03-bb0b-c06a924052ed
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|9d5832ba-9079-4f0c-9175-b374cc02e69b
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|4088ef44-a101-4ffd-8495-db35d81728f8

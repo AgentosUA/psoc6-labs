@@ -1,5 +1,5 @@
 # lab4
-# 2019-10-02 10:56:51Z
+# 2019-11-26 07:52:08Z
 
 dont_use_location p4usbcell -1 -1 0
 dont_use_location USB -1 -1 0
@@ -12,6 +12,6 @@ set_io "CY_CPUSS_SWJ_SWDIO_TMS(0)" iocell 6 6
 set_io "Pin_Red(0)" iocell 0 3
 set_io "Pin_Blue(0)" iocell 11 1
 set_io "Pin_Green(0)" iocell 1 1
-set_location "\PWM_1:TCPWM\" TCPWM -1 -1 2
-set_location "\PWM_2:TCPWM\" TCPWM -1 -1 0
-set_location "\PWM_3:TCPWM\" TCPWM -1 -1 1
+set_location "\PWM_1:TCPWM\" TCPWM -1 -1 1
+set_location "\PWM_2:TCPWM\" TCPWM -1 -1 2
+set_location "\PWM_3:TCPWM\" TCPWM -1 -1 0

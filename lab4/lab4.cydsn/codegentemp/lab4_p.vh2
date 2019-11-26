@@ -1,5 +1,5 @@
 -- Project:   lab4
--- Generated: 10/02/2019 13:56:49
+-- Generated: 11/26/2019 09:52:07
 -- PSoC Creator  4.2
 
 ENTITY lab4 IS
@@ -46,10 +46,6 @@ ARCHITECTURE __DEFAULT__ OF lab4 IS
     SIGNAL ClockBlock_SlowClk : bit;
     SIGNAL ClockBlock_WCO : bit;
     SIGNAL Net_112 : bit;
-    SIGNAL Net_184_ff11 : bit;
-    ATTRIBUTE global_signal OF Net_184_ff11 : SIGNAL IS true;
-    SIGNAL Net_184_ff12 : bit;
-    ATTRIBUTE global_signal OF Net_184_ff12 : SIGNAL IS true;
     SIGNAL Net_184_ff13 : bit;
     ATTRIBUTE global_signal OF Net_184_ff13 : SIGNAL IS true;
     SIGNAL Net_190 : bit;
@@ -62,6 +58,10 @@ ARCHITECTURE __DEFAULT__ OF lab4 IS
     SIGNAL Net_202 : bit;
     SIGNAL Net_203 : bit;
     SIGNAL Net_204 : bit;
+    SIGNAL Net_206_ff11 : bit;
+    ATTRIBUTE global_signal OF Net_206_ff11 : SIGNAL IS true;
+    SIGNAL Net_207_ff12 : bit;
+    ATTRIBUTE global_signal OF Net_207_ff12 : SIGNAL IS true;
     SIGNAL Net_45 : bit;
     SIGNAL Net_88 : bit;
     SIGNAL Net_89 : bit;
@@ -454,8 +454,8 @@ BEGIN
             ilo => ClockBlock_ILO,
             wco => ClockBlock_WCO,
             lfclk => ClockBlock_LFClk,
-            ff_div_11 => Net_184_ff11,
-            ff_div_12 => Net_184_ff12,
+            ff_div_11 => Net_206_ff11,
+            ff_div_12 => Net_207_ff12,
             ff_div_13 => Net_184_ff13,
             periclk_App => periclk_App);
 
@@ -744,7 +744,7 @@ BEGIN
             exact_width => 0,
             width => 16)
         PORT MAP(
-            clock => Net_184_ff11,
+            clock => Net_184_ff13,
             capture => '0',
             count => '1',
             reload => '0',
@@ -763,7 +763,7 @@ BEGIN
             exact_width => 0,
             width => 16)
         PORT MAP(
-            clock => Net_184_ff12,
+            clock => Net_206_ff11,
             capture => '0',
             count => '1',
             reload => '0',
@@ -782,7 +782,7 @@ BEGIN
             exact_width => 0,
             width => 16)
         PORT MAP(
-            clock => Net_184_ff13,
+            clock => Net_207_ff12,
             capture => '0',
             count => '1',
             reload => '0',

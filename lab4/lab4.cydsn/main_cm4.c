@@ -20,11 +20,11 @@ int main(void)
     for(;;)
     {
         PWM_1_Start();
-        
+        CyDelay(2000);
         PWM_2_Start();
-        
+        CyDelay(2000);
         PWM_3_Start();
-        
+        CyDelay(2000);
     }
 }
 

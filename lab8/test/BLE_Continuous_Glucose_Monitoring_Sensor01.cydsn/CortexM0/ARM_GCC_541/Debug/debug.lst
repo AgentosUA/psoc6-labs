@@ -1,0 +1,1997 @@
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 6
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"debug.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text._write,"ax",%progbits
+  20              		.align	2
+  21              		.global	_write
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	_write, %function
+  25              	_write:
+  26              	.LFB36:
+  27              		.file 1 "debug.c"
+   1:debug.c       **** /*******************************************************************************
+   2:debug.c       **** * File Name: debug.c
+   3:debug.c       **** *
+   4:debug.c       **** * Version 1.0
+   5:debug.c       **** *
+   6:debug.c       **** * Description:
+   7:debug.c       **** *  Common BLE application code for printout debug messages.
+   8:debug.c       **** *
+   9:debug.c       **** * Hardware Dependency:
+  10:debug.c       **** *  CY8CKIT-042 BLE
+  11:debug.c       **** *
+  12:debug.c       **** ********************************************************************************
+  13:debug.c       **** * Copyright 2016, Cypress Semiconductor Corporation.  All rights reserved.
+  14:debug.c       **** * You may use this file only in accordance with the license, terms, conditions,
+  15:debug.c       **** * disclaimers, and limitations in the end user license agreement accompanying
+  16:debug.c       **** * the software package with which this file was provided.
+  17:debug.c       **** *******************************************************************************/
+  18:debug.c       **** 
+  19:debug.c       **** #include "main.h"
+  20:debug.c       **** 
+  21:debug.c       **** #if (DEBUG_UART_ENABLED == ENABLED)
+  22:debug.c       **** 
+  23:debug.c       **** #if defined(__ARMCC_VERSION)
+  24:debug.c       **** 
+  25:debug.c       **** /* For MDK/RVDS compiler, revise fputc function for printf functionality */
+  26:debug.c       **** struct __FILE
+  27:debug.c       **** {
+  28:debug.c       ****     int handle;
+  29:debug.c       **** };
+  30:debug.c       **** 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 2
+
+
+  31:debug.c       **** enum
+  32:debug.c       **** {
+  33:debug.c       ****     STDIN_HANDLE,
+  34:debug.c       ****     STDOUT_HANDLE,
+  35:debug.c       ****     STDERR_HANDLE
+  36:debug.c       **** };
+  37:debug.c       **** 
+  38:debug.c       **** FILE __stdin = {STDIN_HANDLE};
+  39:debug.c       **** FILE __stdout = {STDOUT_HANDLE};
+  40:debug.c       **** FILE __stderr = {STDERR_HANDLE};
+  41:debug.c       **** 
+  42:debug.c       **** int fputc(int ch, FILE *file)
+  43:debug.c       **** {
+  44:debug.c       ****     int ret = EOF;
+  45:debug.c       **** 
+  46:debug.c       ****     switch( file->handle )
+  47:debug.c       ****     {
+  48:debug.c       ****         case STDOUT_HANDLE:
+  49:debug.c       ****             UART_DEB_UartPutChar(ch);
+  50:debug.c       ****             ret = ch ;
+  51:debug.c       ****             break ;
+  52:debug.c       **** 
+  53:debug.c       ****         case STDERR_HANDLE:
+  54:debug.c       ****             ret = ch ;
+  55:debug.c       ****             break ;
+  56:debug.c       **** 
+  57:debug.c       ****         default:
+  58:debug.c       ****             file = file;
+  59:debug.c       ****             break ;
+  60:debug.c       ****     }
+  61:debug.c       ****     return ret ;
+  62:debug.c       **** }
+  63:debug.c       **** 
+  64:debug.c       **** #elif defined (__ICCARM__)      /* IAR */
+  65:debug.c       **** 
+  66:debug.c       **** /* For IAR compiler, revise __write() function for printf functionality */
+  67:debug.c       **** size_t __write(int handle, const unsigned char * buffer, size_t size)
+  68:debug.c       **** {
+  69:debug.c       ****     size_t nChars = 0;
+  70:debug.c       **** 
+  71:debug.c       ****     if (buffer == 0)
+  72:debug.c       ****     {
+  73:debug.c       ****         /*
+  74:debug.c       ****          * This means that we should flush internal buffers.  Since we
+  75:debug.c       ****          * don't, we just return.  (Remember, "handle" == -1 means that all
+  76:debug.c       ****          * handles should be flushed.)
+  77:debug.c       ****          */
+  78:debug.c       ****         return (0);
+  79:debug.c       ****     }
+  80:debug.c       **** 
+  81:debug.c       ****     for (/* Empty */; size != 0; --size)
+  82:debug.c       ****     {
+  83:debug.c       ****         UART_DEB_UartPutChar(*buffer++);
+  84:debug.c       ****         ++nChars;
+  85:debug.c       ****     }
+  86:debug.c       **** 
+  87:debug.c       ****     return (nChars);
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 3
+
+
+  88:debug.c       **** }
+  89:debug.c       **** 
+  90:debug.c       **** #else  /* (__GNUC__)  GCC */
+  91:debug.c       **** 
+  92:debug.c       **** /* For GCC compiler, revise _write() function for printf functionality */
+  93:debug.c       **** int _write(int file, char *ptr, int len)
+  94:debug.c       **** {
+  28              		.loc 1 94 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 24
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32 0000 80B5     		push	{r7, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 7, -8
+  35              		.cfi_offset 14, -4
+  36 0002 86B0     		sub	sp, sp, #24
+  37              		.cfi_def_cfa_offset 32
+  38 0004 00AF     		add	r7, sp, #0
+  39              		.cfi_def_cfa_register 7
+  40 0006 F860     		str	r0, [r7, #12]
+  41 0008 B960     		str	r1, [r7, #8]
+  42 000a 7A60     		str	r2, [r7, #4]
+  95:debug.c       ****     int x;
+  96:debug.c       ****     file = file;
+  97:debug.c       ****     for (x = 0; x < len; x++)
+  43              		.loc 1 97 0
+  44 000c 0023     		movs	r3, #0
+  45 000e 7B61     		str	r3, [r7, #20]
+  46 0010 09E0     		b	.L2
+  47              	.L3:
+  98:debug.c       ****     {
+  99:debug.c       ****         UART_DEB_UartPutChar(*ptr++);
+  48              		.loc 1 99 0 discriminator 3
+  49 0012 BB68     		ldr	r3, [r7, #8]
+  50 0014 5A1C     		adds	r2, r3, #1
+  51 0016 BA60     		str	r2, [r7, #8]
+  52 0018 1B78     		ldrb	r3, [r3]
+  53 001a 1800     		movs	r0, r3
+  54 001c FFF7FEFF 		bl	UART_DEB_SpiUartWriteTxData
+  97:debug.c       ****     {
+  55              		.loc 1 97 0 discriminator 3
+  56 0020 7B69     		ldr	r3, [r7, #20]
+  57 0022 0133     		adds	r3, r3, #1
+  58 0024 7B61     		str	r3, [r7, #20]
+  59              	.L2:
+  97:debug.c       ****     {
+  60              		.loc 1 97 0 is_stmt 0 discriminator 1
+  61 0026 7A69     		ldr	r2, [r7, #20]
+  62 0028 7B68     		ldr	r3, [r7, #4]
+  63 002a 9A42     		cmp	r2, r3
+  64 002c F1DB     		blt	.L3
+ 100:debug.c       ****     }
+ 101:debug.c       ****     return len;
+  65              		.loc 1 101 0 is_stmt 1
+  66 002e 7B68     		ldr	r3, [r7, #4]
+ 102:debug.c       **** }
+  67              		.loc 1 102 0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 4
+
+
+  68 0030 1800     		movs	r0, r3
+  69 0032 BD46     		mov	sp, r7
+  70 0034 06B0     		add	sp, sp, #24
+  71              		@ sp needed
+  72 0036 80BD     		pop	{r7, pc}
+  73              		.cfi_endproc
+  74              	.LFE36:
+  75              		.size	_write, .-_write
+  76              		.section	.rodata
+  77              		.align	2
+  78              	.LC1:
+  79 0000 4379426C 		.ascii	"CyBle_GetStackLibraryVersion API Error: \000"
+  79      655F4765 
+  79      74537461 
+  79      636B4C69 
+  79      62726172 
+  80 0029 000000   		.align	2
+  81              	.LC3:
+  82 002c 424C4520 		.ascii	"BLE Stack Version: %d.%d.%d.%d\015\012\000"
+  82      53746163 
+  82      6B205665 
+  82      7273696F 
+  82      6E3A2025 
+  83              		.section	.text.PrintStackVersion,"ax",%progbits
+  84              		.align	2
+  85              		.global	PrintStackVersion
+  86              		.code	16
+  87              		.thumb_func
+  88              		.type	PrintStackVersion, %function
+  89              	PrintStackVersion:
+  90              	.LFB37:
+ 103:debug.c       **** 
+ 104:debug.c       **** #endif  /* (__ARMCC_VERSION) */
+ 105:debug.c       **** 
+ 106:debug.c       **** #endif /* DEBUG_UART_ENABLED == ENABLED */
+ 107:debug.c       **** 
+ 108:debug.c       **** 
+ 109:debug.c       **** /*******************************************************************************
+ 110:debug.c       **** * Function Name: PrintStackVersion
+ 111:debug.c       **** ********************************************************************************
+ 112:debug.c       **** *
+ 113:debug.c       **** * Summary:
+ 114:debug.c       **** *   Prints the BLE Stack version if the PRINT_STACK_VERSION is defined.
+ 115:debug.c       **** *
+ 116:debug.c       **** * Parameters:
+ 117:debug.c       **** *   None.
+ 118:debug.c       **** *
+ 119:debug.c       **** * Return:
+ 120:debug.c       **** *   None.
+ 121:debug.c       **** *
+ 122:debug.c       **** *******************************************************************************/
+ 123:debug.c       **** void PrintStackVersion(void)
+ 124:debug.c       **** {
+  91              		.loc 1 124 0
+  92              		.cfi_startproc
+  93              		@ args = 0, pretend = 0, frame = 8
+  94              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 5
+
+
+  95 0000 90B5     		push	{r4, r7, lr}
+  96              		.cfi_def_cfa_offset 12
+  97              		.cfi_offset 4, -12
+  98              		.cfi_offset 7, -8
+  99              		.cfi_offset 14, -4
+ 100 0002 85B0     		sub	sp, sp, #20
+ 101              		.cfi_def_cfa_offset 32
+ 102 0004 02AF     		add	r7, sp, #8
+ 103              		.cfi_def_cfa 7, 24
+ 125:debug.c       ****     CYBLE_STACK_LIB_VERSION_T stackVersion;
+ 126:debug.c       ****     
+ 127:debug.c       ****     apiResult = CyBle_GetStackLibraryVersion(&stackVersion);
+ 104              		.loc 1 127 0
+ 105 0006 3B00     		movs	r3, r7
+ 106 0008 1800     		movs	r0, r3
+ 107 000a FFF7FEFF 		bl	CyBle_GetStackLibraryVersion
+ 108 000e 0300     		movs	r3, r0
+ 109 0010 1A00     		movs	r2, r3
+ 110 0012 104B     		ldr	r3, .L9
+ 111 0014 1A80     		strh	r2, [r3]
+ 128:debug.c       ****     if(apiResult != CYBLE_ERROR_OK)
+ 112              		.loc 1 128 0
+ 113 0016 0F4B     		ldr	r3, .L9
+ 114 0018 1B88     		ldrh	r3, [r3]
+ 115 001a 002B     		cmp	r3, #0
+ 116 001c 06D0     		beq	.L6
+ 129:debug.c       ****     {
+ 130:debug.c       ****         DBG_PRINTF("CyBle_GetStackLibraryVersion API Error: ");
+ 117              		.loc 1 130 0
+ 118 001e 0E4B     		ldr	r3, .L9+4
+ 119 0020 1800     		movs	r0, r3
+ 120 0022 FFF7FEFF 		bl	printf
+ 131:debug.c       ****         PrintApiResult();
+ 121              		.loc 1 131 0
+ 122 0026 FFF7FEFF 		bl	PrintApiResult
+ 132:debug.c       ****     }
+ 133:debug.c       ****     else
+ 134:debug.c       ****     {
+ 135:debug.c       ****         DBG_PRINTF("BLE Stack Version: %d.%d.%d.%d\r\n", stackVersion.majorVersion, 
+ 136:debug.c       ****                                                          stackVersion.minorVersion,
+ 137:debug.c       ****                                                          stackVersion.patch,
+ 138:debug.c       ****                                                          stackVersion.buildNumber);
+ 139:debug.c       ****     }
+ 140:debug.c       **** }
+ 123              		.loc 1 140 0
+ 124 002a 0FE0     		b	.L8
+ 125              	.L6:
+ 135:debug.c       ****                                                          stackVersion.minorVersion,
+ 126              		.loc 1 135 0
+ 127 002c 3B00     		movs	r3, r7
+ 128 002e 1B88     		ldrh	r3, [r3]
+ 129 0030 1900     		movs	r1, r3
+ 130 0032 3B00     		movs	r3, r7
+ 131 0034 5B88     		ldrh	r3, [r3, #2]
+ 132 0036 1A00     		movs	r2, r3
+ 133 0038 3B00     		movs	r3, r7
+ 134 003a 9B88     		ldrh	r3, [r3, #4]
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 6
+
+
+ 135 003c 1C00     		movs	r4, r3
+ 136 003e 3B00     		movs	r3, r7
+ 137 0040 DB88     		ldrh	r3, [r3, #6]
+ 138 0042 0648     		ldr	r0, .L9+8
+ 139 0044 0093     		str	r3, [sp]
+ 140 0046 2300     		movs	r3, r4
+ 141 0048 FFF7FEFF 		bl	printf
+ 142              	.L8:
+ 143              		.loc 1 140 0
+ 144 004c C046     		nop
+ 145 004e BD46     		mov	sp, r7
+ 146 0050 03B0     		add	sp, sp, #12
+ 147              		@ sp needed
+ 148 0052 90BD     		pop	{r4, r7, pc}
+ 149              	.L10:
+ 150              		.align	2
+ 151              	.L9:
+ 152 0054 00000000 		.word	apiResult
+ 153 0058 00000000 		.word	.LC1
+ 154 005c 2C000000 		.word	.LC3
+ 155              		.cfi_endproc
+ 156              	.LFE37:
+ 157              		.size	PrintStackVersion, .-PrintStackVersion
+ 158              		.section	.rodata
+ 159 004d 000000   		.align	2
+ 160              	.LC5:
+ 161 0050 73746174 		.ascii	"state: \000"
+ 161      653A2000 
+ 162              		.align	2
+ 163              	.LC9:
+ 164 0058 73746F70 		.ascii	"stopped\015\000"
+ 164      7065640D 
+ 164      00
+ 165 0061 000000   		.align	2
+ 166              	.LC11:
+ 167 0064 696E6974 		.ascii	"initializing\015\000"
+ 167      69616C69 
+ 167      7A696E67 
+ 167      0D00
+ 168 0072 0000     		.align	2
+ 169              	.LC13:
+ 170 0074 636F6E6E 		.ascii	"connected\015\000"
+ 170      65637465 
+ 170      640D00
+ 171 007f 00       		.align	2
+ 172              	.LC15:
+ 173 0080 64697363 		.ascii	"disconnected\015\000"
+ 173      6F6E6E65 
+ 173      63746564 
+ 173      0D00
+ 174 008e 0000     		.align	2
+ 175              	.LC17:
+ 176 0090 61647665 		.ascii	"advertising\015\000"
+ 176      72746973 
+ 176      696E670D 
+ 176      00
+ 177 009d 000000   		.align	2
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 7
+
+
+ 178              	.LC19:
+ 179 00a0 756E6B6E 		.ascii	"unknown\015\000"
+ 179      6F776E0D 
+ 179      00
+ 180              		.section	.text.PrintState,"ax",%progbits
+ 181              		.align	2
+ 182              		.global	PrintState
+ 183              		.code	16
+ 184              		.thumb_func
+ 185              		.type	PrintState, %function
+ 186              	PrintState:
+ 187              	.LFB38:
+ 141:debug.c       **** 
+ 142:debug.c       **** /*******************************************************************************
+ 143:debug.c       **** * Function Name: PrintState
+ 144:debug.c       **** ********************************************************************************
+ 145:debug.c       **** *
+ 146:debug.c       **** * Summary:
+ 147:debug.c       **** *   Decodes and prints the cyBle_state global variable value.
+ 148:debug.c       **** *
+ 149:debug.c       **** * Parameters:
+ 150:debug.c       **** *   None.
+ 151:debug.c       **** *
+ 152:debug.c       **** * Return:
+ 153:debug.c       **** *   None.
+ 154:debug.c       **** *
+ 155:debug.c       **** *******************************************************************************/
+ 156:debug.c       **** void PrintState(void)
+ 157:debug.c       **** {
+ 188              		.loc 1 157 0
+ 189              		.cfi_startproc
+ 190              		@ args = 0, pretend = 0, frame = 0
+ 191              		@ frame_needed = 1, uses_anonymous_args = 0
+ 192 0000 80B5     		push	{r7, lr}
+ 193              		.cfi_def_cfa_offset 8
+ 194              		.cfi_offset 7, -8
+ 195              		.cfi_offset 14, -4
+ 196 0002 00AF     		add	r7, sp, #0
+ 197              		.cfi_def_cfa_register 7
+ 158:debug.c       ****     DBG_PRINTF("state: ");
+ 198              		.loc 1 158 0
+ 199 0004 164B     		ldr	r3, .L20
+ 200 0006 1800     		movs	r0, r3
+ 201 0008 FFF7FEFF 		bl	printf
+ 159:debug.c       ****     switch(CyBle_GetState())
+ 202              		.loc 1 159 0
+ 203 000c 154B     		ldr	r3, .L20+4
+ 204 000e 1B78     		ldrb	r3, [r3]
+ 205 0010 042B     		cmp	r3, #4
+ 206 0012 1DD8     		bhi	.L12
+ 207 0014 9A00     		lsls	r2, r3, #2
+ 208 0016 144B     		ldr	r3, .L20+8
+ 209 0018 D318     		adds	r3, r2, r3
+ 210 001a 1B68     		ldr	r3, [r3]
+ 211 001c 9F46     		mov	pc, r3
+ 212              		.section	.rodata
+ 213 00a9 000000   		.align	2
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 8
+
+
+ 214              	.L14:
+ 215 00ac 1E000000 		.word	.L13
+ 216 00b0 28000000 		.word	.L15
+ 217 00b4 32000000 		.word	.L16
+ 218 00b8 46000000 		.word	.L17
+ 219 00bc 3C000000 		.word	.L18
+ 220              		.section	.text.PrintState
+ 221              	.L13:
+ 160:debug.c       ****     {
+ 161:debug.c       ****         case CYBLE_STATE_STOPPED:
+ 162:debug.c       ****             DBG_PRINTF("stopped\r\n");
+ 222              		.loc 1 162 0
+ 223 001e 134B     		ldr	r3, .L20+12
+ 224 0020 1800     		movs	r0, r3
+ 225 0022 FFF7FEFF 		bl	puts
+ 163:debug.c       ****             break;
+ 226              		.loc 1 163 0
+ 227 0026 18E0     		b	.L19
+ 228              	.L15:
+ 164:debug.c       ****             
+ 165:debug.c       ****         case CYBLE_STATE_INITIALIZING:
+ 166:debug.c       ****             DBG_PRINTF("initializing\r\n");
+ 229              		.loc 1 166 0
+ 230 0028 114B     		ldr	r3, .L20+16
+ 231 002a 1800     		movs	r0, r3
+ 232 002c FFF7FEFF 		bl	puts
+ 167:debug.c       ****             break;
+ 233              		.loc 1 167 0
+ 234 0030 13E0     		b	.L19
+ 235              	.L16:
+ 168:debug.c       ****             
+ 169:debug.c       ****         case CYBLE_STATE_CONNECTED:
+ 170:debug.c       ****             DBG_PRINTF("connected\r\n");
+ 236              		.loc 1 170 0
+ 237 0032 104B     		ldr	r3, .L20+20
+ 238 0034 1800     		movs	r0, r3
+ 239 0036 FFF7FEFF 		bl	puts
+ 171:debug.c       ****             break;
+ 240              		.loc 1 171 0
+ 241 003a 0EE0     		b	.L19
+ 242              	.L18:
+ 172:debug.c       ****             
+ 173:debug.c       ****         case CYBLE_STATE_DISCONNECTED:
+ 174:debug.c       ****             DBG_PRINTF("disconnected\r\n");
+ 243              		.loc 1 174 0
+ 244 003c 0E4B     		ldr	r3, .L20+24
+ 245 003e 1800     		movs	r0, r3
+ 246 0040 FFF7FEFF 		bl	puts
+ 175:debug.c       ****             break;
+ 247              		.loc 1 175 0
+ 248 0044 09E0     		b	.L19
+ 249              	.L17:
+ 176:debug.c       ****             
+ 177:debug.c       ****         case CYBLE_STATE_ADVERTISING:
+ 178:debug.c       ****             DBG_PRINTF("advertising\r\n");
+ 250              		.loc 1 178 0
+ 251 0046 0D4B     		ldr	r3, .L20+28
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 9
+
+
+ 252 0048 1800     		movs	r0, r3
+ 253 004a FFF7FEFF 		bl	puts
+ 179:debug.c       ****             break;
+ 254              		.loc 1 179 0
+ 255 004e 04E0     		b	.L19
+ 256              	.L12:
+ 180:debug.c       **** 
+ 181:debug.c       ****         default:
+ 182:debug.c       ****             DBG_PRINTF("unknown\r\n");
+ 257              		.loc 1 182 0
+ 258 0050 0B4B     		ldr	r3, .L20+32
+ 259 0052 1800     		movs	r0, r3
+ 260 0054 FFF7FEFF 		bl	puts
+ 183:debug.c       ****             break;
+ 261              		.loc 1 183 0
+ 262 0058 C046     		nop
+ 263              	.L19:
+ 184:debug.c       ****     }
+ 185:debug.c       **** }
+ 264              		.loc 1 185 0
+ 265 005a C046     		nop
+ 266 005c BD46     		mov	sp, r7
+ 267              		@ sp needed
+ 268 005e 80BD     		pop	{r7, pc}
+ 269              	.L21:
+ 270              		.align	2
+ 271              	.L20:
+ 272 0060 50000000 		.word	.LC5
+ 273 0064 00000000 		.word	cyBle_state
+ 274 0068 AC000000 		.word	.L14
+ 275 006c 58000000 		.word	.LC9
+ 276 0070 64000000 		.word	.LC11
+ 277 0074 74000000 		.word	.LC13
+ 278 0078 80000000 		.word	.LC15
+ 279 007c 90000000 		.word	.LC17
+ 280 0080 A0000000 		.word	.LC19
+ 281              		.cfi_endproc
+ 282              	.LFE38:
+ 283              		.size	PrintState, .-PrintState
+ 284              		.section	.rodata
+ 285              		.align	2
+ 286              	.LC22:
+ 287 00c0 30782532 		.ascii	"0x%2.2x \000"
+ 287      2E327820 
+ 287      00
+ 288 00c9 000000   		.align	2
+ 289              	.LC24:
+ 290 00cc 6F6B0D00 		.ascii	"ok\015\000"
+ 291              		.align	2
+ 292              	.LC26:
+ 293 00d0 696E7661 		.ascii	"invalid parameter\015\000"
+ 293      6C696420 
+ 293      70617261 
+ 293      6D657465 
+ 293      720D00
+ 294 00e3 00       		.align	2
+ 295              	.LC28:
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 10
+
+
+ 296 00e4 696E7661 		.ascii	"invalid operation\015\000"
+ 296      6C696420 
+ 296      6F706572 
+ 296      6174696F 
+ 296      6E0D00
+ 297 00f7 00       		.align	2
+ 298              	.LC30:
+ 299 00f8 6E6F2064 		.ascii	"no device entity\015\000"
+ 299      65766963 
+ 299      6520656E 
+ 299      74697479 
+ 299      0D00
+ 300 010a 0000     		.align	2
+ 301              	.LC32:
+ 302 010c 6E6F7469 		.ascii	"notification is disabled\015\000"
+ 302      66696361 
+ 302      74696F6E 
+ 302      20697320 
+ 302      64697361 
+ 303 0126 0000     		.align	2
+ 304              	.LC34:
+ 305 0128 696E6469 		.ascii	"indication is disabled\015\000"
+ 305      63617469 
+ 305      6F6E2069 
+ 305      73206469 
+ 305      7361626C 
+ 306              		.align	2
+ 307              	.LC36:
+ 308 0140 63686172 		.ascii	"characteristic is not discovered\015\000"
+ 308      61637465 
+ 308      72697374 
+ 308      69632069 
+ 308      73206E6F 
+ 309 0162 0000     		.align	2
+ 310              	.LC38:
+ 311 0164 696E7661 		.ascii	"invalid state: \000"
+ 311      6C696420 
+ 311      73746174 
+ 311      653A2000 
+ 312              		.align	2
+ 313              	.LC40:
+ 314 0174 696E7661 		.ascii	"invalid attribute handle\015\000"
+ 314      6C696420 
+ 314      61747472 
+ 314      69627574 
+ 314      65206861 
+ 315 018e 0000     		.align	2
+ 316              	.LC42:
+ 317 0190 666C6173 		.ascii	"flash write not permitted\015\000"
+ 317      68207772 
+ 317      69746520 
+ 317      6E6F7420 
+ 317      7065726D 
+ 318 01ab 00       		.align	2
+ 319              	.LC44:
+ 320 01ac 6F746865 		.ascii	"other api result\015\000"
+ 320      72206170 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 11
+
+
+ 320      69207265 
+ 320      73756C74 
+ 320      0D00
+ 321              		.section	.text.PrintApiResult,"ax",%progbits
+ 322              		.align	2
+ 323              		.global	PrintApiResult
+ 324              		.code	16
+ 325              		.thumb_func
+ 326              		.type	PrintApiResult, %function
+ 327              	PrintApiResult:
+ 328              	.LFB39:
+ 186:debug.c       **** 
+ 187:debug.c       **** 
+ 188:debug.c       **** /*******************************************************************************
+ 189:debug.c       **** * Function Name: PrintApiResult
+ 190:debug.c       **** ********************************************************************************
+ 191:debug.c       **** *
+ 192:debug.c       **** * Summary:
+ 193:debug.c       **** *   Decodes and prints the apiResult global variable value.
+ 194:debug.c       **** *
+ 195:debug.c       **** * Parameters:
+ 196:debug.c       **** *   None.
+ 197:debug.c       **** *
+ 198:debug.c       **** * Return:
+ 199:debug.c       **** *   None.
+ 200:debug.c       **** *
+ 201:debug.c       **** *******************************************************************************/
+ 202:debug.c       **** void PrintApiResult(void)
+ 203:debug.c       **** {
+ 329              		.loc 1 203 0
+ 330              		.cfi_startproc
+ 331              		@ args = 0, pretend = 0, frame = 0
+ 332              		@ frame_needed = 1, uses_anonymous_args = 0
+ 333 0000 80B5     		push	{r7, lr}
+ 334              		.cfi_def_cfa_offset 8
+ 335              		.cfi_offset 7, -8
+ 336              		.cfi_offset 14, -4
+ 337 0002 00AF     		add	r7, sp, #0
+ 338              		.cfi_def_cfa_register 7
+ 204:debug.c       ****     DBG_PRINTF("0x%2.2x ", apiResult);
+ 339              		.loc 1 204 0
+ 340 0004 354B     		ldr	r3, .L38
+ 341 0006 1B88     		ldrh	r3, [r3]
+ 342 0008 1A00     		movs	r2, r3
+ 343 000a 354B     		ldr	r3, .L38+4
+ 344 000c 1100     		movs	r1, r2
+ 345 000e 1800     		movs	r0, r3
+ 346 0010 FFF7FEFF 		bl	printf
+ 205:debug.c       ****     
+ 206:debug.c       ****     switch(apiResult)
+ 347              		.loc 1 206 0
+ 348 0014 314B     		ldr	r3, .L38
+ 349 0016 1B88     		ldrh	r3, [r3]
+ 350 0018 132B     		cmp	r3, #19
+ 351 001a 4DD0     		beq	.L24
+ 352 001c 0ADC     		bgt	.L25
+ 353 001e 012B     		cmp	r3, #1
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 12
+
+
+ 354 0020 25D0     		beq	.L26
+ 355 0022 02DC     		bgt	.L27
+ 356 0024 002B     		cmp	r3, #0
+ 357 0026 1DD0     		beq	.L28
+ 358 0028 50E0     		b	.L23
+ 359              	.L27:
+ 360 002a 022B     		cmp	r3, #2
+ 361 002c 24D0     		beq	.L29
+ 362 002e 072B     		cmp	r3, #7
+ 363 0030 27D0     		beq	.L30
+ 364 0032 4BE0     		b	.L23
+ 365              	.L25:
+ 366 0034 0222     		movs	r2, #2
+ 367 0036 FF32     		adds	r2, r2, #255
+ 368 0038 9342     		cmp	r3, r2
+ 369 003a 2CD0     		beq	.L31
+ 370 003c 0222     		movs	r2, #2
+ 371 003e FF32     		adds	r2, r2, #255
+ 372 0040 9342     		cmp	r3, r2
+ 373 0042 06DC     		bgt	.L32
+ 374 0044 282B     		cmp	r3, #40
+ 375 0046 3CD0     		beq	.L33
+ 376 0048 8022     		movs	r2, #128
+ 377 004a 5200     		lsls	r2, r2, #1
+ 378 004c 9342     		cmp	r3, r2
+ 379 004e 1DD0     		beq	.L34
+ 380 0050 3CE0     		b	.L23
+ 381              	.L32:
+ 382 0052 8122     		movs	r2, #129
+ 383 0054 5200     		lsls	r2, r2, #1
+ 384 0056 9342     		cmp	r3, r2
+ 385 0058 22D0     		beq	.L35
+ 386 005a 0422     		movs	r2, #4
+ 387 005c FF32     		adds	r2, r2, #255
+ 388 005e 9342     		cmp	r3, r2
+ 389 0060 23D0     		beq	.L36
+ 390 0062 33E0     		b	.L23
+ 391              	.L28:
+ 207:debug.c       ****     {
+ 208:debug.c       ****         case CYBLE_ERROR_OK:
+ 209:debug.c       ****             DBG_PRINTF("ok\r\n");
+ 392              		.loc 1 209 0
+ 393 0064 1F4B     		ldr	r3, .L38+8
+ 394 0066 1800     		movs	r0, r3
+ 395 0068 FFF7FEFF 		bl	puts
+ 210:debug.c       ****             break;
+ 396              		.loc 1 210 0
+ 397 006c 33E0     		b	.L37
+ 398              	.L26:
+ 211:debug.c       ****             
+ 212:debug.c       ****         case CYBLE_ERROR_INVALID_PARAMETER:
+ 213:debug.c       ****             DBG_PRINTF("invalid parameter\r\n");
+ 399              		.loc 1 213 0
+ 400 006e 1E4B     		ldr	r3, .L38+12
+ 401 0070 1800     		movs	r0, r3
+ 402 0072 FFF7FEFF 		bl	puts
+ 214:debug.c       ****             break;
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 13
+
+
+ 403              		.loc 1 214 0
+ 404 0076 2EE0     		b	.L37
+ 405              	.L29:
+ 215:debug.c       ****             
+ 216:debug.c       ****         case CYBLE_ERROR_INVALID_OPERATION:
+ 217:debug.c       ****             DBG_PRINTF("invalid operation\r\n");
+ 406              		.loc 1 217 0
+ 407 0078 1C4B     		ldr	r3, .L38+16
+ 408 007a 1800     		movs	r0, r3
+ 409 007c FFF7FEFF 		bl	puts
+ 218:debug.c       ****             break;
+ 410              		.loc 1 218 0
+ 411 0080 29E0     		b	.L37
+ 412              	.L30:
+ 219:debug.c       ****             
+ 220:debug.c       ****         case CYBLE_ERROR_NO_DEVICE_ENTITY:
+ 221:debug.c       ****             DBG_PRINTF("no device entity\r\n");
+ 413              		.loc 1 221 0
+ 414 0082 1B4B     		ldr	r3, .L38+20
+ 415 0084 1800     		movs	r0, r3
+ 416 0086 FFF7FEFF 		bl	puts
+ 222:debug.c       ****             break;
+ 417              		.loc 1 222 0
+ 418 008a 24E0     		b	.L37
+ 419              	.L34:
+ 223:debug.c       ****             
+ 224:debug.c       ****         case CYBLE_ERROR_NTF_DISABLED:
+ 225:debug.c       ****             DBG_PRINTF("notification is disabled\r\n");
+ 420              		.loc 1 225 0
+ 421 008c 194B     		ldr	r3, .L38+24
+ 422 008e 1800     		movs	r0, r3
+ 423 0090 FFF7FEFF 		bl	puts
+ 226:debug.c       ****             break;
+ 424              		.loc 1 226 0
+ 425 0094 1FE0     		b	.L37
+ 426              	.L31:
+ 227:debug.c       ****             
+ 228:debug.c       ****         case CYBLE_ERROR_IND_DISABLED:
+ 229:debug.c       ****             DBG_PRINTF("indication is disabled\r\n");
+ 427              		.loc 1 229 0
+ 428 0096 184B     		ldr	r3, .L38+28
+ 429 0098 1800     		movs	r0, r3
+ 430 009a FFF7FEFF 		bl	puts
+ 230:debug.c       ****             break;
+ 431              		.loc 1 230 0
+ 432 009e 1AE0     		b	.L37
+ 433              	.L35:
+ 231:debug.c       ****             
+ 232:debug.c       ****         case CYBLE_ERROR_CHAR_IS_NOT_DISCOVERED:
+ 233:debug.c       ****             DBG_PRINTF("characteristic is not discovered\r\n");
+ 434              		.loc 1 233 0
+ 435 00a0 164B     		ldr	r3, .L38+32
+ 436 00a2 1800     		movs	r0, r3
+ 437 00a4 FFF7FEFF 		bl	puts
+ 234:debug.c       ****             break;
+ 438              		.loc 1 234 0
+ 439 00a8 15E0     		b	.L37
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 14
+
+
+ 440              	.L36:
+ 235:debug.c       ****             
+ 236:debug.c       ****         case CYBLE_ERROR_INVALID_STATE:
+ 237:debug.c       ****             DBG_PRINTF("invalid state: ");
+ 441              		.loc 1 237 0
+ 442 00aa 154B     		ldr	r3, .L38+36
+ 443 00ac 1800     		movs	r0, r3
+ 444 00ae FFF7FEFF 		bl	printf
+ 238:debug.c       ****             PrintState();
+ 445              		.loc 1 238 0
+ 446 00b2 FFF7FEFF 		bl	PrintState
+ 239:debug.c       ****             break;
+ 447              		.loc 1 239 0
+ 448 00b6 0EE0     		b	.L37
+ 449              	.L24:
+ 240:debug.c       ****             
+ 241:debug.c       ****         case CYBLE_ERROR_GATT_DB_INVALID_ATTR_HANDLE:
+ 242:debug.c       ****             DBG_PRINTF("invalid attribute handle\r\n");
+ 450              		.loc 1 242 0
+ 451 00b8 124B     		ldr	r3, .L38+40
+ 452 00ba 1800     		movs	r0, r3
+ 453 00bc FFF7FEFF 		bl	puts
+ 243:debug.c       ****             break;
+ 454              		.loc 1 243 0
+ 455 00c0 09E0     		b	.L37
+ 456              	.L33:
+ 244:debug.c       ****             
+ 245:debug.c       ****         case CYBLE_ERROR_FLASH_WRITE_NOT_PERMITED:
+ 246:debug.c       ****             DBG_PRINTF("flash write not permitted\r\n");
+ 457              		.loc 1 246 0
+ 458 00c2 114B     		ldr	r3, .L38+44
+ 459 00c4 1800     		movs	r0, r3
+ 460 00c6 FFF7FEFF 		bl	puts
+ 247:debug.c       ****             break;
+ 461              		.loc 1 247 0
+ 462 00ca 04E0     		b	.L37
+ 463              	.L23:
+ 248:debug.c       ****             
+ 249:debug.c       ****         default:
+ 250:debug.c       ****             DBG_PRINTF("other api result\r\n");
+ 464              		.loc 1 250 0
+ 465 00cc 0F4B     		ldr	r3, .L38+48
+ 466 00ce 1800     		movs	r0, r3
+ 467 00d0 FFF7FEFF 		bl	puts
+ 251:debug.c       ****             break;
+ 468              		.loc 1 251 0
+ 469 00d4 C046     		nop
+ 470              	.L37:
+ 252:debug.c       ****     }
+ 253:debug.c       **** }
+ 471              		.loc 1 253 0
+ 472 00d6 C046     		nop
+ 473 00d8 BD46     		mov	sp, r7
+ 474              		@ sp needed
+ 475 00da 80BD     		pop	{r7, pc}
+ 476              	.L39:
+ 477              		.align	2
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 15
+
+
+ 478              	.L38:
+ 479 00dc 00000000 		.word	apiResult
+ 480 00e0 C0000000 		.word	.LC22
+ 481 00e4 CC000000 		.word	.LC24
+ 482 00e8 D0000000 		.word	.LC26
+ 483 00ec E4000000 		.word	.LC28
+ 484 00f0 F8000000 		.word	.LC30
+ 485 00f4 0C010000 		.word	.LC32
+ 486 00f8 28010000 		.word	.LC34
+ 487 00fc 40010000 		.word	.LC36
+ 488 0100 64010000 		.word	.LC38
+ 489 0104 74010000 		.word	.LC40
+ 490 0108 90010000 		.word	.LC42
+ 491 010c AC010000 		.word	.LC44
+ 492              		.cfi_endproc
+ 493              	.LFE39:
+ 494              		.size	PrintApiResult, .-PrintApiResult
+ 495              		.text
+ 496              	.Letext0:
+ 497              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 498              		.file 3 "Generated_Source\\PSoC4/BLE_Stack.h"
+ 499              		.file 4 "Generated_Source\\PSoC4/BLE_eventHandler.h"
+ 500              		.file 5 "main.h"
+ 501              		.section	.debug_info,"",%progbits
+ 502              	.Ldebug_info0:
+ 503 0000 BD020000 		.4byte	0x2bd
+ 504 0004 0400     		.2byte	0x4
+ 505 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 506 000a 04       		.byte	0x4
+ 507 000b 01       		.uleb128 0x1
+ 508 000c 5F020000 		.4byte	.LASF67
+ 509 0010 0C       		.byte	0xc
+ 510 0011 40030000 		.4byte	.LASF68
+ 511 0015 37060000 		.4byte	.LASF69
+ 512 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 513 001d 00000000 		.4byte	0
+ 514 0021 00000000 		.4byte	.Ldebug_line0
+ 515 0025 02       		.uleb128 0x2
+ 516 0026 01       		.byte	0x1
+ 517 0027 06       		.byte	0x6
+ 518 0028 48030000 		.4byte	.LASF0
+ 519 002c 02       		.uleb128 0x2
+ 520 002d 01       		.byte	0x1
+ 521 002e 08       		.byte	0x8
+ 522 002f 1A030000 		.4byte	.LASF1
+ 523 0033 02       		.uleb128 0x2
+ 524 0034 02       		.byte	0x2
+ 525 0035 05       		.byte	0x5
+ 526 0036 7F000000 		.4byte	.LASF2
+ 527 003a 02       		.uleb128 0x2
+ 528 003b 02       		.byte	0x2
+ 529 003c 07       		.byte	0x7
+ 530 003d 13040000 		.4byte	.LASF3
+ 531 0041 02       		.uleb128 0x2
+ 532 0042 04       		.byte	0x4
+ 533 0043 05       		.byte	0x5
+ 534 0044 38020000 		.4byte	.LASF4
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 16
+
+
+ 535 0048 02       		.uleb128 0x2
+ 536 0049 04       		.byte	0x4
+ 537 004a 07       		.byte	0x7
+ 538 004b 31050000 		.4byte	.LASF5
+ 539 004f 02       		.uleb128 0x2
+ 540 0050 08       		.byte	0x8
+ 541 0051 05       		.byte	0x5
+ 542 0052 0A020000 		.4byte	.LASF6
+ 543 0056 02       		.uleb128 0x2
+ 544 0057 08       		.byte	0x8
+ 545 0058 07       		.byte	0x7
+ 546 0059 54030000 		.4byte	.LASF7
+ 547 005d 03       		.uleb128 0x3
+ 548 005e 04       		.byte	0x4
+ 549 005f 05       		.byte	0x5
+ 550 0060 696E7400 		.ascii	"int\000"
+ 551 0064 02       		.uleb128 0x2
+ 552 0065 04       		.byte	0x4
+ 553 0066 07       		.byte	0x7
+ 554 0067 97030000 		.4byte	.LASF8
+ 555 006b 04       		.uleb128 0x4
+ 556 006c 5C010000 		.4byte	.LASF9
+ 557 0070 02       		.byte	0x2
+ 558 0071 D301     		.2byte	0x1d3
+ 559 0073 3A000000 		.4byte	0x3a
+ 560 0077 04       		.uleb128 0x4
+ 561 0078 43050000 		.4byte	.LASF10
+ 562 007c 02       		.byte	0x2
+ 563 007d D401     		.2byte	0x1d4
+ 564 007f 48000000 		.4byte	0x48
+ 565 0083 02       		.uleb128 0x2
+ 566 0084 04       		.byte	0x4
+ 567 0085 04       		.byte	0x4
+ 568 0086 04020000 		.4byte	.LASF11
+ 569 008a 02       		.uleb128 0x2
+ 570 008b 08       		.byte	0x8
+ 571 008c 04       		.byte	0x4
+ 572 008d 30060000 		.4byte	.LASF12
+ 573 0091 02       		.uleb128 0x2
+ 574 0092 01       		.byte	0x1
+ 575 0093 08       		.byte	0x8
+ 576 0094 41040000 		.4byte	.LASF13
+ 577 0098 02       		.uleb128 0x2
+ 578 0099 08       		.byte	0x8
+ 579 009a 04       		.byte	0x4
+ 580 009b C6000000 		.4byte	.LASF14
+ 581 009f 02       		.uleb128 0x2
+ 582 00a0 04       		.byte	0x4
+ 583 00a1 07       		.byte	0x7
+ 584 00a2 89000000 		.4byte	.LASF15
+ 585 00a6 05       		.uleb128 0x5
+ 586 00a7 04       		.byte	0x4
+ 587 00a8 91000000 		.4byte	0x91
+ 588 00ac 06       		.uleb128 0x6
+ 589 00ad 02       		.byte	0x2
+ 590 00ae 3A000000 		.4byte	0x3a
+ 591 00b2 03       		.byte	0x3
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 17
+
+
+ 592 00b3 0204     		.2byte	0x402
+ 593 00b5 85010000 		.4byte	0x185
+ 594 00b9 07       		.uleb128 0x7
+ 595 00ba 92000000 		.4byte	.LASF16
+ 596 00be 00       		.byte	0
+ 597 00bf 07       		.uleb128 0x7
+ 598 00c0 0E010000 		.4byte	.LASF17
+ 599 00c4 01       		.byte	0x1
+ 600 00c5 07       		.uleb128 0x7
+ 601 00c6 63010000 		.4byte	.LASF18
+ 602 00ca 02       		.byte	0x2
+ 603 00cb 07       		.uleb128 0x7
+ 604 00cc A0040000 		.4byte	.LASF19
+ 605 00d0 03       		.byte	0x3
+ 606 00d1 07       		.uleb128 0x7
+ 607 00d2 E1010000 		.4byte	.LASF20
+ 608 00d6 04       		.byte	0x4
+ 609 00d7 07       		.uleb128 0x7
+ 610 00d8 2C010000 		.4byte	.LASF21
+ 611 00dc 05       		.byte	0x5
+ 612 00dd 07       		.uleb128 0x7
+ 613 00de 94010000 		.4byte	.LASF22
+ 614 00e2 06       		.byte	0x6
+ 615 00e3 07       		.uleb128 0x7
+ 616 00e4 F3020000 		.4byte	.LASF23
+ 617 00e8 07       		.byte	0x7
+ 618 00e9 07       		.uleb128 0x7
+ 619 00ea 41020000 		.4byte	.LASF24
+ 620 00ee 08       		.byte	0x8
+ 621 00ef 07       		.uleb128 0x7
+ 622 00f0 82030000 		.4byte	.LASF25
+ 623 00f4 09       		.byte	0x9
+ 624 00f5 07       		.uleb128 0x7
+ 625 00f6 C7010000 		.4byte	.LASF26
+ 626 00fa 0A       		.byte	0xa
+ 627 00fb 07       		.uleb128 0x7
+ 628 00fc 18020000 		.4byte	.LASF27
+ 629 0100 0B       		.byte	0xb
+ 630 0101 07       		.uleb128 0x7
+ 631 0102 6B030000 		.4byte	.LASF28
+ 632 0106 0C       		.byte	0xc
+ 633 0107 07       		.uleb128 0x7
+ 634 0108 A4030000 		.4byte	.LASF29
+ 635 010c 0D       		.byte	0xd
+ 636 010d 07       		.uleb128 0x7
+ 637 010e 25000000 		.4byte	.LASF30
+ 638 0112 0E       		.byte	0xe
+ 639 0113 07       		.uleb128 0x7
+ 640 0114 00000000 		.4byte	.LASF31
+ 641 0118 0F       		.byte	0xf
+ 642 0119 07       		.uleb128 0x7
+ 643 011a 8E060000 		.4byte	.LASF32
+ 644 011e 10       		.byte	0x10
+ 645 011f 07       		.uleb128 0x7
+ 646 0120 5B000000 		.4byte	.LASF33
+ 647 0124 11       		.byte	0x11
+ 648 0125 07       		.uleb128 0x7
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 18
+
+
+ 649 0126 72050000 		.4byte	.LASF34
+ 650 012a 12       		.byte	0x12
+ 651 012b 07       		.uleb128 0x7
+ 652 012c 4A050000 		.4byte	.LASF35
+ 653 0130 13       		.byte	0x13
+ 654 0131 07       		.uleb128 0x7
+ 655 0132 D7050000 		.4byte	.LASF36
+ 656 0136 27       		.byte	0x27
+ 657 0137 07       		.uleb128 0x7
+ 658 0138 A1000000 		.4byte	.LASF37
+ 659 013c 28       		.byte	0x28
+ 660 013d 07       		.uleb128 0x7
+ 661 013e D9000000 		.4byte	.LASF38
+ 662 0142 29       		.byte	0x29
+ 663 0143 07       		.uleb128 0x7
+ 664 0144 95050000 		.4byte	.LASF39
+ 665 0148 2A       		.byte	0x2a
+ 666 0149 07       		.uleb128 0x7
+ 667 014a DB040000 		.4byte	.LASF40
+ 668 014e 2B       		.byte	0x2b
+ 669 014f 07       		.uleb128 0x7
+ 670 0150 28030000 		.4byte	.LASF41
+ 671 0154 2C       		.byte	0x2c
+ 672 0155 07       		.uleb128 0x7
+ 673 0156 6A040000 		.4byte	.LASF42
+ 674 015a FE       		.byte	0xfe
+ 675 015b 07       		.uleb128 0x7
+ 676 015c 06060000 		.4byte	.LASF43
+ 677 0160 FF       		.byte	0xff
+ 678 0161 08       		.uleb128 0x8
+ 679 0162 BE050000 		.4byte	.LASF44
+ 680 0166 0001     		.2byte	0x100
+ 681 0168 08       		.uleb128 0x8
+ 682 0169 BC060000 		.4byte	.LASF45
+ 683 016d 0101     		.2byte	0x101
+ 684 016f 08       		.uleb128 0x8
+ 685 0170 F0030000 		.4byte	.LASF46
+ 686 0174 0201     		.2byte	0x102
+ 687 0176 08       		.uleb128 0x8
+ 688 0177 16060000 		.4byte	.LASF47
+ 689 017b 0301     		.2byte	0x103
+ 690 017d 08       		.uleb128 0x8
+ 691 017e 46040000 		.4byte	.LASF48
+ 692 0182 0401     		.2byte	0x104
+ 693 0184 00       		.byte	0
+ 694 0185 04       		.uleb128 0x4
+ 695 0186 81010000 		.4byte	.LASF49
+ 696 018a 03       		.byte	0x3
+ 697 018b 7104     		.2byte	0x471
+ 698 018d AC000000 		.4byte	0xac
+ 699 0191 09       		.uleb128 0x9
+ 700 0192 08       		.byte	0x8
+ 701 0193 03       		.byte	0x3
+ 702 0194 2A05     		.2byte	0x52a
+ 703 0196 CF010000 		.4byte	0x1cf
+ 704 019a 0A       		.uleb128 0xa
+ 705 019b 4E000000 		.4byte	.LASF50
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 19
+
+
+ 706 019f 03       		.byte	0x3
+ 707 01a0 2D05     		.2byte	0x52d
+ 708 01a2 6B000000 		.4byte	0x6b
+ 709 01a6 00       		.byte	0
+ 710 01a7 0A       		.uleb128 0xa
+ 711 01a8 F9050000 		.4byte	.LASF51
+ 712 01ac 03       		.byte	0x3
+ 713 01ad 2F05     		.2byte	0x52f
+ 714 01af 6B000000 		.4byte	0x6b
+ 715 01b3 02       		.byte	0x2
+ 716 01b4 0A       		.uleb128 0xa
+ 717 01b5 ED020000 		.4byte	.LASF52
+ 718 01b9 03       		.byte	0x3
+ 719 01ba 3105     		.2byte	0x531
+ 720 01bc 6B000000 		.4byte	0x6b
+ 721 01c0 04       		.byte	0x4
+ 722 01c1 0A       		.uleb128 0xa
+ 723 01c2 35040000 		.4byte	.LASF53
+ 724 01c6 03       		.byte	0x3
+ 725 01c7 3305     		.2byte	0x533
+ 726 01c9 6B000000 		.4byte	0x6b
+ 727 01cd 06       		.byte	0x6
+ 728 01ce 00       		.byte	0
+ 729 01cf 04       		.uleb128 0x4
+ 730 01d0 86040000 		.4byte	.LASF54
+ 731 01d4 03       		.byte	0x3
+ 732 01d5 3505     		.2byte	0x535
+ 733 01d7 91010000 		.4byte	0x191
+ 734 01db 06       		.uleb128 0x6
+ 735 01dc 01       		.byte	0x1
+ 736 01dd 2C000000 		.4byte	0x2c
+ 737 01e1 04       		.byte	0x4
+ 738 01e2 5008     		.2byte	0x850
+ 739 01e4 07020000 		.4byte	0x207
+ 740 01e8 07       		.uleb128 0x7
+ 741 01e9 FA000000 		.4byte	.LASF55
+ 742 01ed 00       		.byte	0
+ 743 01ee 07       		.uleb128 0x7
+ 744 01ef AE010000 		.4byte	.LASF56
+ 745 01f3 01       		.byte	0x1
+ 746 01f4 07       		.uleb128 0x7
+ 747 01f5 C5040000 		.4byte	.LASF57
+ 748 01f9 02       		.byte	0x2
+ 749 01fa 07       		.uleb128 0x7
+ 750 01fb 0E050000 		.4byte	.LASF58
+ 751 01ff 03       		.byte	0x3
+ 752 0200 07       		.uleb128 0x7
+ 753 0201 C9030000 		.4byte	.LASF59
+ 754 0205 04       		.byte	0x4
+ 755 0206 00       		.byte	0
+ 756 0207 04       		.uleb128 0x4
+ 757 0208 E2030000 		.4byte	.LASF60
+ 758 020c 04       		.byte	0x4
+ 759 020d 5E08     		.2byte	0x85e
+ 760 020f DB010000 		.4byte	0x1db
+ 761 0213 0B       		.uleb128 0xb
+ 762 0214 D2000000 		.4byte	.LASF70
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 20
+
+
+ 763 0218 01       		.byte	0x1
+ 764 0219 5D       		.byte	0x5d
+ 765 021a 5D000000 		.4byte	0x5d
+ 766 021e 00000000 		.4byte	.LFB36
+ 767 0222 38000000 		.4byte	.LFE36-.LFB36
+ 768 0226 01       		.uleb128 0x1
+ 769 0227 9C       		.byte	0x9c
+ 770 0228 63020000 		.4byte	0x263
+ 771 022c 0C       		.uleb128 0xc
+ 772 022d F5000000 		.4byte	.LASF61
+ 773 0231 01       		.byte	0x1
+ 774 0232 5D       		.byte	0x5d
+ 775 0233 5D000000 		.4byte	0x5d
+ 776 0237 02       		.uleb128 0x2
+ 777 0238 91       		.byte	0x91
+ 778 0239 6C       		.sleb128 -20
+ 779 023a 0D       		.uleb128 0xd
+ 780 023b 70747200 		.ascii	"ptr\000"
+ 781 023f 01       		.byte	0x1
+ 782 0240 5D       		.byte	0x5d
+ 783 0241 A6000000 		.4byte	0xa6
+ 784 0245 02       		.uleb128 0x2
+ 785 0246 91       		.byte	0x91
+ 786 0247 68       		.sleb128 -24
+ 787 0248 0D       		.uleb128 0xd
+ 788 0249 6C656E00 		.ascii	"len\000"
+ 789 024d 01       		.byte	0x1
+ 790 024e 5D       		.byte	0x5d
+ 791 024f 5D000000 		.4byte	0x5d
+ 792 0253 02       		.uleb128 0x2
+ 793 0254 91       		.byte	0x91
+ 794 0255 64       		.sleb128 -28
+ 795 0256 0E       		.uleb128 0xe
+ 796 0257 7800     		.ascii	"x\000"
+ 797 0259 01       		.byte	0x1
+ 798 025a 5F       		.byte	0x5f
+ 799 025b 5D000000 		.4byte	0x5d
+ 800 025f 02       		.uleb128 0x2
+ 801 0260 91       		.byte	0x91
+ 802 0261 74       		.sleb128 -12
+ 803 0262 00       		.byte	0
+ 804 0263 0F       		.uleb128 0xf
+ 805 0264 4A010000 		.4byte	.LASF71
+ 806 0268 01       		.byte	0x1
+ 807 0269 7B       		.byte	0x7b
+ 808 026a 00000000 		.4byte	.LFB37
+ 809 026e 60000000 		.4byte	.LFE37-.LFB37
+ 810 0272 01       		.uleb128 0x1
+ 811 0273 9C       		.byte	0x9c
+ 812 0274 87020000 		.4byte	0x287
+ 813 0278 10       		.uleb128 0x10
+ 814 0279 5D040000 		.4byte	.LASF62
+ 815 027d 01       		.byte	0x1
+ 816 027e 7D       		.byte	0x7d
+ 817 027f CF010000 		.4byte	0x1cf
+ 818 0283 02       		.uleb128 0x2
+ 819 0284 91       		.byte	0x91
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 21
+
+
+ 820 0285 68       		.sleb128 -24
+ 821 0286 00       		.byte	0
+ 822 0287 11       		.uleb128 0x11
+ 823 0288 26050000 		.4byte	.LASF63
+ 824 028c 01       		.byte	0x1
+ 825 028d 9C       		.byte	0x9c
+ 826 028e 00000000 		.4byte	.LFB38
+ 827 0292 84000000 		.4byte	.LFE38-.LFB38
+ 828 0296 01       		.uleb128 0x1
+ 829 0297 9C       		.byte	0x9c
+ 830 0298 11       		.uleb128 0x11
+ 831 0299 26040000 		.4byte	.LASF64
+ 832 029d 01       		.byte	0x1
+ 833 029e CA       		.byte	0xca
+ 834 029f 00000000 		.4byte	.LFB39
+ 835 02a3 10010000 		.4byte	.LFE39-.LFB39
+ 836 02a7 01       		.uleb128 0x1
+ 837 02a8 9C       		.byte	0x9c
+ 838 02a9 12       		.uleb128 0x12
+ 839 02aa B2050000 		.4byte	.LASF65
+ 840 02ae 04       		.byte	0x4
+ 841 02af A90A     		.2byte	0xaa9
+ 842 02b1 07020000 		.4byte	0x207
+ 843 02b5 13       		.uleb128 0x13
+ 844 02b6 10030000 		.4byte	.LASF66
+ 845 02ba 05       		.byte	0x5
+ 846 02bb 3A       		.byte	0x3a
+ 847 02bc 85010000 		.4byte	0x185
+ 848 02c0 00       		.byte	0
+ 849              		.section	.debug_abbrev,"",%progbits
+ 850              	.Ldebug_abbrev0:
+ 851 0000 01       		.uleb128 0x1
+ 852 0001 11       		.uleb128 0x11
+ 853 0002 01       		.byte	0x1
+ 854 0003 25       		.uleb128 0x25
+ 855 0004 0E       		.uleb128 0xe
+ 856 0005 13       		.uleb128 0x13
+ 857 0006 0B       		.uleb128 0xb
+ 858 0007 03       		.uleb128 0x3
+ 859 0008 0E       		.uleb128 0xe
+ 860 0009 1B       		.uleb128 0x1b
+ 861 000a 0E       		.uleb128 0xe
+ 862 000b 55       		.uleb128 0x55
+ 863 000c 17       		.uleb128 0x17
+ 864 000d 11       		.uleb128 0x11
+ 865 000e 01       		.uleb128 0x1
+ 866 000f 10       		.uleb128 0x10
+ 867 0010 17       		.uleb128 0x17
+ 868 0011 00       		.byte	0
+ 869 0012 00       		.byte	0
+ 870 0013 02       		.uleb128 0x2
+ 871 0014 24       		.uleb128 0x24
+ 872 0015 00       		.byte	0
+ 873 0016 0B       		.uleb128 0xb
+ 874 0017 0B       		.uleb128 0xb
+ 875 0018 3E       		.uleb128 0x3e
+ 876 0019 0B       		.uleb128 0xb
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 22
+
+
+ 877 001a 03       		.uleb128 0x3
+ 878 001b 0E       		.uleb128 0xe
+ 879 001c 00       		.byte	0
+ 880 001d 00       		.byte	0
+ 881 001e 03       		.uleb128 0x3
+ 882 001f 24       		.uleb128 0x24
+ 883 0020 00       		.byte	0
+ 884 0021 0B       		.uleb128 0xb
+ 885 0022 0B       		.uleb128 0xb
+ 886 0023 3E       		.uleb128 0x3e
+ 887 0024 0B       		.uleb128 0xb
+ 888 0025 03       		.uleb128 0x3
+ 889 0026 08       		.uleb128 0x8
+ 890 0027 00       		.byte	0
+ 891 0028 00       		.byte	0
+ 892 0029 04       		.uleb128 0x4
+ 893 002a 16       		.uleb128 0x16
+ 894 002b 00       		.byte	0
+ 895 002c 03       		.uleb128 0x3
+ 896 002d 0E       		.uleb128 0xe
+ 897 002e 3A       		.uleb128 0x3a
+ 898 002f 0B       		.uleb128 0xb
+ 899 0030 3B       		.uleb128 0x3b
+ 900 0031 05       		.uleb128 0x5
+ 901 0032 49       		.uleb128 0x49
+ 902 0033 13       		.uleb128 0x13
+ 903 0034 00       		.byte	0
+ 904 0035 00       		.byte	0
+ 905 0036 05       		.uleb128 0x5
+ 906 0037 0F       		.uleb128 0xf
+ 907 0038 00       		.byte	0
+ 908 0039 0B       		.uleb128 0xb
+ 909 003a 0B       		.uleb128 0xb
+ 910 003b 49       		.uleb128 0x49
+ 911 003c 13       		.uleb128 0x13
+ 912 003d 00       		.byte	0
+ 913 003e 00       		.byte	0
+ 914 003f 06       		.uleb128 0x6
+ 915 0040 04       		.uleb128 0x4
+ 916 0041 01       		.byte	0x1
+ 917 0042 0B       		.uleb128 0xb
+ 918 0043 0B       		.uleb128 0xb
+ 919 0044 49       		.uleb128 0x49
+ 920 0045 13       		.uleb128 0x13
+ 921 0046 3A       		.uleb128 0x3a
+ 922 0047 0B       		.uleb128 0xb
+ 923 0048 3B       		.uleb128 0x3b
+ 924 0049 05       		.uleb128 0x5
+ 925 004a 01       		.uleb128 0x1
+ 926 004b 13       		.uleb128 0x13
+ 927 004c 00       		.byte	0
+ 928 004d 00       		.byte	0
+ 929 004e 07       		.uleb128 0x7
+ 930 004f 28       		.uleb128 0x28
+ 931 0050 00       		.byte	0
+ 932 0051 03       		.uleb128 0x3
+ 933 0052 0E       		.uleb128 0xe
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 23
+
+
+ 934 0053 1C       		.uleb128 0x1c
+ 935 0054 0B       		.uleb128 0xb
+ 936 0055 00       		.byte	0
+ 937 0056 00       		.byte	0
+ 938 0057 08       		.uleb128 0x8
+ 939 0058 28       		.uleb128 0x28
+ 940 0059 00       		.byte	0
+ 941 005a 03       		.uleb128 0x3
+ 942 005b 0E       		.uleb128 0xe
+ 943 005c 1C       		.uleb128 0x1c
+ 944 005d 05       		.uleb128 0x5
+ 945 005e 00       		.byte	0
+ 946 005f 00       		.byte	0
+ 947 0060 09       		.uleb128 0x9
+ 948 0061 13       		.uleb128 0x13
+ 949 0062 01       		.byte	0x1
+ 950 0063 0B       		.uleb128 0xb
+ 951 0064 0B       		.uleb128 0xb
+ 952 0065 3A       		.uleb128 0x3a
+ 953 0066 0B       		.uleb128 0xb
+ 954 0067 3B       		.uleb128 0x3b
+ 955 0068 05       		.uleb128 0x5
+ 956 0069 01       		.uleb128 0x1
+ 957 006a 13       		.uleb128 0x13
+ 958 006b 00       		.byte	0
+ 959 006c 00       		.byte	0
+ 960 006d 0A       		.uleb128 0xa
+ 961 006e 0D       		.uleb128 0xd
+ 962 006f 00       		.byte	0
+ 963 0070 03       		.uleb128 0x3
+ 964 0071 0E       		.uleb128 0xe
+ 965 0072 3A       		.uleb128 0x3a
+ 966 0073 0B       		.uleb128 0xb
+ 967 0074 3B       		.uleb128 0x3b
+ 968 0075 05       		.uleb128 0x5
+ 969 0076 49       		.uleb128 0x49
+ 970 0077 13       		.uleb128 0x13
+ 971 0078 38       		.uleb128 0x38
+ 972 0079 0B       		.uleb128 0xb
+ 973 007a 00       		.byte	0
+ 974 007b 00       		.byte	0
+ 975 007c 0B       		.uleb128 0xb
+ 976 007d 2E       		.uleb128 0x2e
+ 977 007e 01       		.byte	0x1
+ 978 007f 3F       		.uleb128 0x3f
+ 979 0080 19       		.uleb128 0x19
+ 980 0081 03       		.uleb128 0x3
+ 981 0082 0E       		.uleb128 0xe
+ 982 0083 3A       		.uleb128 0x3a
+ 983 0084 0B       		.uleb128 0xb
+ 984 0085 3B       		.uleb128 0x3b
+ 985 0086 0B       		.uleb128 0xb
+ 986 0087 27       		.uleb128 0x27
+ 987 0088 19       		.uleb128 0x19
+ 988 0089 49       		.uleb128 0x49
+ 989 008a 13       		.uleb128 0x13
+ 990 008b 11       		.uleb128 0x11
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 24
+
+
+ 991 008c 01       		.uleb128 0x1
+ 992 008d 12       		.uleb128 0x12
+ 993 008e 06       		.uleb128 0x6
+ 994 008f 40       		.uleb128 0x40
+ 995 0090 18       		.uleb128 0x18
+ 996 0091 9642     		.uleb128 0x2116
+ 997 0093 19       		.uleb128 0x19
+ 998 0094 01       		.uleb128 0x1
+ 999 0095 13       		.uleb128 0x13
+ 1000 0096 00       		.byte	0
+ 1001 0097 00       		.byte	0
+ 1002 0098 0C       		.uleb128 0xc
+ 1003 0099 05       		.uleb128 0x5
+ 1004 009a 00       		.byte	0
+ 1005 009b 03       		.uleb128 0x3
+ 1006 009c 0E       		.uleb128 0xe
+ 1007 009d 3A       		.uleb128 0x3a
+ 1008 009e 0B       		.uleb128 0xb
+ 1009 009f 3B       		.uleb128 0x3b
+ 1010 00a0 0B       		.uleb128 0xb
+ 1011 00a1 49       		.uleb128 0x49
+ 1012 00a2 13       		.uleb128 0x13
+ 1013 00a3 02       		.uleb128 0x2
+ 1014 00a4 18       		.uleb128 0x18
+ 1015 00a5 00       		.byte	0
+ 1016 00a6 00       		.byte	0
+ 1017 00a7 0D       		.uleb128 0xd
+ 1018 00a8 05       		.uleb128 0x5
+ 1019 00a9 00       		.byte	0
+ 1020 00aa 03       		.uleb128 0x3
+ 1021 00ab 08       		.uleb128 0x8
+ 1022 00ac 3A       		.uleb128 0x3a
+ 1023 00ad 0B       		.uleb128 0xb
+ 1024 00ae 3B       		.uleb128 0x3b
+ 1025 00af 0B       		.uleb128 0xb
+ 1026 00b0 49       		.uleb128 0x49
+ 1027 00b1 13       		.uleb128 0x13
+ 1028 00b2 02       		.uleb128 0x2
+ 1029 00b3 18       		.uleb128 0x18
+ 1030 00b4 00       		.byte	0
+ 1031 00b5 00       		.byte	0
+ 1032 00b6 0E       		.uleb128 0xe
+ 1033 00b7 34       		.uleb128 0x34
+ 1034 00b8 00       		.byte	0
+ 1035 00b9 03       		.uleb128 0x3
+ 1036 00ba 08       		.uleb128 0x8
+ 1037 00bb 3A       		.uleb128 0x3a
+ 1038 00bc 0B       		.uleb128 0xb
+ 1039 00bd 3B       		.uleb128 0x3b
+ 1040 00be 0B       		.uleb128 0xb
+ 1041 00bf 49       		.uleb128 0x49
+ 1042 00c0 13       		.uleb128 0x13
+ 1043 00c1 02       		.uleb128 0x2
+ 1044 00c2 18       		.uleb128 0x18
+ 1045 00c3 00       		.byte	0
+ 1046 00c4 00       		.byte	0
+ 1047 00c5 0F       		.uleb128 0xf
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 25
+
+
+ 1048 00c6 2E       		.uleb128 0x2e
+ 1049 00c7 01       		.byte	0x1
+ 1050 00c8 3F       		.uleb128 0x3f
+ 1051 00c9 19       		.uleb128 0x19
+ 1052 00ca 03       		.uleb128 0x3
+ 1053 00cb 0E       		.uleb128 0xe
+ 1054 00cc 3A       		.uleb128 0x3a
+ 1055 00cd 0B       		.uleb128 0xb
+ 1056 00ce 3B       		.uleb128 0x3b
+ 1057 00cf 0B       		.uleb128 0xb
+ 1058 00d0 27       		.uleb128 0x27
+ 1059 00d1 19       		.uleb128 0x19
+ 1060 00d2 11       		.uleb128 0x11
+ 1061 00d3 01       		.uleb128 0x1
+ 1062 00d4 12       		.uleb128 0x12
+ 1063 00d5 06       		.uleb128 0x6
+ 1064 00d6 40       		.uleb128 0x40
+ 1065 00d7 18       		.uleb128 0x18
+ 1066 00d8 9642     		.uleb128 0x2116
+ 1067 00da 19       		.uleb128 0x19
+ 1068 00db 01       		.uleb128 0x1
+ 1069 00dc 13       		.uleb128 0x13
+ 1070 00dd 00       		.byte	0
+ 1071 00de 00       		.byte	0
+ 1072 00df 10       		.uleb128 0x10
+ 1073 00e0 34       		.uleb128 0x34
+ 1074 00e1 00       		.byte	0
+ 1075 00e2 03       		.uleb128 0x3
+ 1076 00e3 0E       		.uleb128 0xe
+ 1077 00e4 3A       		.uleb128 0x3a
+ 1078 00e5 0B       		.uleb128 0xb
+ 1079 00e6 3B       		.uleb128 0x3b
+ 1080 00e7 0B       		.uleb128 0xb
+ 1081 00e8 49       		.uleb128 0x49
+ 1082 00e9 13       		.uleb128 0x13
+ 1083 00ea 02       		.uleb128 0x2
+ 1084 00eb 18       		.uleb128 0x18
+ 1085 00ec 00       		.byte	0
+ 1086 00ed 00       		.byte	0
+ 1087 00ee 11       		.uleb128 0x11
+ 1088 00ef 2E       		.uleb128 0x2e
+ 1089 00f0 00       		.byte	0
+ 1090 00f1 3F       		.uleb128 0x3f
+ 1091 00f2 19       		.uleb128 0x19
+ 1092 00f3 03       		.uleb128 0x3
+ 1093 00f4 0E       		.uleb128 0xe
+ 1094 00f5 3A       		.uleb128 0x3a
+ 1095 00f6 0B       		.uleb128 0xb
+ 1096 00f7 3B       		.uleb128 0x3b
+ 1097 00f8 0B       		.uleb128 0xb
+ 1098 00f9 27       		.uleb128 0x27
+ 1099 00fa 19       		.uleb128 0x19
+ 1100 00fb 11       		.uleb128 0x11
+ 1101 00fc 01       		.uleb128 0x1
+ 1102 00fd 12       		.uleb128 0x12
+ 1103 00fe 06       		.uleb128 0x6
+ 1104 00ff 40       		.uleb128 0x40
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 26
+
+
+ 1105 0100 18       		.uleb128 0x18
+ 1106 0101 9642     		.uleb128 0x2116
+ 1107 0103 19       		.uleb128 0x19
+ 1108 0104 00       		.byte	0
+ 1109 0105 00       		.byte	0
+ 1110 0106 12       		.uleb128 0x12
+ 1111 0107 34       		.uleb128 0x34
+ 1112 0108 00       		.byte	0
+ 1113 0109 03       		.uleb128 0x3
+ 1114 010a 0E       		.uleb128 0xe
+ 1115 010b 3A       		.uleb128 0x3a
+ 1116 010c 0B       		.uleb128 0xb
+ 1117 010d 3B       		.uleb128 0x3b
+ 1118 010e 05       		.uleb128 0x5
+ 1119 010f 49       		.uleb128 0x49
+ 1120 0110 13       		.uleb128 0x13
+ 1121 0111 3F       		.uleb128 0x3f
+ 1122 0112 19       		.uleb128 0x19
+ 1123 0113 3C       		.uleb128 0x3c
+ 1124 0114 19       		.uleb128 0x19
+ 1125 0115 00       		.byte	0
+ 1126 0116 00       		.byte	0
+ 1127 0117 13       		.uleb128 0x13
+ 1128 0118 34       		.uleb128 0x34
+ 1129 0119 00       		.byte	0
+ 1130 011a 03       		.uleb128 0x3
+ 1131 011b 0E       		.uleb128 0xe
+ 1132 011c 3A       		.uleb128 0x3a
+ 1133 011d 0B       		.uleb128 0xb
+ 1134 011e 3B       		.uleb128 0x3b
+ 1135 011f 0B       		.uleb128 0xb
+ 1136 0120 49       		.uleb128 0x49
+ 1137 0121 13       		.uleb128 0x13
+ 1138 0122 3F       		.uleb128 0x3f
+ 1139 0123 19       		.uleb128 0x19
+ 1140 0124 3C       		.uleb128 0x3c
+ 1141 0125 19       		.uleb128 0x19
+ 1142 0126 00       		.byte	0
+ 1143 0127 00       		.byte	0
+ 1144 0128 00       		.byte	0
+ 1145              		.section	.debug_aranges,"",%progbits
+ 1146 0000 34000000 		.4byte	0x34
+ 1147 0004 0200     		.2byte	0x2
+ 1148 0006 00000000 		.4byte	.Ldebug_info0
+ 1149 000a 04       		.byte	0x4
+ 1150 000b 00       		.byte	0
+ 1151 000c 0000     		.2byte	0
+ 1152 000e 0000     		.2byte	0
+ 1153 0010 00000000 		.4byte	.LFB36
+ 1154 0014 38000000 		.4byte	.LFE36-.LFB36
+ 1155 0018 00000000 		.4byte	.LFB37
+ 1156 001c 60000000 		.4byte	.LFE37-.LFB37
+ 1157 0020 00000000 		.4byte	.LFB38
+ 1158 0024 84000000 		.4byte	.LFE38-.LFB38
+ 1159 0028 00000000 		.4byte	.LFB39
+ 1160 002c 10010000 		.4byte	.LFE39-.LFB39
+ 1161 0030 00000000 		.4byte	0
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 27
+
+
+ 1162 0034 00000000 		.4byte	0
+ 1163              		.section	.debug_ranges,"",%progbits
+ 1164              	.Ldebug_ranges0:
+ 1165 0000 00000000 		.4byte	.LFB36
+ 1166 0004 38000000 		.4byte	.LFE36
+ 1167 0008 00000000 		.4byte	.LFB37
+ 1168 000c 60000000 		.4byte	.LFE37
+ 1169 0010 00000000 		.4byte	.LFB38
+ 1170 0014 84000000 		.4byte	.LFE38
+ 1171 0018 00000000 		.4byte	.LFB39
+ 1172 001c 10010000 		.4byte	.LFE39
+ 1173 0020 00000000 		.4byte	0
+ 1174 0024 00000000 		.4byte	0
+ 1175              		.section	.debug_line,"",%progbits
+ 1176              	.Ldebug_line0:
+ 1177 0000 FF000000 		.section	.debug_str,"MS",%progbits,1
+ 1177      02007100 
+ 1177      00000201 
+ 1177      FB0E0D00 
+ 1177      01010101 
+ 1178              	.LASF31:
+ 1179 0000 4359424C 		.ascii	"CYBLE_ERROR_L2CAP_PSM_NOT_REGISTERED\000"
+ 1179      455F4552 
+ 1179      524F525F 
+ 1179      4C324341 
+ 1179      505F5053 
+ 1180              	.LASF30:
+ 1181 0025 4359424C 		.ascii	"CYBLE_ERROR_L2CAP_PSM_ALREADY_REGISTERED\000"
+ 1181      455F4552 
+ 1181      524F525F 
+ 1181      4C324341 
+ 1181      505F5053 
+ 1182              	.LASF50:
+ 1183 004e 6D616A6F 		.ascii	"majorVersion\000"
+ 1183      72566572 
+ 1183      73696F6E 
+ 1183      00
+ 1184              	.LASF33:
+ 1185 005b 4359424C 		.ascii	"CYBLE_ERROR_L2CAP_CHANNEL_NOT_FOUND\000"
+ 1185      455F4552 
+ 1185      524F525F 
+ 1185      4C324341 
+ 1185      505F4348 
+ 1186              	.LASF2:
+ 1187 007f 73686F72 		.ascii	"short int\000"
+ 1187      7420696E 
+ 1187      7400
+ 1188              	.LASF15:
+ 1189 0089 73697A65 		.ascii	"sizetype\000"
+ 1189      74797065 
+ 1189      00
+ 1190              	.LASF16:
+ 1191 0092 4359424C 		.ascii	"CYBLE_ERROR_OK\000"
+ 1191      455F4552 
+ 1191      524F525F 
+ 1191      4F4B00
+ 1192              	.LASF37:
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 28
+
+
+ 1193 00a1 4359424C 		.ascii	"CYBLE_ERROR_FLASH_WRITE_NOT_PERMITED\000"
+ 1193      455F4552 
+ 1193      524F525F 
+ 1193      464C4153 
+ 1193      485F5752 
+ 1194              	.LASF14:
+ 1195 00c6 6C6F6E67 		.ascii	"long double\000"
+ 1195      20646F75 
+ 1195      626C6500 
+ 1196              	.LASF70:
+ 1197 00d2 5F777269 		.ascii	"_write\000"
+ 1197      746500
+ 1198              	.LASF38:
+ 1199 00d9 4359424C 		.ascii	"CYBLE_ERROR_MIC_AUTH_FAILED\000"
+ 1199      455F4552 
+ 1199      524F525F 
+ 1199      4D49435F 
+ 1199      41555448 
+ 1200              	.LASF61:
+ 1201 00f5 66696C65 		.ascii	"file\000"
+ 1201      00
+ 1202              	.LASF55:
+ 1203 00fa 4359424C 		.ascii	"CYBLE_STATE_STOPPED\000"
+ 1203      455F5354 
+ 1203      4154455F 
+ 1203      53544F50 
+ 1203      50454400 
+ 1204              	.LASF17:
+ 1205 010e 4359424C 		.ascii	"CYBLE_ERROR_INVALID_PARAMETER\000"
+ 1205      455F4552 
+ 1205      524F525F 
+ 1205      494E5641 
+ 1205      4C49445F 
+ 1206              	.LASF21:
+ 1207 012c 4359424C 		.ascii	"CYBLE_ERROR_OOB_NOT_AVAILABLE\000"
+ 1207      455F4552 
+ 1207      524F525F 
+ 1207      4F4F425F 
+ 1207      4E4F545F 
+ 1208              	.LASF71:
+ 1209 014a 5072696E 		.ascii	"PrintStackVersion\000"
+ 1209      74537461 
+ 1209      636B5665 
+ 1209      7273696F 
+ 1209      6E00
+ 1210              	.LASF9:
+ 1211 015c 75696E74 		.ascii	"uint16\000"
+ 1211      313600
+ 1212              	.LASF18:
+ 1213 0163 4359424C 		.ascii	"CYBLE_ERROR_INVALID_OPERATION\000"
+ 1213      455F4552 
+ 1213      524F525F 
+ 1213      494E5641 
+ 1213      4C49445F 
+ 1214              	.LASF49:
+ 1215 0181 4359424C 		.ascii	"CYBLE_API_RESULT_T\000"
+ 1215      455F4150 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 29
+
+
+ 1215      495F5245 
+ 1215      53554C54 
+ 1215      5F5400
+ 1216              	.LASF22:
+ 1217 0194 4359424C 		.ascii	"CYBLE_ERROR_NO_CONNECTION\000"
+ 1217      455F4552 
+ 1217      524F525F 
+ 1217      4E4F5F43 
+ 1217      4F4E4E45 
+ 1218              	.LASF56:
+ 1219 01ae 4359424C 		.ascii	"CYBLE_STATE_INITIALIZING\000"
+ 1219      455F5354 
+ 1219      4154455F 
+ 1219      494E4954 
+ 1219      49414C49 
+ 1220              	.LASF26:
+ 1221 01c7 4359424C 		.ascii	"CYBLE_ERROR_TX_POWER_READ\000"
+ 1221      455F4552 
+ 1221      524F525F 
+ 1221      54585F50 
+ 1221      4F574552 
+ 1222              	.LASF20:
+ 1223 01e1 4359424C 		.ascii	"CYBLE_ERROR_INSUFFICIENT_RESOURCES\000"
+ 1223      455F4552 
+ 1223      524F525F 
+ 1223      494E5355 
+ 1223      46464943 
+ 1224              	.LASF11:
+ 1225 0204 666C6F61 		.ascii	"float\000"
+ 1225      7400
+ 1226              	.LASF6:
+ 1227 020a 6C6F6E67 		.ascii	"long long int\000"
+ 1227      206C6F6E 
+ 1227      6720696E 
+ 1227      7400
+ 1228              	.LASF27:
+ 1229 0218 4359424C 		.ascii	"CYBLE_ERROR_BT_ON_NOT_COMPLETED\000"
+ 1229      455F4552 
+ 1229      524F525F 
+ 1229      42545F4F 
+ 1229      4E5F4E4F 
+ 1230              	.LASF4:
+ 1231 0238 6C6F6E67 		.ascii	"long int\000"
+ 1231      20696E74 
+ 1231      00
+ 1232              	.LASF24:
+ 1233 0241 4359424C 		.ascii	"CYBLE_ERROR_REPEATED_ATTEMPTS\000"
+ 1233      455F4552 
+ 1233      524F525F 
+ 1233      52455045 
+ 1233      41544544 
+ 1234              	.LASF67:
+ 1235 025f 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1235      43313120 
+ 1235      352E342E 
+ 1235      31203230 
+ 1235      31363036 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 30
+
+
+ 1236 0292 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1236      20726576 
+ 1236      6973696F 
+ 1236      6E203233 
+ 1236      37373135 
+ 1237 02c5 30202D66 		.ascii	"0 -ffunction-sections -ffat-lto-objects\000"
+ 1237      66756E63 
+ 1237      74696F6E 
+ 1237      2D736563 
+ 1237      74696F6E 
+ 1238              	.LASF52:
+ 1239 02ed 70617463 		.ascii	"patch\000"
+ 1239      6800
+ 1240              	.LASF23:
+ 1241 02f3 4359424C 		.ascii	"CYBLE_ERROR_NO_DEVICE_ENTITY\000"
+ 1241      455F4552 
+ 1241      524F525F 
+ 1241      4E4F5F44 
+ 1241      45564943 
+ 1242              	.LASF66:
+ 1243 0310 61706952 		.ascii	"apiResult\000"
+ 1243      6573756C 
+ 1243      7400
+ 1244              	.LASF1:
+ 1245 031a 756E7369 		.ascii	"unsigned char\000"
+ 1245      676E6564 
+ 1245      20636861 
+ 1245      7200
+ 1246              	.LASF41:
+ 1247 0328 4359424C 		.ascii	"CYBLE_ERROR_FLASH_WRITE\000"
+ 1247      455F4552 
+ 1247      524F525F 
+ 1247      464C4153 
+ 1247      485F5752 
+ 1248              	.LASF68:
+ 1249 0340 64656275 		.ascii	"debug.c\000"
+ 1249      672E6300 
+ 1250              	.LASF0:
+ 1251 0348 7369676E 		.ascii	"signed char\000"
+ 1251      65642063 
+ 1251      68617200 
+ 1252              	.LASF7:
+ 1253 0354 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1253      206C6F6E 
+ 1253      6720756E 
+ 1253      7369676E 
+ 1253      65642069 
+ 1254              	.LASF28:
+ 1255 036b 4359424C 		.ascii	"CYBLE_ERROR_SEC_FAILED\000"
+ 1255      455F4552 
+ 1255      524F525F 
+ 1255      5345435F 
+ 1255      4641494C 
+ 1256              	.LASF25:
+ 1257 0382 4359424C 		.ascii	"CYBLE_ERROR_GAP_ROLE\000"
+ 1257      455F4552 
+ 1257      524F525F 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 31
+
+
+ 1257      4741505F 
+ 1257      524F4C45 
+ 1258              	.LASF8:
+ 1259 0397 756E7369 		.ascii	"unsigned int\000"
+ 1259      676E6564 
+ 1259      20696E74 
+ 1259      00
+ 1260              	.LASF29:
+ 1261 03a4 4359424C 		.ascii	"CYBLE_ERROR_L2CAP_PSM_WRONG_ENCODING\000"
+ 1261      455F4552 
+ 1261      524F525F 
+ 1261      4C324341 
+ 1261      505F5053 
+ 1262              	.LASF59:
+ 1263 03c9 4359424C 		.ascii	"CYBLE_STATE_DISCONNECTED\000"
+ 1263      455F5354 
+ 1263      4154455F 
+ 1263      44495343 
+ 1263      4F4E4E45 
+ 1264              	.LASF60:
+ 1265 03e2 4359424C 		.ascii	"CYBLE_STATE_T\000"
+ 1265      455F5354 
+ 1265      4154455F 
+ 1265      5400
+ 1266              	.LASF46:
+ 1267 03f0 4359424C 		.ascii	"CYBLE_ERROR_CHAR_IS_NOT_DISCOVERED\000"
+ 1267      455F4552 
+ 1267      524F525F 
+ 1267      43484152 
+ 1267      5F49535F 
+ 1268              	.LASF3:
+ 1269 0413 73686F72 		.ascii	"short unsigned int\000"
+ 1269      7420756E 
+ 1269      7369676E 
+ 1269      65642069 
+ 1269      6E7400
+ 1270              	.LASF64:
+ 1271 0426 5072696E 		.ascii	"PrintApiResult\000"
+ 1271      74417069 
+ 1271      52657375 
+ 1271      6C7400
+ 1272              	.LASF53:
+ 1273 0435 6275696C 		.ascii	"buildNumber\000"
+ 1273      644E756D 
+ 1273      62657200 
+ 1274              	.LASF13:
+ 1275 0441 63686172 		.ascii	"char\000"
+ 1275      00
+ 1276              	.LASF48:
+ 1277 0446 4359424C 		.ascii	"CYBLE_ERROR_STACK_BUSY\000"
+ 1277      455F4552 
+ 1277      524F525F 
+ 1277      53544143 
+ 1277      4B5F4255 
+ 1278              	.LASF62:
+ 1279 045d 73746163 		.ascii	"stackVersion\000"
+ 1279      6B566572 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 32
+
+
+ 1279      73696F6E 
+ 1279      00
+ 1280              	.LASF42:
+ 1281 046a 4359424C 		.ascii	"CYBLE_ERROR_CONTROLLER_BUSY\000"
+ 1281      455F4552 
+ 1281      524F525F 
+ 1281      434F4E54 
+ 1281      524F4C4C 
+ 1282              	.LASF54:
+ 1283 0486 4359424C 		.ascii	"CYBLE_STACK_LIB_VERSION_T\000"
+ 1283      455F5354 
+ 1283      41434B5F 
+ 1283      4C49425F 
+ 1283      56455253 
+ 1284              	.LASF19:
+ 1285 04a0 4359424C 		.ascii	"CYBLE_ERROR_MEMORY_ALLOCATION_FAILED\000"
+ 1285      455F4552 
+ 1285      524F525F 
+ 1285      4D454D4F 
+ 1285      52595F41 
+ 1286              	.LASF57:
+ 1287 04c5 4359424C 		.ascii	"CYBLE_STATE_CONNECTED\000"
+ 1287      455F5354 
+ 1287      4154455F 
+ 1287      434F4E4E 
+ 1287      45435445 
+ 1288              	.LASF40:
+ 1289 04db 4359424C 		.ascii	"CYBLE_ERROR_UNSUPPORTED_FEATURE_OR_PARAMETER_VALUE\000"
+ 1289      455F4552 
+ 1289      524F525F 
+ 1289      554E5355 
+ 1289      50504F52 
+ 1290              	.LASF58:
+ 1291 050e 4359424C 		.ascii	"CYBLE_STATE_ADVERTISING\000"
+ 1291      455F5354 
+ 1291      4154455F 
+ 1291      41445645 
+ 1291      52544953 
+ 1292              	.LASF63:
+ 1293 0526 5072696E 		.ascii	"PrintState\000"
+ 1293      74537461 
+ 1293      746500
+ 1294              	.LASF5:
+ 1295 0531 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1295      20756E73 
+ 1295      69676E65 
+ 1295      6420696E 
+ 1295      7400
+ 1296              	.LASF10:
+ 1297 0543 75696E74 		.ascii	"uint32\000"
+ 1297      333200
+ 1298              	.LASF35:
+ 1299 054a 4359424C 		.ascii	"CYBLE_ERROR_GATT_DB_INVALID_ATTR_HANDLE\000"
+ 1299      455F4552 
+ 1299      524F525F 
+ 1299      47415454 
+ 1299      5F44425F 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 33
+
+
+ 1300              	.LASF34:
+ 1301 0572 4359424C 		.ascii	"CYBLE_ERROR_L2CAP_PSM_NOT_IN_RANGE\000"
+ 1301      455F4552 
+ 1301      524F525F 
+ 1301      4C324341 
+ 1301      505F5053 
+ 1302              	.LASF39:
+ 1303 0595 4359424C 		.ascii	"CYBLE_ERROR_HARDWARE_FAILURE\000"
+ 1303      455F4552 
+ 1303      524F525F 
+ 1303      48415244 
+ 1303      57415245 
+ 1304              	.LASF65:
+ 1305 05b2 6379426C 		.ascii	"cyBle_state\000"
+ 1305      655F7374 
+ 1305      61746500 
+ 1306              	.LASF44:
+ 1307 05be 4359424C 		.ascii	"CYBLE_ERROR_NTF_DISABLED\000"
+ 1307      455F4552 
+ 1307      524F525F 
+ 1307      4E54465F 
+ 1307      44495341 
+ 1308              	.LASF36:
+ 1309 05d7 4359424C 		.ascii	"CYBLE_ERROR_DEVICE_ALREADY_EXISTS\000"
+ 1309      455F4552 
+ 1309      524F525F 
+ 1309      44455649 
+ 1309      43455F41 
+ 1310              	.LASF51:
+ 1311 05f9 6D696E6F 		.ascii	"minorVersion\000"
+ 1311      72566572 
+ 1311      73696F6E 
+ 1311      00
+ 1312              	.LASF43:
+ 1313 0606 4359424C 		.ascii	"CYBLE_ERROR_MAX\000"
+ 1313      455F4552 
+ 1313      524F525F 
+ 1313      4D415800 
+ 1314              	.LASF47:
+ 1315 0616 4359424C 		.ascii	"CYBLE_ERROR_INVALID_STATE\000"
+ 1315      455F4552 
+ 1315      524F525F 
+ 1315      494E5641 
+ 1315      4C49445F 
+ 1316              	.LASF12:
+ 1317 0630 646F7562 		.ascii	"double\000"
+ 1317      6C6500
+ 1318              	.LASF69:
+ 1319 0637 443A5C73 		.ascii	"D:\\student\\FeS-31\\Stepaniuk\\lab8\\test\\BLE_Con"
+ 1319      74756465 
+ 1319      6E745C46 
+ 1319      65532D33 
+ 1319      315C5374 
+ 1320 0664 74696E75 		.ascii	"tinuous_Glucose_Monitoring_Sensor01.cydsn\000"
+ 1320      6F75735F 
+ 1320      476C7563 
+ 1320      6F73655F 
+ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccRHdJDy.s 			page 34
+
+
+ 1320      4D6F6E69 
+ 1321              	.LASF32:
+ 1322 068e 4359424C 		.ascii	"CYBLE_ERROR_L2CAP_CONNECTION_ENTITY_NOT_FOUND\000"
+ 1322      455F4552 
+ 1322      524F525F 
+ 1322      4C324341 
+ 1322      505F434F 
+ 1323              	.LASF45:
+ 1324 06bc 4359424C 		.ascii	"CYBLE_ERROR_IND_DISABLED\000"
+ 1324      455F4552 
+ 1324      524F525F 
+ 1324      494E445F 
+ 1324      44495341 
+ 1325              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

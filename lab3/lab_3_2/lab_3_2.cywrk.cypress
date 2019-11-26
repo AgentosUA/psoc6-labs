@@ -211,53 +211,6 @@
 <VisibleNodeIds>
 <v>lab_3_2</v>
 <v>lab_3_2\lab_3_2</v>
-<v>lab_3_2\lab_3_2\CortexM0p</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ble_clk.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_efuse.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_flash.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_gpio.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_config.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_drv.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_pipe.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_sema.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_lvd.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_profile.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_prot.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_sysanalog.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_sysclk.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_sysint.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_syslib.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_syslib_gcc.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_syspm.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_systick.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_trigmux.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_wdt.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cyfitter_sysint_cfg.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\main_cm0p.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\startup_psoc63_cm0plus.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\system_psoc63_cm0plus.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\lab_3_2.elf</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\lab_3_2.hex</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\lab_3_2.map</v>
-<v>lab_3_2\lab_3_2\CortexM4</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ble_clk.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_efuse.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_flash.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_gpio.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_config.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_drv.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_pipe.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_sema.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_lvd.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_profile.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -323,7 +276,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1458, 915" SelectedTabbedMdiWindow="e6765aa9-b1b4-41b1-ad18-3b4e984a16dc"><ToolWindow Key="Output Window Plugin:7305390e-eabe-4963-b21f-3a0f11b4b1d5:Output Window" Guid="7e9b0da0-e664-42c6-be77-80f7fd8f1b6a" /><ToolWindow Key="CyNoticeWindow:44d3d453-9474-4f2b-b928-4356f496bef0:Notice Window" Guid="5fce2f72-8ccd-4794-8453-74ede0d2b43b" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab3\lab_3_2\lab_3_2.cydsn\TopDesign\TopDesign.cysch" Guid="d377e060-9854-44e0-92ac-6a69befa9842" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab3\lab_3_2\lab_3_2.cydsn\main_cm4.c" Guid="e6765aa9-b1b4-41b1-ad18-3b4e984a16dc" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1400, 915" SelectedTabbedMdiWindow="e6765aa9-b1b4-41b1-ad18-3b4e984a16dc"><ToolWindow Key="Output Window Plugin:7305390e-eabe-4963-b21f-3a0f11b4b1d5:Output Window" Guid="7e9b0da0-e664-42c6-be77-80f7fd8f1b6a" /><ToolWindow Key="CyNoticeWindow:44d3d453-9474-4f2b-b928-4356f496bef0:Notice Window" Guid="5fce2f72-8ccd-4794-8453-74ede0d2b43b" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab3\lab_3_2\lab_3_2.cydsn\TopDesign\TopDesign.cysch" Guid="d377e060-9854-44e0-92ac-6a69befa9842" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab3\lab_3_2\lab_3_2.cydsn\main_cm4.c" Guid="e6765aa9-b1b4-41b1-ad18-3b4e984a16dc" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="5310f859-90b9-4e1b-b1f9-5c9a44eb91bd" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>

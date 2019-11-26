@@ -261,18 +261,6 @@
 <v>lab_2_2\lab_2_2\PSoC 63 Family Datasheet</v>
 <v>lab_2_2\lab_2_2\Peripheral Driver Library</v>
 <v>lab_2_2\lab_2_2\System Reference Guides</v>
-<v>lab_2_2\lab_2_2\Gnd_v1_0</v>
-<v>lab_2_2\lab_2_2\Gnd_v1_0\Gnd_v1_0.pdf</v>
-<v>lab_2_2\lab_2_2\GPIO_PDL_v1_0</v>
-<v>lab_2_2\lab_2_2\GPIO_PDL_v1_0\GPIO_PDL_v1_0.pdf</v>
-<v>lab_2_2\lab_2_2\LED_v1_0</v>
-<v>lab_2_2\lab_2_2\LED_v1_0\LED_v1_0.pdf</v>
-<v>lab_2_2\lab_2_2\Resistor_v1_0</v>
-<v>lab_2_2\lab_2_2\Resistor_v1_0\Resistor_v1_0.pdf</v>
-<v>lab_2_2\lab_2_2\SysClk_PDL_v1_0</v>
-<v>lab_2_2\lab_2_2\SysClk_PDL_v1_0\SysClk_PDL_v1_0.pdf</v>
-<v>lab_2_2\lab_2_2\TCPWM_PWM_PDL_v1_0</v>
-<v>lab_2_2\lab_2_2\TCPWM_PWM_PDL_v1_0\TCPWM_PWM_PDL_v1_0.pdf</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>lab_2_2</v>
@@ -282,17 +270,11 @@
 <v>lab_2_2\lab_2_2\Peripheral Driver Library</v>
 <v>lab_2_2\lab_2_2\System Reference Guides</v>
 <v>lab_2_2\lab_2_2\Gnd_v1_0</v>
-<v>lab_2_2\lab_2_2\Gnd_v1_0\Gnd_v1_0.pdf</v>
 <v>lab_2_2\lab_2_2\GPIO_PDL_v1_0</v>
-<v>lab_2_2\lab_2_2\GPIO_PDL_v1_0\GPIO_PDL_v1_0.pdf</v>
 <v>lab_2_2\lab_2_2\LED_v1_0</v>
-<v>lab_2_2\lab_2_2\LED_v1_0\LED_v1_0.pdf</v>
 <v>lab_2_2\lab_2_2\Resistor_v1_0</v>
-<v>lab_2_2\lab_2_2\Resistor_v1_0\Resistor_v1_0.pdf</v>
 <v>lab_2_2\lab_2_2\SysClk_PDL_v1_0</v>
-<v>lab_2_2\lab_2_2\SysClk_PDL_v1_0\SysClk_PDL_v1_0.pdf</v>
 <v>lab_2_2\lab_2_2\TCPWM_PWM_PDL_v1_0</v>
-<v>lab_2_2\lab_2_2\TCPWM_PWM_PDL_v1_0\TCPWM_PWM_PDL_v1_0.pdf</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStatesV2>
@@ -303,8 +285,8 @@
 <Unloaded />
 <OpenDocs>
 <name v=".\lab_2_2.cydsn\TopDesign\TopDesign.cysch" />
-<name v=".\lab_2_2.cydsn\lab_2_2.cydwr" />
 <name v=".\lab_2_2.cydsn\main_cm4.c" />
+<name v=".\lab_2_2.cydsn\lab_2_2.cydwr" />
 </OpenDocs>
 <OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
 
@@ -312,7 +294,7 @@
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1637, 915" SelectedTabbedMdiWindow="7e9b0da0-e664-42c6-be77-80f7fd8f1b6a"><ToolWindow Key="Output Window Plugin:7305390e-eabe-4963-b21f-3a0f11b4b1d5:Output Window" Guid="7e9b0da0-e664-42c6-be77-80f7fd8f1b6a" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="5310f859-90b9-4e1b-b1f9-5c9a44eb91bd" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab2\lab_2_2\lab_2_2.cydsn\TopDesign\TopDesign.cysch" Guid="f17f9b8b-3897-4737-b3ae-5250d0263a94" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab2\lab_2_2\lab_2_2.cydsn\lab_2_2.cydwr" Guid="57146479-8c7c-4b75-9c2c-ab54e50f2abf" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab2\lab_2_2\lab_2_2.cydsn\main_cm4.c" Guid="07f9d44b-3026-450b-ab87-93e2f238cbb4" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1579, 915" SelectedTabbedMdiWindow="88bdf644-a7bb-4e5c-942c-e0cdb10db0da"><ToolWindow Key="Output Window Plugin:7305390e-eabe-4963-b21f-3a0f11b4b1d5:Output Window" Guid="7e9b0da0-e664-42c6-be77-80f7fd8f1b6a" /><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="5310f859-90b9-4e1b-b1f9-5c9a44eb91bd" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab2\lab_2_2\lab_2_2.cydsn\TopDesign\TopDesign.cysch" Guid="f17f9b8b-3897-4737-b3ae-5250d0263a94" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab2\lab_2_2\lab_2_2.cydsn\main_cm4.c" Guid="07f9d44b-3026-450b-ab87-93e2f238cbb4" /><ToolWindow Key="CyNoticeWindow:44d3d453-9474-4f2b-b928-4356f496bef0:Notice Window" Guid="5fce2f72-8ccd-4794-8453-74ede0d2b43b" /><DocumentWindow Key="D:\student\FeS-31\Stepaniuk\lab2\lab_2_2\lab_2_2.cydsn\lab_2_2.cydwr" Guid="88bdf644-a7bb-4e5c-942c-e0cdb10db0da" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
