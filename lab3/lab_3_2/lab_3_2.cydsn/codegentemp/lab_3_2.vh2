@@ -2,7 +2,7 @@
 --	Conversion of lab_3_2.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Wed Sep 18 17:37:42 2019
+--	Tue Nov 26 14:18:47 2019
 --
 
 USE cypress.cypress.all;
@@ -32,21 +32,6 @@ SIGNAL tmpFB_0__LED_Blue_P11_1_net_0 : bit;
 SIGNAL tmpIO_0__LED_Blue_P11_1_net_0 : bit;
 TERMINAL tmpSIOVREF__LED_Blue_P11_1_net_0 : bit;
 SIGNAL Net_3 : bit;
-SIGNAL tmpFB_6__Port5_net_6 : bit;
-SIGNAL tmpFB_6__Port5_net_5 : bit;
-SIGNAL tmpFB_6__Port5_net_4 : bit;
-SIGNAL tmpFB_6__Port5_net_3 : bit;
-SIGNAL tmpFB_6__Port5_net_2 : bit;
-SIGNAL tmpFB_6__Port5_net_1 : bit;
-SIGNAL tmpFB_6__Port5_net_0 : bit;
-SIGNAL tmpIO_6__Port5_net_6 : bit;
-SIGNAL tmpIO_6__Port5_net_5 : bit;
-SIGNAL tmpIO_6__Port5_net_4 : bit;
-SIGNAL tmpIO_6__Port5_net_3 : bit;
-SIGNAL tmpIO_6__Port5_net_2 : bit;
-SIGNAL tmpIO_6__Port5_net_1 : bit;
-SIGNAL tmpIO_6__Port5_net_0 : bit;
-TERMINAL tmpSIOVREF__Port5_net_0 : bit;
 BEGIN
 
 one <=  ('1') ;
@@ -192,44 +177,6 @@ SysInt_Port0:cy_mxs40_isr_v1_0
 		deepsleep_required=>'0',
 		int_type=>"10")
 	PORT MAP(int_signal=>Net_3);
-Port5:cy_mxs40_gpio_v1_0
-	GENERIC MAP(cy_registers=>"",
-		width=>7,
-		sio_grp_cnt=>0,
-		id=>"fb6468c4-21ee-4b09-9dc9-2980e44e97b6",
-		drive_mode=>"6,6,6,6,6,6,6",
-		ibuf_enabled=>"0,0,0,0,0,0,1",
-		init_dr_st=>"0,0,0,0,0,0,0",
-		input_sync=>"0,0,0,0,0,0,0",
-		intr_mode=>"0,0,0,0,0,0,0",
-		io_voltage=>",,,,,,",
-		output_conn=>"0,0,0,0,0,0,0",
-		oe_conn=>"0,0,0,0,0,0,0",
-		output_sync=>"0,0,0,0,0,0,0",
-		oe_sync=>"0,0,0,0,0,0,0",
-		drive_strength=>"0,0,0,0,0,0,0",
-		max_frequency=>"100,100,100,100,100,100,100",
-		output_current_cap=>"8,8,8,8,8,8,8",
-		i2c_mode=>"0,0,0,0,0,0,0",
-		pin_aliases=>",,,,,,",
-		pin_mode=>"O,O,O,O,O,O,I",
-		slew_rate=>"0,0,0,0,0,0,0",
-		vtrip=>"0,0,0,0,0,0,0",
-		use_annotation=>"0,0,0,0,0,0,0",
-		hotswap_needed=>"0,0,0,0,0,0,0")
-	PORT MAP(oe=>(one, one, one, one,
-			one, one, one),
-		y=>(zero, zero, zero, zero,
-			zero, zero, zero),
-		fb=>(tmpFB_6__Port5_net_6, tmpFB_6__Port5_net_5, tmpFB_6__Port5_net_4, tmpFB_6__Port5_net_3,
-			tmpFB_6__Port5_net_2, tmpFB_6__Port5_net_1, tmpFB_6__Port5_net_0),
-		analog=>(open, open, open, open,
-			open, open, open),
-		io=>(tmpIO_6__Port5_net_6, tmpIO_6__Port5_net_5, tmpIO_6__Port5_net_4, tmpIO_6__Port5_net_3,
-			tmpIO_6__Port5_net_2, tmpIO_6__Port5_net_1, tmpIO_6__Port5_net_0),
-		annotation=>(open, open, open, open,
-			open, open, open),
-		siovref=>(tmpSIOVREF__Port5_net_0));
 PWR_1:cy_annotation_universal_v1_0
 	GENERIC MAP(comp_name=>"Power_v1_0",
 		port_names=>"T1",

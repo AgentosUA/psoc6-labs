@@ -8,22 +8,7 @@
  * WHICH IS THE PROPERTY OF your company.
  *
  * ========================================
-*/
-#include "project.h"
 
-int main(void)
-{
-    __enable_irq(); /* Enable global interrupts. */
-
-    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
-
-    for(;;)
-    {
-        
-    }
-}
-
-/* [] END OF FILE */
 
 
 
@@ -287,10 +272,12 @@ int main(void)
         if(1u == pinReadValue)
         {
             Cy_GPIO_Set(LED_Red_P0_3_PORT, LED_Red_P0_3_NUM);
+            Cy_GPIO_Clr(LED_Blue_P11_1_PORT,LED_Blue_P11_1_NUM);
         }
         else
         {
             Cy_GPIO_Clr(LED_Red_P0_3_PORT, LED_Red_P0_3_NUM);
+            Cy_GPIO_Set(LED_Blue_P11_1_PORT,LED_Blue_P11_1_NUM);
         }
         Cy_GPIO_Inv(LED_Red_P0_3_PORT, LED_Red_P0_3_NUM);
         GPIO_PRT0->OUT_INV = CY_GPIO_OUT_MASK << P0_3_NUM; /* Equivalent to Cy_GPIO_Inv() function */

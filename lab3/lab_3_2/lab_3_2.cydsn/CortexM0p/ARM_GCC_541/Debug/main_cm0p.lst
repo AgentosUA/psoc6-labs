@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 1
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccTAl0E2.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 1
    1:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /**************************************************************************//**
    2:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
    3:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 2
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccTAl0E2.s 			page 2
 
 
    4:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @version  V5.0.1
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 1
   58:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic pop
   59:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
   60:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 3
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccTAl0E2.s 			page 3
 
 
   61:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __ALIGNED
@@ -178,23 +178,23 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 1
   66              	.Ldebug_info0:
   67 0000 E2000000 		.4byte	0xe2
   68 0004 0400     		.2byte	0x4
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 4
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccTAl0E2.s 			page 4
 
 
   69 0006 00000000 		.4byte	.Ldebug_abbrev0
   70 000a 04       		.byte	0x4
   71 000b 01       		.uleb128 0x1
-  72 000c 00010000 		.4byte	.LASF15
+  72 000c 0F010000 		.4byte	.LASF15
   73 0010 0C       		.byte	0xc
   74 0011 6F000000 		.4byte	.LASF16
-  75 0015 BF000000 		.4byte	.LASF17
+  75 0015 B3000000 		.4byte	.LASF17
   76 0019 00000000 		.4byte	.Ldebug_ranges0+0
   77 001d 00000000 		.4byte	0
   78 0021 00000000 		.4byte	.Ldebug_line0
   79 0025 02       		.uleb128 0x2
   80 0026 02       		.byte	0x2
   81 0027 05       		.byte	0x5
-  82 0028 F6000000 		.4byte	.LASF0
+  82 0028 05010000 		.4byte	.LASF0
   83 002c 02       		.uleb128 0x2
   84 002d 01       		.byte	0x1
   85 002e 08       		.byte	0x8
@@ -230,18 +230,18 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 1
  115 0064 02       		.uleb128 0x2
  116 0065 04       		.byte	0x4
  117 0066 07       		.byte	0x7
- 118 0067 92010000 		.4byte	.LASF8
+ 118 0067 A1010000 		.4byte	.LASF8
  119 006b 02       		.uleb128 0x2
  120 006c 04       		.byte	0x4
  121 006d 07       		.byte	0x7
- 122 006e 9F010000 		.4byte	.LASF9
+ 122 006e AE010000 		.4byte	.LASF9
  123 0072 02       		.uleb128 0x2
  124 0073 08       		.byte	0x8
  125 0074 04       		.byte	0x4
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 5
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccTAl0E2.s 			page 5
 
 
- 126 0075 B3000000 		.4byte	.LASF10
+ 126 0075 F9000000 		.4byte	.LASF10
  127 0079 02       		.uleb128 0x2
  128 007a 01       		.byte	0x1
  129 007b 08       		.byte	0x8
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 1
  180 00e5 00       		.byte	0
  181              		.section	.debug_abbrev,"",%progbits
  182              	.Ldebug_abbrev0:
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 6
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccTAl0E2.s 			page 6
 
 
  183 0000 01       		.uleb128 0x1
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 1
  237 0036 00       		.byte	0
  238 0037 00       		.byte	0
  239 0038 05       		.uleb128 0x5
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 7
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccTAl0E2.s 			page 7
 
 
  240 0039 2E       		.uleb128 0x2e
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 1
  294 0075 00       		.byte	0
  295 0076 02       		.uleb128 0x2
  296 0077 18       		.uleb128 0x18
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 8
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccTAl0E2.s 			page 8
 
 
  297 0078 9142     		.uleb128 0x2111
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 1
  343      61626C65 
  343      5F697271 
  343      00
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 9
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccTAl0E2.s 			page 9
 
 
  344              	.LASF1:
@@ -536,49 +536,51 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 1
  369      7973456E 
  369      61626C65 
  369      434D3400 
- 370              	.LASF10:
- 371 00b3 6C6F6E67 		.ascii	"long double\000"
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccAOcxZI.s 			page 10
+ 370              	.LASF17:
+ 371 00b3 433A5C55 		.ascii	"C:\\Users\\User\\Desktop\\labs\\olega\\Stepaniuk\\l"
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccTAl0E2.s 			page 10
 
 
- 371      20646F75 
- 371      626C6500 
- 372              	.LASF17:
- 373 00bf 443A5C73 		.ascii	"D:\\student\\FeS-31\\Stepaniuk\\lab3\\lab_3_2\\lab_"
- 373      74756465 
- 373      6E745C46 
- 373      65532D33 
- 373      315C5374 
- 374 00ec 335F322E 		.ascii	"3_2.cydsn\000"
- 374      63796473 
- 374      6E00
+ 371      73657273 
+ 371      5C557365 
+ 371      725C4465 
+ 371      736B746F 
+ 372 00df 6162335C 		.ascii	"ab3\\lab_3_2\\lab_3_2.cydsn\000"
+ 372      6C61625F 
+ 372      335F325C 
+ 372      6C61625F 
+ 372      335F322E 
+ 373              	.LASF10:
+ 374 00f9 6C6F6E67 		.ascii	"long double\000"
+ 374      20646F75 
+ 374      626C6500 
  375              	.LASF0:
- 376 00f6 73686F72 		.ascii	"short int\000"
+ 376 0105 73686F72 		.ascii	"short int\000"
  376      7420696E 
  376      7400
  377              	.LASF15:
- 378 0100 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 378 010f 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
  378      43313120 
  378      352E342E 
  378      31203230 
  378      31363036 
- 379 0133 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 379 0142 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
  379      20726576 
  379      6973696F 
  379      6E203233 
  379      37373135 
- 380 0166 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 380 0175 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
  380      67202D66 
  380      66756E63 
  380      74696F6E 
  380      2D736563 
  381              	.LASF8:
- 382 0192 756E7369 		.ascii	"unsigned int\000"
+ 382 01a1 756E7369 		.ascii	"unsigned int\000"
  382      676E6564 
  382      20696E74 
  382      00
  383              	.LASF9:
- 384 019f 73697A65 		.ascii	"sizetype\000"
+ 384 01ae 73697A65 		.ascii	"sizetype\000"
  384      74797065 
  384      00
  385              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

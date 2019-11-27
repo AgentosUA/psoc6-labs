@@ -210,52 +210,6 @@
 <VisibleNodeIds>
 <v>lab_3_2</v>
 <v>lab_3_2\lab_3_2</v>
-<v>lab_3_2\lab_3_2\CortexM0p</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ble_clk.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_efuse.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_flash.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_gpio.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_config.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_drv.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_pipe.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_ipc_sema.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_lvd.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_profile.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_prot.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_sysanalog.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_sysclk.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_sysint.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_syslib.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_syslib_gcc.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_syspm.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_systick.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_trigmux.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cy_wdt.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cyfitter_cfg.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cyfitter_sysint_cfg.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\cymetadata.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\main_cm0p.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\startup_psoc63_cm0plus.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\Listing Files\system_psoc63_cm0plus.lst</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\lab_3_2.elf</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\lab_3_2.hex</v>
-<v>lab_3_2\lab_3_2\CortexM0p\ARM_GCC_541\Debug\lab_3_2.map</v>
-<v>lab_3_2\lab_3_2\CortexM4</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ble_clk.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_efuse.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_flash.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_gpio.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_config.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_drv.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_pipe.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_ipc_sema.lst</v>
-<v>lab_3_2\lab_3_2\CortexM4\ARM_GCC_541\Debug\Listing Files\cy_lvd.lst</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStates>
@@ -271,6 +225,18 @@
 <v>lab_3_2\lab_3_2\PSoC 63 Family Datasheet</v>
 <v>lab_3_2\lab_3_2\Peripheral Driver Library</v>
 <v>lab_3_2\lab_3_2\System Reference Guides</v>
+<v>lab_3_2\lab_3_2\cy_gsref_v2_10.pdf</v>
+<v>lab_3_2\lab_3_2\Gnd_v1_0</v>
+<v>lab_3_2\lab_3_2\Gnd_v1_0\Gnd_v1_0.pdf</v>
+<v>lab_3_2\lab_3_2\GPIO_PDL_v1_0</v>
+<v>lab_3_2\lab_3_2\GPIO_PDL_v1_0\GPIO_PDL_v1_0.pdf</v>
+<v>lab_3_2\lab_3_2\LED_v1_0</v>
+<v>lab_3_2\lab_3_2\LED_v1_0\LED_v1_0.pdf</v>
+<v>lab_3_2\lab_3_2\Power_v1_0.pdf</v>
+<v>lab_3_2\lab_3_2\Resistor_v1_0</v>
+<v>lab_3_2\lab_3_2\Resistor_v1_0\Resistor_v1_0.pdf</v>
+<v>lab_3_2\lab_3_2\SwitchSPST_v1_0.pdf</v>
+<v>lab_3_2\lab_3_2\SysInt_PDL_v1_0.pdf</v>
 </ExpandedNodeIds>
 <VisibleNodeIds>
 <v>lab_3_2</v>
@@ -279,6 +245,18 @@
 <v>lab_3_2\lab_3_2\PSoC 63 Family Datasheet</v>
 <v>lab_3_2\lab_3_2\Peripheral Driver Library</v>
 <v>lab_3_2\lab_3_2\System Reference Guides</v>
+<v>lab_3_2\lab_3_2\cy_gsref_v2_10.pdf</v>
+<v>lab_3_2\lab_3_2\Gnd_v1_0</v>
+<v>lab_3_2\lab_3_2\Gnd_v1_0\Gnd_v1_0.pdf</v>
+<v>lab_3_2\lab_3_2\GPIO_PDL_v1_0</v>
+<v>lab_3_2\lab_3_2\GPIO_PDL_v1_0\GPIO_PDL_v1_0.pdf</v>
+<v>lab_3_2\lab_3_2\LED_v1_0</v>
+<v>lab_3_2\lab_3_2\LED_v1_0\LED_v1_0.pdf</v>
+<v>lab_3_2\lab_3_2\Power_v1_0.pdf</v>
+<v>lab_3_2\lab_3_2\Resistor_v1_0</v>
+<v>lab_3_2\lab_3_2\Resistor_v1_0\Resistor_v1_0.pdf</v>
+<v>lab_3_2\lab_3_2\SwitchSPST_v1_0.pdf</v>
+<v>lab_3_2\lab_3_2\SysInt_PDL_v1_0.pdf</v>
 </VisibleNodeIds>
 </CyGuid_2a325b3b-c96a-4e9f-b7a0-2c44ecb5f237>
 </TreeStatesV2>
@@ -287,7 +265,18 @@
 </userData>
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
-<OpenDocs />
+<OpenDocs>
+<name v=".\lab_3_2.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\lab_3_2.cydsn\main_cm4.c" />
+<name v=".\lab_3_2.cydsn\lab_3_2.cydwr" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1439, 702" SelectedTabbedMdiWindow="db8b79d3-a4d9-48e1-a896-356ac8aff4df"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="67b94497-efc7-494e-aeee-0ae275ad2538" /><DocumentWindow Key="C:\Users\User\Desktop\labs\olega\Stepaniuk\lab3\lab_3_2\lab_3_2.cydsn\TopDesign\TopDesign.cysch" Guid="db8b79d3-a4d9-48e1-a896-356ac8aff4df" /><DocumentWindow Key="C:\Users\User\Desktop\labs\olega\Stepaniuk\lab3\lab_3_2\lab_3_2.cydsn\main_cm4.c" Guid="a1081756-f4c2-435e-b0a0-5e2ad86e72b4" /><DocumentWindow Key="C:\Users\User\Desktop\labs\olega\Stepaniuk\lab3\lab_3_2\lab_3_2.cydsn\lab_3_2.cydwr" Guid="2ca2ab4a-2d89-43d3-aaae-4b26cea7ddba" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>

@@ -1,7 +1,6 @@
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|4e7a981e-9cc2-4e29-9d17-a8de0b5a241a
-C:\Users\cypress\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|00a7b264-3293-4a5d-a9c7-a5f94b4e66f1
-C:\Users\cypress\Documents\PSoC Creator\4.1\Downloads ( 4.1).cylib\Downloads ( 4.1).cyprj|95ec4d61-fdc9-4b32-9c9f-def85fd22c12
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|7148c84f-93c6-4bbe-85e2-89c130fa6fce
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|2be92cdc-929a-44cb-84f3-f4fb75a541d3
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|9ae0db0a-acb3-4383-9495-6511e3fda62a
-D:\student\FeS-31\Stepaniuk\lab3\lab_3_2\lab_3_2.cydsn\lab_3_2.cyprj|317318f3-e778-4483-92d8-fdf5d614605b
+C:\Users\User\Desktop\labs\olega\Stepaniuk\lab3\lab_3_2\lab_3_2.cydsn\lab_3_2.cyprj|4f3ecd9e-83c6-4042-b705-16a39fb8351e
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|22f232c2-b627-4283-8ca3-d07cd71aeb4e
+C:\Users\User\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|7ac2c791-63fc-4a41-bdd6-6dd97c4edcd6
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|8492de39-388e-495d-a627-8080420269dc
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|16742f15-3886-472c-8d53-f3eafab49ddd
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|03e10974-a8d0-4499-a50f-e6ff038d87b1

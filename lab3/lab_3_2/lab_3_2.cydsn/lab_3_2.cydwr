@@ -4,7 +4,13 @@
     <Group key="v1" />
   </Group>
   <Data key="DataVersionKey" value="2" />
-  <Group key="DWRInstGuidMapping" />
+  <Group key="DWRInstGuidMapping">
+    <Group key="Pin">
+      <Data key="6fb4e58b-fc61-450d-ab10-533363eee47b" value="SW2_P0_4" />
+      <Data key="9ac5f4f6-d38f-434a-9b17-afab494961b6" value="LED_Blue_P11_1" />
+      <Data key="a61270bc-07ec-447d-ac9e-34cfe85c30e9" value="LED_Red_P0_3" />
+    </Group>
+  </Group>
   <Group key="M0S8Clock">
     <Group key="DesigneWideClks">
       <Group key="8AF878A3-9701-44BB-864C-92E241DEEFC9">
@@ -585,6 +591,13 @@
         <Data key="src_clk_id" value="" />
         <Data key="src_clk_name" value="" />
         <Data key="start_on_reset" value="False" />
+      </Group>
+    </Group>
+  </Group>
+  <Group key="Pin2">
+    <Group key="9ac5f4f6-d38f-434a-9b17-afab494961b6">
+      <Group key="0">
+        <Data key="Port Format" value="1,1" />
       </Group>
     </Group>
   </Group>

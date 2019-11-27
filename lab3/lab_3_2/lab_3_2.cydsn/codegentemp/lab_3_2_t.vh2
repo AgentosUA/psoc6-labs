@@ -1,19 +1,12 @@
--- Project:   D:\student\FeS-31\Stepaniuk\lab3\lab_3_2\lab_3_2.cydsn\lab_3_2.cyprj
--- Generated: 09/18/2019 17:37:57
+-- Project:   C:\Users\User\Desktop\labs\olega\Stepaniuk\lab3\lab_3_2\lab_3_2.cydsn\lab_3_2.cyprj
+-- Generated: 11/26/2019 14:19:07
 -- PSoC Creator  4.2
 
 ENTITY lab_3_2 IS
     PORT(
         SW2_P0_4(0)_PAD : IN std_ulogic;
         LED_Red_P0_3(0)_PAD : OUT std_ulogic;
-        LED_Blue_P11_1(0)_PAD : OUT std_ulogic;
-        Port5(0)_PAD : OUT std_ulogic;
-        Port5(1)_PAD : OUT std_ulogic;
-        Port5(2)_PAD : OUT std_ulogic;
-        Port5(3)_PAD : OUT std_ulogic;
-        Port5(4)_PAD : OUT std_ulogic;
-        Port5(5)_PAD : OUT std_ulogic;
-        Port5(6)_PAD : IN std_ulogic);
+        LED_Blue_P11_1(0)_PAD : OUT std_ulogic);
     ATTRIBUTE voltage_VBACKUP OF __DEFAULT__ : ENTITY IS 3.3e0;
     ATTRIBUTE voltage_VDD_NS OF __DEFAULT__ : ENTITY IS 3.3e0;
     ATTRIBUTE voltage_VDDA_CSD OF __DEFAULT__ : ENTITY IS 3.3e0;
@@ -55,13 +48,6 @@ ARCHITECTURE __DEFAULT__ OF lab_3_2 IS
     SIGNAL INDIVIDUAL_PICU_OUT_0 : bit;
     SIGNAL LED_Blue_P11_1(0)__PA : bit;
     SIGNAL LED_Red_P0_3(0)__PA : bit;
-    SIGNAL Port5(0)__PA : bit;
-    SIGNAL Port5(1)__PA : bit;
-    SIGNAL Port5(2)__PA : bit;
-    SIGNAL Port5(3)__PA : bit;
-    SIGNAL Port5(4)__PA : bit;
-    SIGNAL Port5(5)__PA : bit;
-    SIGNAL Port5(6)__PA : bit;
     SIGNAL SW2_P0_4(0)__PA : bit;
     SIGNAL __ONE__ : bit;
     ATTRIBUTE POWER OF __ONE__ : SIGNAL IS true;
@@ -84,21 +70,7 @@ ARCHITECTURE __DEFAULT__ OF lab_3_2 IS
     ATTRIBUTE lib_model OF LED_Red_P0_3(0) : LABEL IS "iocell4";
     ATTRIBUTE Location OF LED_Red_P0_3(0) : LABEL IS "P0[3]";
     ATTRIBUTE lib_model OF LED_Blue_P11_1(0) : LABEL IS "iocell5";
-    ATTRIBUTE Location OF LED_Blue_P11_1(0) : LABEL IS "P11[1]";
-    ATTRIBUTE lib_model OF Port5(0) : LABEL IS "iocell6";
-    ATTRIBUTE Location OF Port5(0) : LABEL IS "P0[5]";
-    ATTRIBUTE lib_model OF Port5(1) : LABEL IS "iocell7";
-    ATTRIBUTE Location OF Port5(1) : LABEL IS "P1[2]";
-    ATTRIBUTE lib_model OF Port5(2) : LABEL IS "iocell8";
-    ATTRIBUTE Location OF Port5(2) : LABEL IS "P1[1]";
-    ATTRIBUTE lib_model OF Port5(3) : LABEL IS "iocell9";
-    ATTRIBUTE Location OF Port5(3) : LABEL IS "P0[1]";
-    ATTRIBUTE lib_model OF Port5(4) : LABEL IS "iocell10";
-    ATTRIBUTE Location OF Port5(4) : LABEL IS "P0[2]";
-    ATTRIBUTE lib_model OF Port5(5) : LABEL IS "iocell11";
-    ATTRIBUTE Location OF Port5(5) : LABEL IS "P0[0]";
-    ATTRIBUTE lib_model OF Port5(6) : LABEL IS "iocell12";
-    ATTRIBUTE Location OF Port5(6) : LABEL IS "P1[0]";
+    ATTRIBUTE Location OF LED_Blue_P11_1(0) : LABEL IS "P1[1]";
     ATTRIBUTE Location OF SysInt_Port0 : LABEL IS "[IntrContainer=(0)][IntrId=(0)]";
     ATTRIBUTE Location OF IOSS : LABEL IS "F(IOSS,0)";
     COMPONENT CLK_GEN
@@ -744,174 +716,6 @@ BEGIN
             pa_out => LED_Blue_P11_1(0)__PA,
             oe => open,
             pad_in => LED_Blue_P11_1(0)_PAD,
-            in_clock => open,
-            in_clock_en => open,
-            in_reset => open,
-            out_clock => open,
-            out_clock_en => open,
-            out_reset => open);
-
-    Port5:logicalport
-        GENERIC MAP(
-            cy_registers => "",
-            drive_mode => "110_110_110_110_110_110_110",
-            drive_strength => "0_0_0_0_0_0_0",
-            hotswap_needed => "0_0_0_0_0_0_0",
-            i2c_mode => "0,0,0,0,0,0,0",
-            ibuf_enabled => "0_0_0_0_0_0_1",
-            id => "fb6468c4-21ee-4b09-9dc9-2980e44e97b6",
-            init_dr_st => "0_0_0_0_0_0_0",
-            input_sync => "0,0,0,0,0,0,0",
-            intr_mode => "00_00_00_00_00_00_00",
-            io_voltage => ",,,,,,",
-            max_frequency => "100,100,100,100,100,100,100",
-            oe_conn => "0_0_0_0_0_0_0",
-            oe_sync => "0_0_0_0_0_0_0",
-            output_conn => "0_0_0_0_0_0_0",
-            output_current_cap => "8,8,8,8,8,8,8",
-            output_sync => "0_0_0_0_0_0_0",
-            pin_aliases => ",,,,,,",
-            pin_mode => "BBBBBBB",
-            sio_grp_cnt => 0,
-            slew_rate => "0_0_0_0_0_0_0",
-            use_annotation => "0,0,0,0,0,0,0",
-            vtrip => "00_00_00_00_00_00_00",
-            width => 7,
-            in_clk_inv => 0,
-            in_clken_inv => 0,
-            in_clken_mode => 1,
-            in_rst_inv => 0,
-            out_clk_inv => 0,
-            out_clken_inv => 0,
-            out_clken_mode => 1,
-            out_rst_inv => 0);
-
-    Port5(0):iocell
-        GENERIC MAP(
-            in_sync_mode => 0,
-            out_sync_mode => 0,
-            oe_sync_mode => 0,
-            logicalport => "Port5",
-            logicalport_pin_id => 0,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
-        PORT MAP(
-            pa_out => Port5(0)__PA,
-            oe => open,
-            pad_in => Port5(0)_PAD,
-            in_clock => open,
-            in_clock_en => open,
-            in_reset => open,
-            out_clock => open,
-            out_clock_en => open,
-            out_reset => open);
-
-    Port5(1):iocell
-        GENERIC MAP(
-            in_sync_mode => 0,
-            out_sync_mode => 0,
-            oe_sync_mode => 0,
-            logicalport => "Port5",
-            logicalport_pin_id => 1,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
-        PORT MAP(
-            pa_out => Port5(1)__PA,
-            oe => open,
-            pad_in => Port5(1)_PAD,
-            in_clock => open,
-            in_clock_en => open,
-            in_reset => open,
-            out_clock => open,
-            out_clock_en => open,
-            out_reset => open);
-
-    Port5(2):iocell
-        GENERIC MAP(
-            in_sync_mode => 0,
-            out_sync_mode => 0,
-            oe_sync_mode => 0,
-            logicalport => "Port5",
-            logicalport_pin_id => 2,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
-        PORT MAP(
-            pa_out => Port5(2)__PA,
-            oe => open,
-            pad_in => Port5(2)_PAD,
-            in_clock => open,
-            in_clock_en => open,
-            in_reset => open,
-            out_clock => open,
-            out_clock_en => open,
-            out_reset => open);
-
-    Port5(3):iocell
-        GENERIC MAP(
-            in_sync_mode => 0,
-            out_sync_mode => 0,
-            oe_sync_mode => 0,
-            logicalport => "Port5",
-            logicalport_pin_id => 3,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
-        PORT MAP(
-            pa_out => Port5(3)__PA,
-            oe => open,
-            pad_in => Port5(3)_PAD,
-            in_clock => open,
-            in_clock_en => open,
-            in_reset => open,
-            out_clock => open,
-            out_clock_en => open,
-            out_reset => open);
-
-    Port5(4):iocell
-        GENERIC MAP(
-            in_sync_mode => 0,
-            out_sync_mode => 0,
-            oe_sync_mode => 0,
-            logicalport => "Port5",
-            logicalport_pin_id => 4,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
-        PORT MAP(
-            pa_out => Port5(4)__PA,
-            oe => open,
-            pad_in => Port5(4)_PAD,
-            in_clock => open,
-            in_clock_en => open,
-            in_reset => open,
-            out_clock => open,
-            out_clock_en => open,
-            out_reset => open);
-
-    Port5(5):iocell
-        GENERIC MAP(
-            in_sync_mode => 0,
-            out_sync_mode => 0,
-            oe_sync_mode => 0,
-            logicalport => "Port5",
-            logicalport_pin_id => 5,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
-        PORT MAP(
-            pa_out => Port5(5)__PA,
-            oe => open,
-            pad_in => Port5(5)_PAD,
-            in_clock => open,
-            in_clock_en => open,
-            in_reset => open,
-            out_clock => open,
-            out_clock_en => open,
-            out_reset => open);
-
-    Port5(6):iocell
-        GENERIC MAP(
-            in_sync_mode => 0,
-            out_sync_mode => 0,
-            oe_sync_mode => 0,
-            logicalport => "Port5",
-            logicalport_pin_id => 6,
-            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
-        PORT MAP(
-            pa_out => Port5(6)__PA,
-            oe => open,
-            pad_in => Port5(6)_PAD,
             in_clock => open,
             in_clock_en => open,
             in_reset => open,
