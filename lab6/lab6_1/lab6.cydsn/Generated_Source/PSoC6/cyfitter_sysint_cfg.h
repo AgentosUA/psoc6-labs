@@ -21,6 +21,9 @@
 
 /* ARM CM4 */
 #if (((__CORTEX_M == 4) && (CY_CORE_ID == 0)))
+    #define SysInt_Switch__INTC_ASSIGNED 1u
+    extern const cy_stc_sysint_t SysInt_Switch_cfg;
+
     #define isrTimer__INTC_ASSIGNED 1u
     extern const cy_stc_sysint_t isrTimer_cfg;
 

@@ -1,7 +1,6 @@
-D:\student\FeS-31\Stepaniuk\lab6\lab6_2\lab6.cydsn\lab6.cyprj|193944ea-5fcd-4bae-9830-784787986458
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|d4a9b683-a270-47c8-a419-93234505d3b0
-C:\Users\cypress\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|5e28b25a-9542-4b39-b122-670c95078188
-C:\Users\cypress\Documents\PSoC Creator\4.1\Downloads ( 4.1).cylib\Downloads ( 4.1).cyprj|277e7ae6-6807-4e48-b63d-daadf1a0d7a4
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|ef789e34-cffb-467b-a500-52b8f42e3b4a
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|97c977ad-5c6b-450b-bf61-e45b1c4466e7
-C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|cb93d439-0f9e-4363-9be7-369c8186d0ad
+C:\Users\User\Desktop\labs\olega\Stepaniuk\lab6\lab6_2\lab6.cydsn\lab6.cyprj|0c0cc3a4-82d6-4184-9ff1-0a210b9e5b45
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|f2873be8-8910-42e6-959e-f8cbe8024a8c
+C:\Users\User\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|4486ab84-e7f2-4364-a839-edd6c74ae5f4
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|a03454f8-0826-47e7-9a69-920c4eddd323
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|bf1da4a3-fa07-46f4-a444-93358a336fe1
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|bdc854c9-77ec-41da-baf4-60165cc98679

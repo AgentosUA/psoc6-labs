@@ -5,8 +5,25 @@
   </Group>
   <Data key="DataVersionKey" value="2" />
   <Group key="DWRInstGuidMapping">
+    <Group key="Interrupt">
+      <Data key="818dab76-364e-4157-b9b0-82180f3dccb3" value="SysInt_Switch" />
+      <Data key="8073f847-f13e-4f74-a18c-14f2aff38df7" value="isrTimer" />
+    </Group>
     <Group key="Pin">
+      <Data key="4cca878b-77b5-471d-8aeb-ad6925202455" value="KIT_BTN1" />
+      <Data key="6fb4e58b-fc61-450d-ab10-533363eee47b" value="SW2_P0_4" />
+      <Data key="a61270bc-07ec-447d-ac9e-34cfe85c30e9" value="KIT_LED_RED" />
       <Data key="c66c5798-e320-4a9f-a870-48c18cc5b1da" value="LED" />
+      <Data key="cc837c40-430c-4b93-a838-3394b772e92d" value="KIT_LED_BLUE" />
+    </Group>
+  </Group>
+  <Group key="Interrupt">
+    <Group key="818dab76-364e-4157-b9b0-82180f3dccb3">
+      <Group key="CortexM4">
+        <Data key="Assigned" value="True" />
+        <Data key="Priority" value="0" />
+        <Data key="Vector" value="-1" />
+      </Group>
     </Group>
   </Group>
   <Group key="M0S8Clock">
@@ -593,9 +610,29 @@
     </Group>
   </Group>
   <Group key="Pin2">
+    <Group key="4cca878b-77b5-471d-8aeb-ad6925202455">
+      <Group key="0">
+        <Data key="Port Format" value="0,4" />
+      </Group>
+    </Group>
+    <Group key="6fb4e58b-fc61-450d-ab10-533363eee47b">
+      <Group key="0">
+        <Data key="Port Format" value="0,4" />
+      </Group>
+    </Group>
+    <Group key="a61270bc-07ec-447d-ac9e-34cfe85c30e9">
+      <Group key="0">
+        <Data key="Port Format" value="13,7" />
+      </Group>
+    </Group>
     <Group key="c66c5798-e320-4a9f-a870-48c18cc5b1da">
       <Group key="0">
         <Data key="Port Format" value="0,3" />
+      </Group>
+    </Group>
+    <Group key="cc837c40-430c-4b93-a838-3394b772e92d">
+      <Group key="0">
+        <Data key="Port Format" value="11,1" />
       </Group>
     </Group>
   </Group>

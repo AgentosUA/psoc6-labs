@@ -28,7 +28,7 @@ uint8_t Timer_initVar = 0U;
 */ 
 cy_stc_tcpwm_counter_config_t const Timer_config =
 {
-        .period = 32768UL,
+        .period = 1000UL,
         .clockPrescaler = 0UL,
         .runMode = 0UL,
         .countDirection = 0UL,

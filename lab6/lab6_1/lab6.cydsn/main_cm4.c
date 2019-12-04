@@ -11,17 +11,41 @@
 */
 #include "project.h"
 
+ 
+
 #define TIMER_PERIOD_MSEC 1000U /* Період таймера в мсек */
-
-
+uint32 pragma = 0 ;
+uint32 i = 0 ;
+uint32 p = 16 ; 
 void TimerInterruptHandler(void)
     {
-        /* Очистка переривання підрахунку терміналу */
         Cy_TCPWM_ClearInterrupt(Timer_HW, Timer_CNT_NUM,CY_TCPWM_INT_ON_TC);
+        /* Очистка переривання підрахунку терміналу */
 
-        /* Переключення світлодіоду LED */
-        Cy_GPIO_Inv(LED_PORT, LED_NUM);
+        if(pragma)
+        {
+            Cy_GPIO_Set(KIT_LED_RED_PORT, KIT_LED_RED_NUM); 
+            Timer_SetPeriod(500);
+            p = 8;
+            Cy_GPIO_Inv(KIT_LED_BLUE_PORT, KIT_LED_BLUE_NUM);
+        }
+        else
+        {
+            Cy_GPIO_Set(KIT_LED_BLUE_PORT, KIT_LED_BLUE_NUM);
+            Timer_SetPeriod(1000);
+            p = 16;
+            Cy_GPIO_Inv(KIT_LED_RED_PORT, KIT_LED_RED_NUM);
+        }
+        i++;
     }
+void Isr_switch(void) {  
+    
+    Cy_GPIO_ClearInterrupt(SW2_P0_4_PORT, SW2_P0_4_NUM); 
+    NVIC_ClearPendingIRQ(SysInt_Switch_cfg.intrSrc);   
+
+    pragma = 1 -  pragma ;
+}    
+
 
 int main(void)
 {
@@ -33,6 +57,9 @@ int main(void)
     
     void NVIC_ClearPendingIRQ (IRQn_Type IRQn);
     
+    Cy_SysInt_Init(&SysInt_Switch_cfg, Isr_switch);
+    NVIC_ClearPendingIRQ(SysInt_Switch_cfg.intrSrc);
+    NVIC_EnableIRQ(SysInt_Switch_cfg.intrSrc); 
     
     (void)Cy_TCPWM_Counter_Init(Timer_HW, Timer_CNT_NUM, &Timer_config);
     Cy_TCPWM_Enable_Multiple(Timer_HW, Timer_CNT_MASK); 
@@ -40,10 +67,15 @@ int main(void)
     Cy_TCPWM_Counter_SetPeriod(Timer_HW, Timer_CNT_NUM, TIMER_PERIOD_MSEC - 1);
     
     Cy_TCPWM_TriggerStart(Timer_HW, Timer_CNT_MASK);
-    
+   
     for(;;)
-    {
-        Cy_SysPm_Sleep(CY_SYSPM_WAIT_FOR_INTERRUPT);
+    {   
+        if (i == p)
+        {
+            i = 0;
+            CyDelay(100);
+            Cy_SysPm_DeepSleep(CY_SYSPM_WAIT_FOR_INTERRUPT);  
+        }    
     }
 }
 

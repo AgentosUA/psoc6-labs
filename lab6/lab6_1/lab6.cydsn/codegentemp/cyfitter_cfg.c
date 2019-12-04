@@ -284,10 +284,10 @@ void Cy_SystemInit(void)
 	{
 	    const cy_stc_gpio_prt_config_t port0_cfg =
 	    {
-	        .out        = 0x00000008u,
-	        .intrMask   = 0x00000000u,
-	        .intrCfg    = 0x00000000u,
-	        .cfg        = 0x00006000u,
+	        .out        = 0x00000010u,
+	        .intrMask   = 0x00000010u,
+	        .intrCfg    = 0x00000200u,
+	        .cfg        = 0x000A0000u,
 	        .cfgIn      = 0x00000000u,
 	        .cfgOut     = 0x00000000u,
 	        .cfgSIO     = 0x00000000u,
@@ -312,6 +312,40 @@ void Cy_SystemInit(void)
 	        .sel1Active = 0x1D1D0000u,
 	    };
 	    (void)Cy_GPIO_Port_Init(GPIO_PRT6, &port6_cfg);
+	}
+
+	/* Port11 configuration */
+	{
+	    const cy_stc_gpio_prt_config_t port11_cfg =
+	    {
+	        .out        = 0x00000002u,
+	        .intrMask   = 0x00000000u,
+	        .intrCfg    = 0x00000000u,
+	        .cfg        = 0x00000060u,
+	        .cfgIn      = 0x00000000u,
+	        .cfgOut     = 0x00000000u,
+	        .cfgSIO     = 0x00000000u,
+	        .sel0Active = 0x00000000u,
+	        .sel1Active = 0x00000000u,
+	    };
+	    (void)Cy_GPIO_Port_Init(GPIO_PRT11, &port11_cfg);
+	}
+
+	/* Port13 configuration */
+	{
+	    const cy_stc_gpio_prt_config_t port13_cfg =
+	    {
+	        .out        = 0x00000080u,
+	        .intrMask   = 0x00000000u,
+	        .intrCfg    = 0x00000000u,
+	        .cfg        = 0x60000000u,
+	        .cfgIn      = 0x00000000u,
+	        .cfgOut     = 0x00000000u,
+	        .cfgSIO     = 0x00000000u,
+	        .sel0Active = 0x00000000u,
+	        .sel1Active = 0x00000000u,
+	    };
+	    (void)Cy_GPIO_Port_Init(GPIO_PRT13, &port13_cfg);
 	}
 
 

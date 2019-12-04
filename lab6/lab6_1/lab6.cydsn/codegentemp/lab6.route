@@ -14,6 +14,11 @@ net CPUSS_swj_swdio_tms
 	switch ":CPUSS[0]swj_swdio_tms_input_permute.CPUSS[0]swj_swdio_tms==>:CPUSScontainer:CPUSS[0].swj_swdio_tms"
 	term   ":CPUSScontainer:CPUSS[0].swj_swdio_tms"
 end CPUSS_swj_swdio_tms
+net INDIVIDUAL_PICU_OUT_0
+	term   ":IOSScontainer:IOSS[0].interrupt_port_0"
+	switch ":IOSScontainer:IOSS[0].interrupt_port_0==>:intc_0:interrupt0.interrupt"
+	term   ":intc_0:interrupt0.interrupt"
+end INDIVIDUAL_PICU_OUT_0
 net Net_10
 	term   ":TCPWMcontainer:TCPWM[0].interrupt"
 	switch ":TCPWMcontainer:TCPWM[0].interrupt==>:intc_0:interrupt90.interrupt"

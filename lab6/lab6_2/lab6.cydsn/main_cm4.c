@@ -48,7 +48,7 @@ int main(void)
 {
     
     
-    Cy_GPIO_Write(LED_Blue_PORT, LED_Blue_NUM, LED_OFF);
+    //Cy_GPIO_Write(LED_Blue_PORT, LED_Blue_NUM, LED_OFF);
     uint32_t count = 0;
     uint32_t delayMs = DELAY_LONG;
     
@@ -83,7 +83,7 @@ int main(void)
             }
         }
         
-        
+        /* 
         for (count = 0; count < RED_LED_BLINK_COUNT; count++)
         {
             Cy_GPIO_Write(LED_Blue_PORT, LED_Blue_NUM, LED_ON);
@@ -91,7 +91,7 @@ int main(void)
             Cy_GPIO_Write(LED_Blue_PORT, LED_Blue_NUM, LED_OFF);
             Cy_SysLib_Delay(delayMs);
         }
-        
+        */
         Cy_SysPm_Sleep(CY_SYSPM_WAIT_FOR_INTERRUPT);
         Cy_TCPWM_TriggerStart(Timer_HW, Timer_CNT_MASK);
     }

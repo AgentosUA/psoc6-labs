@@ -20,6 +20,12 @@
 /* ARM CM4 */
 #if (((__CORTEX_M == 4) && (CY_CORE_ID == 0)))
 
+    /* SysInt_Switch */
+    const cy_stc_sysint_t SysInt_Switch_cfg = {
+        .intrSrc = (IRQn_Type)SysInt_Switch__INTC_NUMBER,
+        .intrPriority = SysInt_Switch__INTC_CORTEXM4_PRIORITY
+    };
+
     /* isrTimer */
     const cy_stc_sysint_t isrTimer_cfg = {
         .intrSrc = (IRQn_Type)isrTimer__INTC_NUMBER,

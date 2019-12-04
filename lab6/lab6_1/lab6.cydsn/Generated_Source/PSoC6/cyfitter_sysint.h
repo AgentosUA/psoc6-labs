@@ -26,4 +26,12 @@
 #define isrTimer_INTC_CORTEXM4_PRIORITY 7u
 #define isrTimer_INTC_NUMBER 90u
 
+/* SysInt_Switch */
+#define SysInt_Switch__INTC_CORTEXM4_ASSIGNED 1
+#define SysInt_Switch__INTC_CORTEXM4_PRIORITY 0u
+#define SysInt_Switch__INTC_NUMBER 0u
+#define SysInt_Switch_INTC_CORTEXM4_ASSIGNED 1
+#define SysInt_Switch_INTC_CORTEXM4_PRIORITY 0u
+#define SysInt_Switch_INTC_NUMBER 0u
+
 #endif /* INCLUDED_CYFITTER_SYSINT_H */

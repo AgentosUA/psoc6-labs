@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
   28:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_counter.c **** *
   29:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_counter.c **** * \param base
   30:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_counter.c **** * The pointer to a TCPWM instance.
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 2
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 2
 
 
   31:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_counter.c **** *
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
   59 001c 2340     		ands	r3, r4
   52:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_counter.c ****                                   _VAL2FLD(TCPWM_CNT_CTRL_ONE_SHOT, config->runMode) |
   60              		.loc 1 52 0
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 3
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 3
 
 
   61 001e 2B43     		orrs	r3, r5
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  104 005e 0EE0     		b	.L5
  105              	.L4:
   61:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_counter.c ****         }
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 4
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 4
 
 
   62:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_counter.c ****         else if (CY_TCPWM_COUNTER_COUNT_DOWN == config->countDirection)
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  144              		.loc 1 77 0
  145 009a 8B01     		lsls	r3, r1, #6
  146 009c C318     		adds	r3, r0, r3
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 5
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 5
 
 
  147 009e 1533     		adds	r3, r3, #21
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  188 00da 8C01     		lsls	r4, r1, #6
  189 00dc 0419     		adds	r4, r0, r4
  190 00de 2134     		adds	r4, r4, #33
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 6
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 6
 
 
  191 00e0 FF34     		adds	r4, r4, #255
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  233 011c 0800     		movs	r0, r1
  234              	.LVL3:
  235 011e 2530     		adds	r0, r0, #37
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 7
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 7
 
 
  236 0120 FF30     		adds	r0, r0, #255
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  106:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_counter.c **** *
  107:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_counter.c **** * De-initializes the counter in the TCPWM block, returns register values to 
  108:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_counter.c **** * default.
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 8
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 8
 
 
  109:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_counter.c **** *
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  309              		.loc 1 129 0
  310 0026 0436     		adds	r6, r6, #4
  311 0028 3560     		str	r5, [r6]
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 9
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 9
 
 
  130:Generated_Source\PSoC6\pdl\drivers\peripheral\tcpwm/cy_tcpwm_counter.c ****     base->CNT[cntNum].PERIOD_BUFF = CY_TCPWM_CNT_PERIOD_BUFF_DEFAULT;
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  354              	.L16:
  355 0064 FF030000 		.word	1023
  356              		.cfi_endproc
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 10
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 10
 
 
  357              	.LFE63:
@@ -557,10 +557,10 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  370 0006 00000000 		.4byte	.Ldebug_abbrev0
  371 000a 04       		.byte	0x4
  372 000b 01       		.uleb128 0x1
- 373 000c 01030000 		.4byte	.LASF67
+ 373 000c 43030000 		.4byte	.LASF67
  374 0010 0C       		.byte	0xc
  375 0011 B3000000 		.4byte	.LASF68
- 376 0015 34040000 		.4byte	.LASF69
+ 376 0015 E8020000 		.4byte	.LASF69
  377 0019 00000000 		.4byte	.Ldebug_ranges0+0
  378 001d 00000000 		.4byte	0
  379 0021 00000000 		.4byte	.Ldebug_line0
@@ -592,13 +592,13 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  405 0053 02       		.uleb128 0x2
  406 0054 04       		.byte	0x4
  407 0055 07       		.byte	0x7
- 408 0056 E8020000 		.4byte	.LASF5
+ 408 0056 2A030000 		.4byte	.LASF5
  409 005a 02       		.uleb128 0x2
  410 005b 08       		.byte	0x8
  411 005c 05       		.byte	0x5
  412 005d 6B010000 		.4byte	.LASF6
  413 0061 02       		.uleb128 0x2
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 11
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 11
 
 
  414 0062 08       		.byte	0x8
@@ -647,7 +647,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  457 00b4 94000000 		.4byte	0x94
  458 00b8 04       		.byte	0x4
  459 00b9 08       		.uleb128 0x8
- 460 00ba E9030000 		.4byte	.LASF15
+ 460 00ba 2B040000 		.4byte	.LASF15
  461 00be 04       		.byte	0x4
  462 00bf 25       		.byte	0x25
  463 00c0 8F000000 		.4byte	0x8f
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  468 00ca 26       		.byte	0x26
  469 00cb 8F000000 		.4byte	0x8f
  470 00cf 0C       		.byte	0xc
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 12
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 12
 
 
  471 00d0 08       		.uleb128 0x8
@@ -680,7 +680,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  487 00ef 8F000000 		.4byte	0x8f
  488 00f3 18       		.byte	0x18
  489 00f4 08       		.uleb128 0x8
- 490 00f5 F1030000 		.4byte	.LASF19
+ 490 00f5 33040000 		.4byte	.LASF19
  491 00f9 04       		.byte	0x4
  492 00fa 2A       		.byte	0x2a
  493 00fb 94000000 		.4byte	0x94
@@ -718,14 +718,14 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  525 013c 08       		.uleb128 0x8
  526 013d 16020000 		.4byte	.LASF25
  527 0141 04       		.byte	0x4
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 13
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 13
 
 
  528 0142 30       		.byte	0x30
  529 0143 8F000000 		.4byte	0x8f
  530 0147 34       		.byte	0x34
  531 0148 08       		.uleb128 0x8
- 532 0149 1A040000 		.4byte	.LASF26
+ 532 0149 5C040000 		.4byte	.LASF26
  533 014d 04       		.byte	0x4
  534 014e 31       		.byte	0x31
  535 014f 8F000000 		.4byte	0x8f
@@ -754,7 +754,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  558 017c 8F000000 		.4byte	0x8f
  559 0180 00       		.byte	0
  560 0181 08       		.uleb128 0x8
- 561 0182 C8030000 		.4byte	.LASF29
+ 561 0182 0A040000 		.4byte	.LASF29
  562 0186 04       		.byte	0x4
  563 0187 3A       		.byte	0x3a
  564 0188 8F000000 		.4byte	0x8f
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  582 01ac 8F000000 		.4byte	0x8f
  583 01b0 10       		.byte	0x10
  584 01b1 08       		.uleb128 0x8
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 14
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 14
 
 
  585 01b2 62020000 		.4byte	.LASF33
@@ -799,7 +799,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  600 01d0 94000000 		.4byte	0x94
  601 01d4 1C       		.byte	0x1c
  602 01d5 08       		.uleb128 0x8
- 603 01d6 F1030000 		.4byte	.LASF19
+ 603 01d6 33040000 		.4byte	.LASF19
  604 01da 04       		.byte	0x4
  605 01db 41       		.byte	0x41
  606 01dc 04020000 		.4byte	0x204
@@ -830,7 +830,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  631 0217 1F       		.byte	0x1f
  632 0218 00       		.byte	0
  633 0219 03       		.uleb128 0x3
- 634 021a 24040000 		.4byte	.LASF36
+ 634 021a 66040000 		.4byte	.LASF36
  635 021e 04       		.byte	0x4
  636 021f 43       		.byte	0x43
  637 0220 6C010000 		.4byte	0x16c
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  639 0225 01       		.byte	0x1
  640 0226 08       		.byte	0x8
  641 0227 A3020000 		.4byte	.LASF37
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 15
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 15
 
 
  642 022b 02       		.uleb128 0x2
@@ -848,7 +848,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  646 0232 02       		.uleb128 0x2
  647 0233 08       		.byte	0x8
  648 0234 04       		.byte	0x4
- 649 0235 FA020000 		.4byte	.LASF39
+ 649 0235 3C030000 		.4byte	.LASF39
  650 0239 0E       		.uleb128 0xe
  651 023a 04       		.byte	0x4
  652 023b 6F000000 		.4byte	0x6f
@@ -863,12 +863,12 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  661 0251 0100B600 		.4byte	0xb60001
  662 0255 00       		.byte	0
  663 0256 11       		.uleb128 0x11
- 664 0257 FA030000 		.4byte	.LASF42
+ 664 0257 3C040000 		.4byte	.LASF42
  665 025b 05       		.byte	0x5
  666 025c 4E01     		.2byte	0x14e
  667 025e 39020000 		.4byte	0x239
  668 0262 12       		.uleb128 0x12
- 669 0263 93030000 		.4byte	.LASF70
+ 669 0263 D5030000 		.4byte	.LASF70
  670 0267 4C       		.byte	0x4c
  671 0268 06       		.byte	0x6
  672 0269 2B       		.byte	0x2b
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  696 0299 76000000 		.4byte	0x76
  697 029d 0C       		.byte	0xc
  698 029e 08       		.uleb128 0x8
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 16
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 16
 
 
  699 029f 3F020000 		.4byte	.LASF47
@@ -958,19 +958,19 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  753 030b CE010000 		.4byte	.LASF56
  754 030f 06       		.byte	0x6
  755 0310 3F       		.byte	0x3f
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 17
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 17
 
 
  756 0311 76000000 		.4byte	0x76
  757 0315 34       		.byte	0x34
  758 0316 08       		.uleb128 0x8
- 759 0317 AF030000 		.4byte	.LASF57
+ 759 0317 F1030000 		.4byte	.LASF57
  760 031b 06       		.byte	0x6
  761 031c 41       		.byte	0x41
  762 031d 76000000 		.4byte	0x76
  763 0321 38       		.byte	0x38
  764 0322 08       		.uleb128 0x8
- 765 0323 BA030000 		.4byte	.LASF58
+ 765 0323 FC030000 		.4byte	.LASF58
  766 0327 06       		.byte	0x6
  767 0328 42       		.byte	0x42
  768 0329 76000000 		.4byte	0x76
@@ -988,7 +988,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  780 0341 76000000 		.4byte	0x76
  781 0345 44       		.byte	0x44
  782 0346 08       		.uleb128 0x8
- 783 0347 0F040000 		.4byte	.LASF61
+ 783 0347 51040000 		.4byte	.LASF61
  784 034b 06       		.byte	0x6
  785 034c 47       		.byte	0x47
  786 034d 76000000 		.4byte	0x76
@@ -1014,11 +1014,11 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  806 0379 9C       		.byte	0x9c
  807 037a B9030000 		.4byte	0x3b9
  808 037e 14       		.uleb128 0x14
- 809 037f 2F040000 		.4byte	.LASF64
+ 809 037f 71040000 		.4byte	.LASF64
  810 0383 01       		.byte	0x1
  811 0384 2D       		.byte	0x2d
  812 0385 B9030000 		.4byte	0x3b9
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 18
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 18
 
 
  813 0389 00000000 		.4byte	.LLST0
@@ -1051,7 +1051,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  840 03c5 06       		.uleb128 0x6
  841 03c6 5A030000 		.4byte	0x35a
  842 03ca 18       		.uleb128 0x18
- 843 03cb D1030000 		.4byte	.LASF73
+ 843 03cb 13040000 		.4byte	.LASF73
  844 03cf 01       		.byte	0x1
  845 03d0 7B       		.byte	0x7b
  846 03d1 00000000 		.4byte	.LFB63
@@ -1059,7 +1059,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  848 03d9 01       		.uleb128 0x1
  849 03da 9C       		.byte	0x9c
  850 03db 15       		.uleb128 0x15
- 851 03dc 2F040000 		.4byte	.LASF64
+ 851 03dc 71040000 		.4byte	.LASF64
  852 03e0 01       		.byte	0x1
  853 03e1 7B       		.byte	0x7b
  854 03e2 B9030000 		.4byte	0x3b9
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  867 03fe BF030000 		.4byte	0x3bf
  868 0402 01       		.uleb128 0x1
  869 0403 52       		.byte	0x52
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 19
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 19
 
 
  870 0404 00       		.byte	0
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  924 0032 03       		.uleb128 0x3
  925 0033 08       		.uleb128 0x8
  926 0034 00       		.byte	0
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 20
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 20
 
 
  927 0035 00       		.byte	0
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  981 006b 38       		.uleb128 0x38
  982 006c 0B       		.uleb128 0xb
  983 006d 00       		.byte	0
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 21
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 21
 
 
  984 006e 00       		.byte	0
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  1038 00a4 3A       		.uleb128 0x3a
  1039 00a5 0B       		.uleb128 0xb
  1040 00a6 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 22
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 22
 
 
  1041 00a7 05       		.uleb128 0x5
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  1095 00dd 3F       		.uleb128 0x3f
  1096 00de 19       		.uleb128 0x19
  1097 00df 03       		.uleb128 0x3
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 23
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 23
 
 
  1098 00e0 0E       		.uleb128 0xe
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  1152 0117 03       		.uleb128 0x3
  1153 0118 0E       		.uleb128 0xe
  1154 0119 3A       		.uleb128 0x3a
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 24
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 24
 
 
  1155 011a 0B       		.uleb128 0xb
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  1209 0017 50       		.byte	0x50
  1210 0018 9F       		.byte	0x9f
  1211 0019 30010000 		.4byte	.LVL5
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 25
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 25
 
 
  1212 001d 32010000 		.4byte	.LVL6
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  1266 009c 9F       		.byte	0x9f
  1267 009d 2C010000 		.4byte	.LVL4
  1268 00a1 30010000 		.4byte	.LVL5
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 26
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 26
 
 
  1269 00a5 0200     		.2byte	0x2
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  1322      0200BA01 
  1322      00000201 
  1322      FB0E0D00 
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 27
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 27
 
 
  1322      01010101 
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  1348      00
  1349              	.LASF22:
  1350 008e 54525F43 		.ascii	"TR_CTRL2\000"
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 28
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 28
 
 
  1350      54524C32 
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  1373 0148 666C6F61 		.ascii	"float\000"
  1373      7400
  1374              	.LASF8:
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 29
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 29
 
 
  1375 014e 756E7369 		.ascii	"unsigned int\000"
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  1400              	.LASF46:
  1401 01eb 636F756E 		.ascii	"countDirection\000"
  1401      74446972 
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 30
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 30
 
 
  1401      65637469 
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  1423      6E7400
  1424              	.LASF72:
  1425 029c 73746174 		.ascii	"status\000"
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 31
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 31
 
 
  1425      757300
@@ -1830,96 +1830,99 @@ ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 1
  1439 02de 52455345 		.ascii	"RESERVED1\000"
  1439      52564544 
  1439      3100
- 1440              	.LASF5:
- 1441 02e8 6C6F6E67 		.ascii	"long unsigned int\000"
- 1441      20756E73 
- 1441      69676E65 
- 1441      6420696E 
- 1441      7400
- 1442              	.LASF39:
- 1443 02fa 646F7562 		.ascii	"double\000"
- 1443      6C6500
- 1444              	.LASF67:
- 1445 0301 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
- 1445      43313120 
- 1445      352E342E 
- 1445      31203230 
- 1445      31363036 
- 1446 0334 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
- 1446      20726576 
- 1446      6973696F 
- 1446      6E203233 
- 1446      37373135 
- 1447 0367 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
- 1447      67202D66 
- 1447      66756E63 
- 1447      74696F6E 
- 1447      2D736563 
- 1448              	.LASF70:
- 1449 0393 63795F73 		.ascii	"cy_stc_tcpwm_counter_config\000"
- 1449      74635F74 
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 32
+ 1440              	.LASF69:
+ 1441 02e8 433A5C55 		.ascii	"C:\\Users\\User\\Desktop\\labs\\olega\\Stepaniuk\\l"
+ 1441      73657273 
+ 1441      5C557365 
+ 1441      725C4465 
+ 1441      736B746F 
+ 1442 0314 6162365C 		.ascii	"ab6\\lab6_2\\lab6.cydsn\000"
+ 1442      6C616236 
+ 1442      5F325C6C 
+ 1442      6162362E 
+ 1442      63796473 
+ 1443              	.LASF5:
+ 1444 032a 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1444      20756E73 
+ 1444      69676E65 
+ 1444      6420696E 
+ 1444      7400
+ 1445              	.LASF39:
+ 1446 033c 646F7562 		.ascii	"double\000"
+ 1446      6C6500
+ 1447              	.LASF67:
+ 1448 0343 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1448      43313120 
+ 1448      352E342E 
+ 1448      31203230 
+ 1448      31363036 
+ 1449 0376 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 1449      20726576 
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 32
 
 
- 1449      6370776D 
- 1449      5F636F75 
- 1449      6E746572 
- 1450              	.LASF57:
- 1451 03af 73746172 		.ascii	"startInput\000"
- 1451      74496E70 
- 1451      757400
- 1452              	.LASF58:
- 1453 03ba 73746F70 		.ascii	"stopInputMode\000"
- 1453      496E7075 
- 1453      744D6F64 
- 1453      6500
- 1454              	.LASF29:
- 1455 03c8 4354524C 		.ascii	"CTRL_CLR\000"
- 1455      5F434C52 
- 1455      00
- 1456              	.LASF73:
- 1457 03d1 43795F54 		.ascii	"Cy_TCPWM_Counter_DeInit\000"
- 1457      4350574D 
- 1457      5F436F75 
- 1457      6E746572 
- 1457      5F446549 
- 1458              	.LASF15:
- 1459 03e9 434F554E 		.ascii	"COUNTER\000"
- 1459      54455200 
- 1460              	.LASF19:
- 1461 03f1 52455345 		.ascii	"RESERVED\000"
- 1461      52564544 
- 1461      00
- 1462              	.LASF42:
- 1463 03fa 63795F65 		.ascii	"cy_en_tcpwm_status_t\000"
- 1463      6E5F7463 
- 1463      70776D5F 
- 1463      73746174 
- 1463      75735F74 
- 1464              	.LASF61:
- 1465 040f 636F756E 		.ascii	"countInput\000"
- 1465      74496E70 
- 1465      757400
- 1466              	.LASF26:
- 1467 041a 494E5452 		.ascii	"INTR_MASK\000"
- 1467      5F4D4153 
- 1467      4B00
- 1468              	.LASF36:
- 1469 0424 54435057 		.ascii	"TCPWM_Type\000"
- 1469      4D5F5479 
- 1469      706500
- 1470              	.LASF64:
- 1471 042f 62617365 		.ascii	"base\000"
- 1471      00
- 1472              	.LASF69:
- 1473 0434 443A5C73 		.ascii	"D:\\student\\FeS-31\\Stepaniuk\\lab6\\lab6_2\\lab6."
- 1473      74756465 
- 1473      6E745C46 
- 1473      65532D33 
- 1473      315C5374 
- 1474 0461 63796473 		.ascii	"cydsn\000"
-ARM GAS  C:\Users\cypress\AppData\Local\Temp\ccsHlt4c.s 			page 33
+ 1449      6973696F 
+ 1449      6E203233 
+ 1449      37373135 
+ 1450 03a9 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 1450      67202D66 
+ 1450      66756E63 
+ 1450      74696F6E 
+ 1450      2D736563 
+ 1451              	.LASF70:
+ 1452 03d5 63795F73 		.ascii	"cy_stc_tcpwm_counter_config\000"
+ 1452      74635F74 
+ 1452      6370776D 
+ 1452      5F636F75 
+ 1452      6E746572 
+ 1453              	.LASF57:
+ 1454 03f1 73746172 		.ascii	"startInput\000"
+ 1454      74496E70 
+ 1454      757400
+ 1455              	.LASF58:
+ 1456 03fc 73746F70 		.ascii	"stopInputMode\000"
+ 1456      496E7075 
+ 1456      744D6F64 
+ 1456      6500
+ 1457              	.LASF29:
+ 1458 040a 4354524C 		.ascii	"CTRL_CLR\000"
+ 1458      5F434C52 
+ 1458      00
+ 1459              	.LASF73:
+ 1460 0413 43795F54 		.ascii	"Cy_TCPWM_Counter_DeInit\000"
+ 1460      4350574D 
+ 1460      5F436F75 
+ 1460      6E746572 
+ 1460      5F446549 
+ 1461              	.LASF15:
+ 1462 042b 434F554E 		.ascii	"COUNTER\000"
+ 1462      54455200 
+ 1463              	.LASF19:
+ 1464 0433 52455345 		.ascii	"RESERVED\000"
+ 1464      52564544 
+ 1464      00
+ 1465              	.LASF42:
+ 1466 043c 63795F65 		.ascii	"cy_en_tcpwm_status_t\000"
+ 1466      6E5F7463 
+ 1466      70776D5F 
+ 1466      73746174 
+ 1466      75735F74 
+ 1467              	.LASF61:
+ 1468 0451 636F756E 		.ascii	"countInput\000"
+ 1468      74496E70 
+ 1468      757400
+ 1469              	.LASF26:
+ 1470 045c 494E5452 		.ascii	"INTR_MASK\000"
+ 1470      5F4D4153 
+ 1470      4B00
+ 1471              	.LASF36:
+ 1472 0466 54435057 		.ascii	"TCPWM_Type\000"
+ 1472      4D5F5479 
+ARM GAS  C:\Users\User\AppData\Local\Temp\ccwU9EHj.s 			page 33
 
 
- 1474      6E00
+ 1472      706500
+ 1473              	.LASF64:
+ 1474 0471 62617365 		.ascii	"base\000"
+ 1474      00
  1475              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

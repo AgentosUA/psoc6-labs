@@ -311,7 +311,18 @@
 </userData>
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
-<OpenDocs />
+<OpenDocs>
+<name v=".\lab_3_2.cydsn\lab_3_2.cydwr" />
+<name v=".\lab_3_2.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\lab_3_2.cydsn\main_cm4.c" />
+</OpenDocs>
+<OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
+
+  Actipro Docking/MDI for WinForms
+  Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
+  http://www.actiprosoftware.com
+
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1604, 855" SelectedTabbedMdiWindow="72d420f1-2579-4d39-96a8-6daeeb6896c4"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="16b8702b-206e-46f3-874b-083d7938365d" /><DocumentWindow Key="D:\Web\psoc6-labs\lab3\lab_3_2\lab_3_2.cydsn\lab_3_2.cydwr" Guid="72d420f1-2579-4d39-96a8-6daeeb6896c4" /><DocumentWindow Key="D:\Web\psoc6-labs\lab3\lab_3_2\lab_3_2.cydsn\TopDesign\TopDesign.cysch" Guid="51d1cc75-0985-4c5f-98f9-d9e2583dc15b" /><DocumentWindow Key="D:\Web\psoc6-labs\lab3\lab_3_2\lab_3_2.cydsn\main_cm4.c" Guid="aa881217-befc-4e0f-acac-ac7720b9350d" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
