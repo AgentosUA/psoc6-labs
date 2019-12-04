@@ -1,0 +1,100 @@
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/CortexM0p/ARM_GCC_541/Debug/PWM_1.o : C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/cmsis/include/cmsis_armcc.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/cmsis/include/cmsis_armclang.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/cmsis/include/cmsis_compiler.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/cmsis/include/cmsis_gcc.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/cmsis/include/core_cm0plus.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/cmsis/include/core_cm4.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_backup.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_ble.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_cpuss.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_crypto.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_csd.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_ctbm.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_ctdac.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_dw.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_efuse.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_efuse_data.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_fault.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_flashc.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_gpio.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_headers.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_hsiom.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_i2s.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_ipc.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_lcd.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_lpcomp.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_pass.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_pdm.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_peri.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_profile.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_prot.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_sar.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_scb.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_sflash.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_smartio.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_smif.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_srss.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_tcpwm.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_udb.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/psoc63/include/cy8c6347bzi_bld53.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/psoc63/include/cy_device_headers.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/psoc63/include/gpio_psoc63_116_bga_ble.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/psoc63/include/psoc63_config.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/drivers/peripheral/tcpwm/cy_tcpwm_pwm.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/PWM_1.c C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/PWM_1.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/cyfitter.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/cyfitter_gpio.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/cyfitter_sysint.h C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/system_psoc63.h 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/cmsis/include/cmsis_armcc.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/cmsis/include/cmsis_armclang.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/cmsis/include/cmsis_compiler.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/cmsis/include/cmsis_gcc.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/cmsis/include/core_cm0plus.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/cmsis/include/core_cm4.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_backup.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_ble.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_cpuss.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_crypto.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_csd.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_ctbm.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_ctdac.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_dw.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_efuse.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_efuse_data.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_fault.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_flashc.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_gpio.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_headers.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_hsiom.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_i2s.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_ipc.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_lcd.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_lpcomp.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_pass.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_pdm.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_peri.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_profile.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_prot.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_sar.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_scb.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_sflash.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_smartio.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_smif.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_srss.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_tcpwm.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/ip/cyip_udb.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/psoc63/include/cy8c6347bzi_bld53.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/psoc63/include/cy_device_headers.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/psoc63/include/gpio_psoc63_116_bga_ble.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/devices/psoc6/psoc63/include/psoc63_config.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/pdl/drivers/peripheral/tcpwm/cy_tcpwm_pwm.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/PWM_1.c : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/PWM_1.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/cyfitter.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/cyfitter_gpio.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/Generated_Source/PSoC6/cyfitter_sysint.h : 
+
+C:/Users/User/Desktop/labs/olega/Stepaniuk/lab3/lab_3_2/lab_3_2.cydsn/system_psoc63.h : 
+

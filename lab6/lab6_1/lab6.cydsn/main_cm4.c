@@ -1,28 +1,22 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
-*/
 #include "project.h"
-
- 
-
 #define TIMER_PERIOD_MSEC 1000U /* Період таймера в мсек */
-uint32 pragma = 0 ;
+uint32 status = 0 ;
 uint32 i = 0 ;
 uint32 p = 16 ; 
+
+void Isr_switch(void) {  
+    Cy_GPIO_ClearInterrupt(SW2_P0_4_PORT, SW2_P0_4_NUM); 
+    NVIC_ClearPendingIRQ(SysInt_Switch_cfg.intrSrc);   
+
+    status = 1 -  status ;
+}  
+
 void TimerInterruptHandler(void)
     {
         Cy_TCPWM_ClearInterrupt(Timer_HW, Timer_CNT_NUM,CY_TCPWM_INT_ON_TC);
         /* Очистка переривання підрахунку терміналу */
 
-        if(pragma)
+        if(status)
         {
             Cy_GPIO_Set(KIT_LED_RED_PORT, KIT_LED_RED_NUM); 
             Timer_SetPeriod(500);
@@ -38,15 +32,7 @@ void TimerInterruptHandler(void)
         }
         i++;
     }
-void Isr_switch(void) {  
-    
-    Cy_GPIO_ClearInterrupt(SW2_P0_4_PORT, SW2_P0_4_NUM); 
-    NVIC_ClearPendingIRQ(SysInt_Switch_cfg.intrSrc);   
-
-    pragma = 1 -  pragma ;
-}    
-
-
+  
 int main(void)
 {
     __enable_irq(); /* Enable global interrupts. */
@@ -78,5 +64,3 @@ int main(void)
         }    
     }
 }
-
-/* [] END OF FILE */
