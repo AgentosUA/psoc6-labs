@@ -1,0 +1,1479 @@
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0plus
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main_cm0p.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.main,"ax",%progbits
+  20              		.align	2
+  21              		.global	main
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	main, %function
+  25              	main:
+  26              	.LFB424:
+  27              		.file 1 "main_cm0p.c"
+   1:main_cm0p.c   **** /******************************************************************************
+   2:main_cm0p.c   **** * File Name: main_cm0p.c
+   3:main_cm0p.c   **** *
+   4:main_cm0p.c   **** * Version: 1.00
+   5:main_cm0p.c   **** *
+   6:main_cm0p.c   **** * Description: This file contains the Cortex-M0+ code that starts Cortex-M4
+   7:main_cm0p.c   **** *
+   8:main_cm0p.c   **** * Related Document: CE218136_EINK_CapSense_RTOS.pdf
+   9:main_cm0p.c   **** *
+  10:main_cm0p.c   **** * Hardware Dependency: CY8CKIT-062-BLE PSoC 6 BLE Pioneer Kit
+  11:main_cm0p.c   **** *
+  12:main_cm0p.c   **** *******************************************************************************
+  13:main_cm0p.c   **** * Copyright (2018), Cypress Semiconductor Corporation. All rights reserved.
+  14:main_cm0p.c   **** *******************************************************************************
+  15:main_cm0p.c   **** * This software, including source code, documentation and related materials
+  16:main_cm0p.c   **** * (“Software”), is owned by Cypress Semiconductor Corporation or one of its
+  17:main_cm0p.c   **** * subsidiaries (“Cypress”) and is protected by and subject to worldwide patent
+  18:main_cm0p.c   **** * protection (United States and foreign), United States copyright laws and
+  19:main_cm0p.c   **** * international treaty provisions. Therefore, you may use this Software only
+  20:main_cm0p.c   **** * as provided in the license agreement accompanying the software package from
+  21:main_cm0p.c   **** * which you obtained this Software (“EULA”).
+  22:main_cm0p.c   **** *
+  23:main_cm0p.c   **** * If no EULA applies, Cypress hereby grants you a personal, nonexclusive,
+  24:main_cm0p.c   **** * non-transferable license to copy, modify, and compile the Software source
+  25:main_cm0p.c   **** * code solely for use in connection with Cypress’s integrated circuit products.
+  26:main_cm0p.c   **** * Any reproduction, modification, translation, compilation, or representation
+  27:main_cm0p.c   **** * of this Software except as specified above is prohibited without the express
+  28:main_cm0p.c   **** * written permission of Cypress.
+  29:main_cm0p.c   **** *
+  30:main_cm0p.c   **** * Disclaimer: THIS SOFTWARE IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 2
+
+
+  31:main_cm0p.c   **** * EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED 
+  32:main_cm0p.c   **** * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Cypress 
+  33:main_cm0p.c   **** * reserves the right to make changes to the Software without notice. Cypress 
+  34:main_cm0p.c   **** * does not assume any liability arising out of the application or use of the 
+  35:main_cm0p.c   **** * Software or any product or circuit described in the Software. Cypress does 
+  36:main_cm0p.c   **** * not authorize its products for use in any products where a malfunction or 
+  37:main_cm0p.c   **** * failure of the Cypress product may reasonably be expected to result in 
+  38:main_cm0p.c   **** * significant property damage, injury or death (“High Risk Product”). By 
+  39:main_cm0p.c   **** * including Cypress’s product in a High Risk Product, the manufacturer of such 
+  40:main_cm0p.c   **** * system or application assumes all risk of such use and in doing so agrees to 
+  41:main_cm0p.c   **** * indemnify Cypress against all liability.
+  42:main_cm0p.c   **** *******************************************************************************/
+  43:main_cm0p.c   **** /******************************************************************************
+  44:main_cm0p.c   **** * Cortex-M0+ starts UART based debug and enables Cortex-M4. See main_cm4.c
+  45:main_cm0p.c   **** * for the main firmware.
+  46:main_cm0p.c   **** *******************************************************************************/
+  47:main_cm0p.c   **** 
+  48:main_cm0p.c   **** /* Header file includes */
+  49:main_cm0p.c   **** #include "project.h"
+  50:main_cm0p.c   **** #include "uart_debug.h"
+  51:main_cm0p.c   **** 
+  52:main_cm0p.c   **** /*******************************************************************************
+  53:main_cm0p.c   **** * Function Name: main
+  54:main_cm0p.c   **** ********************************************************************************
+  55:main_cm0p.c   **** * Summary:
+  56:main_cm0p.c   **** *  System entrance point. Starts UART based debug and enables Cortex-M4
+  57:main_cm0p.c   **** *
+  58:main_cm0p.c   **** * Parameters:
+  59:main_cm0p.c   **** *  void
+  60:main_cm0p.c   **** *
+  61:main_cm0p.c   **** * Return:
+  62:main_cm0p.c   **** *  int
+  63:main_cm0p.c   **** *
+  64:main_cm0p.c   **** *******************************************************************************/
+  65:main_cm0p.c   **** int main(void)
+  66:main_cm0p.c   **** {
+  28              		.loc 1 66 0
+  29              		.cfi_startproc
+  30              		@ Volatile: function does not return.
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 10B5     		push	{r4, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  37              	.LBB4:
+  38              	.LBB5:
+  39              		.file 2 "Generated_Source\\PSoC6\\pdl\\cmsis/include/cmsis_gcc.h"
+   1:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /**************************************************************************//**
+   2:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
+   4:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @version  V5.0.1
+   5:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @date     02. February 2017
+   6:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /*
+   8:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+   9:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 3
+
+
+  10:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
+  11:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  12:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+  13:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * not use this file except in compliance with the License.
+  14:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * You may obtain a copy of the License at
+  15:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  16:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+  17:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  18:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
+  19:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  20:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * See the License for the specific language governing permissions and
+  22:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * limitations under the License.
+  23:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  */
+  24:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  25:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  26:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  27:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  28:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  29:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  30:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  31:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  32:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  33:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  34:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
+  35:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __ASM
+  36:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __ASM                     __asm
+  37:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  38:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __INLINE
+  39:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __INLINE                  inline
+  40:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  41:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
+  42:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __STATIC_INLINE           static inline
+  43:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  44:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __NO_RETURN
+  45:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __NO_RETURN               __attribute__((noreturn))
+  46:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  47:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __USED
+  48:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __USED                    __attribute__((used))
+  49:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  50:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __WEAK
+  51:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __WEAK                    __attribute__((weak))
+  52:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  53:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32
+  54:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  55:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wpacked"
+  56:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wattributes"
+  57:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+  58:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic pop
+  59:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+  60:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  61:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __ALIGNED
+  62:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __ALIGNED(x)              __attribute__((aligned(x)))
+  63:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  64:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __PACKED
+  65:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __PACKED                  __attribute__((packed, aligned(1)))
+  66:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 4
+
+
+  67:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
+  68:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __PACKED_STRUCT           struct __attribute__((packed, aligned(1)))
+  69:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  70:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  71:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  72:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  73:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  74:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  75:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   @{
+  76:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  */
+  77:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  78:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /**
+  79:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  80:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  81:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  82:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  */
+  83:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __enable_irq(void)
+  84:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** {
+  85:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  40              		.loc 2 85 0
+  41              		.syntax divided
+  42              	@ 85 "Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h" 1
+  43 0002 62B6     		cpsie i
+  44              	@ 0 "" 2
+  45              		.thumb
+  46              		.syntax unified
+  47              	.LBE5:
+  48              	.LBE4:
+  67:main_cm0p.c   ****     /* Enable global interrupts */
+  68:main_cm0p.c   ****     __enable_irq();
+  69:main_cm0p.c   ****     
+  70:main_cm0p.c   ****     /* Initialize the hardware used to send debug messages, if debug is enabled
+  71:main_cm0p.c   ****        in uart_debug.h header file */
+  72:main_cm0p.c   ****     DebugPrintfInit();
+  73:main_cm0p.c   ****     /* \x1b[2J\x1b[;H - ANSI ESC sequence to clear screen */
+  74:main_cm0p.c   ****     DebugPrintf("\x1b[2J\x1b[;H");
+  75:main_cm0p.c   **** 
+  76:main_cm0p.c   ****     /* Enable CM4 only if BLE Controller started successfully. 
+  77:main_cm0p.c   ****        CY_CORTEX_M4_APPL_ADDR must be updated if CM4 memory layout 
+  78:main_cm0p.c   ****        is changed. */
+  79:main_cm0p.c   ****     Cy_SysEnableCM4(CY_CORTEX_M4_APPL_ADDR);
+  49              		.loc 1 79 0
+  50 0004 0348     		ldr	r0, .L3
+  51 0006 FFF7FEFF 		bl	Cy_SysEnableCM4
+  52              	.LVL0:
+  53              	.L2:
+  80:main_cm0p.c   ****  
+  81:main_cm0p.c   ****     for (;;)
+  82:main_cm0p.c   ****     {
+  83:main_cm0p.c   ****         /* Put CM0+ to Deep Sleep mode */
+  84:main_cm0p.c   ****         Cy_SysPm_DeepSleep(CY_SYSPM_WAIT_FOR_INTERRUPT);
+  54              		.loc 1 84 0 discriminator 1
+  55 000a 0020     		movs	r0, #0
+  56 000c FFF7FEFF 		bl	Cy_SysPm_DeepSleep
+  57              	.LVL1:
+  58 0010 FBE7     		b	.L2
+  59              	.L4:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 5
+
+
+  60 0012 C046     		.align	2
+  61              	.L3:
+  62 0014 00000810 		.word	268959744
+  63              		.cfi_endproc
+  64              	.LFE424:
+  65              		.size	main, .-main
+  66              		.text
+  67              	.Letext0:
+  68              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  69              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  70              		.file 5 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/scb/cy_scb_spi.h"
+  71              		.file 6 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/syspm/cy_syspm.h"
+  72              		.file 7 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/sar/cy_sar.h"
+  73              		.file 8 "Generated_Source\\PSoC6/ADC.h"
+  74              		.file 9 "Generated_Source\\PSoC6/CY_EINK_SPIM.h"
+  75              		.file 10 "./system_psoc63.h"
+  76              		.section	.debug_info,"",%progbits
+  77              	.Ldebug_info0:
+  78 0000 97030000 		.4byte	0x397
+  79 0004 0400     		.2byte	0x4
+  80 0006 00000000 		.4byte	.Ldebug_abbrev0
+  81 000a 04       		.byte	0x4
+  82 000b 01       		.uleb128 0x1
+  83 000c 95000000 		.4byte	.LASF62
+  84 0010 0C       		.byte	0xc
+  85 0011 E6030000 		.4byte	.LASF63
+  86 0015 18020000 		.4byte	.LASF64
+  87 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  88 001d 00000000 		.4byte	0
+  89 0021 00000000 		.4byte	.Ldebug_line0
+  90 0025 02       		.uleb128 0x2
+  91 0026 02       		.byte	0x2
+  92 0027 05       		.byte	0x5
+  93 0028 4D000000 		.4byte	.LASF0
+  94 002c 02       		.uleb128 0x2
+  95 002d 01       		.byte	0x1
+  96 002e 08       		.byte	0x8
+  97 002f 52020000 		.4byte	.LASF1
+  98 0033 02       		.uleb128 0x2
+  99 0034 01       		.byte	0x1
+ 100 0035 06       		.byte	0x6
+ 101 0036 75020000 		.4byte	.LASF2
+ 102 003a 02       		.uleb128 0x2
+ 103 003b 02       		.byte	0x2
+ 104 003c 07       		.byte	0x7
+ 105 003d 23030000 		.4byte	.LASF3
+ 106 0041 02       		.uleb128 0x2
+ 107 0042 04       		.byte	0x4
+ 108 0043 05       		.byte	0x5
+ 109 0044 DB010000 		.4byte	.LASF4
+ 110 0048 03       		.uleb128 0x3
+ 111 0049 50010000 		.4byte	.LASF9
+ 112 004d 03       		.byte	0x3
+ 113 004e 41       		.byte	0x41
+ 114 004f 53000000 		.4byte	0x53
+ 115 0053 02       		.uleb128 0x2
+ 116 0054 04       		.byte	0x4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 6
+
+
+ 117 0055 07       		.byte	0x7
+ 118 0056 5E030000 		.4byte	.LASF5
+ 119 005a 02       		.uleb128 0x2
+ 120 005b 08       		.byte	0x8
+ 121 005c 05       		.byte	0x5
+ 122 005d CD010000 		.4byte	.LASF6
+ 123 0061 02       		.uleb128 0x2
+ 124 0062 08       		.byte	0x8
+ 125 0063 07       		.byte	0x7
+ 126 0064 81020000 		.4byte	.LASF7
+ 127 0068 04       		.uleb128 0x4
+ 128 0069 04       		.byte	0x4
+ 129 006a 05       		.byte	0x5
+ 130 006b 696E7400 		.ascii	"int\000"
+ 131 006f 02       		.uleb128 0x2
+ 132 0070 04       		.byte	0x4
+ 133 0071 07       		.byte	0x7
+ 134 0072 12040000 		.4byte	.LASF8
+ 135 0076 03       		.uleb128 0x3
+ 136 0077 98020000 		.4byte	.LASF10
+ 137 007b 04       		.byte	0x4
+ 138 007c 30       		.byte	0x30
+ 139 007d 48000000 		.4byte	0x48
+ 140 0081 02       		.uleb128 0x2
+ 141 0082 04       		.byte	0x4
+ 142 0083 07       		.byte	0x7
+ 143 0084 57000000 		.4byte	.LASF11
+ 144 0088 05       		.uleb128 0x5
+ 145 0089 76000000 		.4byte	0x76
+ 146 008d 02       		.uleb128 0x2
+ 147 008e 08       		.byte	0x8
+ 148 008f 04       		.byte	0x4
+ 149 0090 0C020000 		.4byte	.LASF12
+ 150 0094 02       		.uleb128 0x2
+ 151 0095 01       		.byte	0x1
+ 152 0096 08       		.byte	0x8
+ 153 0097 F3020000 		.4byte	.LASF13
+ 154 009b 02       		.uleb128 0x2
+ 155 009c 04       		.byte	0x4
+ 156 009d 04       		.byte	0x4
+ 157 009e A9010000 		.4byte	.LASF14
+ 158 00a2 02       		.uleb128 0x2
+ 159 00a3 08       		.byte	0x8
+ 160 00a4 04       		.byte	0x4
+ 161 00a5 70030000 		.4byte	.LASF15
+ 162 00a9 06       		.uleb128 0x6
+ 163 00aa 01       		.byte	0x1
+ 164 00ab 2C000000 		.4byte	0x2c
+ 165 00af 06       		.byte	0x6
+ 166 00b0 A503     		.2byte	0x3a5
+ 167 00b2 C3000000 		.4byte	0xc3
+ 168 00b6 07       		.uleb128 0x7
+ 169 00b7 CA030000 		.4byte	.LASF16
+ 170 00bb 00       		.byte	0
+ 171 00bc 07       		.uleb128 0x7
+ 172 00bd C9020000 		.4byte	.LASF17
+ 173 00c1 01       		.byte	0x1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 7
+
+
+ 174 00c2 00       		.byte	0
+ 175 00c3 08       		.uleb128 0x8
+ 176 00c4 04       		.byte	0x4
+ 177 00c5 02       		.uleb128 0x2
+ 178 00c6 01       		.byte	0x1
+ 179 00c7 02       		.byte	0x2
+ 180 00c8 36030000 		.4byte	.LASF18
+ 181 00cc 09       		.uleb128 0x9
+ 182 00cd 04       		.byte	0x4
+ 183 00ce D2000000 		.4byte	0xd2
+ 184 00d2 0A       		.uleb128 0xa
+ 185 00d3 DD000000 		.4byte	0xdd
+ 186 00d7 0B       		.uleb128 0xb
+ 187 00d8 76000000 		.4byte	0x76
+ 188 00dc 00       		.byte	0
+ 189 00dd 0C       		.uleb128 0xc
+ 190 00de 7D010000 		.4byte	.LASF19
+ 191 00e2 05       		.byte	0x5
+ 192 00e3 BF01     		.2byte	0x1bf
+ 193 00e5 CC000000 		.4byte	0xcc
+ 194 00e9 0D       		.uleb128 0xd
+ 195 00ea 1F040000 		.4byte	.LASF65
+ 196 00ee 24       		.byte	0x24
+ 197 00ef 05       		.byte	0x5
+ 198 00f0 4102     		.2byte	0x241
+ 199 00f2 6C010000 		.4byte	0x16c
+ 200 00f6 0E       		.uleb128 0xe
+ 201 00f7 E1020000 		.4byte	.LASF20
+ 202 00fb 05       		.byte	0x5
+ 203 00fc 4402     		.2byte	0x244
+ 204 00fe 88000000 		.4byte	0x88
+ 205 0102 00       		.byte	0
+ 206 0103 0E       		.uleb128 0xe
+ 207 0104 48030000 		.4byte	.LASF21
+ 208 0108 05       		.byte	0x5
+ 209 0109 4602     		.2byte	0x246
+ 210 010b C3000000 		.4byte	0xc3
+ 211 010f 04       		.byte	0x4
+ 212 0110 0E       		.uleb128 0xe
+ 213 0111 38000000 		.4byte	.LASF22
+ 214 0115 05       		.byte	0x5
+ 215 0116 4702     		.2byte	0x247
+ 216 0118 76000000 		.4byte	0x76
+ 217 011c 08       		.byte	0x8
+ 218 011d 0E       		.uleb128 0xe
+ 219 011e 5B010000 		.4byte	.LASF23
+ 220 0122 05       		.byte	0x5
+ 221 0123 4802     		.2byte	0x248
+ 222 0125 88000000 		.4byte	0x88
+ 223 0129 0C       		.byte	0xc
+ 224 012a 0E       		.uleb128 0xe
+ 225 012b AF010000 		.4byte	.LASF24
+ 226 012f 05       		.byte	0x5
+ 227 0130 4A02     		.2byte	0x24a
+ 228 0132 C3000000 		.4byte	0xc3
+ 229 0136 10       		.byte	0x10
+ 230 0137 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 8
+
+
+ 231 0138 BF020000 		.4byte	.LASF25
+ 232 013c 05       		.byte	0x5
+ 233 013d 4B02     		.2byte	0x24b
+ 234 013f 76000000 		.4byte	0x76
+ 235 0143 14       		.byte	0x14
+ 236 0144 0E       		.uleb128 0xe
+ 237 0145 F6010000 		.4byte	.LASF26
+ 238 0149 05       		.byte	0x5
+ 239 014a 4C02     		.2byte	0x24c
+ 240 014c 88000000 		.4byte	0x88
+ 241 0150 18       		.byte	0x18
+ 242 0151 0E       		.uleb128 0xe
+ 243 0152 02030000 		.4byte	.LASF27
+ 244 0156 05       		.byte	0x5
+ 245 0157 5202     		.2byte	0x252
+ 246 0159 DD000000 		.4byte	0xdd
+ 247 015d 1C       		.byte	0x1c
+ 248 015e 0E       		.uleb128 0xe
+ 249 015f 90030000 		.4byte	.LASF28
+ 250 0163 05       		.byte	0x5
+ 251 0164 5502     		.2byte	0x255
+ 252 0166 76000000 		.4byte	0x76
+ 253 016a 20       		.byte	0x20
+ 254 016b 00       		.byte	0
+ 255 016c 0C       		.uleb128 0xc
+ 256 016d 27010000 		.4byte	.LASF29
+ 257 0171 05       		.byte	0x5
+ 258 0172 5802     		.2byte	0x258
+ 259 0174 E9000000 		.4byte	0xe9
+ 260 0178 06       		.uleb128 0x6
+ 261 0179 01       		.byte	0x1
+ 262 017a 2C000000 		.4byte	0x2c
+ 263 017e 07       		.byte	0x7
+ 264 017f 0504     		.2byte	0x405
+ 265 0181 9E010000 		.4byte	0x19e
+ 266 0185 07       		.uleb128 0x7
+ 267 0186 B5010000 		.4byte	.LASF30
+ 268 018a 00       		.byte	0
+ 269 018b 07       		.uleb128 0x7
+ 270 018c 77030000 		.4byte	.LASF31
+ 271 0190 01       		.byte	0x1
+ 272 0191 07       		.uleb128 0x7
+ 273 0192 0B030000 		.4byte	.LASF32
+ 274 0196 02       		.byte	0x2
+ 275 0197 07       		.uleb128 0x7
+ 276 0198 1E000000 		.4byte	.LASF33
+ 277 019c 03       		.byte	0x3
+ 278 019d 00       		.byte	0
+ 279 019e 0C       		.uleb128 0xc
+ 280 019f 3F040000 		.4byte	.LASF34
+ 281 01a3 07       		.byte	0x7
+ 282 01a4 0A04     		.2byte	0x40a
+ 283 01a6 78010000 		.4byte	0x178
+ 284 01aa 0F       		.uleb128 0xf
+ 285 01ab 78       		.byte	0x78
+ 286 01ac 07       		.byte	0x7
+ 287 01ad F404     		.2byte	0x4f4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 9
+
+
+ 288 01af 77020000 		.4byte	0x277
+ 289 01b3 0E       		.uleb128 0xe
+ 290 01b4 E4010000 		.4byte	.LASF35
+ 291 01b8 07       		.byte	0x7
+ 292 01b9 F604     		.2byte	0x4f6
+ 293 01bb 76000000 		.4byte	0x76
+ 294 01bf 00       		.byte	0
+ 295 01c0 0E       		.uleb128 0xe
+ 296 01c1 6C000000 		.4byte	.LASF36
+ 297 01c5 07       		.byte	0x7
+ 298 01c6 F704     		.2byte	0x4f7
+ 299 01c8 76000000 		.4byte	0x76
+ 300 01cc 04       		.byte	0x4
+ 301 01cd 0E       		.uleb128 0xe
+ 302 01ce E9010000 		.4byte	.LASF37
+ 303 01d2 07       		.byte	0x7
+ 304 01d3 F804     		.2byte	0x4f8
+ 305 01d5 76000000 		.4byte	0x76
+ 306 01d9 08       		.byte	0x8
+ 307 01da 0E       		.uleb128 0xe
+ 308 01db F2030000 		.4byte	.LASF38
+ 309 01df 07       		.byte	0x7
+ 310 01e0 F904     		.2byte	0x4f9
+ 311 01e2 76000000 		.4byte	0x76
+ 312 01e6 0C       		.byte	0xc
+ 313 01e7 0E       		.uleb128 0xe
+ 314 01e8 40010000 		.4byte	.LASF39
+ 315 01ec 07       		.byte	0x7
+ 316 01ed FA04     		.2byte	0x4fa
+ 317 01ef 76000000 		.4byte	0x76
+ 318 01f3 10       		.byte	0x10
+ 319 01f4 0E       		.uleb128 0xe
+ 320 01f5 64010000 		.4byte	.LASF40
+ 321 01f9 07       		.byte	0x7
+ 322 01fa FB04     		.2byte	0x4fb
+ 323 01fc 9E010000 		.4byte	0x19e
+ 324 0200 14       		.byte	0x14
+ 325 0201 0E       		.uleb128 0xe
+ 326 0202 B7030000 		.4byte	.LASF41
+ 327 0206 07       		.byte	0x7
+ 328 0207 FC04     		.2byte	0x4fc
+ 329 0209 76000000 		.4byte	0x76
+ 330 020d 18       		.byte	0x18
+ 331 020e 0E       		.uleb128 0xe
+ 332 020f 98030000 		.4byte	.LASF42
+ 333 0213 07       		.byte	0x7
+ 334 0214 FD04     		.2byte	0x4fd
+ 335 0216 77020000 		.4byte	0x277
+ 336 021a 1C       		.byte	0x1c
+ 337 021b 0E       		.uleb128 0xe
+ 338 021c 36040000 		.4byte	.LASF43
+ 339 0220 07       		.byte	0x7
+ 340 0221 FE04     		.2byte	0x4fe
+ 341 0223 76000000 		.4byte	0x76
+ 342 0227 5C       		.byte	0x5c
+ 343 0228 0E       		.uleb128 0xe
+ 344 0229 60000000 		.4byte	.LASF44
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 10
+
+
+ 345 022d 07       		.byte	0x7
+ 346 022e FF04     		.2byte	0x4ff
+ 347 0230 76000000 		.4byte	0x76
+ 348 0234 60       		.byte	0x60
+ 349 0235 0E       		.uleb128 0xe
+ 350 0236 A1020000 		.4byte	.LASF45
+ 351 023a 07       		.byte	0x7
+ 352 023b 0005     		.2byte	0x500
+ 353 023d 76000000 		.4byte	0x76
+ 354 0241 64       		.byte	0x64
+ 355 0242 0E       		.uleb128 0xe
+ 356 0243 F8020000 		.4byte	.LASF46
+ 357 0247 07       		.byte	0x7
+ 358 0248 0105     		.2byte	0x501
+ 359 024a 76000000 		.4byte	0x76
+ 360 024e 68       		.byte	0x68
+ 361 024f 0E       		.uleb128 0xe
+ 362 0250 AF020000 		.4byte	.LASF47
+ 363 0254 07       		.byte	0x7
+ 364 0255 0205     		.2byte	0x502
+ 365 0257 76000000 		.4byte	0x76
+ 366 025b 6C       		.byte	0x6c
+ 367 025c 0E       		.uleb128 0xe
+ 368 025d 9B010000 		.4byte	.LASF48
+ 369 0261 07       		.byte	0x7
+ 370 0262 0305     		.2byte	0x503
+ 371 0264 C5000000 		.4byte	0xc5
+ 372 0268 70       		.byte	0x70
+ 373 0269 0E       		.uleb128 0xe
+ 374 026a 89000000 		.4byte	.LASF49
+ 375 026e 07       		.byte	0x7
+ 376 026f 0405     		.2byte	0x504
+ 377 0271 76000000 		.4byte	0x76
+ 378 0275 74       		.byte	0x74
+ 379 0276 00       		.byte	0
+ 380 0277 10       		.uleb128 0x10
+ 381 0278 76000000 		.4byte	0x76
+ 382 027c 87020000 		.4byte	0x287
+ 383 0280 11       		.uleb128 0x11
+ 384 0281 81000000 		.4byte	0x81
+ 385 0285 0F       		.byte	0xf
+ 386 0286 00       		.byte	0
+ 387 0287 0C       		.uleb128 0xc
+ 388 0288 A3030000 		.4byte	.LASF50
+ 389 028c 07       		.byte	0x7
+ 390 028d 0505     		.2byte	0x505
+ 391 028f AA010000 		.4byte	0x1aa
+ 392 0293 12       		.uleb128 0x12
+ 393 0294 14       		.byte	0x14
+ 394 0295 08       		.byte	0x8
+ 395 0296 3B       		.byte	0x3b
+ 396 0297 D8020000 		.4byte	0x2d8
+ 397 029b 13       		.uleb128 0x13
+ 398 029c 00000000 		.4byte	.LASF51
+ 399 02a0 08       		.byte	0x8
+ 400 02a1 3D       		.byte	0x3d
+ 401 02a2 76000000 		.4byte	0x76
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 11
+
+
+ 402 02a6 00       		.byte	0
+ 403 02a7 13       		.uleb128 0x13
+ 404 02a8 BE030000 		.4byte	.LASF52
+ 405 02ac 08       		.byte	0x8
+ 406 02ad 3E       		.byte	0x3e
+ 407 02ae 76000000 		.4byte	0x76
+ 408 02b2 04       		.byte	0x4
+ 409 02b3 13       		.uleb128 0x13
+ 410 02b4 3C030000 		.4byte	.LASF53
+ 411 02b8 08       		.byte	0x8
+ 412 02b9 3F       		.byte	0x3f
+ 413 02ba D8020000 		.4byte	0x2d8
+ 414 02be 08       		.byte	0x8
+ 415 02bf 13       		.uleb128 0x13
+ 416 02c0 E8020000 		.4byte	.LASF54
+ 417 02c4 08       		.byte	0x8
+ 418 02c5 40       		.byte	0x40
+ 419 02c6 76000000 		.4byte	0x76
+ 420 02ca 0C       		.byte	0xc
+ 421 02cb 13       		.uleb128 0x13
+ 422 02cc 42000000 		.4byte	.LASF55
+ 423 02d0 08       		.byte	0x8
+ 424 02d1 45       		.byte	0x45
+ 425 02d2 76000000 		.4byte	0x76
+ 426 02d6 10       		.byte	0x10
+ 427 02d7 00       		.byte	0
+ 428 02d8 09       		.uleb128 0x9
+ 429 02d9 04       		.byte	0x4
+ 430 02da DE020000 		.4byte	0x2de
+ 431 02de 14       		.uleb128 0x14
+ 432 02df 87020000 		.4byte	0x287
+ 433 02e3 03       		.uleb128 0x3
+ 434 02e4 77000000 		.4byte	.LASF56
+ 435 02e8 08       		.byte	0x8
+ 436 02e9 48       		.byte	0x48
+ 437 02ea 93020000 		.4byte	0x293
+ 438 02ee 15       		.uleb128 0x15
+ 439 02ef FF010000 		.4byte	.LASF66
+ 440 02f3 02       		.byte	0x2
+ 441 02f4 53       		.byte	0x53
+ 442 02f5 03       		.byte	0x3
+ 443 02f6 16       		.uleb128 0x16
+ 444 02f7 4B010000 		.4byte	.LASF67
+ 445 02fb 01       		.byte	0x1
+ 446 02fc 41       		.byte	0x41
+ 447 02fd 68000000 		.4byte	0x68
+ 448 0301 00000000 		.4byte	.LFB424
+ 449 0305 18000000 		.4byte	.LFE424-.LFB424
+ 450 0309 01       		.uleb128 0x1
+ 451 030a 9C       		.byte	0x9c
+ 452 030b 45030000 		.4byte	0x345
+ 453 030f 17       		.uleb128 0x17
+ 454 0310 EE020000 		.4byte	0x2ee
+ 455 0314 02000000 		.4byte	.LBB4
+ 456 0318 02000000 		.4byte	.LBE4-.LBB4
+ 457 031c 01       		.byte	0x1
+ 458 031d 44       		.byte	0x44
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 12
+
+
+ 459 031e 18       		.uleb128 0x18
+ 460 031f 0A000000 		.4byte	.LVL0
+ 461 0323 82030000 		.4byte	0x382
+ 462 0327 35030000 		.4byte	0x335
+ 463 032b 19       		.uleb128 0x19
+ 464 032c 01       		.uleb128 0x1
+ 465 032d 50       		.byte	0x50
+ 466 032e 05       		.uleb128 0x5
+ 467 032f 0C       		.byte	0xc
+ 468 0330 00000810 		.4byte	0x10080000
+ 469 0334 00       		.byte	0
+ 470 0335 1A       		.uleb128 0x1a
+ 471 0336 10000000 		.4byte	.LVL1
+ 472 033a 8E030000 		.4byte	0x38e
+ 473 033e 19       		.uleb128 0x19
+ 474 033f 01       		.uleb128 0x1
+ 475 0340 50       		.byte	0x50
+ 476 0341 01       		.uleb128 0x1
+ 477 0342 30       		.byte	0x30
+ 478 0343 00       		.byte	0
+ 479 0344 00       		.byte	0
+ 480 0345 1B       		.uleb128 0x1b
+ 481 0346 60020000 		.4byte	.LASF57
+ 482 034a 09       		.byte	0x9
+ 483 034b 5E       		.byte	0x5e
+ 484 034c 6C010000 		.4byte	0x16c
+ 485 0350 1C       		.uleb128 0x1c
+ 486 0351 0C000000 		.4byte	.LASF58
+ 487 0355 08       		.byte	0x8
+ 488 0356 6001     		.2byte	0x160
+ 489 0358 76000000 		.4byte	0x76
+ 490 035c 10       		.uleb128 0x10
+ 491 035d 6C030000 		.4byte	0x36c
+ 492 0361 6C030000 		.4byte	0x36c
+ 493 0365 11       		.uleb128 0x11
+ 494 0366 81000000 		.4byte	0x81
+ 495 036a 00       		.byte	0
+ 496 036b 00       		.byte	0
+ 497 036c 14       		.uleb128 0x14
+ 498 036d E3020000 		.4byte	0x2e3
+ 499 0371 1C       		.uleb128 0x1c
+ 500 0372 6E010000 		.4byte	.LASF59
+ 501 0376 08       		.byte	0x8
+ 502 0377 6401     		.2byte	0x164
+ 503 0379 7D030000 		.4byte	0x37d
+ 504 037d 14       		.uleb128 0x14
+ 505 037e 5C030000 		.4byte	0x35c
+ 506 0382 1D       		.uleb128 0x1d
+ 507 0383 4E030000 		.4byte	.LASF60
+ 508 0387 4E030000 		.4byte	.LASF60
+ 509 038b 0A       		.byte	0xa
+ 510 038c FE01     		.2byte	0x1fe
+ 511 038e 1D       		.uleb128 0x1d
+ 512 038f FF030000 		.4byte	.LASF61
+ 513 0393 FF030000 		.4byte	.LASF61
+ 514 0397 06       		.byte	0x6
+ 515 0398 C404     		.2byte	0x4c4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 13
+
+
+ 516 039a 00       		.byte	0
+ 517              		.section	.debug_abbrev,"",%progbits
+ 518              	.Ldebug_abbrev0:
+ 519 0000 01       		.uleb128 0x1
+ 520 0001 11       		.uleb128 0x11
+ 521 0002 01       		.byte	0x1
+ 522 0003 25       		.uleb128 0x25
+ 523 0004 0E       		.uleb128 0xe
+ 524 0005 13       		.uleb128 0x13
+ 525 0006 0B       		.uleb128 0xb
+ 526 0007 03       		.uleb128 0x3
+ 527 0008 0E       		.uleb128 0xe
+ 528 0009 1B       		.uleb128 0x1b
+ 529 000a 0E       		.uleb128 0xe
+ 530 000b 55       		.uleb128 0x55
+ 531 000c 17       		.uleb128 0x17
+ 532 000d 11       		.uleb128 0x11
+ 533 000e 01       		.uleb128 0x1
+ 534 000f 10       		.uleb128 0x10
+ 535 0010 17       		.uleb128 0x17
+ 536 0011 00       		.byte	0
+ 537 0012 00       		.byte	0
+ 538 0013 02       		.uleb128 0x2
+ 539 0014 24       		.uleb128 0x24
+ 540 0015 00       		.byte	0
+ 541 0016 0B       		.uleb128 0xb
+ 542 0017 0B       		.uleb128 0xb
+ 543 0018 3E       		.uleb128 0x3e
+ 544 0019 0B       		.uleb128 0xb
+ 545 001a 03       		.uleb128 0x3
+ 546 001b 0E       		.uleb128 0xe
+ 547 001c 00       		.byte	0
+ 548 001d 00       		.byte	0
+ 549 001e 03       		.uleb128 0x3
+ 550 001f 16       		.uleb128 0x16
+ 551 0020 00       		.byte	0
+ 552 0021 03       		.uleb128 0x3
+ 553 0022 0E       		.uleb128 0xe
+ 554 0023 3A       		.uleb128 0x3a
+ 555 0024 0B       		.uleb128 0xb
+ 556 0025 3B       		.uleb128 0x3b
+ 557 0026 0B       		.uleb128 0xb
+ 558 0027 49       		.uleb128 0x49
+ 559 0028 13       		.uleb128 0x13
+ 560 0029 00       		.byte	0
+ 561 002a 00       		.byte	0
+ 562 002b 04       		.uleb128 0x4
+ 563 002c 24       		.uleb128 0x24
+ 564 002d 00       		.byte	0
+ 565 002e 0B       		.uleb128 0xb
+ 566 002f 0B       		.uleb128 0xb
+ 567 0030 3E       		.uleb128 0x3e
+ 568 0031 0B       		.uleb128 0xb
+ 569 0032 03       		.uleb128 0x3
+ 570 0033 08       		.uleb128 0x8
+ 571 0034 00       		.byte	0
+ 572 0035 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 14
+
+
+ 573 0036 05       		.uleb128 0x5
+ 574 0037 35       		.uleb128 0x35
+ 575 0038 00       		.byte	0
+ 576 0039 49       		.uleb128 0x49
+ 577 003a 13       		.uleb128 0x13
+ 578 003b 00       		.byte	0
+ 579 003c 00       		.byte	0
+ 580 003d 06       		.uleb128 0x6
+ 581 003e 04       		.uleb128 0x4
+ 582 003f 01       		.byte	0x1
+ 583 0040 0B       		.uleb128 0xb
+ 584 0041 0B       		.uleb128 0xb
+ 585 0042 49       		.uleb128 0x49
+ 586 0043 13       		.uleb128 0x13
+ 587 0044 3A       		.uleb128 0x3a
+ 588 0045 0B       		.uleb128 0xb
+ 589 0046 3B       		.uleb128 0x3b
+ 590 0047 05       		.uleb128 0x5
+ 591 0048 01       		.uleb128 0x1
+ 592 0049 13       		.uleb128 0x13
+ 593 004a 00       		.byte	0
+ 594 004b 00       		.byte	0
+ 595 004c 07       		.uleb128 0x7
+ 596 004d 28       		.uleb128 0x28
+ 597 004e 00       		.byte	0
+ 598 004f 03       		.uleb128 0x3
+ 599 0050 0E       		.uleb128 0xe
+ 600 0051 1C       		.uleb128 0x1c
+ 601 0052 0B       		.uleb128 0xb
+ 602 0053 00       		.byte	0
+ 603 0054 00       		.byte	0
+ 604 0055 08       		.uleb128 0x8
+ 605 0056 0F       		.uleb128 0xf
+ 606 0057 00       		.byte	0
+ 607 0058 0B       		.uleb128 0xb
+ 608 0059 0B       		.uleb128 0xb
+ 609 005a 00       		.byte	0
+ 610 005b 00       		.byte	0
+ 611 005c 09       		.uleb128 0x9
+ 612 005d 0F       		.uleb128 0xf
+ 613 005e 00       		.byte	0
+ 614 005f 0B       		.uleb128 0xb
+ 615 0060 0B       		.uleb128 0xb
+ 616 0061 49       		.uleb128 0x49
+ 617 0062 13       		.uleb128 0x13
+ 618 0063 00       		.byte	0
+ 619 0064 00       		.byte	0
+ 620 0065 0A       		.uleb128 0xa
+ 621 0066 15       		.uleb128 0x15
+ 622 0067 01       		.byte	0x1
+ 623 0068 27       		.uleb128 0x27
+ 624 0069 19       		.uleb128 0x19
+ 625 006a 01       		.uleb128 0x1
+ 626 006b 13       		.uleb128 0x13
+ 627 006c 00       		.byte	0
+ 628 006d 00       		.byte	0
+ 629 006e 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 15
+
+
+ 630 006f 05       		.uleb128 0x5
+ 631 0070 00       		.byte	0
+ 632 0071 49       		.uleb128 0x49
+ 633 0072 13       		.uleb128 0x13
+ 634 0073 00       		.byte	0
+ 635 0074 00       		.byte	0
+ 636 0075 0C       		.uleb128 0xc
+ 637 0076 16       		.uleb128 0x16
+ 638 0077 00       		.byte	0
+ 639 0078 03       		.uleb128 0x3
+ 640 0079 0E       		.uleb128 0xe
+ 641 007a 3A       		.uleb128 0x3a
+ 642 007b 0B       		.uleb128 0xb
+ 643 007c 3B       		.uleb128 0x3b
+ 644 007d 05       		.uleb128 0x5
+ 645 007e 49       		.uleb128 0x49
+ 646 007f 13       		.uleb128 0x13
+ 647 0080 00       		.byte	0
+ 648 0081 00       		.byte	0
+ 649 0082 0D       		.uleb128 0xd
+ 650 0083 13       		.uleb128 0x13
+ 651 0084 01       		.byte	0x1
+ 652 0085 03       		.uleb128 0x3
+ 653 0086 0E       		.uleb128 0xe
+ 654 0087 0B       		.uleb128 0xb
+ 655 0088 0B       		.uleb128 0xb
+ 656 0089 3A       		.uleb128 0x3a
+ 657 008a 0B       		.uleb128 0xb
+ 658 008b 3B       		.uleb128 0x3b
+ 659 008c 05       		.uleb128 0x5
+ 660 008d 01       		.uleb128 0x1
+ 661 008e 13       		.uleb128 0x13
+ 662 008f 00       		.byte	0
+ 663 0090 00       		.byte	0
+ 664 0091 0E       		.uleb128 0xe
+ 665 0092 0D       		.uleb128 0xd
+ 666 0093 00       		.byte	0
+ 667 0094 03       		.uleb128 0x3
+ 668 0095 0E       		.uleb128 0xe
+ 669 0096 3A       		.uleb128 0x3a
+ 670 0097 0B       		.uleb128 0xb
+ 671 0098 3B       		.uleb128 0x3b
+ 672 0099 05       		.uleb128 0x5
+ 673 009a 49       		.uleb128 0x49
+ 674 009b 13       		.uleb128 0x13
+ 675 009c 38       		.uleb128 0x38
+ 676 009d 0B       		.uleb128 0xb
+ 677 009e 00       		.byte	0
+ 678 009f 00       		.byte	0
+ 679 00a0 0F       		.uleb128 0xf
+ 680 00a1 13       		.uleb128 0x13
+ 681 00a2 01       		.byte	0x1
+ 682 00a3 0B       		.uleb128 0xb
+ 683 00a4 0B       		.uleb128 0xb
+ 684 00a5 3A       		.uleb128 0x3a
+ 685 00a6 0B       		.uleb128 0xb
+ 686 00a7 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 16
+
+
+ 687 00a8 05       		.uleb128 0x5
+ 688 00a9 01       		.uleb128 0x1
+ 689 00aa 13       		.uleb128 0x13
+ 690 00ab 00       		.byte	0
+ 691 00ac 00       		.byte	0
+ 692 00ad 10       		.uleb128 0x10
+ 693 00ae 01       		.uleb128 0x1
+ 694 00af 01       		.byte	0x1
+ 695 00b0 49       		.uleb128 0x49
+ 696 00b1 13       		.uleb128 0x13
+ 697 00b2 01       		.uleb128 0x1
+ 698 00b3 13       		.uleb128 0x13
+ 699 00b4 00       		.byte	0
+ 700 00b5 00       		.byte	0
+ 701 00b6 11       		.uleb128 0x11
+ 702 00b7 21       		.uleb128 0x21
+ 703 00b8 00       		.byte	0
+ 704 00b9 49       		.uleb128 0x49
+ 705 00ba 13       		.uleb128 0x13
+ 706 00bb 2F       		.uleb128 0x2f
+ 707 00bc 0B       		.uleb128 0xb
+ 708 00bd 00       		.byte	0
+ 709 00be 00       		.byte	0
+ 710 00bf 12       		.uleb128 0x12
+ 711 00c0 13       		.uleb128 0x13
+ 712 00c1 01       		.byte	0x1
+ 713 00c2 0B       		.uleb128 0xb
+ 714 00c3 0B       		.uleb128 0xb
+ 715 00c4 3A       		.uleb128 0x3a
+ 716 00c5 0B       		.uleb128 0xb
+ 717 00c6 3B       		.uleb128 0x3b
+ 718 00c7 0B       		.uleb128 0xb
+ 719 00c8 01       		.uleb128 0x1
+ 720 00c9 13       		.uleb128 0x13
+ 721 00ca 00       		.byte	0
+ 722 00cb 00       		.byte	0
+ 723 00cc 13       		.uleb128 0x13
+ 724 00cd 0D       		.uleb128 0xd
+ 725 00ce 00       		.byte	0
+ 726 00cf 03       		.uleb128 0x3
+ 727 00d0 0E       		.uleb128 0xe
+ 728 00d1 3A       		.uleb128 0x3a
+ 729 00d2 0B       		.uleb128 0xb
+ 730 00d3 3B       		.uleb128 0x3b
+ 731 00d4 0B       		.uleb128 0xb
+ 732 00d5 49       		.uleb128 0x49
+ 733 00d6 13       		.uleb128 0x13
+ 734 00d7 38       		.uleb128 0x38
+ 735 00d8 0B       		.uleb128 0xb
+ 736 00d9 00       		.byte	0
+ 737 00da 00       		.byte	0
+ 738 00db 14       		.uleb128 0x14
+ 739 00dc 26       		.uleb128 0x26
+ 740 00dd 00       		.byte	0
+ 741 00de 49       		.uleb128 0x49
+ 742 00df 13       		.uleb128 0x13
+ 743 00e0 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 17
+
+
+ 744 00e1 00       		.byte	0
+ 745 00e2 15       		.uleb128 0x15
+ 746 00e3 2E       		.uleb128 0x2e
+ 747 00e4 00       		.byte	0
+ 748 00e5 03       		.uleb128 0x3
+ 749 00e6 0E       		.uleb128 0xe
+ 750 00e7 3A       		.uleb128 0x3a
+ 751 00e8 0B       		.uleb128 0xb
+ 752 00e9 3B       		.uleb128 0x3b
+ 753 00ea 0B       		.uleb128 0xb
+ 754 00eb 27       		.uleb128 0x27
+ 755 00ec 19       		.uleb128 0x19
+ 756 00ed 20       		.uleb128 0x20
+ 757 00ee 0B       		.uleb128 0xb
+ 758 00ef 00       		.byte	0
+ 759 00f0 00       		.byte	0
+ 760 00f1 16       		.uleb128 0x16
+ 761 00f2 2E       		.uleb128 0x2e
+ 762 00f3 01       		.byte	0x1
+ 763 00f4 3F       		.uleb128 0x3f
+ 764 00f5 19       		.uleb128 0x19
+ 765 00f6 03       		.uleb128 0x3
+ 766 00f7 0E       		.uleb128 0xe
+ 767 00f8 3A       		.uleb128 0x3a
+ 768 00f9 0B       		.uleb128 0xb
+ 769 00fa 3B       		.uleb128 0x3b
+ 770 00fb 0B       		.uleb128 0xb
+ 771 00fc 27       		.uleb128 0x27
+ 772 00fd 19       		.uleb128 0x19
+ 773 00fe 49       		.uleb128 0x49
+ 774 00ff 13       		.uleb128 0x13
+ 775 0100 8701     		.uleb128 0x87
+ 776 0102 19       		.uleb128 0x19
+ 777 0103 11       		.uleb128 0x11
+ 778 0104 01       		.uleb128 0x1
+ 779 0105 12       		.uleb128 0x12
+ 780 0106 06       		.uleb128 0x6
+ 781 0107 40       		.uleb128 0x40
+ 782 0108 18       		.uleb128 0x18
+ 783 0109 9742     		.uleb128 0x2117
+ 784 010b 19       		.uleb128 0x19
+ 785 010c 01       		.uleb128 0x1
+ 786 010d 13       		.uleb128 0x13
+ 787 010e 00       		.byte	0
+ 788 010f 00       		.byte	0
+ 789 0110 17       		.uleb128 0x17
+ 790 0111 1D       		.uleb128 0x1d
+ 791 0112 00       		.byte	0
+ 792 0113 31       		.uleb128 0x31
+ 793 0114 13       		.uleb128 0x13
+ 794 0115 11       		.uleb128 0x11
+ 795 0116 01       		.uleb128 0x1
+ 796 0117 12       		.uleb128 0x12
+ 797 0118 06       		.uleb128 0x6
+ 798 0119 58       		.uleb128 0x58
+ 799 011a 0B       		.uleb128 0xb
+ 800 011b 59       		.uleb128 0x59
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 18
+
+
+ 801 011c 0B       		.uleb128 0xb
+ 802 011d 00       		.byte	0
+ 803 011e 00       		.byte	0
+ 804 011f 18       		.uleb128 0x18
+ 805 0120 898201   		.uleb128 0x4109
+ 806 0123 01       		.byte	0x1
+ 807 0124 11       		.uleb128 0x11
+ 808 0125 01       		.uleb128 0x1
+ 809 0126 31       		.uleb128 0x31
+ 810 0127 13       		.uleb128 0x13
+ 811 0128 01       		.uleb128 0x1
+ 812 0129 13       		.uleb128 0x13
+ 813 012a 00       		.byte	0
+ 814 012b 00       		.byte	0
+ 815 012c 19       		.uleb128 0x19
+ 816 012d 8A8201   		.uleb128 0x410a
+ 817 0130 00       		.byte	0
+ 818 0131 02       		.uleb128 0x2
+ 819 0132 18       		.uleb128 0x18
+ 820 0133 9142     		.uleb128 0x2111
+ 821 0135 18       		.uleb128 0x18
+ 822 0136 00       		.byte	0
+ 823 0137 00       		.byte	0
+ 824 0138 1A       		.uleb128 0x1a
+ 825 0139 898201   		.uleb128 0x4109
+ 826 013c 01       		.byte	0x1
+ 827 013d 11       		.uleb128 0x11
+ 828 013e 01       		.uleb128 0x1
+ 829 013f 31       		.uleb128 0x31
+ 830 0140 13       		.uleb128 0x13
+ 831 0141 00       		.byte	0
+ 832 0142 00       		.byte	0
+ 833 0143 1B       		.uleb128 0x1b
+ 834 0144 34       		.uleb128 0x34
+ 835 0145 00       		.byte	0
+ 836 0146 03       		.uleb128 0x3
+ 837 0147 0E       		.uleb128 0xe
+ 838 0148 3A       		.uleb128 0x3a
+ 839 0149 0B       		.uleb128 0xb
+ 840 014a 3B       		.uleb128 0x3b
+ 841 014b 0B       		.uleb128 0xb
+ 842 014c 49       		.uleb128 0x49
+ 843 014d 13       		.uleb128 0x13
+ 844 014e 3F       		.uleb128 0x3f
+ 845 014f 19       		.uleb128 0x19
+ 846 0150 3C       		.uleb128 0x3c
+ 847 0151 19       		.uleb128 0x19
+ 848 0152 00       		.byte	0
+ 849 0153 00       		.byte	0
+ 850 0154 1C       		.uleb128 0x1c
+ 851 0155 34       		.uleb128 0x34
+ 852 0156 00       		.byte	0
+ 853 0157 03       		.uleb128 0x3
+ 854 0158 0E       		.uleb128 0xe
+ 855 0159 3A       		.uleb128 0x3a
+ 856 015a 0B       		.uleb128 0xb
+ 857 015b 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 19
+
+
+ 858 015c 05       		.uleb128 0x5
+ 859 015d 49       		.uleb128 0x49
+ 860 015e 13       		.uleb128 0x13
+ 861 015f 3F       		.uleb128 0x3f
+ 862 0160 19       		.uleb128 0x19
+ 863 0161 3C       		.uleb128 0x3c
+ 864 0162 19       		.uleb128 0x19
+ 865 0163 00       		.byte	0
+ 866 0164 00       		.byte	0
+ 867 0165 1D       		.uleb128 0x1d
+ 868 0166 2E       		.uleb128 0x2e
+ 869 0167 00       		.byte	0
+ 870 0168 3F       		.uleb128 0x3f
+ 871 0169 19       		.uleb128 0x19
+ 872 016a 3C       		.uleb128 0x3c
+ 873 016b 19       		.uleb128 0x19
+ 874 016c 6E       		.uleb128 0x6e
+ 875 016d 0E       		.uleb128 0xe
+ 876 016e 03       		.uleb128 0x3
+ 877 016f 0E       		.uleb128 0xe
+ 878 0170 3A       		.uleb128 0x3a
+ 879 0171 0B       		.uleb128 0xb
+ 880 0172 3B       		.uleb128 0x3b
+ 881 0173 05       		.uleb128 0x5
+ 882 0174 00       		.byte	0
+ 883 0175 00       		.byte	0
+ 884 0176 00       		.byte	0
+ 885              		.section	.debug_aranges,"",%progbits
+ 886 0000 1C000000 		.4byte	0x1c
+ 887 0004 0200     		.2byte	0x2
+ 888 0006 00000000 		.4byte	.Ldebug_info0
+ 889 000a 04       		.byte	0x4
+ 890 000b 00       		.byte	0
+ 891 000c 0000     		.2byte	0
+ 892 000e 0000     		.2byte	0
+ 893 0010 00000000 		.4byte	.LFB424
+ 894 0014 18000000 		.4byte	.LFE424-.LFB424
+ 895 0018 00000000 		.4byte	0
+ 896 001c 00000000 		.4byte	0
+ 897              		.section	.debug_ranges,"",%progbits
+ 898              	.Ldebug_ranges0:
+ 899 0000 00000000 		.4byte	.LFB424
+ 900 0004 18000000 		.4byte	.LFE424
+ 901 0008 00000000 		.4byte	0
+ 902 000c 00000000 		.4byte	0
+ 903              		.section	.debug_line,"",%progbits
+ 904              	.Ldebug_line0:
+ 905 0000 85020000 		.section	.debug_str,"MS",%progbits,1
+ 905      02006002 
+ 905      00000201 
+ 905      FB0E0D00 
+ 905      01010101 
+ 906              	.LASF51:
+ 907 0000 6368616E 		.ascii	"channelBase\000"
+ 907      6E656C42 
+ 907      61736500 
+ 908              	.LASF58:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 20
+
+
+ 909 000c 4144435F 		.ascii	"ADC_currentConfig\000"
+ 909      63757272 
+ 909      656E7443 
+ 909      6F6E6669 
+ 909      6700
+ 910              	.LASF33:
+ 911 001e 43595F53 		.ascii	"CY_SAR_RANGE_COND_OUTSIDE\000"
+ 911      41525F52 
+ 911      414E4745 
+ 911      5F434F4E 
+ 911      445F4F55 
+ 912              	.LASF22:
+ 913 0038 72784275 		.ascii	"rxBufSize\000"
+ 913      6653697A 
+ 913      6500
+ 914              	.LASF55:
+ 915 0042 636C6B44 		.ascii	"clkDivider\000"
+ 915      69766964 
+ 915      657200
+ 916              	.LASF0:
+ 917 004d 73686F72 		.ascii	"short int\000"
+ 917      7420696E 
+ 917      7400
+ 918              	.LASF11:
+ 919 0057 73697A65 		.ascii	"sizetype\000"
+ 919      74797065 
+ 919      00
+ 920              	.LASF44:
+ 921 0060 73617449 		.ascii	"satIntrMask\000"
+ 921      6E74724D 
+ 921      61736B00 
+ 922              	.LASF36:
+ 923 006c 73616D70 		.ascii	"sampleCtrl\000"
+ 923      6C654374 
+ 923      726C00
+ 924              	.LASF56:
+ 925 0077 4144435F 		.ascii	"ADC_CONFIG_STRUCT\000"
+ 925      434F4E46 
+ 925      49475F53 
+ 925      54525543 
+ 925      5400
+ 926              	.LASF49:
+ 927 0089 76726566 		.ascii	"vrefMvValue\000"
+ 927      4D765661 
+ 927      6C756500 
+ 928              	.LASF62:
+ 929 0095 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 929      43313120 
+ 929      352E342E 
+ 929      31203230 
+ 929      31363036 
+ 930 00c8 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 930      20726576 
+ 930      6973696F 
+ 930      6E203233 
+ 930      37373135 
+ 931 00fb 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 21
+
+
+ 931      67202D66 
+ 931      66756E63 
+ 931      74696F6E 
+ 931      2D736563 
+ 932              	.LASF29:
+ 933 0127 63795F73 		.ascii	"cy_stc_scb_spi_context_t\000"
+ 933      74635F73 
+ 933      63625F73 
+ 933      70695F63 
+ 933      6F6E7465 
+ 934              	.LASF39:
+ 935 0140 72616E67 		.ascii	"rangeThres\000"
+ 935      65546872 
+ 935      657300
+ 936              	.LASF67:
+ 937 014b 6D61696E 		.ascii	"main\000"
+ 937      00
+ 938              	.LASF9:
+ 939 0150 5F5F7569 		.ascii	"__uint32_t\000"
+ 939      6E743332 
+ 939      5F7400
+ 940              	.LASF23:
+ 941 015b 72784275 		.ascii	"rxBufIdx\000"
+ 941      66496478 
+ 941      00
+ 942              	.LASF40:
+ 943 0164 72616E67 		.ascii	"rangeCond\000"
+ 943      65436F6E 
+ 943      6400
+ 944              	.LASF59:
+ 945 016e 4144435F 		.ascii	"ADC_allConfigs\000"
+ 945      616C6C43 
+ 945      6F6E6669 
+ 945      677300
+ 946              	.LASF19:
+ 947 017d 63795F63 		.ascii	"cy_cb_scb_spi_handle_events_t\000"
+ 947      625F7363 
+ 947      625F7370 
+ 947      695F6861 
+ 947      6E646C65 
+ 948              	.LASF48:
+ 949 019b 636F6E66 		.ascii	"configRouting\000"
+ 949      6967526F 
+ 949      7574696E 
+ 949      6700
+ 950              	.LASF14:
+ 951 01a9 666C6F61 		.ascii	"float\000"
+ 951      7400
+ 952              	.LASF24:
+ 953 01af 74784275 		.ascii	"txBuf\000"
+ 953      6600
+ 954              	.LASF30:
+ 955 01b5 43595F53 		.ascii	"CY_SAR_RANGE_COND_BELOW\000"
+ 955      41525F52 
+ 955      414E4745 
+ 955      5F434F4E 
+ 955      445F4245 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 22
+
+
+ 956              	.LASF6:
+ 957 01cd 6C6F6E67 		.ascii	"long long int\000"
+ 957      206C6F6E 
+ 957      6720696E 
+ 957      7400
+ 958              	.LASF4:
+ 959 01db 6C6F6E67 		.ascii	"long int\000"
+ 959      20696E74 
+ 959      00
+ 960              	.LASF35:
+ 961 01e4 6374726C 		.ascii	"ctrl\000"
+ 961      00
+ 962              	.LASF37:
+ 963 01e9 73616D70 		.ascii	"sampleTime01\000"
+ 963      6C655469 
+ 963      6D653031 
+ 963      00
+ 964              	.LASF26:
+ 965 01f6 74784275 		.ascii	"txBufIdx\000"
+ 965      66496478 
+ 965      00
+ 966              	.LASF66:
+ 967 01ff 5F5F656E 		.ascii	"__enable_irq\000"
+ 967      61626C65 
+ 967      5F697271 
+ 967      00
+ 968              	.LASF12:
+ 969 020c 6C6F6E67 		.ascii	"long double\000"
+ 969      20646F75 
+ 969      626C6500 
+ 970              	.LASF64:
+ 971 0218 433A5C55 		.ascii	"C:\\Users\\Agentos\\Documents\\PSoC Creator\\lab11\\"
+ 971      73657273 
+ 971      5C416765 
+ 971      6E746F73 
+ 971      5C446F63 
+ 972 0246 6C616231 		.ascii	"lab11.cydsn\000"
+ 972      312E6379 
+ 972      64736E00 
+ 973              	.LASF1:
+ 974 0252 756E7369 		.ascii	"unsigned char\000"
+ 974      676E6564 
+ 974      20636861 
+ 974      7200
+ 975              	.LASF57:
+ 976 0260 43595F45 		.ascii	"CY_EINK_SPIM_context\000"
+ 976      494E4B5F 
+ 976      5350494D 
+ 976      5F636F6E 
+ 976      74657874 
+ 977              	.LASF2:
+ 978 0275 7369676E 		.ascii	"signed char\000"
+ 978      65642063 
+ 978      68617200 
+ 979              	.LASF7:
+ 980 0281 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 980      206C6F6E 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 23
+
+
+ 980      6720756E 
+ 980      7369676E 
+ 980      65642069 
+ 981              	.LASF10:
+ 982 0298 75696E74 		.ascii	"uint32_t\000"
+ 982      33325F74 
+ 982      00
+ 983              	.LASF45:
+ 984 02a1 72616E67 		.ascii	"rangeIntrMask\000"
+ 984      65496E74 
+ 984      724D6173 
+ 984      6B00
+ 985              	.LASF47:
+ 986 02af 6D757853 		.ascii	"muxSwitchSqCtrl\000"
+ 986      77697463 
+ 986      68537143 
+ 986      74726C00 
+ 987              	.LASF25:
+ 988 02bf 74784275 		.ascii	"txBufSize\000"
+ 988      6653697A 
+ 988      6500
+ 989              	.LASF17:
+ 990 02c9 43595F53 		.ascii	"CY_SYSPM_WAIT_FOR_EVENT\000"
+ 990      5953504D 
+ 990      5F574149 
+ 990      545F464F 
+ 990      525F4556 
+ 991              	.LASF20:
+ 992 02e1 73746174 		.ascii	"status\000"
+ 992      757300
+ 993              	.LASF54:
+ 994 02e8 6D697363 		.ascii	"miscConfig\000"
+ 994      436F6E66 
+ 994      696700
+ 995              	.LASF13:
+ 996 02f3 63686172 		.ascii	"char\000"
+ 996      00
+ 997              	.LASF46:
+ 998 02f8 6D757853 		.ascii	"muxSwitch\000"
+ 998      77697463 
+ 998      6800
+ 999              	.LASF27:
+ 1000 0302 63624576 		.ascii	"cbEvents\000"
+ 1000      656E7473 
+ 1000      00
+ 1001              	.LASF32:
+ 1002 030b 43595F53 		.ascii	"CY_SAR_RANGE_COND_ABOVE\000"
+ 1002      41525F52 
+ 1002      414E4745 
+ 1002      5F434F4E 
+ 1002      445F4142 
+ 1003              	.LASF3:
+ 1004 0323 73686F72 		.ascii	"short unsigned int\000"
+ 1004      7420756E 
+ 1004      7369676E 
+ 1004      65642069 
+ 1004      6E7400
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 24
+
+
+ 1005              	.LASF18:
+ 1006 0336 5F426F6F 		.ascii	"_Bool\000"
+ 1006      6C00
+ 1007              	.LASF53:
+ 1008 033c 6877436F 		.ascii	"hwConfigStc\000"
+ 1008      6E666967 
+ 1008      53746300 
+ 1009              	.LASF21:
+ 1010 0348 72784275 		.ascii	"rxBuf\000"
+ 1010      6600
+ 1011              	.LASF60:
+ 1012 034e 43795F53 		.ascii	"Cy_SysEnableCM4\000"
+ 1012      7973456E 
+ 1012      61626C65 
+ 1012      434D3400 
+ 1013              	.LASF5:
+ 1014 035e 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1014      20756E73 
+ 1014      69676E65 
+ 1014      6420696E 
+ 1014      7400
+ 1015              	.LASF15:
+ 1016 0370 646F7562 		.ascii	"double\000"
+ 1016      6C6500
+ 1017              	.LASF31:
+ 1018 0377 43595F53 		.ascii	"CY_SAR_RANGE_COND_INSIDE\000"
+ 1018      41525F52 
+ 1018      414E4745 
+ 1018      5F434F4E 
+ 1018      445F494E 
+ 1019              	.LASF28:
+ 1020 0390 696E6974 		.ascii	"initKey\000"
+ 1020      4B657900 
+ 1021              	.LASF42:
+ 1022 0398 6368616E 		.ascii	"chanConfig\000"
+ 1022      436F6E66 
+ 1022      696700
+ 1023              	.LASF50:
+ 1024 03a3 63795F73 		.ascii	"cy_stc_sar_config_t\000"
+ 1024      74635F73 
+ 1024      61725F63 
+ 1024      6F6E6669 
+ 1024      675F7400 
+ 1025              	.LASF41:
+ 1026 03b7 6368616E 		.ascii	"chanEn\000"
+ 1026      456E00
+ 1027              	.LASF52:
+ 1028 03be 6E756D43 		.ascii	"numChannels\000"
+ 1028      68616E6E 
+ 1028      656C7300 
+ 1029              	.LASF16:
+ 1030 03ca 43595F53 		.ascii	"CY_SYSPM_WAIT_FOR_INTERRUPT\000"
+ 1030      5953504D 
+ 1030      5F574149 
+ 1030      545F464F 
+ 1030      525F494E 
+ 1031              	.LASF63:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccxpNP3s.s 			page 25
+
+
+ 1032 03e6 6D61696E 		.ascii	"main_cm0p.c\000"
+ 1032      5F636D30 
+ 1032      702E6300 
+ 1033              	.LASF38:
+ 1034 03f2 73616D70 		.ascii	"sampleTime23\000"
+ 1034      6C655469 
+ 1034      6D653233 
+ 1034      00
+ 1035              	.LASF61:
+ 1036 03ff 43795F53 		.ascii	"Cy_SysPm_DeepSleep\000"
+ 1036      7973506D 
+ 1036      5F446565 
+ 1036      70536C65 
+ 1036      657000
+ 1037              	.LASF8:
+ 1038 0412 756E7369 		.ascii	"unsigned int\000"
+ 1038      676E6564 
+ 1038      20696E74 
+ 1038      00
+ 1039              	.LASF65:
+ 1040 041f 63795F73 		.ascii	"cy_stc_scb_spi_context\000"
+ 1040      74635F73 
+ 1040      63625F73 
+ 1040      70695F63 
+ 1040      6F6E7465 
+ 1041              	.LASF43:
+ 1042 0436 696E7472 		.ascii	"intrMask\000"
+ 1042      4D61736B 
+ 1042      00
+ 1043              	.LASF34:
+ 1044 043f 63795F65 		.ascii	"cy_en_sar_range_detect_condition_t\000"
+ 1044      6E5F7361 
+ 1044      725F7261 
+ 1044      6E67655F 
+ 1044      64657465 
+ 1045              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

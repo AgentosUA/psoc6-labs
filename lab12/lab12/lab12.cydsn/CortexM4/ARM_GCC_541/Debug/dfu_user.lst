@@ -1,0 +1,3431 @@
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"dfu_user.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.IsMultipleOf,"ax",%progbits
+  21              		.align	2
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	IsMultipleOf, %function
+  25              	IsMultipleOf:
+  26              	.LFB132:
+  27              		.file 1 "dfu_user.c"
+   1:dfu_user.c    **** /***************************************************************************//**
+   2:dfu_user.c    **** * \file dfu_user.c
+   3:dfu_user.c    **** * \version 3.0
+   4:dfu_user.c    **** * 
+   5:dfu_user.c    **** * This file provides the custom API for a firmware application with 
+   6:dfu_user.c    **** * DFU SDK.
+   7:dfu_user.c    **** * - Cy_DFU_ReadData (address, length, ctl, params) - to read  the NVM block
+   8:dfu_user.c    **** * - Cy_Bootalod_WriteData(address, length, ctl, params) - to write the NVM block
+   9:dfu_user.c    **** *
+  10:dfu_user.c    **** * - Cy_DFU_TransportStart() to start a communication interface
+  11:dfu_user.c    **** * - Cy_DFU_TransportStop () to stop  a communication interface
+  12:dfu_user.c    **** * - Cy_DFU_TransportReset() to reset a communication interface
+  13:dfu_user.c    **** * - Cy_DFU_TransportRead (buffer, size, count, timeout)
+  14:dfu_user.c    **** * - Cy_DFU_TransportWrite(buffer, size, count, timeout)
+  15:dfu_user.c    **** *
+  16:dfu_user.c    **** ********************************************************************************
+  17:dfu_user.c    **** * \copyright
+  18:dfu_user.c    **** * Copyright 2016-2018, Cypress Semiconductor Corporation.  All rights reserved.
+  19:dfu_user.c    **** * You may use this file only in accordance with the license, terms, conditions,
+  20:dfu_user.c    **** * disclaimers, and limitations in the end user license agreement accompanying
+  21:dfu_user.c    **** * the software package with which this file was provided.
+  22:dfu_user.c    **** *******************************************************************************/
+  23:dfu_user.c    **** 
+  24:dfu_user.c    **** #include <string.h>
+  25:dfu_user.c    **** #include "transport_uart.h"
+  26:dfu_user.c    **** #include "cy_syslib.h"
+  27:dfu_user.c    **** #include "cy_flash.h"
+  28:dfu_user.c    **** #include "cy_dfu.h"
+  29:dfu_user.c    **** 
+  30:dfu_user.c    **** 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 2
+
+
+  31:dfu_user.c    **** /*
+  32:dfu_user.c    **** * The DFU SDK metadata initial value is placed here
+  33:dfu_user.c    **** * Note: the number of elements equal to the number of the app multiplies by 2 
+  34:dfu_user.c    **** *       because of the two fields per app plus one element for the CRC-32C field.
+  35:dfu_user.c    **** */
+  36:dfu_user.c    **** CY_SECTION(".cy_boot_metadata") __USED
+  37:dfu_user.c    **** static const uint32_t cy_dfu_metadata[CY_FLASH_SIZEOF_ROW / sizeof(uint32_t)] =
+  38:dfu_user.c    **** {
+  39:dfu_user.c    ****     CY_DFU_APP0_VERIFY_START, CY_DFU_APP0_VERIFY_LENGTH, /* The App0 base address and length */
+  40:dfu_user.c    ****     CY_DFU_APP1_VERIFY_START, CY_DFU_APP1_VERIFY_LENGTH, /* The App1 base address and length */
+  41:dfu_user.c    ****     0u                                                             /* The rest does not matter     
+  42:dfu_user.c    **** };
+  43:dfu_user.c    **** 
+  44:dfu_user.c    **** 
+  45:dfu_user.c    **** static uint32_t IsMultipleOf(uint32_t value, uint32_t multiple);
+  46:dfu_user.c    **** static void GetStartEndAddress(uint32_t appId, uint32_t *startAddress, uint32_t *endAddress);
+  47:dfu_user.c    **** 
+  48:dfu_user.c    **** 
+  49:dfu_user.c    **** /*******************************************************************************
+  50:dfu_user.c    **** * Function Name: IsMultipleOf
+  51:dfu_user.c    **** ****************************************************************************//**
+  52:dfu_user.c    **** *
+  53:dfu_user.c    **** * This internal function check if value parameter is a multiple of parameter 
+  54:dfu_user.c    **** * multiple
+  55:dfu_user.c    **** *
+  56:dfu_user.c    **** * \param value      value that will be checked
+  57:dfu_user.c    **** * \param multiple   value with which value is checked 
+  58:dfu_user.c    **** *
+  59:dfu_user.c    **** * \return 1 - value is multiple of parameter multiple, else 0  
+  60:dfu_user.c    **** *
+  61:dfu_user.c    **** *******************************************************************************/
+  62:dfu_user.c    **** static uint32_t IsMultipleOf(uint32_t value, uint32_t multiple)
+  63:dfu_user.c    **** {
+  28              		.loc 1 63 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  64:dfu_user.c    ****     return ( ((value % multiple) == 0u)? 1ul : 0ul);
+  34              		.loc 1 64 0
+  35 0000 B0FBF1F3 		udiv	r3, r0, r1
+  36 0004 01FB1301 		mls	r1, r1, r3, r0
+  37              	.LVL1:
+  38 0008 09B9     		cbnz	r1, .L3
+  39 000a 0120     		movs	r0, #1
+  40              	.LVL2:
+  41 000c 7047     		bx	lr
+  42              	.LVL3:
+  43              	.L3:
+  44 000e 0020     		movs	r0, #0
+  45              	.LVL4:
+  65:dfu_user.c    **** }
+  46              		.loc 1 65 0
+  47 0010 7047     		bx	lr
+  48              		.cfi_endproc
+  49              	.LFE132:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 3
+
+
+  50              		.size	IsMultipleOf, .-IsMultipleOf
+  51 0012 00BF     		.section	.text.GetStartEndAddress,"ax",%progbits
+  52              		.align	2
+  53              		.thumb
+  54              		.thumb_func
+  55              		.type	GetStartEndAddress, %function
+  56              	GetStartEndAddress:
+  57              	.LFB133:
+  66:dfu_user.c    **** 
+  67:dfu_user.c    **** 
+  68:dfu_user.c    **** /*******************************************************************************
+  69:dfu_user.c    **** * Function Name: GetStartEndAddress
+  70:dfu_user.c    **** ****************************************************************************//**
+  71:dfu_user.c    **** *
+  72:dfu_user.c    **** * This internal function returns start and end address of application
+  73:dfu_user.c    **** *
+  74:dfu_user.c    **** * \param appId          The application number
+  75:dfu_user.c    **** * \param startAddress   The pointer to a variable where an application start
+  76:dfu_user.c    **** *                       address is stored
+  77:dfu_user.c    **** * \param endAddress     The pointer to a variable where a size of application 
+  78:dfu_user.c    **** *                       area is stored.
+  79:dfu_user.c    **** *
+  80:dfu_user.c    **** *******************************************************************************/
+  81:dfu_user.c    **** static void GetStartEndAddress(uint32_t appId, uint32_t *startAddress, uint32_t *endAddress)
+  82:dfu_user.c    **** {
+  58              		.loc 1 82 0
+  59              		.cfi_startproc
+  60              		@ args = 0, pretend = 0, frame = 8
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62              	.LVL5:
+  63 0000 30B5     		push	{r4, r5, lr}
+  64              		.cfi_def_cfa_offset 12
+  65              		.cfi_offset 4, -12
+  66              		.cfi_offset 5, -8
+  67              		.cfi_offset 14, -4
+  68 0002 83B0     		sub	sp, sp, #12
+  69              		.cfi_def_cfa_offset 24
+  70 0004 0D46     		mov	r5, r1
+  71 0006 1446     		mov	r4, r2
+  83:dfu_user.c    ****     uint32_t verifyStart;
+  84:dfu_user.c    ****     uint32_t verifySize;
+  85:dfu_user.c    **** 
+  86:dfu_user.c    ****     (void)Cy_DFU_GetAppMetadata(appId, &verifyStart, &verifySize);
+  72              		.loc 1 86 0
+  73 0008 6A46     		mov	r2, sp
+  74              	.LVL6:
+  75 000a 01A9     		add	r1, sp, #4
+  76              	.LVL7:
+  77 000c FFF7FEFF 		bl	Cy_DFU_GetAppMetadata
+  78              	.LVL8:
+  87:dfu_user.c    **** 
+  88:dfu_user.c    **** #if (CY_DFU_APP_FORMAT == CY_DFU_SIMPLIFIED_APP)
+  89:dfu_user.c    ****     *startAddress = verifyStart - CY_DFU_SIGNATURE_SIZE; 
+  90:dfu_user.c    ****     *endAddress = verifyStart + verifySize;
+  91:dfu_user.c    **** #else
+  92:dfu_user.c    ****     *startAddress = verifyStart; 
+  79              		.loc 1 92 0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 4
+
+
+  80 0010 019A     		ldr	r2, [sp, #4]
+  81 0012 2A60     		str	r2, [r5]
+  93:dfu_user.c    ****     *endAddress = verifyStart + verifySize + CY_DFU_SIGNATURE_SIZE;
+  82              		.loc 1 93 0
+  83 0014 009B     		ldr	r3, [sp]
+  84 0016 1A44     		add	r2, r2, r3
+  85 0018 024B     		ldr	r3, .L6
+  86 001a 1344     		add	r3, r3, r2
+  87 001c 2360     		str	r3, [r4]
+  94:dfu_user.c    **** #endif
+  95:dfu_user.c    **** }
+  88              		.loc 1 95 0
+  89 001e 03B0     		add	sp, sp, #12
+  90              		.cfi_def_cfa_offset 12
+  91              		@ sp needed
+  92 0020 30BD     		pop	{r4, r5, pc}
+  93              	.LVL9:
+  94              	.L7:
+  95 0022 00BF     		.align	2
+  96              	.L6:
+  97 0024 00000000 		.word	__cy_boot_signature_size
+  98              		.cfi_endproc
+  99              	.LFE133:
+ 100              		.size	GetStartEndAddress, .-GetStartEndAddress
+ 101              		.section	.text.Cy_DFU_WriteData,"ax",%progbits
+ 102              		.align	2
+ 103              		.global	Cy_DFU_WriteData
+ 104              		.thumb
+ 105              		.thumb_func
+ 106              		.type	Cy_DFU_WriteData, %function
+ 107              	Cy_DFU_WriteData:
+ 108              	.LFB134:
+  96:dfu_user.c    **** 
+  97:dfu_user.c    **** 
+  98:dfu_user.c    **** /*******************************************************************************
+  99:dfu_user.c    **** * Function Name: Cy_DFU_WriteData
+ 100:dfu_user.c    **** ****************************************************************************//**
+ 101:dfu_user.c    **** *
+ 102:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 103:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 104:dfu_user.c    **** *
+ 105:dfu_user.c    **** *******************************************************************************/
+ 106:dfu_user.c    **** cy_en_dfu_status_t Cy_DFU_WriteData (uint32_t address, uint32_t length, uint32_t ctl, 
+ 107:dfu_user.c    ****                                                cy_stc_dfu_params_t *params)
+ 108:dfu_user.c    **** {
+ 109              		.loc 1 108 0
+ 110              		.cfi_startproc
+ 111              		@ args = 0, pretend = 0, frame = 8
+ 112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 113              	.LVL10:
+ 114 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 115              		.cfi_def_cfa_offset 20
+ 116              		.cfi_offset 4, -20
+ 117              		.cfi_offset 5, -16
+ 118              		.cfi_offset 6, -12
+ 119              		.cfi_offset 7, -8
+ 120              		.cfi_offset 14, -4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 5
+
+
+ 121 0002 83B0     		sub	sp, sp, #12
+ 122              		.cfi_def_cfa_offset 32
+ 123 0004 0446     		mov	r4, r0
+ 124 0006 0D46     		mov	r5, r1
+ 125 0008 1646     		mov	r6, r2
+ 126 000a 1F46     		mov	r7, r3
+ 127              	.LVL11:
+ 109:dfu_user.c    ****     /* User Flash Limits */
+ 110:dfu_user.c    ****     /* Note that App0 is out of range */
+ 111:dfu_user.c    ****     const uint32_t minUFlashAddress = CY_FLASH_BASE + CY_DFU_APP0_VERIFY_LENGTH;
+ 112:dfu_user.c    ****     const uint32_t maxUFlashAddress = CY_FLASH_BASE + CY_FLASH_SIZE;
+ 113:dfu_user.c    ****     /* EM_EEPROM Limits*/
+ 114:dfu_user.c    ****     const uint32_t minEmEepromAddress = CY_EM_EEPROM_BASE;
+ 115:dfu_user.c    ****     const uint32_t maxEmEepromAddress = CY_EM_EEPROM_BASE + CY_EM_EEPROM_SIZE;
+ 116:dfu_user.c    ****     
+ 117:dfu_user.c    ****     cy_en_dfu_status_t status = CY_DFU_SUCCESS;
+ 118:dfu_user.c    **** 
+ 119:dfu_user.c    ****     uint32_t app = Cy_DFU_GetRunningApp();
+ 128              		.loc 1 119 0
+ 129 000c FFF7FEFF 		bl	Cy_DFU_GetRunningApp
+ 130              	.LVL12:
+ 120:dfu_user.c    ****     uint32_t startAddress;
+ 121:dfu_user.c    ****     uint32_t endAddress;
+ 122:dfu_user.c    ****     
+ 123:dfu_user.c    ****     GetStartEndAddress(app, &startAddress, &endAddress);
+ 131              		.loc 1 123 0
+ 132 0010 6A46     		mov	r2, sp
+ 133 0012 01A9     		add	r1, sp, #4
+ 134 0014 FFF7FEFF 		bl	GetStartEndAddress
+ 135              	.LVL13:
+ 124:dfu_user.c    **** 
+ 125:dfu_user.c    ****     /* Check if the address  and length are valid 
+ 126:dfu_user.c    ****      * Note Length = 0 is valid for erase command */
+ 127:dfu_user.c    ****     if ( (IsMultipleOf(address, CY_FLASH_SIZEOF_ROW) == 0u) || 
+ 136              		.loc 1 127 0
+ 137 0018 4FF40071 		mov	r1, #512
+ 138 001c 2046     		mov	r0, r4
+ 139 001e FFF7FEFF 		bl	IsMultipleOf
+ 140              	.LVL14:
+ 141 0022 38B1     		cbz	r0, .L15
+ 142              		.loc 1 127 0 is_stmt 0 discriminator 1
+ 143 0024 B5F5007F 		cmp	r5, #512
+ 144 0028 06D0     		beq	.L16
+ 128:dfu_user.c    ****          ( (length != CY_FLASH_SIZEOF_ROW) && ( (ctl & CY_DFU_IOCTL_ERASE) == 0u) ) )
+ 145              		.loc 1 128 0 is_stmt 1
+ 146 002a 16F0010F 		tst	r6, #1
+ 147 002e 05D0     		beq	.L17
+ 117:dfu_user.c    **** 
+ 148              		.loc 1 117 0
+ 149 0030 0025     		movs	r5, #0
+ 150              	.LVL15:
+ 151 0032 04E0     		b	.L9
+ 152              	.LVL16:
+ 153              	.L15:
+ 129:dfu_user.c    ****     {
+ 130:dfu_user.c    ****         status = CY_DFU_ERROR_LENGTH;   
+ 154              		.loc 1 130 0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 6
+
+
+ 155 0034 154D     		ldr	r5, .L22
+ 156              	.LVL17:
+ 157 0036 02E0     		b	.L9
+ 158              	.LVL18:
+ 159              	.L16:
+ 117:dfu_user.c    **** 
+ 160              		.loc 1 117 0
+ 161 0038 0025     		movs	r5, #0
+ 162              	.LVL19:
+ 163 003a 00E0     		b	.L9
+ 164              	.LVL20:
+ 165              	.L17:
+ 166              		.loc 1 130 0
+ 167 003c 134D     		ldr	r5, .L22
+ 168              	.LVL21:
+ 169              	.L9:
+ 131:dfu_user.c    ****     }
+ 132:dfu_user.c    **** 
+ 133:dfu_user.c    ****     /* Refuse to write to a row within a range of the current application */ 
+ 134:dfu_user.c    ****     if ( (startAddress <= address) && (address < endAddress) )
+ 170              		.loc 1 134 0
+ 171 003e 019B     		ldr	r3, [sp, #4]
+ 172 0040 9C42     		cmp	r4, r3
+ 173 0042 03D3     		bcc	.L10
+ 174              		.loc 1 134 0 is_stmt 0 discriminator 1
+ 175 0044 009B     		ldr	r3, [sp]
+ 176 0046 9C42     		cmp	r4, r3
+ 177 0048 00D2     		bcs	.L10
+ 135:dfu_user.c    ****     {   /* It is forbidden to overwrite the currently running application */
+ 136:dfu_user.c    ****         status = CY_DFU_ERROR_ADDRESS;
+ 178              		.loc 1 136 0 is_stmt 1
+ 179 004a 114D     		ldr	r5, .L22+4
+ 180              	.LVL22:
+ 181              	.L10:
+ 137:dfu_user.c    ****     }
+ 138:dfu_user.c    **** #if CY_DFU_OPT_GOLDEN_IMAGE
+ 139:dfu_user.c    ****     if (status == CY_DFU_SUCCESS)
+ 140:dfu_user.c    ****     {
+ 141:dfu_user.c    ****         uint8_t goldenImages[] = { CY_DFU_GOLDEN_IMAGE_IDS() };
+ 142:dfu_user.c    ****         uint32_t count = sizeof(goldenImages) / sizeof(goldenImages[0]);
+ 143:dfu_user.c    ****         uint32_t idx;
+ 144:dfu_user.c    ****         for (idx = 0u; idx < count; ++idx)
+ 145:dfu_user.c    ****         {
+ 146:dfu_user.c    ****             app = goldenImages[idx];
+ 147:dfu_user.c    ****             GetStartEndAddress(app, &startAddress, &endAddress);
+ 148:dfu_user.c    **** 
+ 149:dfu_user.c    ****             if ( (startAddress <= address) && (address < endAddress) )
+ 150:dfu_user.c    ****             {
+ 151:dfu_user.c    ****                 status = Cy_DFU_ValidateApp(app, params);
+ 152:dfu_user.c    ****                 status = (status == CY_DFU_SUCCESS) ? CY_DFU_ERROR_ADDRESS : CY_DFU_SUCCESS;
+ 153:dfu_user.c    ****                 break;
+ 154:dfu_user.c    ****             }
+ 155:dfu_user.c    ****         }
+ 156:dfu_user.c    ****     } 
+ 157:dfu_user.c    **** #endif /* #if CY_DFU_OPT_GOLDEN_IMAGE != 0 */
+ 158:dfu_user.c    ****     
+ 159:dfu_user.c    ****     /* Check if the address is inside the valid range */
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 7
+
+
+ 160:dfu_user.c    ****     if ( ( (minUFlashAddress <= address) && (address < maxUFlashAddress) ) 
+ 182              		.loc 1 160 0
+ 183 004c 114B     		ldr	r3, .L22+8
+ 184              	.LVL23:
+ 185 004e 9C42     		cmp	r4, r3
+ 186 0050 02D3     		bcc	.L11
+ 187              		.loc 1 160 0 is_stmt 0 discriminator 1
+ 188 0052 114B     		ldr	r3, .L22+12
+ 189              	.LVL24:
+ 190 0054 9C42     		cmp	r4, r3
+ 191 0056 05D9     		bls	.L12
+ 192              	.L11:
+ 161:dfu_user.c    ****       || ( (minEmEepromAddress <= address) && (address < maxEmEepromAddress) )  )
+ 193              		.loc 1 161 0 is_stmt 1
+ 194 0058 04F16C43 		add	r3, r4, #-335544320
+ 195 005c B3F5004F 		cmp	r3, #32768
+ 196 0060 00D3     		bcc	.L12
+ 162:dfu_user.c    ****     {   /* Do nothing, this is an allowed memory range to update to */
+ 163:dfu_user.c    ****     }
+ 164:dfu_user.c    ****     else
+ 165:dfu_user.c    ****     {
+ 166:dfu_user.c    ****         status = CY_DFU_ERROR_ADDRESS;   
+ 197              		.loc 1 166 0
+ 198 0062 0B4D     		ldr	r5, .L22+4
+ 199              	.LVL25:
+ 200              	.L12:
+ 167:dfu_user.c    ****     }
+ 168:dfu_user.c    ****     
+ 169:dfu_user.c    ****     if (status == CY_DFU_SUCCESS)
+ 201              		.loc 1 169 0
+ 202 0064 75B9     		cbnz	r5, .L13
+ 203              	.LBB2:
+ 170:dfu_user.c    ****     {
+ 171:dfu_user.c    ****         if ((ctl & CY_DFU_IOCTL_ERASE) != 0u)
+ 204              		.loc 1 171 0
+ 205 0066 16F0010F 		tst	r6, #1
+ 206 006a 05D0     		beq	.L14
+ 172:dfu_user.c    ****         {
+ 173:dfu_user.c    ****             (void) memset(params->dataBuffer, 0, CY_FLASH_SIZEOF_ROW);
+ 207              		.loc 1 173 0
+ 208 006c 4FF40072 		mov	r2, #512
+ 209 0070 0021     		movs	r1, #0
+ 210 0072 3868     		ldr	r0, [r7]
+ 211 0074 FFF7FEFF 		bl	memset
+ 212              	.LVL26:
+ 213              	.L14:
+ 174:dfu_user.c    ****         }
+ 175:dfu_user.c    ****         cy_en_flashdrv_status_t fstatus =  Cy_Flash_WriteRow(address, (uint32_t*)params->dataBuffer
+ 214              		.loc 1 175 0
+ 215 0078 3968     		ldr	r1, [r7]
+ 216 007a 2046     		mov	r0, r4
+ 217 007c FFF7FEFF 		bl	Cy_Flash_WriteRow
+ 218              	.LVL27:
+ 176:dfu_user.c    ****         status = (fstatus == CY_FLASH_DRV_SUCCESS) ? CY_DFU_SUCCESS : CY_DFU_ERROR_DATA;
+ 219              		.loc 1 176 0
+ 220 0080 00B1     		cbz	r0, .L13
+ 221 0082 064D     		ldr	r5, .L22+16
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 8
+
+
+ 222              	.LVL28:
+ 223              	.L13:
+ 224              	.LBE2:
+ 177:dfu_user.c    ****     }
+ 178:dfu_user.c    ****     return (status);
+ 179:dfu_user.c    **** }
+ 225              		.loc 1 179 0
+ 226 0084 2846     		mov	r0, r5
+ 227 0086 03B0     		add	sp, sp, #12
+ 228              		.cfi_def_cfa_offset 20
+ 229              		@ sp needed
+ 230 0088 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 231              	.LVL29:
+ 232              	.L23:
+ 233 008a 00BF     		.align	2
+ 234              	.L22:
+ 235 008c 03001A00 		.word	1703939
+ 236 0090 0A001A00 		.word	1703946
+ 237 0094 00000010 		.word	__cy_app0_verify_length+268435456
+ 238 0098 FFFF0F10 		.word	269484031
+ 239 009c 04001A00 		.word	1703940
+ 240              		.cfi_endproc
+ 241              	.LFE134:
+ 242              		.size	Cy_DFU_WriteData, .-Cy_DFU_WriteData
+ 243              		.section	.text.Cy_DFU_ReadData,"ax",%progbits
+ 244              		.align	2
+ 245              		.global	Cy_DFU_ReadData
+ 246              		.thumb
+ 247              		.thumb_func
+ 248              		.type	Cy_DFU_ReadData, %function
+ 249              	Cy_DFU_ReadData:
+ 250              	.LFB135:
+ 180:dfu_user.c    **** 
+ 181:dfu_user.c    **** 
+ 182:dfu_user.c    **** /*******************************************************************************
+ 183:dfu_user.c    **** * Function Name: Cy_DFU_ReadData
+ 184:dfu_user.c    **** ****************************************************************************//**
+ 185:dfu_user.c    **** *
+ 186:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 187:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 188:dfu_user.c    **** *
+ 189:dfu_user.c    **** *******************************************************************************/
+ 190:dfu_user.c    **** cy_en_dfu_status_t Cy_DFU_ReadData (uint32_t address, uint32_t length, uint32_t ctl, 
+ 191:dfu_user.c    ****                                               cy_stc_dfu_params_t *params)
+ 192:dfu_user.c    **** {
+ 251              		.loc 1 192 0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 0
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 255              	.LVL30:
+ 256 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 257              		.cfi_def_cfa_offset 24
+ 258              		.cfi_offset 4, -24
+ 259              		.cfi_offset 5, -20
+ 260              		.cfi_offset 6, -16
+ 261              		.cfi_offset 7, -12
+ 262              		.cfi_offset 8, -8
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 9
+
+
+ 263              		.cfi_offset 14, -4
+ 264 0004 0446     		mov	r4, r0
+ 265 0006 0E46     		mov	r6, r1
+ 266 0008 1746     		mov	r7, r2
+ 267 000a 9846     		mov	r8, r3
+ 268              	.LVL31:
+ 193:dfu_user.c    ****     /* User Flash Limits */
+ 194:dfu_user.c    ****     /* Note that App0 is out of range */
+ 195:dfu_user.c    ****     const uint32_t minUFlashAddress = CY_FLASH_BASE + CY_DFU_APP0_VERIFY_LENGTH;
+ 196:dfu_user.c    ****     const uint32_t maxUFlashAddress = CY_FLASH_BASE + CY_FLASH_SIZE;
+ 197:dfu_user.c    ****     /* EM_EEPROM Limits*/
+ 198:dfu_user.c    ****     const uint32_t minEmEepromAddress = CY_EM_EEPROM_BASE;
+ 199:dfu_user.c    ****     const uint32_t maxEmEepromAddress = CY_EM_EEPROM_BASE + CY_EM_EEPROM_SIZE;
+ 200:dfu_user.c    ****     
+ 201:dfu_user.c    ****     cy_en_dfu_status_t status = CY_DFU_SUCCESS;
+ 202:dfu_user.c    **** 
+ 203:dfu_user.c    ****     /* Check if the length is valid */
+ 204:dfu_user.c    ****     if (IsMultipleOf(length, CY_FLASH_SIZEOF_ROW) == 0u) 
+ 269              		.loc 1 204 0
+ 270 000c 4FF40071 		mov	r1, #512
+ 271              	.LVL32:
+ 272 0010 3046     		mov	r0, r6
+ 273              	.LVL33:
+ 274 0012 FFF7FEFF 		bl	IsMultipleOf
+ 275              	.LVL34:
+ 276 0016 08B1     		cbz	r0, .L30
+ 201:dfu_user.c    **** 
+ 277              		.loc 1 201 0
+ 278 0018 0025     		movs	r5, #0
+ 279 001a 00E0     		b	.L25
+ 280              	.L30:
+ 205:dfu_user.c    ****     {
+ 206:dfu_user.c    ****         status = CY_DFU_ERROR_LENGTH;   
+ 281              		.loc 1 206 0
+ 282 001c 114D     		ldr	r5, .L34
+ 283              	.L25:
+ 284              	.LVL35:
+ 207:dfu_user.c    ****     }
+ 208:dfu_user.c    **** 
+ 209:dfu_user.c    ****     /* Check if the address is inside the valid range */
+ 210:dfu_user.c    ****     if ( ( (minUFlashAddress <= address) && (address < maxUFlashAddress) ) 
+ 285              		.loc 1 210 0
+ 286 001e 124B     		ldr	r3, .L34+4
+ 287              	.LVL36:
+ 288 0020 A342     		cmp	r3, r4
+ 289 0022 02D8     		bhi	.L26
+ 290              		.loc 1 210 0 is_stmt 0 discriminator 1
+ 291 0024 114B     		ldr	r3, .L34+8
+ 292              	.LVL37:
+ 293 0026 9C42     		cmp	r4, r3
+ 294 0028 05D9     		bls	.L27
+ 295              	.L26:
+ 211:dfu_user.c    ****       || ( (minEmEepromAddress <= address) && (address < maxEmEepromAddress) )  )
+ 296              		.loc 1 211 0 is_stmt 1
+ 297 002a 04F16C43 		add	r3, r4, #-335544320
+ 298 002e B3F5004F 		cmp	r3, #32768
+ 299 0032 00D3     		bcc	.L27
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 10
+
+
+ 212:dfu_user.c    ****     {   /* Do nothing, this is an allowed memory range to update to */
+ 213:dfu_user.c    ****     }
+ 214:dfu_user.c    ****     else
+ 215:dfu_user.c    ****     {
+ 216:dfu_user.c    ****         status = CY_DFU_ERROR_ADDRESS;   
+ 300              		.loc 1 216 0
+ 301 0034 0E4D     		ldr	r5, .L34+12
+ 302              	.LVL38:
+ 303              	.L27:
+ 217:dfu_user.c    ****     }
+ 218:dfu_user.c    **** 
+ 219:dfu_user.c    ****     /* Read or Compare */
+ 220:dfu_user.c    ****     if (status == CY_DFU_SUCCESS)
+ 304              		.loc 1 220 0
+ 305 0036 8DB9     		cbnz	r5, .L28
+ 221:dfu_user.c    ****     {
+ 222:dfu_user.c    ****         if ((ctl & CY_DFU_IOCTL_COMPARE) == 0u)
+ 306              		.loc 1 222 0
+ 307 0038 17F0010F 		tst	r7, #1
+ 308 003c 06D1     		bne	.L29
+ 223:dfu_user.c    ****         {
+ 224:dfu_user.c    ****             (void) memcpy(params->dataBuffer, (const void *)address, length);
+ 309              		.loc 1 224 0
+ 310 003e 3246     		mov	r2, r6
+ 311 0040 2146     		mov	r1, r4
+ 312 0042 D8F80000 		ldr	r0, [r8]
+ 313 0046 FFF7FEFF 		bl	memcpy
+ 314              	.LVL39:
+ 315 004a 07E0     		b	.L28
+ 316              	.LVL40:
+ 317              	.L29:
+ 225:dfu_user.c    ****             status = CY_DFU_SUCCESS;
+ 226:dfu_user.c    ****         }
+ 227:dfu_user.c    ****         else
+ 228:dfu_user.c    ****         {
+ 229:dfu_user.c    ****             status = ( memcmp(params->dataBuffer, (const void *)address, length) == 0 )
+ 318              		.loc 1 229 0
+ 319 004c 3246     		mov	r2, r6
+ 320 004e 2146     		mov	r1, r4
+ 321 0050 D8F80000 		ldr	r0, [r8]
+ 322 0054 FFF7FEFF 		bl	memcmp
+ 323              	.LVL41:
+ 324 0058 00B1     		cbz	r0, .L28
+ 325 005a 064D     		ldr	r5, .L34+16
+ 326              	.LVL42:
+ 327              	.L28:
+ 230:dfu_user.c    ****                      ? CY_DFU_SUCCESS : CY_DFU_ERROR_VERIFY;
+ 231:dfu_user.c    ****         }
+ 232:dfu_user.c    ****     }
+ 233:dfu_user.c    ****     return (status);
+ 234:dfu_user.c    **** }
+ 328              		.loc 1 234 0
+ 329 005c 2846     		mov	r0, r5
+ 330 005e BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 331              	.LVL43:
+ 332              	.L35:
+ 333 0062 00BF     		.align	2
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 11
+
+
+ 334              	.L34:
+ 335 0064 03001A00 		.word	1703939
+ 336 0068 00000010 		.word	__cy_app0_verify_length+268435456
+ 337 006c FFFF0F10 		.word	269484031
+ 338 0070 0A001A00 		.word	1703946
+ 339 0074 02001A00 		.word	1703938
+ 340              		.cfi_endproc
+ 341              	.LFE135:
+ 342              		.size	Cy_DFU_ReadData, .-Cy_DFU_ReadData
+ 343              		.section	.text.Cy_DFU_TransportRead,"ax",%progbits
+ 344              		.align	2
+ 345              		.global	Cy_DFU_TransportRead
+ 346              		.thumb
+ 347              		.thumb_func
+ 348              		.type	Cy_DFU_TransportRead, %function
+ 349              	Cy_DFU_TransportRead:
+ 350              	.LFB136:
+ 235:dfu_user.c    **** 
+ 236:dfu_user.c    **** 
+ 237:dfu_user.c    **** /*******************************************************************************
+ 238:dfu_user.c    **** * Function Name: Cy_DFU_TransportRead
+ 239:dfu_user.c    **** ****************************************************************************//**
+ 240:dfu_user.c    **** *
+ 241:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 242:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 243:dfu_user.c    **** *
+ 244:dfu_user.c    **** *******************************************************************************/
+ 245:dfu_user.c    **** cy_en_dfu_status_t Cy_DFU_TransportRead (uint8_t *buffer, uint32_t size, uint32_t *count, uint32_t 
+ 246:dfu_user.c    **** {
+ 351              		.loc 1 246 0
+ 352              		.cfi_startproc
+ 353              		@ args = 0, pretend = 0, frame = 0
+ 354              		@ frame_needed = 0, uses_anonymous_args = 0
+ 355              	.LVL44:
+ 356 0000 08B5     		push	{r3, lr}
+ 357              		.cfi_def_cfa_offset 8
+ 358              		.cfi_offset 3, -8
+ 359              		.cfi_offset 14, -4
+ 247:dfu_user.c    ****     return (UART_UartCyBtldrCommRead(buffer, size, count, timeout));
+ 360              		.loc 1 247 0
+ 361 0002 FFF7FEFF 		bl	UART_UartCyBtldrCommRead
+ 362              	.LVL45:
+ 248:dfu_user.c    **** }
+ 363              		.loc 1 248 0
+ 364 0006 08BD     		pop	{r3, pc}
+ 365              		.cfi_endproc
+ 366              	.LFE136:
+ 367              		.size	Cy_DFU_TransportRead, .-Cy_DFU_TransportRead
+ 368              		.section	.text.Cy_DFU_TransportWrite,"ax",%progbits
+ 369              		.align	2
+ 370              		.global	Cy_DFU_TransportWrite
+ 371              		.thumb
+ 372              		.thumb_func
+ 373              		.type	Cy_DFU_TransportWrite, %function
+ 374              	Cy_DFU_TransportWrite:
+ 375              	.LFB137:
+ 249:dfu_user.c    **** 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 12
+
+
+ 250:dfu_user.c    **** /*******************************************************************************
+ 251:dfu_user.c    **** * Function Name: Cy_DFU_TransportWrite
+ 252:dfu_user.c    **** ****************************************************************************//**
+ 253:dfu_user.c    **** *
+ 254:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 255:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 256:dfu_user.c    **** *
+ 257:dfu_user.c    **** *******************************************************************************/
+ 258:dfu_user.c    **** cy_en_dfu_status_t Cy_DFU_TransportWrite(uint8_t *buffer, uint32_t size, uint32_t *count, uint32_t 
+ 259:dfu_user.c    **** {
+ 376              		.loc 1 259 0
+ 377              		.cfi_startproc
+ 378              		@ args = 0, pretend = 0, frame = 0
+ 379              		@ frame_needed = 0, uses_anonymous_args = 0
+ 380              	.LVL46:
+ 381 0000 08B5     		push	{r3, lr}
+ 382              		.cfi_def_cfa_offset 8
+ 383              		.cfi_offset 3, -8
+ 384              		.cfi_offset 14, -4
+ 260:dfu_user.c    ****     return (UART_UartCyBtldrCommWrite(buffer, size, count, timeout));
+ 385              		.loc 1 260 0
+ 386 0002 FFF7FEFF 		bl	UART_UartCyBtldrCommWrite
+ 387              	.LVL47:
+ 261:dfu_user.c    **** }
+ 388              		.loc 1 261 0
+ 389 0006 08BD     		pop	{r3, pc}
+ 390              		.cfi_endproc
+ 391              	.LFE137:
+ 392              		.size	Cy_DFU_TransportWrite, .-Cy_DFU_TransportWrite
+ 393              		.section	.text.Cy_DFU_TransportReset,"ax",%progbits
+ 394              		.align	2
+ 395              		.global	Cy_DFU_TransportReset
+ 396              		.thumb
+ 397              		.thumb_func
+ 398              		.type	Cy_DFU_TransportReset, %function
+ 399              	Cy_DFU_TransportReset:
+ 400              	.LFB138:
+ 262:dfu_user.c    **** 
+ 263:dfu_user.c    **** /*******************************************************************************
+ 264:dfu_user.c    **** * Function Name: Cy_DFU_TransportReset
+ 265:dfu_user.c    **** ****************************************************************************//**
+ 266:dfu_user.c    **** *
+ 267:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 268:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 269:dfu_user.c    **** *
+ 270:dfu_user.c    **** *******************************************************************************/
+ 271:dfu_user.c    **** void Cy_DFU_TransportReset(void)
+ 272:dfu_user.c    **** {
+ 401              		.loc 1 272 0
+ 402              		.cfi_startproc
+ 403              		@ args = 0, pretend = 0, frame = 0
+ 404              		@ frame_needed = 0, uses_anonymous_args = 0
+ 405 0000 08B5     		push	{r3, lr}
+ 406              		.cfi_def_cfa_offset 8
+ 407              		.cfi_offset 3, -8
+ 408              		.cfi_offset 14, -4
+ 273:dfu_user.c    ****     UART_UartCyBtldrCommReset();
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 13
+
+
+ 409              		.loc 1 273 0
+ 410 0002 FFF7FEFF 		bl	UART_UartCyBtldrCommReset
+ 411              	.LVL48:
+ 412 0006 08BD     		pop	{r3, pc}
+ 413              		.cfi_endproc
+ 414              	.LFE138:
+ 415              		.size	Cy_DFU_TransportReset, .-Cy_DFU_TransportReset
+ 416              		.section	.text.Cy_DFU_TransportStart,"ax",%progbits
+ 417              		.align	2
+ 418              		.global	Cy_DFU_TransportStart
+ 419              		.thumb
+ 420              		.thumb_func
+ 421              		.type	Cy_DFU_TransportStart, %function
+ 422              	Cy_DFU_TransportStart:
+ 423              	.LFB139:
+ 274:dfu_user.c    **** }
+ 275:dfu_user.c    **** 
+ 276:dfu_user.c    **** /*******************************************************************************
+ 277:dfu_user.c    **** * Function Name: Cy_DFU_TransportStart
+ 278:dfu_user.c    **** ****************************************************************************//**
+ 279:dfu_user.c    **** *
+ 280:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 281:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 282:dfu_user.c    **** *
+ 283:dfu_user.c    **** *******************************************************************************/
+ 284:dfu_user.c    **** void Cy_DFU_TransportStart(void)
+ 285:dfu_user.c    **** {
+ 424              		.loc 1 285 0
+ 425              		.cfi_startproc
+ 426              		@ args = 0, pretend = 0, frame = 0
+ 427              		@ frame_needed = 0, uses_anonymous_args = 0
+ 428 0000 08B5     		push	{r3, lr}
+ 429              		.cfi_def_cfa_offset 8
+ 430              		.cfi_offset 3, -8
+ 431              		.cfi_offset 14, -4
+ 286:dfu_user.c    ****     UART_UartCyBtldrCommStart();
+ 432              		.loc 1 286 0
+ 433 0002 FFF7FEFF 		bl	UART_UartCyBtldrCommStart
+ 434              	.LVL49:
+ 435 0006 08BD     		pop	{r3, pc}
+ 436              		.cfi_endproc
+ 437              	.LFE139:
+ 438              		.size	Cy_DFU_TransportStart, .-Cy_DFU_TransportStart
+ 439              		.section	.text.Cy_DFU_TransportStop,"ax",%progbits
+ 440              		.align	2
+ 441              		.global	Cy_DFU_TransportStop
+ 442              		.thumb
+ 443              		.thumb_func
+ 444              		.type	Cy_DFU_TransportStop, %function
+ 445              	Cy_DFU_TransportStop:
+ 446              	.LFB140:
+ 287:dfu_user.c    **** }
+ 288:dfu_user.c    **** 
+ 289:dfu_user.c    **** /*******************************************************************************
+ 290:dfu_user.c    **** * Function Name: Cy_DFU_TransportStop
+ 291:dfu_user.c    **** ****************************************************************************//**
+ 292:dfu_user.c    **** *
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 14
+
+
+ 293:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 294:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 295:dfu_user.c    **** *
+ 296:dfu_user.c    **** *******************************************************************************/
+ 297:dfu_user.c    **** void Cy_DFU_TransportStop(void)
+ 298:dfu_user.c    **** {
+ 447              		.loc 1 298 0
+ 448              		.cfi_startproc
+ 449              		@ args = 0, pretend = 0, frame = 0
+ 450              		@ frame_needed = 0, uses_anonymous_args = 0
+ 451 0000 08B5     		push	{r3, lr}
+ 452              		.cfi_def_cfa_offset 8
+ 453              		.cfi_offset 3, -8
+ 454              		.cfi_offset 14, -4
+ 299:dfu_user.c    ****     UART_UartCyBtldrCommStop();
+ 455              		.loc 1 299 0
+ 456 0002 FFF7FEFF 		bl	UART_UartCyBtldrCommStop
+ 457              	.LVL50:
+ 458 0006 08BD     		pop	{r3, pc}
+ 459              		.cfi_endproc
+ 460              	.LFE140:
+ 461              		.size	Cy_DFU_TransportStop, .-Cy_DFU_TransportStop
+ 462              		.section	.cy_boot_metadata,"a",%progbits
+ 463              		.align	2
+ 464              		.type	cy_dfu_metadata, %object
+ 465              		.size	cy_dfu_metadata, 512
+ 466              	cy_dfu_metadata:
+ 467 0000 00000000 		.word	__cy_app0_verify_start
+ 468 0004 00000000 		.word	__cy_app0_verify_length
+ 469 0008 00000000 		.word	__cy_app1_verify_start
+ 470 000c 00000000 		.word	__cy_app1_verify_length
+ 471 0010 00000000 		.word	0
+ 472 0014 00000000 		.space	492
+ 472      00000000 
+ 472      00000000 
+ 472      00000000 
+ 472      00000000 
+ 473              		.text
+ 474              	.Letext0:
+ 475              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 476              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 477              		.file 4 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/flash/cy_flash.h"
+ 478              		.file 5 "Generated_Source\\PSoC6\\pdl\\dfu/cy_dfu.h"
+ 479              		.file 6 "Generated_Source\\PSoC6\\pdl\\cmsis/include/core_cm4.h"
+ 480              		.file 7 "./dfu_user.h"
+ 481              		.file 8 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 482              		.file 9 "transport_uart.h"
+ 483              		.section	.debug_info,"",%progbits
+ 484              	.Ldebug_info0:
+ 485 0000 74070000 		.4byte	0x774
+ 486 0004 0400     		.2byte	0x4
+ 487 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 488 000a 04       		.byte	0x4
+ 489 000b 01       		.uleb128 0x1
+ 490 000c F1050000 		.4byte	.LASF94
+ 491 0010 0C       		.byte	0xc
+ 492 0011 00000000 		.4byte	.LASF95
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 15
+
+
+ 493 0015 EE020000 		.4byte	.LASF96
+ 494 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 495 001d 00000000 		.4byte	0
+ 496 0021 00000000 		.4byte	.Ldebug_line0
+ 497 0025 02       		.uleb128 0x2
+ 498 0026 04       		.byte	0x4
+ 499 0027 05       		.byte	0x5
+ 500 0028 696E7400 		.ascii	"int\000"
+ 501 002c 03       		.uleb128 0x3
+ 502 002d 04       		.byte	0x4
+ 503 002e 07       		.byte	0x7
+ 504 002f D4020000 		.4byte	.LASF0
+ 505 0033 03       		.uleb128 0x3
+ 506 0034 08       		.byte	0x8
+ 507 0035 05       		.byte	0x5
+ 508 0036 E8010000 		.4byte	.LASF1
+ 509 003a 03       		.uleb128 0x3
+ 510 003b 08       		.byte	0x8
+ 511 003c 04       		.byte	0x4
+ 512 003d C8020000 		.4byte	.LASF2
+ 513 0041 03       		.uleb128 0x3
+ 514 0042 01       		.byte	0x1
+ 515 0043 06       		.byte	0x6
+ 516 0044 3E030000 		.4byte	.LASF3
+ 517 0048 04       		.uleb128 0x4
+ 518 0049 63020000 		.4byte	.LASF7
+ 519 004d 02       		.byte	0x2
+ 520 004e 1D       		.byte	0x1d
+ 521 004f 53000000 		.4byte	0x53
+ 522 0053 03       		.uleb128 0x3
+ 523 0054 01       		.byte	0x1
+ 524 0055 08       		.byte	0x8
+ 525 0056 8D020000 		.4byte	.LASF4
+ 526 005a 03       		.uleb128 0x3
+ 527 005b 02       		.byte	0x2
+ 528 005c 05       		.byte	0x5
+ 529 005d 22010000 		.4byte	.LASF5
+ 530 0061 03       		.uleb128 0x3
+ 531 0062 02       		.byte	0x2
+ 532 0063 07       		.byte	0x7
+ 533 0064 CA030000 		.4byte	.LASF6
+ 534 0068 04       		.uleb128 0x4
+ 535 0069 33040000 		.4byte	.LASF8
+ 536 006d 02       		.byte	0x2
+ 537 006e 3F       		.byte	0x3f
+ 538 006f 73000000 		.4byte	0x73
+ 539 0073 03       		.uleb128 0x3
+ 540 0074 04       		.byte	0x4
+ 541 0075 05       		.byte	0x5
+ 542 0076 49020000 		.4byte	.LASF9
+ 543 007a 04       		.uleb128 0x4
+ 544 007b 06050000 		.4byte	.LASF10
+ 545 007f 02       		.byte	0x2
+ 546 0080 41       		.byte	0x41
+ 547 0081 85000000 		.4byte	0x85
+ 548 0085 03       		.uleb128 0x3
+ 549 0086 04       		.byte	0x4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 16
+
+
+ 550 0087 07       		.byte	0x7
+ 551 0088 B8040000 		.4byte	.LASF11
+ 552 008c 03       		.uleb128 0x3
+ 553 008d 08       		.byte	0x8
+ 554 008e 07       		.byte	0x7
+ 555 008f F6010000 		.4byte	.LASF12
+ 556 0093 03       		.uleb128 0x3
+ 557 0094 04       		.byte	0x4
+ 558 0095 07       		.byte	0x7
+ 559 0096 CD000000 		.4byte	.LASF13
+ 560 009a 03       		.uleb128 0x3
+ 561 009b 01       		.byte	0x1
+ 562 009c 08       		.byte	0x8
+ 563 009d 01050000 		.4byte	.LASF14
+ 564 00a1 04       		.uleb128 0x4
+ 565 00a2 44010000 		.4byte	.LASF15
+ 566 00a6 03       		.byte	0x3
+ 567 00a7 18       		.byte	0x18
+ 568 00a8 48000000 		.4byte	0x48
+ 569 00ac 04       		.uleb128 0x4
+ 570 00ad 11040000 		.4byte	.LASF16
+ 571 00b1 03       		.byte	0x3
+ 572 00b2 2C       		.byte	0x2c
+ 573 00b3 68000000 		.4byte	0x68
+ 574 00b7 04       		.uleb128 0x4
+ 575 00b8 52030000 		.4byte	.LASF17
+ 576 00bc 03       		.byte	0x3
+ 577 00bd 30       		.byte	0x30
+ 578 00be 7A000000 		.4byte	0x7a
+ 579 00c2 03       		.uleb128 0x3
+ 580 00c3 04       		.byte	0x4
+ 581 00c4 04       		.byte	0x4
+ 582 00c5 CF010000 		.4byte	.LASF18
+ 583 00c9 03       		.uleb128 0x3
+ 584 00ca 08       		.byte	0x8
+ 585 00cb 04       		.byte	0x4
+ 586 00cc E9040000 		.4byte	.LASF19
+ 587 00d0 05       		.uleb128 0x5
+ 588 00d1 2C020000 		.4byte	.LASF97
+ 589 00d5 04       		.byte	0x4
+ 590 00d6 2C000000 		.4byte	0x2c
+ 591 00da 04       		.byte	0x4
+ 592 00db 7E01     		.2byte	0x17e
+ 593 00dd 4B010000 		.4byte	0x14b
+ 594 00e1 06       		.uleb128 0x6
+ 595 00e2 D7060000 		.4byte	.LASF20
+ 596 00e6 00       		.byte	0
+ 597 00e7 07       		.uleb128 0x7
+ 598 00e8 2E070000 		.4byte	.LASF21
+ 599 00ec 00005200 		.4byte	0x520000
+ 600 00f0 07       		.uleb128 0x7
+ 601 00f1 11050000 		.4byte	.LASF22
+ 602 00f5 01005200 		.4byte	0x520001
+ 603 00f9 07       		.uleb128 0x7
+ 604 00fa 98040000 		.4byte	.LASF23
+ 605 00fe 02005200 		.4byte	0x520002
+ 606 0102 07       		.uleb128 0x7
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 17
+
+
+ 607 0103 64050000 		.4byte	.LASF24
+ 608 0107 03005200 		.4byte	0x520003
+ 609 010b 07       		.uleb128 0x7
+ 610 010c 4E050000 		.4byte	.LASF25
+ 611 0110 05005200 		.4byte	0x520005
+ 612 0114 07       		.uleb128 0x7
+ 613 0115 93010000 		.4byte	.LASF26
+ 614 0119 06005200 		.4byte	0x520006
+ 615 011d 07       		.uleb128 0x7
+ 616 011e 86030000 		.4byte	.LASF27
+ 617 0122 22005200 		.4byte	0x520022
+ 618 0126 07       		.uleb128 0x7
+ 619 0127 7F050000 		.4byte	.LASF28
+ 620 012b FF005200 		.4byte	0x5200ff
+ 621 012f 07       		.uleb128 0x7
+ 622 0130 CA040000 		.4byte	.LASF29
+ 623 0134 00005000 		.4byte	0x500000
+ 624 0138 07       		.uleb128 0x7
+ 625 0139 0D020000 		.4byte	.LASF30
+ 626 013d 01005000 		.4byte	0x500001
+ 627 0141 07       		.uleb128 0x7
+ 628 0142 51040000 		.4byte	.LASF31
+ 629 0146 02005000 		.4byte	0x500002
+ 630 014a 00       		.byte	0
+ 631 014b 08       		.uleb128 0x8
+ 632 014c D6000000 		.4byte	.LASF32
+ 633 0150 04       		.byte	0x4
+ 634 0151 8C01     		.2byte	0x18c
+ 635 0153 D0000000 		.4byte	0xd0
+ 636 0157 09       		.uleb128 0x9
+ 637 0158 1C       		.byte	0x1c
+ 638 0159 05       		.byte	0x5
+ 639 015a 5102     		.2byte	0x251
+ 640 015c BC010000 		.4byte	0x1bc
+ 641 0160 0A       		.uleb128 0xa
+ 642 0161 33030000 		.4byte	.LASF33
+ 643 0165 05       		.byte	0x5
+ 644 0166 5702     		.2byte	0x257
+ 645 0168 BC010000 		.4byte	0x1bc
+ 646 016c 00       		.byte	0
+ 647 016d 0A       		.uleb128 0xa
+ 648 016e FD000000 		.4byte	.LASF34
+ 649 0172 05       		.byte	0x5
+ 650 0173 5802     		.2byte	0x258
+ 651 0175 B7000000 		.4byte	0xb7
+ 652 0179 04       		.byte	0x4
+ 653 017a 0A       		.uleb128 0xa
+ 654 017b E1020000 		.4byte	.LASF35
+ 655 017f 05       		.byte	0x5
+ 656 0180 5D02     		.2byte	0x25d
+ 657 0182 BC010000 		.4byte	0x1bc
+ 658 0186 08       		.byte	0x8
+ 659 0187 0A       		.uleb128 0xa
+ 660 0188 26070000 		.4byte	.LASF36
+ 661 018c 05       		.byte	0x5
+ 662 018d 5E02     		.2byte	0x25e
+ 663 018f B7000000 		.4byte	0xb7
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 18
+
+
+ 664 0193 0C       		.byte	0xc
+ 665 0194 0A       		.uleb128 0xa
+ 666 0195 F0040000 		.4byte	.LASF37
+ 667 0199 05       		.byte	0x5
+ 668 019a 5F02     		.2byte	0x25f
+ 669 019c B7000000 		.4byte	0xb7
+ 670 01a0 10       		.byte	0x10
+ 671 01a1 0A       		.uleb128 0xa
+ 672 01a2 D5010000 		.4byte	.LASF38
+ 673 01a6 05       		.byte	0x5
+ 674 01a7 6102     		.2byte	0x261
+ 675 01a9 B7000000 		.4byte	0xb7
+ 676 01ad 14       		.byte	0x14
+ 677 01ae 0A       		.uleb128 0xa
+ 678 01af 61010000 		.4byte	.LASF39
+ 679 01b3 05       		.byte	0x5
+ 680 01b4 6902     		.2byte	0x269
+ 681 01b6 B7000000 		.4byte	0xb7
+ 682 01ba 18       		.byte	0x18
+ 683 01bb 00       		.byte	0
+ 684 01bc 0B       		.uleb128 0xb
+ 685 01bd 04       		.byte	0x4
+ 686 01be A1000000 		.4byte	0xa1
+ 687 01c2 08       		.uleb128 0x8
+ 688 01c3 E4030000 		.4byte	.LASF40
+ 689 01c7 05       		.byte	0x5
+ 690 01c8 7602     		.2byte	0x276
+ 691 01ca 57010000 		.4byte	0x157
+ 692 01ce 0C       		.uleb128 0xc
+ 693 01cf 04       		.byte	0x4
+ 694 01d0 2C000000 		.4byte	0x2c
+ 695 01d4 05       		.byte	0x5
+ 696 01d5 8C02     		.2byte	0x28c
+ 697 01d7 2A020000 		.4byte	0x22a
+ 698 01db 06       		.uleb128 0x6
+ 699 01dc A4060000 		.4byte	.LASF41
+ 700 01e0 00       		.byte	0
+ 701 01e1 07       		.uleb128 0x7
+ 702 01e2 7F010000 		.4byte	.LASF42
+ 703 01e6 02001A00 		.4byte	0x1a0002
+ 704 01ea 07       		.uleb128 0x7
+ 705 01eb 3D040000 		.4byte	.LASF43
+ 706 01ef 03001A00 		.4byte	0x1a0003
+ 707 01f3 07       		.uleb128 0x7
+ 708 01f4 6B000000 		.4byte	.LASF44
+ 709 01f8 04001A00 		.4byte	0x1a0004
+ 710 01fc 07       		.uleb128 0x7
+ 711 01fd 52020000 		.4byte	.LASF45
+ 712 0201 05001A00 		.4byte	0x1a0005
+ 713 0205 07       		.uleb128 0x7
+ 714 0206 05070000 		.4byte	.LASF46
+ 715 020a 08001A00 		.4byte	0x1a0008
+ 716 020e 07       		.uleb128 0x7
+ 717 020f 0B000000 		.4byte	.LASF47
+ 718 0213 0A001A00 		.4byte	0x1a000a
+ 719 0217 07       		.uleb128 0x7
+ 720 0218 9B020000 		.4byte	.LASF48
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 19
+
+
+ 721 021c 40001A00 		.4byte	0x1a0040
+ 722 0220 07       		.uleb128 0x7
+ 723 0221 B5030000 		.4byte	.LASF49
+ 724 0225 0F001A00 		.4byte	0x1a000f
+ 725 0229 00       		.byte	0
+ 726 022a 08       		.uleb128 0x8
+ 727 022b A2030000 		.4byte	.LASF50
+ 728 022f 05       		.byte	0x5
+ 729 0230 9F02     		.2byte	0x29f
+ 730 0232 CE010000 		.4byte	0x1ce
+ 731 0236 0D       		.uleb128 0xd
+ 732 0237 84040000 		.4byte	.LASF98
+ 733 023b 01       		.byte	0x1
+ 734 023c 3E       		.byte	0x3e
+ 735 023d B7000000 		.4byte	0xb7
+ 736 0241 00000000 		.4byte	.LFB132
+ 737 0245 12000000 		.4byte	.LFE132-.LFB132
+ 738 0249 01       		.uleb128 0x1
+ 739 024a 9C       		.byte	0x9c
+ 740 024b 6E020000 		.4byte	0x26e
+ 741 024f 0E       		.uleb128 0xe
+ 742 0250 3E010000 		.4byte	.LASF51
+ 743 0254 01       		.byte	0x1
+ 744 0255 3E       		.byte	0x3e
+ 745 0256 B7000000 		.4byte	0xb7
+ 746 025a 00000000 		.4byte	.LLST0
+ 747 025e 0E       		.uleb128 0xe
+ 748 025f 33000000 		.4byte	.LASF52
+ 749 0263 01       		.byte	0x1
+ 750 0264 3E       		.byte	0x3e
+ 751 0265 B7000000 		.4byte	0xb7
+ 752 0269 3A000000 		.4byte	.LLST1
+ 753 026d 00       		.byte	0
+ 754 026e 0F       		.uleb128 0xf
+ 755 026f 0F010000 		.4byte	.LASF99
+ 756 0273 01       		.byte	0x1
+ 757 0274 51       		.byte	0x51
+ 758 0275 00000000 		.4byte	.LFB133
+ 759 0279 28000000 		.4byte	.LFE133-.LFB133
+ 760 027d 01       		.uleb128 0x1
+ 761 027e 9C       		.byte	0x9c
+ 762 027f EA020000 		.4byte	0x2ea
+ 763 0283 0E       		.uleb128 0xe
+ 764 0284 F0040000 		.4byte	.LASF37
+ 765 0288 01       		.byte	0x1
+ 766 0289 51       		.byte	0x51
+ 767 028a B7000000 		.4byte	0xb7
+ 768 028e 5B000000 		.4byte	.LLST2
+ 769 0292 0E       		.uleb128 0xe
+ 770 0293 C0000000 		.4byte	.LASF53
+ 771 0297 01       		.byte	0x1
+ 772 0298 51       		.byte	0x51
+ 773 0299 EA020000 		.4byte	0x2ea
+ 774 029d 7C000000 		.4byte	.LLST3
+ 775 02a1 0E       		.uleb128 0xe
+ 776 02a2 F6040000 		.4byte	.LASF54
+ 777 02a6 01       		.byte	0x1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 20
+
+
+ 778 02a7 51       		.byte	0x51
+ 779 02a8 EA020000 		.4byte	0x2ea
+ 780 02ac A8000000 		.4byte	.LLST4
+ 781 02b0 10       		.uleb128 0x10
+ 782 02b1 A5050000 		.4byte	.LASF55
+ 783 02b5 01       		.byte	0x1
+ 784 02b6 53       		.byte	0x53
+ 785 02b7 B7000000 		.4byte	0xb7
+ 786 02bb 02       		.uleb128 0x2
+ 787 02bc 91       		.byte	0x91
+ 788 02bd 6C       		.sleb128 -20
+ 789 02be 10       		.uleb128 0x10
+ 790 02bf 1B070000 		.4byte	.LASF56
+ 791 02c3 01       		.byte	0x1
+ 792 02c4 54       		.byte	0x54
+ 793 02c5 B7000000 		.4byte	0xb7
+ 794 02c9 02       		.uleb128 0x2
+ 795 02ca 91       		.byte	0x91
+ 796 02cb 68       		.sleb128 -24
+ 797 02cc 11       		.uleb128 0x11
+ 798 02cd 10000000 		.4byte	.LVL8
+ 799 02d1 FF060000 		.4byte	0x6ff
+ 800 02d5 12       		.uleb128 0x12
+ 801 02d6 01       		.uleb128 0x1
+ 802 02d7 50       		.byte	0x50
+ 803 02d8 03       		.uleb128 0x3
+ 804 02d9 F3       		.byte	0xf3
+ 805 02da 01       		.uleb128 0x1
+ 806 02db 50       		.byte	0x50
+ 807 02dc 12       		.uleb128 0x12
+ 808 02dd 01       		.uleb128 0x1
+ 809 02de 51       		.byte	0x51
+ 810 02df 02       		.uleb128 0x2
+ 811 02e0 91       		.byte	0x91
+ 812 02e1 6C       		.sleb128 -20
+ 813 02e2 12       		.uleb128 0x12
+ 814 02e3 01       		.uleb128 0x1
+ 815 02e4 52       		.byte	0x52
+ 816 02e5 02       		.uleb128 0x2
+ 817 02e6 7D       		.byte	0x7d
+ 818 02e7 00       		.sleb128 0
+ 819 02e8 00       		.byte	0
+ 820 02e9 00       		.byte	0
+ 821 02ea 0B       		.uleb128 0xb
+ 822 02eb 04       		.byte	0x4
+ 823 02ec B7000000 		.4byte	0xb7
+ 824 02f0 13       		.uleb128 0x13
+ 825 02f1 3D050000 		.4byte	.LASF66
+ 826 02f5 01       		.byte	0x1
+ 827 02f6 6A       		.byte	0x6a
+ 828 02f7 2A020000 		.4byte	0x22a
+ 829 02fb 00000000 		.4byte	.LFB134
+ 830 02ff A0000000 		.4byte	.LFE134-.LFB134
+ 831 0303 01       		.uleb128 0x1
+ 832 0304 9C       		.byte	0x9c
+ 833 0305 3D040000 		.4byte	0x43d
+ 834 0309 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 21
+
+
+ 835 030a 4A030000 		.4byte	.LASF57
+ 836 030e 01       		.byte	0x1
+ 837 030f 6A       		.byte	0x6a
+ 838 0310 B7000000 		.4byte	0xb7
+ 839 0314 D4000000 		.4byte	.LLST5
+ 840 0318 0E       		.uleb128 0xe
+ 841 0319 EE000000 		.4byte	.LASF58
+ 842 031d 01       		.byte	0x1
+ 843 031e 6A       		.byte	0x6a
+ 844 031f B7000000 		.4byte	0xb7
+ 845 0323 00010000 		.4byte	.LLST6
+ 846 0327 14       		.uleb128 0x14
+ 847 0328 63746C00 		.ascii	"ctl\000"
+ 848 032c 01       		.byte	0x1
+ 849 032d 6A       		.byte	0x6a
+ 850 032e B7000000 		.4byte	0xb7
+ 851 0332 77010000 		.4byte	.LLST7
+ 852 0336 0E       		.uleb128 0xe
+ 853 0337 86020000 		.4byte	.LASF59
+ 854 033b 01       		.byte	0x1
+ 855 033c 6B       		.byte	0x6b
+ 856 033d 3D040000 		.4byte	0x43d
+ 857 0341 A3010000 		.4byte	.LLST8
+ 858 0345 15       		.uleb128 0x15
+ 859 0346 2C050000 		.4byte	.LASF60
+ 860 034a 01       		.byte	0x1
+ 861 034b 6F       		.byte	0x6f
+ 862 034c 43040000 		.4byte	0x443
+ 863 0350 CF010000 		.4byte	.LLST9
+ 864 0354 16       		.uleb128 0x16
+ 865 0355 94050000 		.4byte	.LASF61
+ 866 0359 01       		.byte	0x1
+ 867 035a 70       		.byte	0x70
+ 868 035b 43040000 		.4byte	0x443
+ 869 035f 00001010 		.4byte	0x10100000
+ 870 0363 16       		.uleb128 0x16
+ 871 0364 20000000 		.4byte	.LASF62
+ 872 0368 01       		.byte	0x1
+ 873 0369 72       		.byte	0x72
+ 874 036a 43040000 		.4byte	0x443
+ 875 036e 00000014 		.4byte	0x14000000
+ 876 0372 16       		.uleb128 0x16
+ 877 0373 7D000000 		.4byte	.LASF63
+ 878 0377 01       		.byte	0x1
+ 879 0378 73       		.byte	0x73
+ 880 0379 43040000 		.4byte	0x443
+ 881 037d 00800014 		.4byte	0x14008000
+ 882 0381 15       		.uleb128 0x15
+ 883 0382 DD030000 		.4byte	.LASF64
+ 884 0386 01       		.byte	0x1
+ 885 0387 75       		.byte	0x75
+ 886 0388 2A020000 		.4byte	0x22a
+ 887 038c E2010000 		.4byte	.LLST10
+ 888 0390 17       		.uleb128 0x17
+ 889 0391 61707000 		.ascii	"app\000"
+ 890 0395 01       		.byte	0x1
+ 891 0396 77       		.byte	0x77
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 22
+
+
+ 892 0397 B7000000 		.4byte	0xb7
+ 893 039b 0C020000 		.4byte	.LLST11
+ 894 039f 10       		.uleb128 0x10
+ 895 03a0 C0000000 		.4byte	.LASF53
+ 896 03a4 01       		.byte	0x1
+ 897 03a5 78       		.byte	0x78
+ 898 03a6 B7000000 		.4byte	0xb7
+ 899 03aa 02       		.uleb128 0x2
+ 900 03ab 91       		.byte	0x91
+ 901 03ac 64       		.sleb128 -28
+ 902 03ad 10       		.uleb128 0x10
+ 903 03ae F6040000 		.4byte	.LASF54
+ 904 03b2 01       		.byte	0x1
+ 905 03b3 79       		.byte	0x79
+ 906 03b4 B7000000 		.4byte	0xb7
+ 907 03b8 02       		.uleb128 0x2
+ 908 03b9 91       		.byte	0x91
+ 909 03ba 60       		.sleb128 -32
+ 910 03bb 18       		.uleb128 0x18
+ 911 03bc 66000000 		.4byte	.LBB2
+ 912 03c0 1E000000 		.4byte	.LBE2-.LBB2
+ 913 03c4 02040000 		.4byte	0x402
+ 914 03c8 15       		.uleb128 0x15
+ 915 03c9 F5000000 		.4byte	.LASF65
+ 916 03cd 01       		.byte	0x1
+ 917 03ce AF       		.byte	0xaf
+ 918 03cf 4B010000 		.4byte	0x14b
+ 919 03d3 1F020000 		.4byte	.LLST12
+ 920 03d7 19       		.uleb128 0x19
+ 921 03d8 78000000 		.4byte	.LVL26
+ 922 03dc 0B070000 		.4byte	0x70b
+ 923 03e0 F1030000 		.4byte	0x3f1
+ 924 03e4 12       		.uleb128 0x12
+ 925 03e5 01       		.uleb128 0x1
+ 926 03e6 51       		.byte	0x51
+ 927 03e7 01       		.uleb128 0x1
+ 928 03e8 30       		.byte	0x30
+ 929 03e9 12       		.uleb128 0x12
+ 930 03ea 01       		.uleb128 0x1
+ 931 03eb 52       		.byte	0x52
+ 932 03ec 03       		.uleb128 0x3
+ 933 03ed 0A       		.byte	0xa
+ 934 03ee 0002     		.2byte	0x200
+ 935 03f0 00       		.byte	0
+ 936 03f1 11       		.uleb128 0x11
+ 937 03f2 80000000 		.4byte	.LVL27
+ 938 03f6 14070000 		.4byte	0x714
+ 939 03fa 12       		.uleb128 0x12
+ 940 03fb 01       		.uleb128 0x1
+ 941 03fc 50       		.byte	0x50
+ 942 03fd 02       		.uleb128 0x2
+ 943 03fe 74       		.byte	0x74
+ 944 03ff 00       		.sleb128 0
+ 945 0400 00       		.byte	0
+ 946 0401 00       		.byte	0
+ 947 0402 1A       		.uleb128 0x1a
+ 948 0403 10000000 		.4byte	.LVL12
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 23
+
+
+ 949 0407 20070000 		.4byte	0x720
+ 950 040b 19       		.uleb128 0x19
+ 951 040c 18000000 		.4byte	.LVL13
+ 952 0410 6E020000 		.4byte	0x26e
+ 953 0414 25040000 		.4byte	0x425
+ 954 0418 12       		.uleb128 0x12
+ 955 0419 01       		.uleb128 0x1
+ 956 041a 51       		.byte	0x51
+ 957 041b 02       		.uleb128 0x2
+ 958 041c 91       		.byte	0x91
+ 959 041d 64       		.sleb128 -28
+ 960 041e 12       		.uleb128 0x12
+ 961 041f 01       		.uleb128 0x1
+ 962 0420 52       		.byte	0x52
+ 963 0421 02       		.uleb128 0x2
+ 964 0422 7D       		.byte	0x7d
+ 965 0423 00       		.sleb128 0
+ 966 0424 00       		.byte	0
+ 967 0425 11       		.uleb128 0x11
+ 968 0426 22000000 		.4byte	.LVL14
+ 969 042a 36020000 		.4byte	0x236
+ 970 042e 12       		.uleb128 0x12
+ 971 042f 01       		.uleb128 0x1
+ 972 0430 50       		.byte	0x50
+ 973 0431 02       		.uleb128 0x2
+ 974 0432 74       		.byte	0x74
+ 975 0433 00       		.sleb128 0
+ 976 0434 12       		.uleb128 0x12
+ 977 0435 01       		.uleb128 0x1
+ 978 0436 51       		.byte	0x51
+ 979 0437 03       		.uleb128 0x3
+ 980 0438 0A       		.byte	0xa
+ 981 0439 0002     		.2byte	0x200
+ 982 043b 00       		.byte	0
+ 983 043c 00       		.byte	0
+ 984 043d 0B       		.uleb128 0xb
+ 985 043e 04       		.byte	0x4
+ 986 043f C2010000 		.4byte	0x1c2
+ 987 0443 1B       		.uleb128 0x1b
+ 988 0444 B7000000 		.4byte	0xb7
+ 989 0448 13       		.uleb128 0x13
+ 990 0449 B1050000 		.4byte	.LASF67
+ 991 044d 01       		.byte	0x1
+ 992 044e BE       		.byte	0xbe
+ 993 044f 2A020000 		.4byte	0x22a
+ 994 0453 00000000 		.4byte	.LFB135
+ 995 0457 78000000 		.4byte	.LFE135-.LFB135
+ 996 045b 01       		.uleb128 0x1
+ 997 045c 9C       		.byte	0x9c
+ 998 045d 34050000 		.4byte	0x534
+ 999 0461 0E       		.uleb128 0xe
+ 1000 0462 4A030000 		.4byte	.LASF57
+ 1001 0466 01       		.byte	0x1
+ 1002 0467 BE       		.byte	0xbe
+ 1003 0468 B7000000 		.4byte	0xb7
+ 1004 046c 32020000 		.4byte	.LLST13
+ 1005 0470 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 24
+
+
+ 1006 0471 EE000000 		.4byte	.LASF58
+ 1007 0475 01       		.byte	0x1
+ 1008 0476 BE       		.byte	0xbe
+ 1009 0477 B7000000 		.4byte	0xb7
+ 1010 047b 5E020000 		.4byte	.LLST14
+ 1011 047f 14       		.uleb128 0x14
+ 1012 0480 63746C00 		.ascii	"ctl\000"
+ 1013 0484 01       		.byte	0x1
+ 1014 0485 BE       		.byte	0xbe
+ 1015 0486 B7000000 		.4byte	0xb7
+ 1016 048a 8A020000 		.4byte	.LLST15
+ 1017 048e 0E       		.uleb128 0xe
+ 1018 048f 86020000 		.4byte	.LASF59
+ 1019 0493 01       		.byte	0x1
+ 1020 0494 BF       		.byte	0xbf
+ 1021 0495 3D040000 		.4byte	0x43d
+ 1022 0499 B6020000 		.4byte	.LLST16
+ 1023 049d 15       		.uleb128 0x15
+ 1024 049e 2C050000 		.4byte	.LASF60
+ 1025 04a2 01       		.byte	0x1
+ 1026 04a3 C3       		.byte	0xc3
+ 1027 04a4 43040000 		.4byte	0x443
+ 1028 04a8 E2020000 		.4byte	.LLST17
+ 1029 04ac 16       		.uleb128 0x16
+ 1030 04ad 94050000 		.4byte	.LASF61
+ 1031 04b1 01       		.byte	0x1
+ 1032 04b2 C4       		.byte	0xc4
+ 1033 04b3 43040000 		.4byte	0x443
+ 1034 04b7 00001010 		.4byte	0x10100000
+ 1035 04bb 16       		.uleb128 0x16
+ 1036 04bc 20000000 		.4byte	.LASF62
+ 1037 04c0 01       		.byte	0x1
+ 1038 04c1 C6       		.byte	0xc6
+ 1039 04c2 43040000 		.4byte	0x443
+ 1040 04c6 00000014 		.4byte	0x14000000
+ 1041 04ca 16       		.uleb128 0x16
+ 1042 04cb 7D000000 		.4byte	.LASF63
+ 1043 04cf 01       		.byte	0x1
+ 1044 04d0 C7       		.byte	0xc7
+ 1045 04d1 43040000 		.4byte	0x443
+ 1046 04d5 00800014 		.4byte	0x14008000
+ 1047 04d9 15       		.uleb128 0x15
+ 1048 04da DD030000 		.4byte	.LASF64
+ 1049 04de 01       		.byte	0x1
+ 1050 04df C9       		.byte	0xc9
+ 1051 04e0 2A020000 		.4byte	0x22a
+ 1052 04e4 F5020000 		.4byte	.LLST18
+ 1053 04e8 19       		.uleb128 0x19
+ 1054 04e9 16000000 		.4byte	.LVL34
+ 1055 04ed 36020000 		.4byte	0x236
+ 1056 04f1 03050000 		.4byte	0x503
+ 1057 04f5 12       		.uleb128 0x12
+ 1058 04f6 01       		.uleb128 0x1
+ 1059 04f7 50       		.byte	0x50
+ 1060 04f8 02       		.uleb128 0x2
+ 1061 04f9 76       		.byte	0x76
+ 1062 04fa 00       		.sleb128 0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 25
+
+
+ 1063 04fb 12       		.uleb128 0x12
+ 1064 04fc 01       		.uleb128 0x1
+ 1065 04fd 51       		.byte	0x51
+ 1066 04fe 03       		.uleb128 0x3
+ 1067 04ff 0A       		.byte	0xa
+ 1068 0500 0002     		.2byte	0x200
+ 1069 0502 00       		.byte	0
+ 1070 0503 19       		.uleb128 0x19
+ 1071 0504 4A000000 		.4byte	.LVL39
+ 1072 0508 2C070000 		.4byte	0x72c
+ 1073 050c 1D050000 		.4byte	0x51d
+ 1074 0510 12       		.uleb128 0x12
+ 1075 0511 01       		.uleb128 0x1
+ 1076 0512 51       		.byte	0x51
+ 1077 0513 02       		.uleb128 0x2
+ 1078 0514 74       		.byte	0x74
+ 1079 0515 00       		.sleb128 0
+ 1080 0516 12       		.uleb128 0x12
+ 1081 0517 01       		.uleb128 0x1
+ 1082 0518 52       		.byte	0x52
+ 1083 0519 02       		.uleb128 0x2
+ 1084 051a 76       		.byte	0x76
+ 1085 051b 00       		.sleb128 0
+ 1086 051c 00       		.byte	0
+ 1087 051d 11       		.uleb128 0x11
+ 1088 051e 58000000 		.4byte	.LVL41
+ 1089 0522 35070000 		.4byte	0x735
+ 1090 0526 12       		.uleb128 0x12
+ 1091 0527 01       		.uleb128 0x1
+ 1092 0528 51       		.byte	0x51
+ 1093 0529 02       		.uleb128 0x2
+ 1094 052a 74       		.byte	0x74
+ 1095 052b 00       		.sleb128 0
+ 1096 052c 12       		.uleb128 0x12
+ 1097 052d 01       		.uleb128 0x1
+ 1098 052e 52       		.byte	0x52
+ 1099 052f 02       		.uleb128 0x2
+ 1100 0530 76       		.byte	0x76
+ 1101 0531 00       		.sleb128 0
+ 1102 0532 00       		.byte	0
+ 1103 0533 00       		.byte	0
+ 1104 0534 13       		.uleb128 0x13
+ 1105 0535 4C010000 		.4byte	.LASF68
+ 1106 0539 01       		.byte	0x1
+ 1107 053a F5       		.byte	0xf5
+ 1108 053b 2A020000 		.4byte	0x22a
+ 1109 053f 00000000 		.4byte	.LFB136
+ 1110 0543 08000000 		.4byte	.LFE136-.LFB136
+ 1111 0547 01       		.uleb128 0x1
+ 1112 0548 9C       		.byte	0x9c
+ 1113 0549 B0050000 		.4byte	0x5b0
+ 1114 054d 0E       		.uleb128 0xe
+ 1115 054e 91040000 		.4byte	.LASF69
+ 1116 0552 01       		.byte	0x1
+ 1117 0553 F5       		.byte	0xf5
+ 1118 0554 BC010000 		.4byte	0x1bc
+ 1119 0558 36030000 		.4byte	.LLST19
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 26
+
+
+ 1120 055c 0E       		.uleb128 0xe
+ 1121 055d 7F040000 		.4byte	.LASF70
+ 1122 0561 01       		.byte	0x1
+ 1123 0562 F5       		.byte	0xf5
+ 1124 0563 B7000000 		.4byte	0xb7
+ 1125 0567 57030000 		.4byte	.LLST20
+ 1126 056b 0E       		.uleb128 0xe
+ 1127 056c 79010000 		.4byte	.LASF71
+ 1128 0570 01       		.byte	0x1
+ 1129 0571 F5       		.byte	0xf5
+ 1130 0572 EA020000 		.4byte	0x2ea
+ 1131 0576 78030000 		.4byte	.LLST21
+ 1132 057a 0E       		.uleb128 0xe
+ 1133 057b 26070000 		.4byte	.LASF36
+ 1134 057f 01       		.byte	0x1
+ 1135 0580 F5       		.byte	0xf5
+ 1136 0581 B7000000 		.4byte	0xb7
+ 1137 0585 99030000 		.4byte	.LLST22
+ 1138 0589 11       		.uleb128 0x11
+ 1139 058a 06000000 		.4byte	.LVL45
+ 1140 058e 40070000 		.4byte	0x740
+ 1141 0592 12       		.uleb128 0x12
+ 1142 0593 01       		.uleb128 0x1
+ 1143 0594 50       		.byte	0x50
+ 1144 0595 03       		.uleb128 0x3
+ 1145 0596 F3       		.byte	0xf3
+ 1146 0597 01       		.uleb128 0x1
+ 1147 0598 50       		.byte	0x50
+ 1148 0599 12       		.uleb128 0x12
+ 1149 059a 01       		.uleb128 0x1
+ 1150 059b 51       		.byte	0x51
+ 1151 059c 03       		.uleb128 0x3
+ 1152 059d F3       		.byte	0xf3
+ 1153 059e 01       		.uleb128 0x1
+ 1154 059f 51       		.byte	0x51
+ 1155 05a0 12       		.uleb128 0x12
+ 1156 05a1 01       		.uleb128 0x1
+ 1157 05a2 52       		.byte	0x52
+ 1158 05a3 03       		.uleb128 0x3
+ 1159 05a4 F3       		.byte	0xf3
+ 1160 05a5 01       		.uleb128 0x1
+ 1161 05a6 52       		.byte	0x52
+ 1162 05a7 12       		.uleb128 0x12
+ 1163 05a8 01       		.uleb128 0x1
+ 1164 05a9 53       		.byte	0x53
+ 1165 05aa 03       		.uleb128 0x3
+ 1166 05ab F3       		.byte	0xf3
+ 1167 05ac 01       		.uleb128 0x1
+ 1168 05ad 53       		.byte	0x53
+ 1169 05ae 00       		.byte	0
+ 1170 05af 00       		.byte	0
+ 1171 05b0 1C       		.uleb128 0x1c
+ 1172 05b1 B9010000 		.4byte	.LASF72
+ 1173 05b5 01       		.byte	0x1
+ 1174 05b6 0201     		.2byte	0x102
+ 1175 05b8 2A020000 		.4byte	0x22a
+ 1176 05bc 00000000 		.4byte	.LFB137
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 27
+
+
+ 1177 05c0 08000000 		.4byte	.LFE137-.LFB137
+ 1178 05c4 01       		.uleb128 0x1
+ 1179 05c5 9C       		.byte	0x9c
+ 1180 05c6 31060000 		.4byte	0x631
+ 1181 05ca 1D       		.uleb128 0x1d
+ 1182 05cb 91040000 		.4byte	.LASF69
+ 1183 05cf 01       		.byte	0x1
+ 1184 05d0 0201     		.2byte	0x102
+ 1185 05d2 BC010000 		.4byte	0x1bc
+ 1186 05d6 BA030000 		.4byte	.LLST23
+ 1187 05da 1D       		.uleb128 0x1d
+ 1188 05db 7F040000 		.4byte	.LASF70
+ 1189 05df 01       		.byte	0x1
+ 1190 05e0 0201     		.2byte	0x102
+ 1191 05e2 B7000000 		.4byte	0xb7
+ 1192 05e6 DB030000 		.4byte	.LLST24
+ 1193 05ea 1D       		.uleb128 0x1d
+ 1194 05eb 79010000 		.4byte	.LASF71
+ 1195 05ef 01       		.byte	0x1
+ 1196 05f0 0201     		.2byte	0x102
+ 1197 05f2 EA020000 		.4byte	0x2ea
+ 1198 05f6 FC030000 		.4byte	.LLST25
+ 1199 05fa 1D       		.uleb128 0x1d
+ 1200 05fb 26070000 		.4byte	.LASF36
+ 1201 05ff 01       		.byte	0x1
+ 1202 0600 0201     		.2byte	0x102
+ 1203 0602 B7000000 		.4byte	0xb7
+ 1204 0606 1D040000 		.4byte	.LLST26
+ 1205 060a 11       		.uleb128 0x11
+ 1206 060b 06000000 		.4byte	.LVL47
+ 1207 060f 4B070000 		.4byte	0x74b
+ 1208 0613 12       		.uleb128 0x12
+ 1209 0614 01       		.uleb128 0x1
+ 1210 0615 50       		.byte	0x50
+ 1211 0616 03       		.uleb128 0x3
+ 1212 0617 F3       		.byte	0xf3
+ 1213 0618 01       		.uleb128 0x1
+ 1214 0619 50       		.byte	0x50
+ 1215 061a 12       		.uleb128 0x12
+ 1216 061b 01       		.uleb128 0x1
+ 1217 061c 51       		.byte	0x51
+ 1218 061d 03       		.uleb128 0x3
+ 1219 061e F3       		.byte	0xf3
+ 1220 061f 01       		.uleb128 0x1
+ 1221 0620 51       		.byte	0x51
+ 1222 0621 12       		.uleb128 0x12
+ 1223 0622 01       		.uleb128 0x1
+ 1224 0623 52       		.byte	0x52
+ 1225 0624 03       		.uleb128 0x3
+ 1226 0625 F3       		.byte	0xf3
+ 1227 0626 01       		.uleb128 0x1
+ 1228 0627 52       		.byte	0x52
+ 1229 0628 12       		.uleb128 0x12
+ 1230 0629 01       		.uleb128 0x1
+ 1231 062a 53       		.byte	0x53
+ 1232 062b 03       		.uleb128 0x3
+ 1233 062c F3       		.byte	0xf3
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 28
+
+
+ 1234 062d 01       		.uleb128 0x1
+ 1235 062e 53       		.byte	0x53
+ 1236 062f 00       		.byte	0
+ 1237 0630 00       		.byte	0
+ 1238 0631 1E       		.uleb128 0x1e
+ 1239 0632 90000000 		.4byte	.LASF73
+ 1240 0636 01       		.byte	0x1
+ 1241 0637 0F01     		.2byte	0x10f
+ 1242 0639 00000000 		.4byte	.LFB138
+ 1243 063d 08000000 		.4byte	.LFE138-.LFB138
+ 1244 0641 01       		.uleb128 0x1
+ 1245 0642 9C       		.byte	0x9c
+ 1246 0643 51060000 		.4byte	0x651
+ 1247 0647 1A       		.uleb128 0x1a
+ 1248 0648 06000000 		.4byte	.LVL48
+ 1249 064c 56070000 		.4byte	0x756
+ 1250 0650 00       		.byte	0
+ 1251 0651 1E       		.uleb128 0x1e
+ 1252 0652 C1050000 		.4byte	.LASF74
+ 1253 0656 01       		.byte	0x1
+ 1254 0657 1C01     		.2byte	0x11c
+ 1255 0659 00000000 		.4byte	.LFB139
+ 1256 065d 08000000 		.4byte	.LFE139-.LFB139
+ 1257 0661 01       		.uleb128 0x1
+ 1258 0662 9C       		.byte	0x9c
+ 1259 0663 71060000 		.4byte	0x671
+ 1260 0667 1A       		.uleb128 0x1a
+ 1261 0668 06000000 		.4byte	.LVL49
+ 1262 066c 61070000 		.4byte	0x761
+ 1263 0670 00       		.byte	0
+ 1264 0671 1E       		.uleb128 0x1e
+ 1265 0672 5B030000 		.4byte	.LASF75
+ 1266 0676 01       		.byte	0x1
+ 1267 0677 2901     		.2byte	0x129
+ 1268 0679 00000000 		.4byte	.LFB140
+ 1269 067d 08000000 		.4byte	.LFE140-.LFB140
+ 1270 0681 01       		.uleb128 0x1
+ 1271 0682 9C       		.byte	0x9c
+ 1272 0683 91060000 		.4byte	0x691
+ 1273 0687 1A       		.uleb128 0x1a
+ 1274 0688 06000000 		.4byte	.LVL50
+ 1275 068c 6C070000 		.4byte	0x76c
+ 1276 0690 00       		.byte	0
+ 1277 0691 1F       		.uleb128 0x1f
+ 1278 0692 43040000 		.4byte	0x443
+ 1279 0696 A1060000 		.4byte	0x6a1
+ 1280 069a 20       		.uleb128 0x20
+ 1281 069b 93000000 		.4byte	0x93
+ 1282 069f 7F       		.byte	0x7f
+ 1283 06a0 00       		.byte	0
+ 1284 06a1 10       		.uleb128 0x10
+ 1285 06a2 69010000 		.4byte	.LASF76
+ 1286 06a6 01       		.byte	0x1
+ 1287 06a7 25       		.byte	0x25
+ 1288 06a8 B2060000 		.4byte	0x6b2
+ 1289 06ac 05       		.uleb128 0x5
+ 1290 06ad 03       		.byte	0x3
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 29
+
+
+ 1291 06ae 00000000 		.4byte	cy_dfu_metadata
+ 1292 06b2 1B       		.uleb128 0x1b
+ 1293 06b3 91060000 		.4byte	0x691
+ 1294 06b7 21       		.uleb128 0x21
+ 1295 06b8 CA060000 		.4byte	.LASF77
+ 1296 06bc 06       		.byte	0x6
+ 1297 06bd F907     		.2byte	0x7f9
+ 1298 06bf C3060000 		.4byte	0x6c3
+ 1299 06c3 22       		.uleb128 0x22
+ 1300 06c4 AC000000 		.4byte	0xac
+ 1301 06c8 23       		.uleb128 0x23
+ 1302 06c9 3C000000 		.4byte	.LASF78
+ 1303 06cd 07       		.byte	0x7
+ 1304 06ce 77       		.byte	0x77
+ 1305 06cf A1000000 		.4byte	0xa1
+ 1306 06d3 23       		.uleb128 0x23
+ 1307 06d4 B0020000 		.4byte	.LASF79
+ 1308 06d8 07       		.byte	0x7
+ 1309 06d9 78       		.byte	0x78
+ 1310 06da A1000000 		.4byte	0xa1
+ 1311 06de 23       		.uleb128 0x23
+ 1312 06df B3060000 		.4byte	.LASF80
+ 1313 06e3 07       		.byte	0x7
+ 1314 06e4 79       		.byte	0x79
+ 1315 06e5 A1000000 		.4byte	0xa1
+ 1316 06e9 23       		.uleb128 0x23
+ 1317 06ea 53000000 		.4byte	.LASF81
+ 1318 06ee 07       		.byte	0x7
+ 1319 06ef 7A       		.byte	0x7a
+ 1320 06f0 A1000000 		.4byte	0xa1
+ 1321 06f4 23       		.uleb128 0x23
+ 1322 06f5 6D020000 		.4byte	.LASF82
+ 1323 06f9 07       		.byte	0x7
+ 1324 06fa 7B       		.byte	0x7b
+ 1325 06fb A1000000 		.4byte	0xa1
+ 1326 06ff 24       		.uleb128 0x24
+ 1327 0700 70030000 		.4byte	.LASF83
+ 1328 0704 70030000 		.4byte	.LASF83
+ 1329 0708 05       		.byte	0x5
+ 1330 0709 CF02     		.2byte	0x2cf
+ 1331 070b 25       		.uleb128 0x25
+ 1332 070c 42020000 		.4byte	.LASF86
+ 1333 0710 42020000 		.4byte	.LASF86
+ 1334 0714 24       		.uleb128 0x24
+ 1335 0715 2C010000 		.4byte	.LASF84
+ 1336 0719 2C010000 		.4byte	.LASF84
+ 1337 071d 04       		.byte	0x4
+ 1338 071e A601     		.2byte	0x1a6
+ 1339 0720 24       		.uleb128 0x24
+ 1340 0721 6A040000 		.4byte	.LASF85
+ 1341 0725 6A040000 		.4byte	.LASF85
+ 1342 0729 05       		.byte	0x5
+ 1343 072a CD02     		.2byte	0x2cd
+ 1344 072c 25       		.uleb128 0x25
+ 1345 072d 08010000 		.4byte	.LASF87
+ 1346 0731 08010000 		.4byte	.LASF87
+ 1347 0735 26       		.uleb128 0x26
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 30
+
+
+ 1348 0736 E1010000 		.4byte	.LASF88
+ 1349 073a E1010000 		.4byte	.LASF88
+ 1350 073e 08       		.byte	0x8
+ 1351 073f 16       		.byte	0x16
+ 1352 0740 26       		.uleb128 0x26
+ 1353 0741 F8030000 		.4byte	.LASF89
+ 1354 0745 F8030000 		.4byte	.LASF89
+ 1355 0749 09       		.byte	0x9
+ 1356 074a 20       		.byte	0x20
+ 1357 074b 26       		.uleb128 0x26
+ 1358 074c A6000000 		.4byte	.LASF90
+ 1359 0750 A6000000 		.4byte	.LASF90
+ 1360 0754 09       		.byte	0x9
+ 1361 0755 21       		.byte	0x21
+ 1362 0756 26       		.uleb128 0x26
+ 1363 0757 D7050000 		.4byte	.LASF91
+ 1364 075b D7050000 		.4byte	.LASF91
+ 1365 075f 09       		.byte	0x9
+ 1366 0760 1F       		.byte	0x1f
+ 1367 0761 26       		.uleb128 0x26
+ 1368 0762 19040000 		.4byte	.LASF92
+ 1369 0766 19040000 		.4byte	.LASF92
+ 1370 076a 09       		.byte	0x9
+ 1371 076b 1D       		.byte	0x1d
+ 1372 076c 26       		.uleb128 0x26
+ 1373 076d EC060000 		.4byte	.LASF93
+ 1374 0771 EC060000 		.4byte	.LASF93
+ 1375 0775 09       		.byte	0x9
+ 1376 0776 1E       		.byte	0x1e
+ 1377 0777 00       		.byte	0
+ 1378              		.section	.debug_abbrev,"",%progbits
+ 1379              	.Ldebug_abbrev0:
+ 1380 0000 01       		.uleb128 0x1
+ 1381 0001 11       		.uleb128 0x11
+ 1382 0002 01       		.byte	0x1
+ 1383 0003 25       		.uleb128 0x25
+ 1384 0004 0E       		.uleb128 0xe
+ 1385 0005 13       		.uleb128 0x13
+ 1386 0006 0B       		.uleb128 0xb
+ 1387 0007 03       		.uleb128 0x3
+ 1388 0008 0E       		.uleb128 0xe
+ 1389 0009 1B       		.uleb128 0x1b
+ 1390 000a 0E       		.uleb128 0xe
+ 1391 000b 55       		.uleb128 0x55
+ 1392 000c 17       		.uleb128 0x17
+ 1393 000d 11       		.uleb128 0x11
+ 1394 000e 01       		.uleb128 0x1
+ 1395 000f 10       		.uleb128 0x10
+ 1396 0010 17       		.uleb128 0x17
+ 1397 0011 00       		.byte	0
+ 1398 0012 00       		.byte	0
+ 1399 0013 02       		.uleb128 0x2
+ 1400 0014 24       		.uleb128 0x24
+ 1401 0015 00       		.byte	0
+ 1402 0016 0B       		.uleb128 0xb
+ 1403 0017 0B       		.uleb128 0xb
+ 1404 0018 3E       		.uleb128 0x3e
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 31
+
+
+ 1405 0019 0B       		.uleb128 0xb
+ 1406 001a 03       		.uleb128 0x3
+ 1407 001b 08       		.uleb128 0x8
+ 1408 001c 00       		.byte	0
+ 1409 001d 00       		.byte	0
+ 1410 001e 03       		.uleb128 0x3
+ 1411 001f 24       		.uleb128 0x24
+ 1412 0020 00       		.byte	0
+ 1413 0021 0B       		.uleb128 0xb
+ 1414 0022 0B       		.uleb128 0xb
+ 1415 0023 3E       		.uleb128 0x3e
+ 1416 0024 0B       		.uleb128 0xb
+ 1417 0025 03       		.uleb128 0x3
+ 1418 0026 0E       		.uleb128 0xe
+ 1419 0027 00       		.byte	0
+ 1420 0028 00       		.byte	0
+ 1421 0029 04       		.uleb128 0x4
+ 1422 002a 16       		.uleb128 0x16
+ 1423 002b 00       		.byte	0
+ 1424 002c 03       		.uleb128 0x3
+ 1425 002d 0E       		.uleb128 0xe
+ 1426 002e 3A       		.uleb128 0x3a
+ 1427 002f 0B       		.uleb128 0xb
+ 1428 0030 3B       		.uleb128 0x3b
+ 1429 0031 0B       		.uleb128 0xb
+ 1430 0032 49       		.uleb128 0x49
+ 1431 0033 13       		.uleb128 0x13
+ 1432 0034 00       		.byte	0
+ 1433 0035 00       		.byte	0
+ 1434 0036 05       		.uleb128 0x5
+ 1435 0037 04       		.uleb128 0x4
+ 1436 0038 01       		.byte	0x1
+ 1437 0039 03       		.uleb128 0x3
+ 1438 003a 0E       		.uleb128 0xe
+ 1439 003b 0B       		.uleb128 0xb
+ 1440 003c 0B       		.uleb128 0xb
+ 1441 003d 49       		.uleb128 0x49
+ 1442 003e 13       		.uleb128 0x13
+ 1443 003f 3A       		.uleb128 0x3a
+ 1444 0040 0B       		.uleb128 0xb
+ 1445 0041 3B       		.uleb128 0x3b
+ 1446 0042 05       		.uleb128 0x5
+ 1447 0043 01       		.uleb128 0x1
+ 1448 0044 13       		.uleb128 0x13
+ 1449 0045 00       		.byte	0
+ 1450 0046 00       		.byte	0
+ 1451 0047 06       		.uleb128 0x6
+ 1452 0048 28       		.uleb128 0x28
+ 1453 0049 00       		.byte	0
+ 1454 004a 03       		.uleb128 0x3
+ 1455 004b 0E       		.uleb128 0xe
+ 1456 004c 1C       		.uleb128 0x1c
+ 1457 004d 0B       		.uleb128 0xb
+ 1458 004e 00       		.byte	0
+ 1459 004f 00       		.byte	0
+ 1460 0050 07       		.uleb128 0x7
+ 1461 0051 28       		.uleb128 0x28
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 32
+
+
+ 1462 0052 00       		.byte	0
+ 1463 0053 03       		.uleb128 0x3
+ 1464 0054 0E       		.uleb128 0xe
+ 1465 0055 1C       		.uleb128 0x1c
+ 1466 0056 06       		.uleb128 0x6
+ 1467 0057 00       		.byte	0
+ 1468 0058 00       		.byte	0
+ 1469 0059 08       		.uleb128 0x8
+ 1470 005a 16       		.uleb128 0x16
+ 1471 005b 00       		.byte	0
+ 1472 005c 03       		.uleb128 0x3
+ 1473 005d 0E       		.uleb128 0xe
+ 1474 005e 3A       		.uleb128 0x3a
+ 1475 005f 0B       		.uleb128 0xb
+ 1476 0060 3B       		.uleb128 0x3b
+ 1477 0061 05       		.uleb128 0x5
+ 1478 0062 49       		.uleb128 0x49
+ 1479 0063 13       		.uleb128 0x13
+ 1480 0064 00       		.byte	0
+ 1481 0065 00       		.byte	0
+ 1482 0066 09       		.uleb128 0x9
+ 1483 0067 13       		.uleb128 0x13
+ 1484 0068 01       		.byte	0x1
+ 1485 0069 0B       		.uleb128 0xb
+ 1486 006a 0B       		.uleb128 0xb
+ 1487 006b 3A       		.uleb128 0x3a
+ 1488 006c 0B       		.uleb128 0xb
+ 1489 006d 3B       		.uleb128 0x3b
+ 1490 006e 05       		.uleb128 0x5
+ 1491 006f 01       		.uleb128 0x1
+ 1492 0070 13       		.uleb128 0x13
+ 1493 0071 00       		.byte	0
+ 1494 0072 00       		.byte	0
+ 1495 0073 0A       		.uleb128 0xa
+ 1496 0074 0D       		.uleb128 0xd
+ 1497 0075 00       		.byte	0
+ 1498 0076 03       		.uleb128 0x3
+ 1499 0077 0E       		.uleb128 0xe
+ 1500 0078 3A       		.uleb128 0x3a
+ 1501 0079 0B       		.uleb128 0xb
+ 1502 007a 3B       		.uleb128 0x3b
+ 1503 007b 05       		.uleb128 0x5
+ 1504 007c 49       		.uleb128 0x49
+ 1505 007d 13       		.uleb128 0x13
+ 1506 007e 38       		.uleb128 0x38
+ 1507 007f 0B       		.uleb128 0xb
+ 1508 0080 00       		.byte	0
+ 1509 0081 00       		.byte	0
+ 1510 0082 0B       		.uleb128 0xb
+ 1511 0083 0F       		.uleb128 0xf
+ 1512 0084 00       		.byte	0
+ 1513 0085 0B       		.uleb128 0xb
+ 1514 0086 0B       		.uleb128 0xb
+ 1515 0087 49       		.uleb128 0x49
+ 1516 0088 13       		.uleb128 0x13
+ 1517 0089 00       		.byte	0
+ 1518 008a 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 33
+
+
+ 1519 008b 0C       		.uleb128 0xc
+ 1520 008c 04       		.uleb128 0x4
+ 1521 008d 01       		.byte	0x1
+ 1522 008e 0B       		.uleb128 0xb
+ 1523 008f 0B       		.uleb128 0xb
+ 1524 0090 49       		.uleb128 0x49
+ 1525 0091 13       		.uleb128 0x13
+ 1526 0092 3A       		.uleb128 0x3a
+ 1527 0093 0B       		.uleb128 0xb
+ 1528 0094 3B       		.uleb128 0x3b
+ 1529 0095 05       		.uleb128 0x5
+ 1530 0096 01       		.uleb128 0x1
+ 1531 0097 13       		.uleb128 0x13
+ 1532 0098 00       		.byte	0
+ 1533 0099 00       		.byte	0
+ 1534 009a 0D       		.uleb128 0xd
+ 1535 009b 2E       		.uleb128 0x2e
+ 1536 009c 01       		.byte	0x1
+ 1537 009d 03       		.uleb128 0x3
+ 1538 009e 0E       		.uleb128 0xe
+ 1539 009f 3A       		.uleb128 0x3a
+ 1540 00a0 0B       		.uleb128 0xb
+ 1541 00a1 3B       		.uleb128 0x3b
+ 1542 00a2 0B       		.uleb128 0xb
+ 1543 00a3 27       		.uleb128 0x27
+ 1544 00a4 19       		.uleb128 0x19
+ 1545 00a5 49       		.uleb128 0x49
+ 1546 00a6 13       		.uleb128 0x13
+ 1547 00a7 11       		.uleb128 0x11
+ 1548 00a8 01       		.uleb128 0x1
+ 1549 00a9 12       		.uleb128 0x12
+ 1550 00aa 06       		.uleb128 0x6
+ 1551 00ab 40       		.uleb128 0x40
+ 1552 00ac 18       		.uleb128 0x18
+ 1553 00ad 9742     		.uleb128 0x2117
+ 1554 00af 19       		.uleb128 0x19
+ 1555 00b0 01       		.uleb128 0x1
+ 1556 00b1 13       		.uleb128 0x13
+ 1557 00b2 00       		.byte	0
+ 1558 00b3 00       		.byte	0
+ 1559 00b4 0E       		.uleb128 0xe
+ 1560 00b5 05       		.uleb128 0x5
+ 1561 00b6 00       		.byte	0
+ 1562 00b7 03       		.uleb128 0x3
+ 1563 00b8 0E       		.uleb128 0xe
+ 1564 00b9 3A       		.uleb128 0x3a
+ 1565 00ba 0B       		.uleb128 0xb
+ 1566 00bb 3B       		.uleb128 0x3b
+ 1567 00bc 0B       		.uleb128 0xb
+ 1568 00bd 49       		.uleb128 0x49
+ 1569 00be 13       		.uleb128 0x13
+ 1570 00bf 02       		.uleb128 0x2
+ 1571 00c0 17       		.uleb128 0x17
+ 1572 00c1 00       		.byte	0
+ 1573 00c2 00       		.byte	0
+ 1574 00c3 0F       		.uleb128 0xf
+ 1575 00c4 2E       		.uleb128 0x2e
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 34
+
+
+ 1576 00c5 01       		.byte	0x1
+ 1577 00c6 03       		.uleb128 0x3
+ 1578 00c7 0E       		.uleb128 0xe
+ 1579 00c8 3A       		.uleb128 0x3a
+ 1580 00c9 0B       		.uleb128 0xb
+ 1581 00ca 3B       		.uleb128 0x3b
+ 1582 00cb 0B       		.uleb128 0xb
+ 1583 00cc 27       		.uleb128 0x27
+ 1584 00cd 19       		.uleb128 0x19
+ 1585 00ce 11       		.uleb128 0x11
+ 1586 00cf 01       		.uleb128 0x1
+ 1587 00d0 12       		.uleb128 0x12
+ 1588 00d1 06       		.uleb128 0x6
+ 1589 00d2 40       		.uleb128 0x40
+ 1590 00d3 18       		.uleb128 0x18
+ 1591 00d4 9742     		.uleb128 0x2117
+ 1592 00d6 19       		.uleb128 0x19
+ 1593 00d7 01       		.uleb128 0x1
+ 1594 00d8 13       		.uleb128 0x13
+ 1595 00d9 00       		.byte	0
+ 1596 00da 00       		.byte	0
+ 1597 00db 10       		.uleb128 0x10
+ 1598 00dc 34       		.uleb128 0x34
+ 1599 00dd 00       		.byte	0
+ 1600 00de 03       		.uleb128 0x3
+ 1601 00df 0E       		.uleb128 0xe
+ 1602 00e0 3A       		.uleb128 0x3a
+ 1603 00e1 0B       		.uleb128 0xb
+ 1604 00e2 3B       		.uleb128 0x3b
+ 1605 00e3 0B       		.uleb128 0xb
+ 1606 00e4 49       		.uleb128 0x49
+ 1607 00e5 13       		.uleb128 0x13
+ 1608 00e6 02       		.uleb128 0x2
+ 1609 00e7 18       		.uleb128 0x18
+ 1610 00e8 00       		.byte	0
+ 1611 00e9 00       		.byte	0
+ 1612 00ea 11       		.uleb128 0x11
+ 1613 00eb 898201   		.uleb128 0x4109
+ 1614 00ee 01       		.byte	0x1
+ 1615 00ef 11       		.uleb128 0x11
+ 1616 00f0 01       		.uleb128 0x1
+ 1617 00f1 31       		.uleb128 0x31
+ 1618 00f2 13       		.uleb128 0x13
+ 1619 00f3 00       		.byte	0
+ 1620 00f4 00       		.byte	0
+ 1621 00f5 12       		.uleb128 0x12
+ 1622 00f6 8A8201   		.uleb128 0x410a
+ 1623 00f9 00       		.byte	0
+ 1624 00fa 02       		.uleb128 0x2
+ 1625 00fb 18       		.uleb128 0x18
+ 1626 00fc 9142     		.uleb128 0x2111
+ 1627 00fe 18       		.uleb128 0x18
+ 1628 00ff 00       		.byte	0
+ 1629 0100 00       		.byte	0
+ 1630 0101 13       		.uleb128 0x13
+ 1631 0102 2E       		.uleb128 0x2e
+ 1632 0103 01       		.byte	0x1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 35
+
+
+ 1633 0104 3F       		.uleb128 0x3f
+ 1634 0105 19       		.uleb128 0x19
+ 1635 0106 03       		.uleb128 0x3
+ 1636 0107 0E       		.uleb128 0xe
+ 1637 0108 3A       		.uleb128 0x3a
+ 1638 0109 0B       		.uleb128 0xb
+ 1639 010a 3B       		.uleb128 0x3b
+ 1640 010b 0B       		.uleb128 0xb
+ 1641 010c 27       		.uleb128 0x27
+ 1642 010d 19       		.uleb128 0x19
+ 1643 010e 49       		.uleb128 0x49
+ 1644 010f 13       		.uleb128 0x13
+ 1645 0110 11       		.uleb128 0x11
+ 1646 0111 01       		.uleb128 0x1
+ 1647 0112 12       		.uleb128 0x12
+ 1648 0113 06       		.uleb128 0x6
+ 1649 0114 40       		.uleb128 0x40
+ 1650 0115 18       		.uleb128 0x18
+ 1651 0116 9742     		.uleb128 0x2117
+ 1652 0118 19       		.uleb128 0x19
+ 1653 0119 01       		.uleb128 0x1
+ 1654 011a 13       		.uleb128 0x13
+ 1655 011b 00       		.byte	0
+ 1656 011c 00       		.byte	0
+ 1657 011d 14       		.uleb128 0x14
+ 1658 011e 05       		.uleb128 0x5
+ 1659 011f 00       		.byte	0
+ 1660 0120 03       		.uleb128 0x3
+ 1661 0121 08       		.uleb128 0x8
+ 1662 0122 3A       		.uleb128 0x3a
+ 1663 0123 0B       		.uleb128 0xb
+ 1664 0124 3B       		.uleb128 0x3b
+ 1665 0125 0B       		.uleb128 0xb
+ 1666 0126 49       		.uleb128 0x49
+ 1667 0127 13       		.uleb128 0x13
+ 1668 0128 02       		.uleb128 0x2
+ 1669 0129 17       		.uleb128 0x17
+ 1670 012a 00       		.byte	0
+ 1671 012b 00       		.byte	0
+ 1672 012c 15       		.uleb128 0x15
+ 1673 012d 34       		.uleb128 0x34
+ 1674 012e 00       		.byte	0
+ 1675 012f 03       		.uleb128 0x3
+ 1676 0130 0E       		.uleb128 0xe
+ 1677 0131 3A       		.uleb128 0x3a
+ 1678 0132 0B       		.uleb128 0xb
+ 1679 0133 3B       		.uleb128 0x3b
+ 1680 0134 0B       		.uleb128 0xb
+ 1681 0135 49       		.uleb128 0x49
+ 1682 0136 13       		.uleb128 0x13
+ 1683 0137 02       		.uleb128 0x2
+ 1684 0138 17       		.uleb128 0x17
+ 1685 0139 00       		.byte	0
+ 1686 013a 00       		.byte	0
+ 1687 013b 16       		.uleb128 0x16
+ 1688 013c 34       		.uleb128 0x34
+ 1689 013d 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 36
+
+
+ 1690 013e 03       		.uleb128 0x3
+ 1691 013f 0E       		.uleb128 0xe
+ 1692 0140 3A       		.uleb128 0x3a
+ 1693 0141 0B       		.uleb128 0xb
+ 1694 0142 3B       		.uleb128 0x3b
+ 1695 0143 0B       		.uleb128 0xb
+ 1696 0144 49       		.uleb128 0x49
+ 1697 0145 13       		.uleb128 0x13
+ 1698 0146 1C       		.uleb128 0x1c
+ 1699 0147 06       		.uleb128 0x6
+ 1700 0148 00       		.byte	0
+ 1701 0149 00       		.byte	0
+ 1702 014a 17       		.uleb128 0x17
+ 1703 014b 34       		.uleb128 0x34
+ 1704 014c 00       		.byte	0
+ 1705 014d 03       		.uleb128 0x3
+ 1706 014e 08       		.uleb128 0x8
+ 1707 014f 3A       		.uleb128 0x3a
+ 1708 0150 0B       		.uleb128 0xb
+ 1709 0151 3B       		.uleb128 0x3b
+ 1710 0152 0B       		.uleb128 0xb
+ 1711 0153 49       		.uleb128 0x49
+ 1712 0154 13       		.uleb128 0x13
+ 1713 0155 02       		.uleb128 0x2
+ 1714 0156 17       		.uleb128 0x17
+ 1715 0157 00       		.byte	0
+ 1716 0158 00       		.byte	0
+ 1717 0159 18       		.uleb128 0x18
+ 1718 015a 0B       		.uleb128 0xb
+ 1719 015b 01       		.byte	0x1
+ 1720 015c 11       		.uleb128 0x11
+ 1721 015d 01       		.uleb128 0x1
+ 1722 015e 12       		.uleb128 0x12
+ 1723 015f 06       		.uleb128 0x6
+ 1724 0160 01       		.uleb128 0x1
+ 1725 0161 13       		.uleb128 0x13
+ 1726 0162 00       		.byte	0
+ 1727 0163 00       		.byte	0
+ 1728 0164 19       		.uleb128 0x19
+ 1729 0165 898201   		.uleb128 0x4109
+ 1730 0168 01       		.byte	0x1
+ 1731 0169 11       		.uleb128 0x11
+ 1732 016a 01       		.uleb128 0x1
+ 1733 016b 31       		.uleb128 0x31
+ 1734 016c 13       		.uleb128 0x13
+ 1735 016d 01       		.uleb128 0x1
+ 1736 016e 13       		.uleb128 0x13
+ 1737 016f 00       		.byte	0
+ 1738 0170 00       		.byte	0
+ 1739 0171 1A       		.uleb128 0x1a
+ 1740 0172 898201   		.uleb128 0x4109
+ 1741 0175 00       		.byte	0
+ 1742 0176 11       		.uleb128 0x11
+ 1743 0177 01       		.uleb128 0x1
+ 1744 0178 31       		.uleb128 0x31
+ 1745 0179 13       		.uleb128 0x13
+ 1746 017a 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 37
+
+
+ 1747 017b 00       		.byte	0
+ 1748 017c 1B       		.uleb128 0x1b
+ 1749 017d 26       		.uleb128 0x26
+ 1750 017e 00       		.byte	0
+ 1751 017f 49       		.uleb128 0x49
+ 1752 0180 13       		.uleb128 0x13
+ 1753 0181 00       		.byte	0
+ 1754 0182 00       		.byte	0
+ 1755 0183 1C       		.uleb128 0x1c
+ 1756 0184 2E       		.uleb128 0x2e
+ 1757 0185 01       		.byte	0x1
+ 1758 0186 3F       		.uleb128 0x3f
+ 1759 0187 19       		.uleb128 0x19
+ 1760 0188 03       		.uleb128 0x3
+ 1761 0189 0E       		.uleb128 0xe
+ 1762 018a 3A       		.uleb128 0x3a
+ 1763 018b 0B       		.uleb128 0xb
+ 1764 018c 3B       		.uleb128 0x3b
+ 1765 018d 05       		.uleb128 0x5
+ 1766 018e 27       		.uleb128 0x27
+ 1767 018f 19       		.uleb128 0x19
+ 1768 0190 49       		.uleb128 0x49
+ 1769 0191 13       		.uleb128 0x13
+ 1770 0192 11       		.uleb128 0x11
+ 1771 0193 01       		.uleb128 0x1
+ 1772 0194 12       		.uleb128 0x12
+ 1773 0195 06       		.uleb128 0x6
+ 1774 0196 40       		.uleb128 0x40
+ 1775 0197 18       		.uleb128 0x18
+ 1776 0198 9742     		.uleb128 0x2117
+ 1777 019a 19       		.uleb128 0x19
+ 1778 019b 01       		.uleb128 0x1
+ 1779 019c 13       		.uleb128 0x13
+ 1780 019d 00       		.byte	0
+ 1781 019e 00       		.byte	0
+ 1782 019f 1D       		.uleb128 0x1d
+ 1783 01a0 05       		.uleb128 0x5
+ 1784 01a1 00       		.byte	0
+ 1785 01a2 03       		.uleb128 0x3
+ 1786 01a3 0E       		.uleb128 0xe
+ 1787 01a4 3A       		.uleb128 0x3a
+ 1788 01a5 0B       		.uleb128 0xb
+ 1789 01a6 3B       		.uleb128 0x3b
+ 1790 01a7 05       		.uleb128 0x5
+ 1791 01a8 49       		.uleb128 0x49
+ 1792 01a9 13       		.uleb128 0x13
+ 1793 01aa 02       		.uleb128 0x2
+ 1794 01ab 17       		.uleb128 0x17
+ 1795 01ac 00       		.byte	0
+ 1796 01ad 00       		.byte	0
+ 1797 01ae 1E       		.uleb128 0x1e
+ 1798 01af 2E       		.uleb128 0x2e
+ 1799 01b0 01       		.byte	0x1
+ 1800 01b1 3F       		.uleb128 0x3f
+ 1801 01b2 19       		.uleb128 0x19
+ 1802 01b3 03       		.uleb128 0x3
+ 1803 01b4 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 38
+
+
+ 1804 01b5 3A       		.uleb128 0x3a
+ 1805 01b6 0B       		.uleb128 0xb
+ 1806 01b7 3B       		.uleb128 0x3b
+ 1807 01b8 05       		.uleb128 0x5
+ 1808 01b9 27       		.uleb128 0x27
+ 1809 01ba 19       		.uleb128 0x19
+ 1810 01bb 11       		.uleb128 0x11
+ 1811 01bc 01       		.uleb128 0x1
+ 1812 01bd 12       		.uleb128 0x12
+ 1813 01be 06       		.uleb128 0x6
+ 1814 01bf 40       		.uleb128 0x40
+ 1815 01c0 18       		.uleb128 0x18
+ 1816 01c1 9742     		.uleb128 0x2117
+ 1817 01c3 19       		.uleb128 0x19
+ 1818 01c4 01       		.uleb128 0x1
+ 1819 01c5 13       		.uleb128 0x13
+ 1820 01c6 00       		.byte	0
+ 1821 01c7 00       		.byte	0
+ 1822 01c8 1F       		.uleb128 0x1f
+ 1823 01c9 01       		.uleb128 0x1
+ 1824 01ca 01       		.byte	0x1
+ 1825 01cb 49       		.uleb128 0x49
+ 1826 01cc 13       		.uleb128 0x13
+ 1827 01cd 01       		.uleb128 0x1
+ 1828 01ce 13       		.uleb128 0x13
+ 1829 01cf 00       		.byte	0
+ 1830 01d0 00       		.byte	0
+ 1831 01d1 20       		.uleb128 0x20
+ 1832 01d2 21       		.uleb128 0x21
+ 1833 01d3 00       		.byte	0
+ 1834 01d4 49       		.uleb128 0x49
+ 1835 01d5 13       		.uleb128 0x13
+ 1836 01d6 2F       		.uleb128 0x2f
+ 1837 01d7 0B       		.uleb128 0xb
+ 1838 01d8 00       		.byte	0
+ 1839 01d9 00       		.byte	0
+ 1840 01da 21       		.uleb128 0x21
+ 1841 01db 34       		.uleb128 0x34
+ 1842 01dc 00       		.byte	0
+ 1843 01dd 03       		.uleb128 0x3
+ 1844 01de 0E       		.uleb128 0xe
+ 1845 01df 3A       		.uleb128 0x3a
+ 1846 01e0 0B       		.uleb128 0xb
+ 1847 01e1 3B       		.uleb128 0x3b
+ 1848 01e2 05       		.uleb128 0x5
+ 1849 01e3 49       		.uleb128 0x49
+ 1850 01e4 13       		.uleb128 0x13
+ 1851 01e5 3F       		.uleb128 0x3f
+ 1852 01e6 19       		.uleb128 0x19
+ 1853 01e7 3C       		.uleb128 0x3c
+ 1854 01e8 19       		.uleb128 0x19
+ 1855 01e9 00       		.byte	0
+ 1856 01ea 00       		.byte	0
+ 1857 01eb 22       		.uleb128 0x22
+ 1858 01ec 35       		.uleb128 0x35
+ 1859 01ed 00       		.byte	0
+ 1860 01ee 49       		.uleb128 0x49
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 39
+
+
+ 1861 01ef 13       		.uleb128 0x13
+ 1862 01f0 00       		.byte	0
+ 1863 01f1 00       		.byte	0
+ 1864 01f2 23       		.uleb128 0x23
+ 1865 01f3 34       		.uleb128 0x34
+ 1866 01f4 00       		.byte	0
+ 1867 01f5 03       		.uleb128 0x3
+ 1868 01f6 0E       		.uleb128 0xe
+ 1869 01f7 3A       		.uleb128 0x3a
+ 1870 01f8 0B       		.uleb128 0xb
+ 1871 01f9 3B       		.uleb128 0x3b
+ 1872 01fa 0B       		.uleb128 0xb
+ 1873 01fb 49       		.uleb128 0x49
+ 1874 01fc 13       		.uleb128 0x13
+ 1875 01fd 3F       		.uleb128 0x3f
+ 1876 01fe 19       		.uleb128 0x19
+ 1877 01ff 3C       		.uleb128 0x3c
+ 1878 0200 19       		.uleb128 0x19
+ 1879 0201 00       		.byte	0
+ 1880 0202 00       		.byte	0
+ 1881 0203 24       		.uleb128 0x24
+ 1882 0204 2E       		.uleb128 0x2e
+ 1883 0205 00       		.byte	0
+ 1884 0206 3F       		.uleb128 0x3f
+ 1885 0207 19       		.uleb128 0x19
+ 1886 0208 3C       		.uleb128 0x3c
+ 1887 0209 19       		.uleb128 0x19
+ 1888 020a 6E       		.uleb128 0x6e
+ 1889 020b 0E       		.uleb128 0xe
+ 1890 020c 03       		.uleb128 0x3
+ 1891 020d 0E       		.uleb128 0xe
+ 1892 020e 3A       		.uleb128 0x3a
+ 1893 020f 0B       		.uleb128 0xb
+ 1894 0210 3B       		.uleb128 0x3b
+ 1895 0211 05       		.uleb128 0x5
+ 1896 0212 00       		.byte	0
+ 1897 0213 00       		.byte	0
+ 1898 0214 25       		.uleb128 0x25
+ 1899 0215 2E       		.uleb128 0x2e
+ 1900 0216 00       		.byte	0
+ 1901 0217 3F       		.uleb128 0x3f
+ 1902 0218 19       		.uleb128 0x19
+ 1903 0219 3C       		.uleb128 0x3c
+ 1904 021a 19       		.uleb128 0x19
+ 1905 021b 6E       		.uleb128 0x6e
+ 1906 021c 0E       		.uleb128 0xe
+ 1907 021d 03       		.uleb128 0x3
+ 1908 021e 0E       		.uleb128 0xe
+ 1909 021f 00       		.byte	0
+ 1910 0220 00       		.byte	0
+ 1911 0221 26       		.uleb128 0x26
+ 1912 0222 2E       		.uleb128 0x2e
+ 1913 0223 00       		.byte	0
+ 1914 0224 3F       		.uleb128 0x3f
+ 1915 0225 19       		.uleb128 0x19
+ 1916 0226 3C       		.uleb128 0x3c
+ 1917 0227 19       		.uleb128 0x19
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 40
+
+
+ 1918 0228 6E       		.uleb128 0x6e
+ 1919 0229 0E       		.uleb128 0xe
+ 1920 022a 03       		.uleb128 0x3
+ 1921 022b 0E       		.uleb128 0xe
+ 1922 022c 3A       		.uleb128 0x3a
+ 1923 022d 0B       		.uleb128 0xb
+ 1924 022e 3B       		.uleb128 0x3b
+ 1925 022f 0B       		.uleb128 0xb
+ 1926 0230 00       		.byte	0
+ 1927 0231 00       		.byte	0
+ 1928 0232 00       		.byte	0
+ 1929              		.section	.debug_loc,"",%progbits
+ 1930              	.Ldebug_loc0:
+ 1931              	.LLST0:
+ 1932 0000 00000000 		.4byte	.LVL0
+ 1933 0004 0C000000 		.4byte	.LVL2
+ 1934 0008 0100     		.2byte	0x1
+ 1935 000a 50       		.byte	0x50
+ 1936 000b 0C000000 		.4byte	.LVL2
+ 1937 000f 0E000000 		.4byte	.LVL3
+ 1938 0013 0400     		.2byte	0x4
+ 1939 0015 F3       		.byte	0xf3
+ 1940 0016 01       		.uleb128 0x1
+ 1941 0017 50       		.byte	0x50
+ 1942 0018 9F       		.byte	0x9f
+ 1943 0019 0E000000 		.4byte	.LVL3
+ 1944 001d 10000000 		.4byte	.LVL4
+ 1945 0021 0100     		.2byte	0x1
+ 1946 0023 50       		.byte	0x50
+ 1947 0024 10000000 		.4byte	.LVL4
+ 1948 0028 12000000 		.4byte	.LFE132
+ 1949 002c 0400     		.2byte	0x4
+ 1950 002e F3       		.byte	0xf3
+ 1951 002f 01       		.uleb128 0x1
+ 1952 0030 50       		.byte	0x50
+ 1953 0031 9F       		.byte	0x9f
+ 1954 0032 00000000 		.4byte	0
+ 1955 0036 00000000 		.4byte	0
+ 1956              	.LLST1:
+ 1957 003a 00000000 		.4byte	.LVL0
+ 1958 003e 08000000 		.4byte	.LVL1
+ 1959 0042 0100     		.2byte	0x1
+ 1960 0044 51       		.byte	0x51
+ 1961 0045 08000000 		.4byte	.LVL1
+ 1962 0049 12000000 		.4byte	.LFE132
+ 1963 004d 0400     		.2byte	0x4
+ 1964 004f F3       		.byte	0xf3
+ 1965 0050 01       		.uleb128 0x1
+ 1966 0051 51       		.byte	0x51
+ 1967 0052 9F       		.byte	0x9f
+ 1968 0053 00000000 		.4byte	0
+ 1969 0057 00000000 		.4byte	0
+ 1970              	.LLST2:
+ 1971 005b 00000000 		.4byte	.LVL5
+ 1972 005f 0F000000 		.4byte	.LVL8-1
+ 1973 0063 0100     		.2byte	0x1
+ 1974 0065 50       		.byte	0x50
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 41
+
+
+ 1975 0066 0F000000 		.4byte	.LVL8-1
+ 1976 006a 28000000 		.4byte	.LFE133
+ 1977 006e 0400     		.2byte	0x4
+ 1978 0070 F3       		.byte	0xf3
+ 1979 0071 01       		.uleb128 0x1
+ 1980 0072 50       		.byte	0x50
+ 1981 0073 9F       		.byte	0x9f
+ 1982 0074 00000000 		.4byte	0
+ 1983 0078 00000000 		.4byte	0
+ 1984              	.LLST3:
+ 1985 007c 00000000 		.4byte	.LVL5
+ 1986 0080 0C000000 		.4byte	.LVL7
+ 1987 0084 0100     		.2byte	0x1
+ 1988 0086 51       		.byte	0x51
+ 1989 0087 0C000000 		.4byte	.LVL7
+ 1990 008b 22000000 		.4byte	.LVL9
+ 1991 008f 0100     		.2byte	0x1
+ 1992 0091 55       		.byte	0x55
+ 1993 0092 22000000 		.4byte	.LVL9
+ 1994 0096 28000000 		.4byte	.LFE133
+ 1995 009a 0400     		.2byte	0x4
+ 1996 009c F3       		.byte	0xf3
+ 1997 009d 01       		.uleb128 0x1
+ 1998 009e 51       		.byte	0x51
+ 1999 009f 9F       		.byte	0x9f
+ 2000 00a0 00000000 		.4byte	0
+ 2001 00a4 00000000 		.4byte	0
+ 2002              	.LLST4:
+ 2003 00a8 00000000 		.4byte	.LVL5
+ 2004 00ac 0A000000 		.4byte	.LVL6
+ 2005 00b0 0100     		.2byte	0x1
+ 2006 00b2 52       		.byte	0x52
+ 2007 00b3 0A000000 		.4byte	.LVL6
+ 2008 00b7 22000000 		.4byte	.LVL9
+ 2009 00bb 0100     		.2byte	0x1
+ 2010 00bd 54       		.byte	0x54
+ 2011 00be 22000000 		.4byte	.LVL9
+ 2012 00c2 28000000 		.4byte	.LFE133
+ 2013 00c6 0400     		.2byte	0x4
+ 2014 00c8 F3       		.byte	0xf3
+ 2015 00c9 01       		.uleb128 0x1
+ 2016 00ca 52       		.byte	0x52
+ 2017 00cb 9F       		.byte	0x9f
+ 2018 00cc 00000000 		.4byte	0
+ 2019 00d0 00000000 		.4byte	0
+ 2020              	.LLST5:
+ 2021 00d4 00000000 		.4byte	.LVL10
+ 2022 00d8 0F000000 		.4byte	.LVL12-1
+ 2023 00dc 0100     		.2byte	0x1
+ 2024 00de 50       		.byte	0x50
+ 2025 00df 0F000000 		.4byte	.LVL12-1
+ 2026 00e3 8A000000 		.4byte	.LVL29
+ 2027 00e7 0100     		.2byte	0x1
+ 2028 00e9 54       		.byte	0x54
+ 2029 00ea 8A000000 		.4byte	.LVL29
+ 2030 00ee A0000000 		.4byte	.LFE134
+ 2031 00f2 0400     		.2byte	0x4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 42
+
+
+ 2032 00f4 F3       		.byte	0xf3
+ 2033 00f5 01       		.uleb128 0x1
+ 2034 00f6 50       		.byte	0x50
+ 2035 00f7 9F       		.byte	0x9f
+ 2036 00f8 00000000 		.4byte	0
+ 2037 00fc 00000000 		.4byte	0
+ 2038              	.LLST6:
+ 2039 0100 00000000 		.4byte	.LVL10
+ 2040 0104 0F000000 		.4byte	.LVL12-1
+ 2041 0108 0100     		.2byte	0x1
+ 2042 010a 51       		.byte	0x51
+ 2043 010b 0F000000 		.4byte	.LVL12-1
+ 2044 010f 32000000 		.4byte	.LVL15
+ 2045 0113 0100     		.2byte	0x1
+ 2046 0115 55       		.byte	0x55
+ 2047 0116 32000000 		.4byte	.LVL15
+ 2048 011a 34000000 		.4byte	.LVL16
+ 2049 011e 0400     		.2byte	0x4
+ 2050 0120 F3       		.byte	0xf3
+ 2051 0121 01       		.uleb128 0x1
+ 2052 0122 51       		.byte	0x51
+ 2053 0123 9F       		.byte	0x9f
+ 2054 0124 34000000 		.4byte	.LVL16
+ 2055 0128 36000000 		.4byte	.LVL17
+ 2056 012c 0100     		.2byte	0x1
+ 2057 012e 55       		.byte	0x55
+ 2058 012f 36000000 		.4byte	.LVL17
+ 2059 0133 38000000 		.4byte	.LVL18
+ 2060 0137 0400     		.2byte	0x4
+ 2061 0139 F3       		.byte	0xf3
+ 2062 013a 01       		.uleb128 0x1
+ 2063 013b 51       		.byte	0x51
+ 2064 013c 9F       		.byte	0x9f
+ 2065 013d 38000000 		.4byte	.LVL18
+ 2066 0141 3A000000 		.4byte	.LVL19
+ 2067 0145 0100     		.2byte	0x1
+ 2068 0147 55       		.byte	0x55
+ 2069 0148 3A000000 		.4byte	.LVL19
+ 2070 014c 3C000000 		.4byte	.LVL20
+ 2071 0150 0400     		.2byte	0x4
+ 2072 0152 F3       		.byte	0xf3
+ 2073 0153 01       		.uleb128 0x1
+ 2074 0154 51       		.byte	0x51
+ 2075 0155 9F       		.byte	0x9f
+ 2076 0156 3C000000 		.4byte	.LVL20
+ 2077 015a 3E000000 		.4byte	.LVL21
+ 2078 015e 0100     		.2byte	0x1
+ 2079 0160 55       		.byte	0x55
+ 2080 0161 3E000000 		.4byte	.LVL21
+ 2081 0165 A0000000 		.4byte	.LFE134
+ 2082 0169 0400     		.2byte	0x4
+ 2083 016b F3       		.byte	0xf3
+ 2084 016c 01       		.uleb128 0x1
+ 2085 016d 51       		.byte	0x51
+ 2086 016e 9F       		.byte	0x9f
+ 2087 016f 00000000 		.4byte	0
+ 2088 0173 00000000 		.4byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 43
+
+
+ 2089              	.LLST7:
+ 2090 0177 00000000 		.4byte	.LVL10
+ 2091 017b 0F000000 		.4byte	.LVL12-1
+ 2092 017f 0100     		.2byte	0x1
+ 2093 0181 52       		.byte	0x52
+ 2094 0182 0F000000 		.4byte	.LVL12-1
+ 2095 0186 8A000000 		.4byte	.LVL29
+ 2096 018a 0100     		.2byte	0x1
+ 2097 018c 56       		.byte	0x56
+ 2098 018d 8A000000 		.4byte	.LVL29
+ 2099 0191 A0000000 		.4byte	.LFE134
+ 2100 0195 0400     		.2byte	0x4
+ 2101 0197 F3       		.byte	0xf3
+ 2102 0198 01       		.uleb128 0x1
+ 2103 0199 52       		.byte	0x52
+ 2104 019a 9F       		.byte	0x9f
+ 2105 019b 00000000 		.4byte	0
+ 2106 019f 00000000 		.4byte	0
+ 2107              	.LLST8:
+ 2108 01a3 00000000 		.4byte	.LVL10
+ 2109 01a7 0F000000 		.4byte	.LVL12-1
+ 2110 01ab 0100     		.2byte	0x1
+ 2111 01ad 53       		.byte	0x53
+ 2112 01ae 0F000000 		.4byte	.LVL12-1
+ 2113 01b2 8A000000 		.4byte	.LVL29
+ 2114 01b6 0100     		.2byte	0x1
+ 2115 01b8 57       		.byte	0x57
+ 2116 01b9 8A000000 		.4byte	.LVL29
+ 2117 01bd A0000000 		.4byte	.LFE134
+ 2118 01c1 0400     		.2byte	0x4
+ 2119 01c3 F3       		.byte	0xf3
+ 2120 01c4 01       		.uleb128 0x1
+ 2121 01c5 53       		.byte	0x53
+ 2122 01c6 9F       		.byte	0x9f
+ 2123 01c7 00000000 		.4byte	0
+ 2124 01cb 00000000 		.4byte	0
+ 2125              	.LLST9:
+ 2126 01cf 4E000000 		.4byte	.LVL23
+ 2127 01d3 54000000 		.4byte	.LVL24
+ 2128 01d7 0100     		.2byte	0x1
+ 2129 01d9 53       		.byte	0x53
+ 2130 01da 00000000 		.4byte	0
+ 2131 01de 00000000 		.4byte	0
+ 2132              	.LLST10:
+ 2133 01e2 0C000000 		.4byte	.LVL11
+ 2134 01e6 3E000000 		.4byte	.LVL21
+ 2135 01ea 0200     		.2byte	0x2
+ 2136 01ec 30       		.byte	0x30
+ 2137 01ed 9F       		.byte	0x9f
+ 2138 01ee 3E000000 		.4byte	.LVL21
+ 2139 01f2 8A000000 		.4byte	.LVL29
+ 2140 01f6 0100     		.2byte	0x1
+ 2141 01f8 55       		.byte	0x55
+ 2142 01f9 8A000000 		.4byte	.LVL29
+ 2143 01fd A0000000 		.4byte	.LFE134
+ 2144 0201 0100     		.2byte	0x1
+ 2145 0203 50       		.byte	0x50
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 44
+
+
+ 2146 0204 00000000 		.4byte	0
+ 2147 0208 00000000 		.4byte	0
+ 2148              	.LLST11:
+ 2149 020c 10000000 		.4byte	.LVL12
+ 2150 0210 17000000 		.4byte	.LVL13-1
+ 2151 0214 0100     		.2byte	0x1
+ 2152 0216 50       		.byte	0x50
+ 2153 0217 00000000 		.4byte	0
+ 2154 021b 00000000 		.4byte	0
+ 2155              	.LLST12:
+ 2156 021f 80000000 		.4byte	.LVL27
+ 2157 0223 84000000 		.4byte	.LVL28
+ 2158 0227 0100     		.2byte	0x1
+ 2159 0229 50       		.byte	0x50
+ 2160 022a 00000000 		.4byte	0
+ 2161 022e 00000000 		.4byte	0
+ 2162              	.LLST13:
+ 2163 0232 00000000 		.4byte	.LVL30
+ 2164 0236 12000000 		.4byte	.LVL33
+ 2165 023a 0100     		.2byte	0x1
+ 2166 023c 50       		.byte	0x50
+ 2167 023d 12000000 		.4byte	.LVL33
+ 2168 0241 62000000 		.4byte	.LVL43
+ 2169 0245 0100     		.2byte	0x1
+ 2170 0247 54       		.byte	0x54
+ 2171 0248 62000000 		.4byte	.LVL43
+ 2172 024c 78000000 		.4byte	.LFE135
+ 2173 0250 0400     		.2byte	0x4
+ 2174 0252 F3       		.byte	0xf3
+ 2175 0253 01       		.uleb128 0x1
+ 2176 0254 50       		.byte	0x50
+ 2177 0255 9F       		.byte	0x9f
+ 2178 0256 00000000 		.4byte	0
+ 2179 025a 00000000 		.4byte	0
+ 2180              	.LLST14:
+ 2181 025e 00000000 		.4byte	.LVL30
+ 2182 0262 10000000 		.4byte	.LVL32
+ 2183 0266 0100     		.2byte	0x1
+ 2184 0268 51       		.byte	0x51
+ 2185 0269 10000000 		.4byte	.LVL32
+ 2186 026d 62000000 		.4byte	.LVL43
+ 2187 0271 0100     		.2byte	0x1
+ 2188 0273 56       		.byte	0x56
+ 2189 0274 62000000 		.4byte	.LVL43
+ 2190 0278 78000000 		.4byte	.LFE135
+ 2191 027c 0400     		.2byte	0x4
+ 2192 027e F3       		.byte	0xf3
+ 2193 027f 01       		.uleb128 0x1
+ 2194 0280 51       		.byte	0x51
+ 2195 0281 9F       		.byte	0x9f
+ 2196 0282 00000000 		.4byte	0
+ 2197 0286 00000000 		.4byte	0
+ 2198              	.LLST15:
+ 2199 028a 00000000 		.4byte	.LVL30
+ 2200 028e 15000000 		.4byte	.LVL34-1
+ 2201 0292 0100     		.2byte	0x1
+ 2202 0294 52       		.byte	0x52
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 45
+
+
+ 2203 0295 15000000 		.4byte	.LVL34-1
+ 2204 0299 62000000 		.4byte	.LVL43
+ 2205 029d 0100     		.2byte	0x1
+ 2206 029f 57       		.byte	0x57
+ 2207 02a0 62000000 		.4byte	.LVL43
+ 2208 02a4 78000000 		.4byte	.LFE135
+ 2209 02a8 0400     		.2byte	0x4
+ 2210 02aa F3       		.byte	0xf3
+ 2211 02ab 01       		.uleb128 0x1
+ 2212 02ac 52       		.byte	0x52
+ 2213 02ad 9F       		.byte	0x9f
+ 2214 02ae 00000000 		.4byte	0
+ 2215 02b2 00000000 		.4byte	0
+ 2216              	.LLST16:
+ 2217 02b6 00000000 		.4byte	.LVL30
+ 2218 02ba 15000000 		.4byte	.LVL34-1
+ 2219 02be 0100     		.2byte	0x1
+ 2220 02c0 53       		.byte	0x53
+ 2221 02c1 15000000 		.4byte	.LVL34-1
+ 2222 02c5 62000000 		.4byte	.LVL43
+ 2223 02c9 0100     		.2byte	0x1
+ 2224 02cb 58       		.byte	0x58
+ 2225 02cc 62000000 		.4byte	.LVL43
+ 2226 02d0 78000000 		.4byte	.LFE135
+ 2227 02d4 0400     		.2byte	0x4
+ 2228 02d6 F3       		.byte	0xf3
+ 2229 02d7 01       		.uleb128 0x1
+ 2230 02d8 53       		.byte	0x53
+ 2231 02d9 9F       		.byte	0x9f
+ 2232 02da 00000000 		.4byte	0
+ 2233 02de 00000000 		.4byte	0
+ 2234              	.LLST17:
+ 2235 02e2 20000000 		.4byte	.LVL36
+ 2236 02e6 26000000 		.4byte	.LVL37
+ 2237 02ea 0100     		.2byte	0x1
+ 2238 02ec 53       		.byte	0x53
+ 2239 02ed 00000000 		.4byte	0
+ 2240 02f1 00000000 		.4byte	0
+ 2241              	.LLST18:
+ 2242 02f5 0C000000 		.4byte	.LVL31
+ 2243 02f9 1E000000 		.4byte	.LVL35
+ 2244 02fd 0200     		.2byte	0x2
+ 2245 02ff 30       		.byte	0x30
+ 2246 0300 9F       		.byte	0x9f
+ 2247 0301 1E000000 		.4byte	.LVL35
+ 2248 0305 4A000000 		.4byte	.LVL39
+ 2249 0309 0100     		.2byte	0x1
+ 2250 030b 55       		.byte	0x55
+ 2251 030c 4A000000 		.4byte	.LVL39
+ 2252 0310 4C000000 		.4byte	.LVL40
+ 2253 0314 0200     		.2byte	0x2
+ 2254 0316 30       		.byte	0x30
+ 2255 0317 9F       		.byte	0x9f
+ 2256 0318 4C000000 		.4byte	.LVL40
+ 2257 031c 62000000 		.4byte	.LVL43
+ 2258 0320 0100     		.2byte	0x1
+ 2259 0322 55       		.byte	0x55
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 46
+
+
+ 2260 0323 62000000 		.4byte	.LVL43
+ 2261 0327 78000000 		.4byte	.LFE135
+ 2262 032b 0100     		.2byte	0x1
+ 2263 032d 50       		.byte	0x50
+ 2264 032e 00000000 		.4byte	0
+ 2265 0332 00000000 		.4byte	0
+ 2266              	.LLST19:
+ 2267 0336 00000000 		.4byte	.LVL44
+ 2268 033a 05000000 		.4byte	.LVL45-1
+ 2269 033e 0100     		.2byte	0x1
+ 2270 0340 50       		.byte	0x50
+ 2271 0341 05000000 		.4byte	.LVL45-1
+ 2272 0345 08000000 		.4byte	.LFE136
+ 2273 0349 0400     		.2byte	0x4
+ 2274 034b F3       		.byte	0xf3
+ 2275 034c 01       		.uleb128 0x1
+ 2276 034d 50       		.byte	0x50
+ 2277 034e 9F       		.byte	0x9f
+ 2278 034f 00000000 		.4byte	0
+ 2279 0353 00000000 		.4byte	0
+ 2280              	.LLST20:
+ 2281 0357 00000000 		.4byte	.LVL44
+ 2282 035b 05000000 		.4byte	.LVL45-1
+ 2283 035f 0100     		.2byte	0x1
+ 2284 0361 51       		.byte	0x51
+ 2285 0362 05000000 		.4byte	.LVL45-1
+ 2286 0366 08000000 		.4byte	.LFE136
+ 2287 036a 0400     		.2byte	0x4
+ 2288 036c F3       		.byte	0xf3
+ 2289 036d 01       		.uleb128 0x1
+ 2290 036e 51       		.byte	0x51
+ 2291 036f 9F       		.byte	0x9f
+ 2292 0370 00000000 		.4byte	0
+ 2293 0374 00000000 		.4byte	0
+ 2294              	.LLST21:
+ 2295 0378 00000000 		.4byte	.LVL44
+ 2296 037c 05000000 		.4byte	.LVL45-1
+ 2297 0380 0100     		.2byte	0x1
+ 2298 0382 52       		.byte	0x52
+ 2299 0383 05000000 		.4byte	.LVL45-1
+ 2300 0387 08000000 		.4byte	.LFE136
+ 2301 038b 0400     		.2byte	0x4
+ 2302 038d F3       		.byte	0xf3
+ 2303 038e 01       		.uleb128 0x1
+ 2304 038f 52       		.byte	0x52
+ 2305 0390 9F       		.byte	0x9f
+ 2306 0391 00000000 		.4byte	0
+ 2307 0395 00000000 		.4byte	0
+ 2308              	.LLST22:
+ 2309 0399 00000000 		.4byte	.LVL44
+ 2310 039d 05000000 		.4byte	.LVL45-1
+ 2311 03a1 0100     		.2byte	0x1
+ 2312 03a3 53       		.byte	0x53
+ 2313 03a4 05000000 		.4byte	.LVL45-1
+ 2314 03a8 08000000 		.4byte	.LFE136
+ 2315 03ac 0400     		.2byte	0x4
+ 2316 03ae F3       		.byte	0xf3
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 47
+
+
+ 2317 03af 01       		.uleb128 0x1
+ 2318 03b0 53       		.byte	0x53
+ 2319 03b1 9F       		.byte	0x9f
+ 2320 03b2 00000000 		.4byte	0
+ 2321 03b6 00000000 		.4byte	0
+ 2322              	.LLST23:
+ 2323 03ba 00000000 		.4byte	.LVL46
+ 2324 03be 05000000 		.4byte	.LVL47-1
+ 2325 03c2 0100     		.2byte	0x1
+ 2326 03c4 50       		.byte	0x50
+ 2327 03c5 05000000 		.4byte	.LVL47-1
+ 2328 03c9 08000000 		.4byte	.LFE137
+ 2329 03cd 0400     		.2byte	0x4
+ 2330 03cf F3       		.byte	0xf3
+ 2331 03d0 01       		.uleb128 0x1
+ 2332 03d1 50       		.byte	0x50
+ 2333 03d2 9F       		.byte	0x9f
+ 2334 03d3 00000000 		.4byte	0
+ 2335 03d7 00000000 		.4byte	0
+ 2336              	.LLST24:
+ 2337 03db 00000000 		.4byte	.LVL46
+ 2338 03df 05000000 		.4byte	.LVL47-1
+ 2339 03e3 0100     		.2byte	0x1
+ 2340 03e5 51       		.byte	0x51
+ 2341 03e6 05000000 		.4byte	.LVL47-1
+ 2342 03ea 08000000 		.4byte	.LFE137
+ 2343 03ee 0400     		.2byte	0x4
+ 2344 03f0 F3       		.byte	0xf3
+ 2345 03f1 01       		.uleb128 0x1
+ 2346 03f2 51       		.byte	0x51
+ 2347 03f3 9F       		.byte	0x9f
+ 2348 03f4 00000000 		.4byte	0
+ 2349 03f8 00000000 		.4byte	0
+ 2350              	.LLST25:
+ 2351 03fc 00000000 		.4byte	.LVL46
+ 2352 0400 05000000 		.4byte	.LVL47-1
+ 2353 0404 0100     		.2byte	0x1
+ 2354 0406 52       		.byte	0x52
+ 2355 0407 05000000 		.4byte	.LVL47-1
+ 2356 040b 08000000 		.4byte	.LFE137
+ 2357 040f 0400     		.2byte	0x4
+ 2358 0411 F3       		.byte	0xf3
+ 2359 0412 01       		.uleb128 0x1
+ 2360 0413 52       		.byte	0x52
+ 2361 0414 9F       		.byte	0x9f
+ 2362 0415 00000000 		.4byte	0
+ 2363 0419 00000000 		.4byte	0
+ 2364              	.LLST26:
+ 2365 041d 00000000 		.4byte	.LVL46
+ 2366 0421 05000000 		.4byte	.LVL47-1
+ 2367 0425 0100     		.2byte	0x1
+ 2368 0427 53       		.byte	0x53
+ 2369 0428 05000000 		.4byte	.LVL47-1
+ 2370 042c 08000000 		.4byte	.LFE137
+ 2371 0430 0400     		.2byte	0x4
+ 2372 0432 F3       		.byte	0xf3
+ 2373 0433 01       		.uleb128 0x1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 48
+
+
+ 2374 0434 53       		.byte	0x53
+ 2375 0435 9F       		.byte	0x9f
+ 2376 0436 00000000 		.4byte	0
+ 2377 043a 00000000 		.4byte	0
+ 2378              		.section	.debug_aranges,"",%progbits
+ 2379 0000 5C000000 		.4byte	0x5c
+ 2380 0004 0200     		.2byte	0x2
+ 2381 0006 00000000 		.4byte	.Ldebug_info0
+ 2382 000a 04       		.byte	0x4
+ 2383 000b 00       		.byte	0
+ 2384 000c 0000     		.2byte	0
+ 2385 000e 0000     		.2byte	0
+ 2386 0010 00000000 		.4byte	.LFB132
+ 2387 0014 12000000 		.4byte	.LFE132-.LFB132
+ 2388 0018 00000000 		.4byte	.LFB133
+ 2389 001c 28000000 		.4byte	.LFE133-.LFB133
+ 2390 0020 00000000 		.4byte	.LFB134
+ 2391 0024 A0000000 		.4byte	.LFE134-.LFB134
+ 2392 0028 00000000 		.4byte	.LFB135
+ 2393 002c 78000000 		.4byte	.LFE135-.LFB135
+ 2394 0030 00000000 		.4byte	.LFB136
+ 2395 0034 08000000 		.4byte	.LFE136-.LFB136
+ 2396 0038 00000000 		.4byte	.LFB137
+ 2397 003c 08000000 		.4byte	.LFE137-.LFB137
+ 2398 0040 00000000 		.4byte	.LFB138
+ 2399 0044 08000000 		.4byte	.LFE138-.LFB138
+ 2400 0048 00000000 		.4byte	.LFB139
+ 2401 004c 08000000 		.4byte	.LFE139-.LFB139
+ 2402 0050 00000000 		.4byte	.LFB140
+ 2403 0054 08000000 		.4byte	.LFE140-.LFB140
+ 2404 0058 00000000 		.4byte	0
+ 2405 005c 00000000 		.4byte	0
+ 2406              		.section	.debug_ranges,"",%progbits
+ 2407              	.Ldebug_ranges0:
+ 2408 0000 00000000 		.4byte	.LFB132
+ 2409 0004 12000000 		.4byte	.LFE132
+ 2410 0008 00000000 		.4byte	.LFB133
+ 2411 000c 28000000 		.4byte	.LFE133
+ 2412 0010 00000000 		.4byte	.LFB134
+ 2413 0014 A0000000 		.4byte	.LFE134
+ 2414 0018 00000000 		.4byte	.LFB135
+ 2415 001c 78000000 		.4byte	.LFE135
+ 2416 0020 00000000 		.4byte	.LFB136
+ 2417 0024 08000000 		.4byte	.LFE136
+ 2418 0028 00000000 		.4byte	.LFB137
+ 2419 002c 08000000 		.4byte	.LFE137
+ 2420 0030 00000000 		.4byte	.LFB138
+ 2421 0034 08000000 		.4byte	.LFE138
+ 2422 0038 00000000 		.4byte	.LFB139
+ 2423 003c 08000000 		.4byte	.LFE139
+ 2424 0040 00000000 		.4byte	.LFB140
+ 2425 0044 08000000 		.4byte	.LFE140
+ 2426 0048 00000000 		.4byte	0
+ 2427 004c 00000000 		.4byte	0
+ 2428              		.section	.debug_line,"",%progbits
+ 2429              	.Ldebug_line0:
+ 2430 0000 44030000 		.section	.debug_str,"MS",%progbits,1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 49
+
+
+ 2430      02005A02 
+ 2430      00000201 
+ 2430      FB0E0D00 
+ 2430      01010101 
+ 2431              	.LASF95:
+ 2432 0000 6466755F 		.ascii	"dfu_user.c\000"
+ 2432      75736572 
+ 2432      2E6300
+ 2433              	.LASF47:
+ 2434 000b 43595F44 		.ascii	"CY_DFU_ERROR_ADDRESS\000"
+ 2434      46555F45 
+ 2434      52524F52 
+ 2434      5F414444 
+ 2434      52455353 
+ 2435              	.LASF62:
+ 2436 0020 6D696E45 		.ascii	"minEmEepromAddress\000"
+ 2436      6D456570 
+ 2436      726F6D41 
+ 2436      64647265 
+ 2436      737300
+ 2437              	.LASF52:
+ 2438 0033 6D756C74 		.ascii	"multiple\000"
+ 2438      69706C65 
+ 2438      00
+ 2439              	.LASF78:
+ 2440 003c 5F5F6379 		.ascii	"__cy_app0_verify_start\000"
+ 2440      5F617070 
+ 2440      305F7665 
+ 2440      72696679 
+ 2440      5F737461 
+ 2441              	.LASF81:
+ 2442 0053 5F5F6379 		.ascii	"__cy_app1_verify_length\000"
+ 2442      5F617070 
+ 2442      315F7665 
+ 2442      72696679 
+ 2442      5F6C656E 
+ 2443              	.LASF44:
+ 2444 006b 43595F44 		.ascii	"CY_DFU_ERROR_DATA\000"
+ 2444      46555F45 
+ 2444      52524F52 
+ 2444      5F444154 
+ 2444      4100
+ 2445              	.LASF63:
+ 2446 007d 6D617845 		.ascii	"maxEmEepromAddress\000"
+ 2446      6D456570 
+ 2446      726F6D41 
+ 2446      64647265 
+ 2446      737300
+ 2447              	.LASF73:
+ 2448 0090 43795F44 		.ascii	"Cy_DFU_TransportReset\000"
+ 2448      46555F54 
+ 2448      72616E73 
+ 2448      706F7274 
+ 2448      52657365 
+ 2449              	.LASF90:
+ 2450 00a6 55415254 		.ascii	"UART_UartCyBtldrCommWrite\000"
+ 2450      5F556172 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 50
+
+
+ 2450      74437942 
+ 2450      746C6472 
+ 2450      436F6D6D 
+ 2451              	.LASF53:
+ 2452 00c0 73746172 		.ascii	"startAddress\000"
+ 2452      74416464 
+ 2452      72657373 
+ 2452      00
+ 2453              	.LASF13:
+ 2454 00cd 73697A65 		.ascii	"sizetype\000"
+ 2454      74797065 
+ 2454      00
+ 2455              	.LASF32:
+ 2456 00d6 63795F65 		.ascii	"cy_en_flashdrv_status_t\000"
+ 2456      6E5F666C 
+ 2456      61736864 
+ 2456      72765F73 
+ 2456      74617475 
+ 2457              	.LASF58:
+ 2458 00ee 6C656E67 		.ascii	"length\000"
+ 2458      746800
+ 2459              	.LASF65:
+ 2460 00f5 66737461 		.ascii	"fstatus\000"
+ 2460      74757300 
+ 2461              	.LASF34:
+ 2462 00fd 64617461 		.ascii	"dataOffset\000"
+ 2462      4F666673 
+ 2462      657400
+ 2463              	.LASF87:
+ 2464 0108 6D656D63 		.ascii	"memcpy\000"
+ 2464      707900
+ 2465              	.LASF99:
+ 2466 010f 47657453 		.ascii	"GetStartEndAddress\000"
+ 2466      74617274 
+ 2466      456E6441 
+ 2466      64647265 
+ 2466      737300
+ 2467              	.LASF5:
+ 2468 0122 73686F72 		.ascii	"short int\000"
+ 2468      7420696E 
+ 2468      7400
+ 2469              	.LASF84:
+ 2470 012c 43795F46 		.ascii	"Cy_Flash_WriteRow\000"
+ 2470      6C617368 
+ 2470      5F577269 
+ 2470      7465526F 
+ 2470      7700
+ 2471              	.LASF51:
+ 2472 013e 76616C75 		.ascii	"value\000"
+ 2472      6500
+ 2473              	.LASF15:
+ 2474 0144 75696E74 		.ascii	"uint8_t\000"
+ 2474      385F7400 
+ 2475              	.LASF68:
+ 2476 014c 43795F44 		.ascii	"Cy_DFU_TransportRead\000"
+ 2476      46555F54 
+ 2476      72616E73 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 51
+
+
+ 2476      706F7274 
+ 2476      52656164 
+ 2477              	.LASF39:
+ 2478 0161 696E6974 		.ascii	"initCtl\000"
+ 2478      43746C00 
+ 2479              	.LASF76:
+ 2480 0169 63795F64 		.ascii	"cy_dfu_metadata\000"
+ 2480      66755F6D 
+ 2480      65746164 
+ 2480      61746100 
+ 2481              	.LASF71:
+ 2482 0179 636F756E 		.ascii	"count\000"
+ 2482      7400
+ 2483              	.LASF42:
+ 2484 017f 43595F44 		.ascii	"CY_DFU_ERROR_VERIFY\000"
+ 2484      46555F45 
+ 2484      52524F52 
+ 2484      5F564552 
+ 2484      49465900 
+ 2485              	.LASF26:
+ 2486 0193 43595F46 		.ascii	"CY_FLASH_DRV_INVALID_INPUT_PARAMETERS\000"
+ 2486      4C415348 
+ 2486      5F445256 
+ 2486      5F494E56 
+ 2486      414C4944 
+ 2487              	.LASF72:
+ 2488 01b9 43795F44 		.ascii	"Cy_DFU_TransportWrite\000"
+ 2488      46555F54 
+ 2488      72616E73 
+ 2488      706F7274 
+ 2488      57726974 
+ 2489              	.LASF18:
+ 2490 01cf 666C6F61 		.ascii	"float\000"
+ 2490      7400
+ 2491              	.LASF38:
+ 2492 01d5 61707056 		.ascii	"appVerified\000"
+ 2492      65726966 
+ 2492      69656400 
+ 2493              	.LASF88:
+ 2494 01e1 6D656D63 		.ascii	"memcmp\000"
+ 2494      6D7000
+ 2495              	.LASF1:
+ 2496 01e8 6C6F6E67 		.ascii	"long long int\000"
+ 2496      206C6F6E 
+ 2496      6720696E 
+ 2496      7400
+ 2497              	.LASF12:
+ 2498 01f6 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2498      206C6F6E 
+ 2498      6720756E 
+ 2498      7369676E 
+ 2498      65642069 
+ 2499              	.LASF30:
+ 2500 020d 43595F46 		.ascii	"CY_FLASH_DRV_OPERATION_STARTED\000"
+ 2500      4C415348 
+ 2500      5F445256 
+ 2500      5F4F5045 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 52
+
+
+ 2500      52415449 
+ 2501              	.LASF97:
+ 2502 022c 63795F65 		.ascii	"cy_en_flashdrv_status\000"
+ 2502      6E5F666C 
+ 2502      61736864 
+ 2502      72765F73 
+ 2502      74617475 
+ 2503              	.LASF86:
+ 2504 0242 6D656D73 		.ascii	"memset\000"
+ 2504      657400
+ 2505              	.LASF9:
+ 2506 0249 6C6F6E67 		.ascii	"long int\000"
+ 2506      20696E74 
+ 2506      00
+ 2507              	.LASF45:
+ 2508 0252 43595F44 		.ascii	"CY_DFU_ERROR_CMD\000"
+ 2508      46555F45 
+ 2508      52524F52 
+ 2508      5F434D44 
+ 2508      00
+ 2509              	.LASF7:
+ 2510 0263 5F5F7569 		.ascii	"__uint8_t\000"
+ 2510      6E74385F 
+ 2510      7400
+ 2511              	.LASF82:
+ 2512 026d 5F5F6379 		.ascii	"__cy_boot_signature_size\000"
+ 2512      5F626F6F 
+ 2512      745F7369 
+ 2512      676E6174 
+ 2512      7572655F 
+ 2513              	.LASF59:
+ 2514 0286 70617261 		.ascii	"params\000"
+ 2514      6D7300
+ 2515              	.LASF4:
+ 2516 028d 756E7369 		.ascii	"unsigned char\000"
+ 2516      676E6564 
+ 2516      20636861 
+ 2516      7200
+ 2517              	.LASF48:
+ 2518 029b 43595F44 		.ascii	"CY_DFU_ERROR_TIMEOUT\000"
+ 2518      46555F45 
+ 2518      52524F52 
+ 2518      5F54494D 
+ 2518      454F5554 
+ 2519              	.LASF79:
+ 2520 02b0 5F5F6379 		.ascii	"__cy_app0_verify_length\000"
+ 2520      5F617070 
+ 2520      305F7665 
+ 2520      72696679 
+ 2520      5F6C656E 
+ 2521              	.LASF2:
+ 2522 02c8 6C6F6E67 		.ascii	"long double\000"
+ 2522      20646F75 
+ 2522      626C6500 
+ 2523              	.LASF0:
+ 2524 02d4 756E7369 		.ascii	"unsigned int\000"
+ 2524      676E6564 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 53
+
+
+ 2524      20696E74 
+ 2524      00
+ 2525              	.LASF35:
+ 2526 02e1 7061636B 		.ascii	"packetBuffer\000"
+ 2526      65744275 
+ 2526      66666572 
+ 2526      00
+ 2527              	.LASF96:
+ 2528 02ee 433A5C55 		.ascii	"C:\\Users\\Agentos\\Documents\\Univer\\psoc6-labs\\"
+ 2528      73657273 
+ 2528      5C416765 
+ 2528      6E746F73 
+ 2528      5C446F63 
+ 2529 031b 6C616231 		.ascii	"lab12\\lab12\\lab12.cydsn\000"
+ 2529      325C6C61 
+ 2529      6231325C 
+ 2529      6C616231 
+ 2529      322E6379 
+ 2530              	.LASF33:
+ 2531 0333 64617461 		.ascii	"dataBuffer\000"
+ 2531      42756666 
+ 2531      657200
+ 2532              	.LASF3:
+ 2533 033e 7369676E 		.ascii	"signed char\000"
+ 2533      65642063 
+ 2533      68617200 
+ 2534              	.LASF57:
+ 2535 034a 61646472 		.ascii	"address\000"
+ 2535      65737300 
+ 2536              	.LASF17:
+ 2537 0352 75696E74 		.ascii	"uint32_t\000"
+ 2537      33325F74 
+ 2537      00
+ 2538              	.LASF75:
+ 2539 035b 43795F44 		.ascii	"Cy_DFU_TransportStop\000"
+ 2539      46555F54 
+ 2539      72616E73 
+ 2539      706F7274 
+ 2539      53746F70 
+ 2540              	.LASF83:
+ 2541 0370 43795F44 		.ascii	"Cy_DFU_GetAppMetadata\000"
+ 2541      46555F47 
+ 2541      65744170 
+ 2541      704D6574 
+ 2541      61646174 
+ 2542              	.LASF27:
+ 2543 0386 43595F46 		.ascii	"CY_FLASH_DRV_PL_ROW_COMP_FA\000"
+ 2543      4C415348 
+ 2543      5F445256 
+ 2543      5F504C5F 
+ 2543      524F575F 
+ 2544              	.LASF50:
+ 2545 03a2 63795F65 		.ascii	"cy_en_dfu_status_t\000"
+ 2545      6E5F6466 
+ 2545      755F7374 
+ 2545      61747573 
+ 2545      5F7400
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 54
+
+
+ 2546              	.LASF49:
+ 2547 03b5 43595F44 		.ascii	"CY_DFU_ERROR_UNKNOWN\000"
+ 2547      46555F45 
+ 2547      52524F52 
+ 2547      5F554E4B 
+ 2547      4E4F574E 
+ 2548              	.LASF6:
+ 2549 03ca 73686F72 		.ascii	"short unsigned int\000"
+ 2549      7420756E 
+ 2549      7369676E 
+ 2549      65642069 
+ 2549      6E7400
+ 2550              	.LASF64:
+ 2551 03dd 73746174 		.ascii	"status\000"
+ 2551      757300
+ 2552              	.LASF40:
+ 2553 03e4 63795F73 		.ascii	"cy_stc_dfu_params_t\000"
+ 2553      74635F64 
+ 2553      66755F70 
+ 2553      6172616D 
+ 2553      735F7400 
+ 2554              	.LASF89:
+ 2555 03f8 55415254 		.ascii	"UART_UartCyBtldrCommRead\000"
+ 2555      5F556172 
+ 2555      74437942 
+ 2555      746C6472 
+ 2555      436F6D6D 
+ 2556              	.LASF16:
+ 2557 0411 696E7433 		.ascii	"int32_t\000"
+ 2557      325F7400 
+ 2558              	.LASF92:
+ 2559 0419 55415254 		.ascii	"UART_UartCyBtldrCommStart\000"
+ 2559      5F556172 
+ 2559      74437942 
+ 2559      746C6472 
+ 2559      436F6D6D 
+ 2560              	.LASF8:
+ 2561 0433 5F5F696E 		.ascii	"__int32_t\000"
+ 2561      7433325F 
+ 2561      7400
+ 2562              	.LASF43:
+ 2563 043d 43595F44 		.ascii	"CY_DFU_ERROR_LENGTH\000"
+ 2563      46555F45 
+ 2563      52524F52 
+ 2563      5F4C454E 
+ 2563      47544800 
+ 2564              	.LASF31:
+ 2565 0451 43595F46 		.ascii	"CY_FLASH_DRV_OPCODE_BUSY\000"
+ 2565      4C415348 
+ 2565      5F445256 
+ 2565      5F4F5043 
+ 2565      4F44455F 
+ 2566              	.LASF85:
+ 2567 046a 43795F44 		.ascii	"Cy_DFU_GetRunningApp\000"
+ 2567      46555F47 
+ 2567      65745275 
+ 2567      6E6E696E 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 55
+
+
+ 2567      67417070 
+ 2568              	.LASF70:
+ 2569 047f 73697A65 		.ascii	"size\000"
+ 2569      00
+ 2570              	.LASF98:
+ 2571 0484 49734D75 		.ascii	"IsMultipleOf\000"
+ 2571      6C746970 
+ 2571      6C654F66 
+ 2571      00
+ 2572              	.LASF69:
+ 2573 0491 62756666 		.ascii	"buffer\000"
+ 2573      657200
+ 2574              	.LASF23:
+ 2575 0498 43595F46 		.ascii	"CY_FLASH_DRV_INVALID_FLASH_ADDR\000"
+ 2575      4C415348 
+ 2575      5F445256 
+ 2575      5F494E56 
+ 2575      414C4944 
+ 2576              	.LASF11:
+ 2577 04b8 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2577      20756E73 
+ 2577      69676E65 
+ 2577      6420696E 
+ 2577      7400
+ 2578              	.LASF29:
+ 2579 04ca 43595F46 		.ascii	"CY_FLASH_DRV_PROGRESS_NO_ERROR\000"
+ 2579      4C415348 
+ 2579      5F445256 
+ 2579      5F50524F 
+ 2579      47524553 
+ 2580              	.LASF19:
+ 2581 04e9 646F7562 		.ascii	"double\000"
+ 2581      6C6500
+ 2582              	.LASF37:
+ 2583 04f0 61707049 		.ascii	"appId\000"
+ 2583      6400
+ 2584              	.LASF54:
+ 2585 04f6 656E6441 		.ascii	"endAddress\000"
+ 2585      64647265 
+ 2585      737300
+ 2586              	.LASF14:
+ 2587 0501 63686172 		.ascii	"char\000"
+ 2587      00
+ 2588              	.LASF10:
+ 2589 0506 5F5F7569 		.ascii	"__uint32_t\000"
+ 2589      6E743332 
+ 2589      5F7400
+ 2590              	.LASF22:
+ 2591 0511 43595F46 		.ascii	"CY_FLASH_DRV_INVALID_FM_PL\000"
+ 2591      4C415348 
+ 2591      5F445256 
+ 2591      5F494E56 
+ 2591      414C4944 
+ 2592              	.LASF60:
+ 2593 052c 6D696E55 		.ascii	"minUFlashAddress\000"
+ 2593      466C6173 
+ 2593      68416464 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 56
+
+
+ 2593      72657373 
+ 2593      00
+ 2594              	.LASF66:
+ 2595 053d 43795F44 		.ascii	"Cy_DFU_WriteData\000"
+ 2595      46555F57 
+ 2595      72697465 
+ 2595      44617461 
+ 2595      00
+ 2596              	.LASF25:
+ 2597 054e 43595F46 		.ascii	"CY_FLASH_DRV_IPC_BUSY\000"
+ 2597      4C415348 
+ 2597      5F445256 
+ 2597      5F495043 
+ 2597      5F425553 
+ 2598              	.LASF24:
+ 2599 0564 43595F46 		.ascii	"CY_FLASH_DRV_ROW_PROTECTED\000"
+ 2599      4C415348 
+ 2599      5F445256 
+ 2599      5F524F57 
+ 2599      5F50524F 
+ 2600              	.LASF28:
+ 2601 057f 43595F46 		.ascii	"CY_FLASH_DRV_ERR_UNC\000"
+ 2601      4C415348 
+ 2601      5F445256 
+ 2601      5F455252 
+ 2601      5F554E43 
+ 2602              	.LASF61:
+ 2603 0594 6D617855 		.ascii	"maxUFlashAddress\000"
+ 2603      466C6173 
+ 2603      68416464 
+ 2603      72657373 
+ 2603      00
+ 2604              	.LASF55:
+ 2605 05a5 76657269 		.ascii	"verifyStart\000"
+ 2605      66795374 
+ 2605      61727400 
+ 2606              	.LASF67:
+ 2607 05b1 43795F44 		.ascii	"Cy_DFU_ReadData\000"
+ 2607      46555F52 
+ 2607      65616444 
+ 2607      61746100 
+ 2608              	.LASF74:
+ 2609 05c1 43795F44 		.ascii	"Cy_DFU_TransportStart\000"
+ 2609      46555F54 
+ 2609      72616E73 
+ 2609      706F7274 
+ 2609      53746172 
+ 2610              	.LASF91:
+ 2611 05d7 55415254 		.ascii	"UART_UartCyBtldrCommReset\000"
+ 2611      5F556172 
+ 2611      74437942 
+ 2611      746C6472 
+ 2611      436F6D6D 
+ 2612              	.LASF94:
+ 2613 05f1 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2613      43313120 
+ 2613      352E342E 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 57
+
+
+ 2613      31203230 
+ 2613      31363036 
+ 2614 0624 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 2614      20726576 
+ 2614      6973696F 
+ 2614      6E203233 
+ 2614      37373135 
+ 2615 0657 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -Og -ffunction-s"
+ 2615      70202D6D 
+ 2615      6670753D 
+ 2615      66707634 
+ 2615      2D73702D 
+ 2616 068a 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 2616      6F6E7320 
+ 2616      2D666661 
+ 2616      742D6C74 
+ 2616      6F2D6F62 
+ 2617              	.LASF41:
+ 2618 06a4 43595F44 		.ascii	"CY_DFU_SUCCESS\000"
+ 2618      46555F53 
+ 2618      55434345 
+ 2618      535300
+ 2619              	.LASF80:
+ 2620 06b3 5F5F6379 		.ascii	"__cy_app1_verify_start\000"
+ 2620      5F617070 
+ 2620      315F7665 
+ 2620      72696679 
+ 2620      5F737461 
+ 2621              	.LASF77:
+ 2622 06ca 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 2622      52784275 
+ 2622      66666572 
+ 2622      00
+ 2623              	.LASF20:
+ 2624 06d7 43595F46 		.ascii	"CY_FLASH_DRV_SUCCESS\000"
+ 2624      4C415348 
+ 2624      5F445256 
+ 2624      5F535543 
+ 2624      43455353 
+ 2625              	.LASF93:
+ 2626 06ec 55415254 		.ascii	"UART_UartCyBtldrCommStop\000"
+ 2626      5F556172 
+ 2626      74437942 
+ 2626      746C6472 
+ 2626      436F6D6D 
+ 2627              	.LASF46:
+ 2628 0705 43595F44 		.ascii	"CY_DFU_ERROR_CHECKSUM\000"
+ 2628      46555F45 
+ 2628      52524F52 
+ 2628      5F434845 
+ 2628      434B5355 
+ 2629              	.LASF56:
+ 2630 071b 76657269 		.ascii	"verifySize\000"
+ 2630      66795369 
+ 2630      7A6500
+ 2631              	.LASF36:
+ 2632 0726 74696D65 		.ascii	"timeout\000"
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccYwDzr6.s 			page 58
+
+
+ 2632      6F757400 
+ 2633              	.LASF21:
+ 2634 072e 43595F46 		.ascii	"CY_FLASH_DRV_INV_PROT\000"
+ 2634      4C415348 
+ 2634      5F445256 
+ 2634      5F494E56 
+ 2634      5F50524F 
+ 2635              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
