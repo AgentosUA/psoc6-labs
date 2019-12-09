@@ -1,0 +1,1328 @@
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0plus
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"CapSense_TMG.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.CapSense_TMG_DecodeAllGestures,"ax",%progbits
+  20              		.align	2
+  21              		.global	CapSense_TMG_DecodeAllGestures
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	CapSense_TMG_DecodeAllGestures, %function
+  25              	CapSense_TMG_DecodeAllGestures:
+  26              	.LFB0:
+  27              		.file 1 "Generated_Source\\PSoC6\\CapSense_TMG.c"
+   1:Generated_Source\PSoC6/CapSense_TMG.c **** /*******************************************************************************
+   2:Generated_Source\PSoC6/CapSense_TMG.c **** * File Name: CapSense_TMG.c
+   3:Generated_Source\PSoC6/CapSense_TMG.c **** * Version 2.0
+   4:Generated_Source\PSoC6/CapSense_TMG.c **** *
+   5:Generated_Source\PSoC6/CapSense_TMG.c **** * Description:
+   6:Generated_Source\PSoC6/CapSense_TMG.c **** *  This file provides the source code of the API for the CapSense TMG component.
+   7:Generated_Source\PSoC6/CapSense_TMG.c **** *
+   8:Generated_Source\PSoC6/CapSense_TMG.c **** ********************************************************************************
+   9:Generated_Source\PSoC6/CapSense_TMG.c **** * Copyright 2014, Cypress Semiconductor Corporation.  All rights reserved.
+  10:Generated_Source\PSoC6/CapSense_TMG.c **** * You may use this file only in accordance with the license, terms, conditions,
+  11:Generated_Source\PSoC6/CapSense_TMG.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  12:Generated_Source\PSoC6/CapSense_TMG.c **** * the software package with which this file was provided.
+  13:Generated_Source\PSoC6/CapSense_TMG.c **** *******************************************************************************/
+  14:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  15:Generated_Source\PSoC6/CapSense_TMG.c **** #include "CapSense_TMG.h"
+  16:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  17:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  18:Generated_Source\PSoC6/CapSense_TMG.c **** /*******************************************************************************
+  19:Generated_Source\PSoC6/CapSense_TMG.c **** * Function Name: CapSense_TMG_DecodeAllGestures
+  20:Generated_Source\PSoC6/CapSense_TMG.c **** ********************************************************************************
+  21:Generated_Source\PSoC6/CapSense_TMG.c **** *
+  22:Generated_Source\PSoC6/CapSense_TMG.c **** * Summary:
+  23:Generated_Source\PSoC6/CapSense_TMG.c **** *  Decodes all enabled gestures in the customizer and returns the detected
+  24:Generated_Source\PSoC6/CapSense_TMG.c **** *  gesture code.
+  25:Generated_Source\PSoC6/CapSense_TMG.c **** *  CapSense_TMG_InitGestures and CapSense_TMG_TimerEnableInt has to be
+  26:Generated_Source\PSoC6/CapSense_TMG.c **** *  called once prior calling this or any other API for gesture decoding.
+  27:Generated_Source\PSoC6/CapSense_TMG.c **** *
+  28:Generated_Source\PSoC6/CapSense_TMG.c **** * Parameters:
+  29:Generated_Source\PSoC6/CapSense_TMG.c **** *  touchNumber: Number of fingers on the trackpad. Valid range 0-2.
+  30:Generated_Source\PSoC6/CapSense_TMG.c **** *  currentTimestamp : Current timestamp value.
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 2
+
+
+  31:Generated_Source\PSoC6/CapSense_TMG.c **** *  pos: Pointer to structure with coordinates of touches.
+  32:Generated_Source\PSoC6/CapSense_TMG.c **** *
+  33:Generated_Source\PSoC6/CapSense_TMG.c **** * Return:
+  34:Generated_Source\PSoC6/CapSense_TMG.c **** *  Detected gesture code.
+  35:Generated_Source\PSoC6/CapSense_TMG.c **** *
+  36:Generated_Source\PSoC6/CapSense_TMG.c **** *******************************************************************************/
+  37:Generated_Source\PSoC6/CapSense_TMG.c **** uint32_t CapSense_TMG_DecodeAllGestures(uint32_t touchNumber, uint32_t currentTimestamp, const CapS
+  38:Generated_Source\PSoC6/CapSense_TMG.c **** {
+  28              		.loc 1 38 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 10B5     		push	{r4, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  37              	.LVL1:
+  39:Generated_Source\PSoC6/CapSense_TMG.c ****     uint32_t gestureID = CapSense_TMG_NO_GESTURE;
+  40:Generated_Source\PSoC6/CapSense_TMG.c ****     #if(0u != CapSense_TMG_GESTURES_ENABLED)
+  41:Generated_Source\PSoC6/CapSense_TMG.c ****         /* Variable for detected click gestures */
+  42:Generated_Source\PSoC6/CapSense_TMG.c ****         uint32_t clickGesture = CapSense_TMG_NO_GESTURE;
+  43:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  44:Generated_Source\PSoC6/CapSense_TMG.c ****         /* Variable for detected single touch gestures */
+  45:Generated_Source\PSoC6/CapSense_TMG.c ****         uint32_t stGesture = CapSense_TMG_NO_GESTURE;
+  46:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  47:Generated_Source\PSoC6/CapSense_TMG.c ****         /* Variable for detected double touch gestures */
+  48:Generated_Source\PSoC6/CapSense_TMG.c ****         uint32_t dtGesture = CapSense_TMG_NO_GESTURE;
+  49:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  50:Generated_Source\PSoC6/CapSense_TMG.c ****         #if (CapSense_TMG_ROTATE_ENABLED != 0u)
+  51:Generated_Source\PSoC6/CapSense_TMG.c ****             static uint32_t rotationActive = 0u;
+  52:Generated_Source\PSoC6/CapSense_TMG.c ****         #endif /* (CapSense_TMG_ROTATE_ENABLED != 0u) */
+  53:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  54:Generated_Source\PSoC6/CapSense_TMG.c ****         #if (CapSense_TMG_EDGE_SWIPE_ENABLED != 0u)
+  55:Generated_Source\PSoC6/CapSense_TMG.c ****             static uint32_t edgeTimeoutStamp = 0u;
+  56:Generated_Source\PSoC6/CapSense_TMG.c ****             uint32_t deltaTimeoutStamp = 0u;
+  57:Generated_Source\PSoC6/CapSense_TMG.c ****         #endif /* (CapSense_TMG_EDGE_SWIPE_ENABLED != 0u) */
+  58:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  59:Generated_Source\PSoC6/CapSense_TMG.c ****         #if ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) && ((CapSense_TMG_CLICKS_ENABLED == 1u) ||\
+  60:Generated_Source\PSoC6/CapSense_TMG.c ****                                                              (CapSense_TMG_ST_SCROLLS_ENABLED == 1u
+  61:Generated_Source\PSoC6/CapSense_TMG.c ****                                                              (CapSense_TMG_ROTATE_ENABLED == 1u)))
+  62:Generated_Source\PSoC6/CapSense_TMG.c ****             static uint32_t edgeSwipeActive = 0u;
+  63:Generated_Source\PSoC6/CapSense_TMG.c ****         #endif /* ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) && ((CapSense_TMG_CLICKS_ENABLED == 1u) 
+  64:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                    (CapSense_TMG_ST_SCROLLS_ENABLED
+  65:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                    (CapSense_TMG_ROTATE_ENABLED == 
+  66:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  67:Generated_Source\PSoC6/CapSense_TMG.c ****         #if ((CapSense_TMG_CLICKS_ENABLED == 1u) && ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) ||\
+  68:Generated_Source\PSoC6/CapSense_TMG.c ****                                                          (CapSense_TMG_ST_SCROLLS_ENABLED == 1u) ||
+  69:Generated_Source\PSoC6/CapSense_TMG.c ****                                                          (CapSense_TMG_ROTATE_ENABLED == 1u)))
+  70:Generated_Source\PSoC6/CapSense_TMG.c ****             static uint32_t clickAndDragActive = 0u;
+  71:Generated_Source\PSoC6/CapSense_TMG.c ****         #endif /* ((CapSense_TMG_CLICKS_ENABLED == 1u) && ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) 
+  72:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                (CapSense_TMG_ST_SCROLLS_ENABLED == 
+  73:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                (CapSense_TMG_ROTATE_ENABLED == 1u))
+  74:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  75:Generated_Source\PSoC6/CapSense_TMG.c ****         #if (CapSense_TMG_EDGE_SWIPE_ENABLED == 1u)
+  76:Generated_Source\PSoC6/CapSense_TMG.c ****             uint32_t edgeSwipeGesture = CapSense_TMG_NO_GESTURE;
+  77:Generated_Source\PSoC6/CapSense_TMG.c ****         #endif /* (CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) */
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 3
+
+
+  78:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  79:Generated_Source\PSoC6/CapSense_TMG.c ****         #if ((CapSense_TMG_CLICKS_ENABLED != 0u) || (CapSense_TMG_EDGE_SWIPE_ENABLED != 0u))
+  80:Generated_Source\PSoC6/CapSense_TMG.c ****             clickGesture = Gesture_DecodeAllClickGestures((uint8_t)touchNumber, currentTimestamp, p
+  81:Generated_Source\PSoC6/CapSense_TMG.c ****         #endif /* ((CapSense_TMG_CLICKS_ENABLED != 0u) || (CapSense_TMG_EDGE_SWIPE_ENABLED != 0u)) 
+  82:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  83:Generated_Source\PSoC6/CapSense_TMG.c ****         #if (CapSense_TMG_CLICKS_ENABLED != 0u)
+  84:Generated_Source\PSoC6/CapSense_TMG.c ****             gestureID = clickGesture;
+  85:Generated_Source\PSoC6/CapSense_TMG.c ****             #if ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) || (CapSense_TMG_ST_SCROLLS_ENABLED == 1u)
+  86:Generated_Source\PSoC6/CapSense_TMG.c ****             if (clickGesture == CapSense_TMG_CLICK_AND_DRAG)
+  87:Generated_Source\PSoC6/CapSense_TMG.c ****             {
+  88:Generated_Source\PSoC6/CapSense_TMG.c ****                 clickAndDragActive = 1u;
+  89:Generated_Source\PSoC6/CapSense_TMG.c ****             }
+  90:Generated_Source\PSoC6/CapSense_TMG.c ****             #endif /* ((CapSense_TMG_CLICKS_ENABLED == 1u) || (CapSense_TMG_ST_SCROLLS_ENABLED == 1
+  91:Generated_Source\PSoC6/CapSense_TMG.c ****         #endif /* (CapSense_TMG_CLICKS_ENABLED != 0u) */
+  92:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  93:Generated_Source\PSoC6/CapSense_TMG.c ****         #if (CapSense_TMG_ROTATE_ENABLED == 1u)
+  94:Generated_Source\PSoC6/CapSense_TMG.c ****             stGesture = Gesture_DecodeSTRotateGestures((uint8_t)touchNumber, currentTimestamp, pos)
+  95:Generated_Source\PSoC6/CapSense_TMG.c **** 
+  96:Generated_Source\PSoC6/CapSense_TMG.c ****             #if ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) || (CapSense_TMG_CLICKS_ENABLED == 1u))
+  97:Generated_Source\PSoC6/CapSense_TMG.c ****                 #if ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) && (CapSense_TMG_CLICKS_ENABLED == 1u)
+  98:Generated_Source\PSoC6/CapSense_TMG.c ****                     if ((clickAndDragActive == 1u) || (edgeSwipeActive == 1u))
+  99:Generated_Source\PSoC6/CapSense_TMG.c ****                 #elif (CapSense_TMG_CLICKS_ENABLED == 1u)
+ 100:Generated_Source\PSoC6/CapSense_TMG.c ****                     if (clickAndDragActive == 1u)
+ 101:Generated_Source\PSoC6/CapSense_TMG.c ****                 #elif (CapSense_TMG_EDGE_SWIPE_ENABLED == 1u)
+ 102:Generated_Source\PSoC6/CapSense_TMG.c ****                     if (edgeSwipeActive == 1u)
+ 103:Generated_Source\PSoC6/CapSense_TMG.c ****                 #endif /* ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) && (CapSense_TMG_CLICKS_ENABLED 
+ 104:Generated_Source\PSoC6/CapSense_TMG.c ****                 {
+ 105:Generated_Source\PSoC6/CapSense_TMG.c ****                     stGesture = CapSense_TMG_NO_GESTURE;
+ 106:Generated_Source\PSoC6/CapSense_TMG.c ****                 }
+ 107:Generated_Source\PSoC6/CapSense_TMG.c ****             #endif /* ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) || (CapSense_TMG_CLICKS_ENABLED == 1
+ 108:Generated_Source\PSoC6/CapSense_TMG.c ****             if ((stGesture == CapSense_TMG_ROTATE_CW) || (stGesture == CapSense_TMG_ROTATE_CCW))
+ 109:Generated_Source\PSoC6/CapSense_TMG.c ****             {
+ 110:Generated_Source\PSoC6/CapSense_TMG.c ****                 rotationActive = CapSense_TMG_ROTATE_TO_OTHER_DEBOUNCE;
+ 111:Generated_Source\PSoC6/CapSense_TMG.c ****             }
+ 112:Generated_Source\PSoC6/CapSense_TMG.c ****             else
+ 113:Generated_Source\PSoC6/CapSense_TMG.c ****             {
+ 114:Generated_Source\PSoC6/CapSense_TMG.c ****                 if (rotationActive > 0u)
+ 115:Generated_Source\PSoC6/CapSense_TMG.c ****                 {
+ 116:Generated_Source\PSoC6/CapSense_TMG.c ****                     rotationActive--;
+ 117:Generated_Source\PSoC6/CapSense_TMG.c ****                 }
+ 118:Generated_Source\PSoC6/CapSense_TMG.c ****             }
+ 119:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 120:Generated_Source\PSoC6/CapSense_TMG.c ****             if (((stGesture == CapSense_TMG_NO_GESTURE)||(stGesture == CapSense_TMG_TOUCHDOWN) \
+ 121:Generated_Source\PSoC6/CapSense_TMG.c ****                                             ||(stGesture == CapSense_TMG_LIFT_OFF))&&(rotationActiv
+ 122:Generated_Source\PSoC6/CapSense_TMG.c ****         #else
+ 123:Generated_Source\PSoC6/CapSense_TMG.c ****             if ((stGesture == CapSense_TMG_NO_GESTURE)||(stGesture == CapSense_TMG_TOUCHDOWN) \
+ 124:Generated_Source\PSoC6/CapSense_TMG.c ****                                             ||(stGesture == CapSense_TMG_LIFT_OFF))
+ 125:Generated_Source\PSoC6/CapSense_TMG.c ****         #endif /* (CapSense_TMG_ROTATE_ENABLED == 1u) */
+ 126:Generated_Source\PSoC6/CapSense_TMG.c ****         {
+ 127:Generated_Source\PSoC6/CapSense_TMG.c ****             #if (CapSense_TMG_ST_SCROLLS_ENABLED == 1u)
+ 128:Generated_Source\PSoC6/CapSense_TMG.c ****                 #if ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) && (CapSense_TMG_CLICKS_ENABLED == 1u)
+ 129:Generated_Source\PSoC6/CapSense_TMG.c ****                     if ((clickAndDragActive == 0u)&&(edgeSwipeActive == 0u))
+ 130:Generated_Source\PSoC6/CapSense_TMG.c ****                 #elif (CapSense_TMG_CLICKS_ENABLED == 1u)
+ 131:Generated_Source\PSoC6/CapSense_TMG.c ****                     if (clickAndDragActive == 0u)
+ 132:Generated_Source\PSoC6/CapSense_TMG.c ****                 #elif (CapSense_TMG_EDGE_SWIPE_ENABLED == 1u)
+ 133:Generated_Source\PSoC6/CapSense_TMG.c ****                     if (edgeSwipeActive == 0u)
+ 134:Generated_Source\PSoC6/CapSense_TMG.c ****                 #else
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 4
+
+
+ 135:Generated_Source\PSoC6/CapSense_TMG.c ****                     if (1u == 1u)
+ 136:Generated_Source\PSoC6/CapSense_TMG.c ****                 #endif /* ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) && (CapSense_TMG_CLICKS_ENABLED 
+ 137:Generated_Source\PSoC6/CapSense_TMG.c ****                 {
+ 138:Generated_Source\PSoC6/CapSense_TMG.c ****                     stGesture = Gesture_DecodeSTScrollGestures((uint8_t)touchNumber, currentTimesta
+ 139:Generated_Source\PSoC6/CapSense_TMG.c ****                 }
+ 140:Generated_Source\PSoC6/CapSense_TMG.c ****             #elif (CapSense_TMG_FLICKS_ENABLED == 1u)
+ 141:Generated_Source\PSoC6/CapSense_TMG.c ****                 stGesture = Gesture_DecodeFlickGestures((uint8_t)touchNumber, currentTimestamp, pos
+  38              		.loc 1 141 0
+  39 0002 C0B2     		uxtb	r0, r0
+  40              	.LVL2:
+  41 0004 FFF7FEFF 		bl	Gesture_DecodeFlickGestures
+  42              	.LVL3:
+ 142:Generated_Source\PSoC6/CapSense_TMG.c ****             #endif /* (CapSense_TMG_ST_SCROLLS_ENABLED == 1u) */
+ 143:Generated_Source\PSoC6/CapSense_TMG.c ****         }
+ 144:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 145:Generated_Source\PSoC6/CapSense_TMG.c ****         #if (CapSense_TMG_EDGE_SWIPE_ENABLED == 1u)
+ 146:Generated_Source\PSoC6/CapSense_TMG.c ****             edgeSwipeGesture = Gesture_DecodeEdgeSwipeGestures((uint8_t)touchNumber, currentTimesta
+ 147:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 148:Generated_Source\PSoC6/CapSense_TMG.c ****             #if (CapSense_TMG_ROTATE_ENABLED == 1u)
+ 149:Generated_Source\PSoC6/CapSense_TMG.c ****                 if (((edgeSwipeGesture != CapSense_TMG_NO_GESTURE) && \
+ 150:Generated_Source\PSoC6/CapSense_TMG.c ****                     (edgeSwipeGesture != CapSense_TMG_TOUCHDOWN) && (edgeSwipeGesture != CapSense_T
+ 151:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                                             && (rot
+ 152:Generated_Source\PSoC6/CapSense_TMG.c ****             #else
+ 153:Generated_Source\PSoC6/CapSense_TMG.c ****                 if ((edgeSwipeGesture != CapSense_TMG_NO_GESTURE) && \
+ 154:Generated_Source\PSoC6/CapSense_TMG.c ****                     (edgeSwipeGesture != CapSense_TMG_TOUCHDOWN) && (edgeSwipeGesture != CapSense_T
+ 155:Generated_Source\PSoC6/CapSense_TMG.c ****             #endif /* (CapSense_TMG_ROTATE_ENABLED == 1u) */
+ 156:Generated_Source\PSoC6/CapSense_TMG.c ****             {
+ 157:Generated_Source\PSoC6/CapSense_TMG.c ****                 stGesture = edgeSwipeGesture;
+ 158:Generated_Source\PSoC6/CapSense_TMG.c ****                 #if ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) && ((CapSense_TMG_CLICKS_ENABLED == 1u
+ 159:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                      (CapSense_TMG_ST_SCROLLS_ENABL
+ 160:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                      (CapSense_TMG_ROTATE_ENABLED =
+ 161:Generated_Source\PSoC6/CapSense_TMG.c ****                     edgeSwipeActive = 1u;
+ 162:Generated_Source\PSoC6/CapSense_TMG.c ****                 #endif /* ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) && ((CapSense_TMG_CLICKS_ENABLED
+ 163:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                            (CapSense_TMG_ST_SCROLLS
+ 164:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                            (CapSense_TMG_ROTATE_ENA
+ 165:Generated_Source\PSoC6/CapSense_TMG.c ****             }
+ 166:Generated_Source\PSoC6/CapSense_TMG.c ****         #endif /* (CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) */
+ 167:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 168:Generated_Source\PSoC6/CapSense_TMG.c ****         if ((stGesture != CapSense_TMG_NO_GESTURE)&&(stGesture != CapSense_TMG_TOUCHDOWN) \
+  43              		.loc 1 168 0
+  44 0008 0028     		cmp	r0, #0
+  45 000a 06D0     		beq	.L2
+  46              		.loc 1 168 0 is_stmt 0 discriminator 1
+  47 000c 2F28     		cmp	r0, #47
+  48 000e 03D0     		beq	.L3
+ 169:Generated_Source\PSoC6/CapSense_TMG.c ****                                             &&(stGesture != CapSense_TMG_LIFT_OFF))
+  49              		.loc 1 169 0 is_stmt 1
+  50 0010 4F28     		cmp	r0, #79
+  51 0012 02D1     		bne	.L2
+  39:Generated_Source\PSoC6/CapSense_TMG.c ****     uint32_t gestureID = CapSense_TMG_NO_GESTURE;
+  52              		.loc 1 39 0
+  53 0014 0020     		movs	r0, #0
+  54              	.LVL4:
+  55 0016 00E0     		b	.L2
+  56              	.LVL5:
+  57              	.L3:
+  58 0018 0020     		movs	r0, #0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 5
+
+
+  59              	.LVL6:
+  60              	.L2:
+ 170:Generated_Source\PSoC6/CapSense_TMG.c ****         {
+ 171:Generated_Source\PSoC6/CapSense_TMG.c ****             gestureID = stGesture;
+ 172:Generated_Source\PSoC6/CapSense_TMG.c ****         }
+ 173:Generated_Source\PSoC6/CapSense_TMG.c ****         else if ((clickGesture == CapSense_TMG_TOUCHDOWN) || (clickGesture == CapSense_TMG_LIFT_OFF
+ 174:Generated_Source\PSoC6/CapSense_TMG.c ****         {
+ 175:Generated_Source\PSoC6/CapSense_TMG.c ****             #if(CapSense_TMG_CLICKS_ENABLED != 0u)
+ 176:Generated_Source\PSoC6/CapSense_TMG.c ****                 gestureID = clickGesture;
+ 177:Generated_Source\PSoC6/CapSense_TMG.c ****             #else
+ 178:Generated_Source\PSoC6/CapSense_TMG.c ****                 gestureID = CapSense_TMG_NO_GESTURE;
+ 179:Generated_Source\PSoC6/CapSense_TMG.c ****             #endif /* (CapSense_TMG_CLICKS_ENABLED != 0u) */
+ 180:Generated_Source\PSoC6/CapSense_TMG.c ****         }
+ 181:Generated_Source\PSoC6/CapSense_TMG.c ****         else
+ 182:Generated_Source\PSoC6/CapSense_TMG.c ****         {
+ 183:Generated_Source\PSoC6/CapSense_TMG.c ****             /* Do not change gestureID */
+ 184:Generated_Source\PSoC6/CapSense_TMG.c ****         }
+ 185:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 186:Generated_Source\PSoC6/CapSense_TMG.c ****         dtGesture = CapSense_TMG_DecodeZoomGestures(touchNumber, currentTimestamp, pos);
+ 187:Generated_Source\PSoC6/CapSense_TMG.c ****         if ((dtGesture == CapSense_TMG_NO_GESTURE) || (dtGesture == CapSense_TMG_TOUCHDOWN) \
+ 188:Generated_Source\PSoC6/CapSense_TMG.c ****                                             || (dtGesture == CapSense_TMG_LIFT_OFF))
+ 189:Generated_Source\PSoC6/CapSense_TMG.c ****         {
+ 190:Generated_Source\PSoC6/CapSense_TMG.c ****             dtGesture = CapSense_TMG_DecodeDTScrollGestures(touchNumber, currentTimestamp, pos);
+ 191:Generated_Source\PSoC6/CapSense_TMG.c ****         }
+ 192:Generated_Source\PSoC6/CapSense_TMG.c ****         else
+ 193:Generated_Source\PSoC6/CapSense_TMG.c ****         {
+ 194:Generated_Source\PSoC6/CapSense_TMG.c ****             (void)CapSense_TMG_DecodeDTScrollGestures(touchNumber, currentTimestamp, pos);
+ 195:Generated_Source\PSoC6/CapSense_TMG.c ****         }
+ 196:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 197:Generated_Source\PSoC6/CapSense_TMG.c ****         if ((dtGesture != CapSense_TMG_NO_GESTURE) && (dtGesture != CapSense_TMG_TOUCHDOWN) \
+ 198:Generated_Source\PSoC6/CapSense_TMG.c ****                                             && (dtGesture != CapSense_TMG_LIFT_OFF))
+ 199:Generated_Source\PSoC6/CapSense_TMG.c ****         {
+ 200:Generated_Source\PSoC6/CapSense_TMG.c ****             gestureID = dtGesture;
+ 201:Generated_Source\PSoC6/CapSense_TMG.c ****         }
+ 202:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 203:Generated_Source\PSoC6/CapSense_TMG.c ****         #if (CapSense_TMG_EDGE_SWIPE_ENABLED != 0u)
+ 204:Generated_Source\PSoC6/CapSense_TMG.c ****             if((gestureID >= CapSense_TMG_EDGE_SWIPE_LEFT)&&(gestureID <= CapSense_TMG_EDGE_SWIPE_B
+ 205:Generated_Source\PSoC6/CapSense_TMG.c ****             {
+ 206:Generated_Source\PSoC6/CapSense_TMG.c ****                 edgeTimeoutStamp = currentTimestamp;
+ 207:Generated_Source\PSoC6/CapSense_TMG.c ****             }
+ 208:Generated_Source\PSoC6/CapSense_TMG.c ****         #endif /* (CapSense_TMG_EDGE_SWIPE_ENABLED != 0u) */
+ 209:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 210:Generated_Source\PSoC6/CapSense_TMG.c ****         if ((clickGesture == CapSense_TMG_LIFT_OFF) || (clickGesture == CapSense_TMG_TOUCHDOWN) || 
+ 211:Generated_Source\PSoC6/CapSense_TMG.c ****                 (gestureID == CapSense_TMG_NO_GESTURE))
+ 212:Generated_Source\PSoC6/CapSense_TMG.c ****         {
+ 213:Generated_Source\PSoC6/CapSense_TMG.c ****             #if ((CapSense_TMG_CLICKS_ENABLED == 1u) && ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) ||
+ 214:Generated_Source\PSoC6/CapSense_TMG.c ****                                                              (CapSense_TMG_ST_SCROLLS_ENABLED == 1u
+ 215:Generated_Source\PSoC6/CapSense_TMG.c ****                                                              (CapSense_TMG_ROTATE_ENABLED == 1u)))
+ 216:Generated_Source\PSoC6/CapSense_TMG.c ****                 if(0u != clickAndDragActive)
+ 217:Generated_Source\PSoC6/CapSense_TMG.c ****                 {
+ 218:Generated_Source\PSoC6/CapSense_TMG.c ****                     clickAndDragActive = 0u;
+ 219:Generated_Source\PSoC6/CapSense_TMG.c ****                 }
+ 220:Generated_Source\PSoC6/CapSense_TMG.c ****             #endif /* ((CapSense_TMG_CLICKS_ENABLED == 1u) && ((CapSense_TMG_EDGE_SWIPE_ENABLED == 
+ 221:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                    (CapSense_TMG_ST_SCROLLS_ENABLED
+ 222:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                    (CapSense_TMG_ROTATE_ENABLED == 
+ 223:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 224:Generated_Source\PSoC6/CapSense_TMG.c ****             #if (CapSense_TMG_EDGE_SWIPE_ENABLED != 0u)
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 6
+
+
+ 225:Generated_Source\PSoC6/CapSense_TMG.c ****             deltaTimeoutStamp = currentTimestamp - edgeTimeoutStamp;
+ 226:Generated_Source\PSoC6/CapSense_TMG.c ****             if ((clickGesture == CapSense_TMG_LIFT_OFF) || (deltaTimeoutStamp >= CapSense_TMG_EDGE_
+ 227:Generated_Source\PSoC6/CapSense_TMG.c ****             {
+ 228:Generated_Source\PSoC6/CapSense_TMG.c ****                 edgeTimeoutStamp = 0u;
+ 229:Generated_Source\PSoC6/CapSense_TMG.c ****                 #if ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) && ((CapSense_TMG_CLICKS_ENABLED == 1u
+ 230:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                             (CapSense_TMG_ST_SCROLL
+ 231:Generated_Source\PSoC6/CapSense_TMG.c ****                     if(0u != edgeSwipeActive)
+ 232:Generated_Source\PSoC6/CapSense_TMG.c ****                     {
+ 233:Generated_Source\PSoC6/CapSense_TMG.c ****                         edgeSwipeActive = 0u;
+ 234:Generated_Source\PSoC6/CapSense_TMG.c ****                     }
+ 235:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 236:Generated_Source\PSoC6/CapSense_TMG.c ****                 #endif /* ((CapSense_TMG_EDGE_SWIPE_ENABLED == 1u) && ((CapSense_TMG_CLICKS_ENABLED
+ 237:Generated_Source\PSoC6/CapSense_TMG.c ****                                                                             (CapSense_TMG_ST_SCROLL
+ 238:Generated_Source\PSoC6/CapSense_TMG.c ****             }
+ 239:Generated_Source\PSoC6/CapSense_TMG.c ****             #endif /* (CapSense_TMG_EDGE_SWIPE_ENABLED != 0u) */
+ 240:Generated_Source\PSoC6/CapSense_TMG.c ****         }
+ 241:Generated_Source\PSoC6/CapSense_TMG.c ****     #endif /* (0u != CapSense_TMG_GESTURES_ENABLED) */
+ 242:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 243:Generated_Source\PSoC6/CapSense_TMG.c ****     return (gestureID);
+ 244:Generated_Source\PSoC6/CapSense_TMG.c **** }
+  61              		.loc 1 244 0
+  62              		@ sp needed
+  63 001a 10BD     		pop	{r4, pc}
+  64              		.cfi_endproc
+  65              	.LFE0:
+  66              		.size	CapSense_TMG_DecodeAllGestures, .-CapSense_TMG_DecodeAllGestures
+  67              		.section	.text.CapSense_TMG_BallisticsMultiplier,"ax",%progbits
+  68              		.align	2
+  69              		.global	CapSense_TMG_BallisticsMultiplier
+  70              		.code	16
+  71              		.thumb_func
+  72              		.type	CapSense_TMG_BallisticsMultiplier, %function
+  73              	CapSense_TMG_BallisticsMultiplier:
+  74              	.LFB1:
+ 245:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 246:Generated_Source\PSoC6/CapSense_TMG.c **** 
+ 247:Generated_Source\PSoC6/CapSense_TMG.c **** /*******************************************************************************
+ 248:Generated_Source\PSoC6/CapSense_TMG.c **** * Function Name: CapSense_TMG_ballisticsMultiplier
+ 249:Generated_Source\PSoC6/CapSense_TMG.c **** ********************************************************************************
+ 250:Generated_Source\PSoC6/CapSense_TMG.c **** *
+ 251:Generated_Source\PSoC6/CapSense_TMG.c **** * Summary:
+ 252:Generated_Source\PSoC6/CapSense_TMG.c **** *  This API is to run the ballistic Multiplier.
+ 253:Generated_Source\PSoC6/CapSense_TMG.c **** *  CapSense_TMG_TimerEnableInt has to be called once prior calling this API.
+ 254:Generated_Source\PSoC6/CapSense_TMG.c **** *
+ 255:Generated_Source\PSoC6/CapSense_TMG.c **** * Parameters:
+ 256:Generated_Source\PSoC6/CapSense_TMG.c **** *   ballisticMultiplier: Pointer to the structure which contains API parameters.
+ 257:Generated_Source\PSoC6/CapSense_TMG.c **** *   currentTimestamp : Current timestamp value.
+ 258:Generated_Source\PSoC6/CapSense_TMG.c **** *   pos: Pointer to dX and dY coordinates.
+ 259:Generated_Source\PSoC6/CapSense_TMG.c **** *
+ 260:Generated_Source\PSoC6/CapSense_TMG.c **** * Return:
+ 261:Generated_Source\PSoC6/CapSense_TMG.c **** *  None
+ 262:Generated_Source\PSoC6/CapSense_TMG.c **** *
+ 263:Generated_Source\PSoC6/CapSense_TMG.c **** * Global Variables:
+ 264:Generated_Source\PSoC6/CapSense_TMG.c **** *  None
+ 265:Generated_Source\PSoC6/CapSense_TMG.c **** *
+ 266:Generated_Source\PSoC6/CapSense_TMG.c **** *******************************************************************************/
+ 267:Generated_Source\PSoC6/CapSense_TMG.c **** void CapSense_TMG_BallisticsMultiplier(const CapSense_TMG_BALLISTIC_MULT * ballisticMultiplier, uin
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 7
+
+
+ 268:Generated_Source\PSoC6/CapSense_TMG.c **** {
+  75              		.loc 1 268 0
+  76              		.cfi_startproc
+  77              		@ args = 0, pretend = 0, frame = 0
+  78              		@ frame_needed = 0, uses_anonymous_args = 0
+  79              		@ link register save eliminated.
+  80              	.LVL7:
+ 269:Generated_Source\PSoC6/CapSense_TMG.c ****     #if (CapSense_TMG_BALLISTICS_ENABLED == 1u)
+ 270:Generated_Source\PSoC6/CapSense_TMG.c ****         CapSense_TMG_BALLISTIC_MULT_INT ballisticsStrct;
+ 271:Generated_Source\PSoC6/CapSense_TMG.c ****         ballisticsStrct.paramStr = *ballisticMultiplier;
+ 272:Generated_Source\PSoC6/CapSense_TMG.c ****         ballisticsStrct.currentTimestamp = currentTimestamp;
+ 273:Generated_Source\PSoC6/CapSense_TMG.c ****         BallisticMultiplier(&ballisticsStrct, pos);
+ 274:Generated_Source\PSoC6/CapSense_TMG.c ****     #endif /* (CapSense_TMG_BALLISTICS_ENABLED == 1u) */
+ 275:Generated_Source\PSoC6/CapSense_TMG.c **** }
+  81              		.loc 1 275 0
+  82              		@ sp needed
+  83 0000 7047     		bx	lr
+  84              		.cfi_endproc
+  85              	.LFE1:
+  86              		.size	CapSense_TMG_BallisticsMultiplier, .-CapSense_TMG_BallisticsMultiplier
+  87 0002 C046     		.text
+  88              	.Letext0:
+  89              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  90              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  91              		.file 4 "Generated_Source\\PSoC6\\CapSense_TMG.h"
+  92              		.section	.debug_info,"",%progbits
+  93              	.Ldebug_info0:
+  94 0000 55020000 		.4byte	0x255
+  95 0004 0400     		.2byte	0x4
+  96 0006 00000000 		.4byte	.Ldebug_abbrev0
+  97 000a 04       		.byte	0x4
+  98 000b 01       		.uleb128 0x1
+  99 000c 14000000 		.4byte	.LASF31
+ 100 0010 0C       		.byte	0xc
+ 101 0011 D1000000 		.4byte	.LASF32
+ 102 0015 8D010000 		.4byte	.LASF33
+ 103 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 104 001d 00000000 		.4byte	0
+ 105 0021 00000000 		.4byte	.Ldebug_line0
+ 106 0025 02       		.uleb128 0x2
+ 107 0026 01       		.byte	0x1
+ 108 0027 06       		.byte	0x6
+ 109 0028 6A010000 		.4byte	.LASF0
+ 110 002c 03       		.uleb128 0x3
+ 111 002d 36010000 		.4byte	.LASF2
+ 112 0031 02       		.byte	0x2
+ 113 0032 1D       		.byte	0x1d
+ 114 0033 37000000 		.4byte	0x37
+ 115 0037 02       		.uleb128 0x2
+ 116 0038 01       		.byte	0x1
+ 117 0039 08       		.byte	0x8
+ 118 003a 5C010000 		.4byte	.LASF1
+ 119 003e 03       		.uleb128 0x3
+ 120 003f AE020000 		.4byte	.LASF3
+ 121 0043 02       		.byte	0x2
+ 122 0044 29       		.byte	0x29
+ 123 0045 49000000 		.4byte	0x49
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 8
+
+
+ 124 0049 02       		.uleb128 0x2
+ 125 004a 02       		.byte	0x2
+ 126 004b 05       		.byte	0x5
+ 127 004c 00000000 		.4byte	.LASF4
+ 128 0050 03       		.uleb128 0x3
+ 129 0051 BE000000 		.4byte	.LASF5
+ 130 0055 02       		.byte	0x2
+ 131 0056 2B       		.byte	0x2b
+ 132 0057 5B000000 		.4byte	0x5b
+ 133 005b 02       		.uleb128 0x2
+ 134 005c 02       		.byte	0x2
+ 135 005d 07       		.byte	0x7
+ 136 005e 26020000 		.4byte	.LASF6
+ 137 0062 02       		.uleb128 0x2
+ 138 0063 04       		.byte	0x4
+ 139 0064 05       		.byte	0x5
+ 140 0065 0E010000 		.4byte	.LASF7
+ 141 0069 03       		.uleb128 0x3
+ 142 006a B3000000 		.4byte	.LASF8
+ 143 006e 02       		.byte	0x2
+ 144 006f 41       		.byte	0x41
+ 145 0070 74000000 		.4byte	0x74
+ 146 0074 02       		.uleb128 0x2
+ 147 0075 04       		.byte	0x4
+ 148 0076 07       		.byte	0x7
+ 149 0077 68020000 		.4byte	.LASF9
+ 150 007b 02       		.uleb128 0x2
+ 151 007c 08       		.byte	0x8
+ 152 007d 05       		.byte	0x5
+ 153 007e 00010000 		.4byte	.LASF10
+ 154 0082 02       		.uleb128 0x2
+ 155 0083 08       		.byte	0x8
+ 156 0084 07       		.byte	0x7
+ 157 0085 76010000 		.4byte	.LASF11
+ 158 0089 04       		.uleb128 0x4
+ 159 008a 04       		.byte	0x4
+ 160 008b 05       		.byte	0x5
+ 161 008c 696E7400 		.ascii	"int\000"
+ 162 0090 02       		.uleb128 0x2
+ 163 0091 04       		.byte	0x4
+ 164 0092 07       		.byte	0x7
+ 165 0093 D2010000 		.4byte	.LASF12
+ 166 0097 03       		.uleb128 0x3
+ 167 0098 C9000000 		.4byte	.LASF13
+ 168 009c 03       		.byte	0x3
+ 169 009d 18       		.byte	0x18
+ 170 009e 2C000000 		.4byte	0x2c
+ 171 00a2 03       		.uleb128 0x3
+ 172 00a3 43020000 		.4byte	.LASF14
+ 173 00a7 03       		.byte	0x3
+ 174 00a8 20       		.byte	0x20
+ 175 00a9 3E000000 		.4byte	0x3e
+ 176 00ad 03       		.uleb128 0x3
+ 177 00ae DF010000 		.4byte	.LASF15
+ 178 00b2 03       		.byte	0x3
+ 179 00b3 24       		.byte	0x24
+ 180 00b4 50000000 		.4byte	0x50
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 9
+
+
+ 181 00b8 03       		.uleb128 0x3
+ 182 00b9 F7000000 		.4byte	.LASF16
+ 183 00bd 03       		.byte	0x3
+ 184 00be 30       		.byte	0x30
+ 185 00bf 69000000 		.4byte	0x69
+ 186 00c3 05       		.uleb128 0x5
+ 187 00c4 06       		.byte	0x6
+ 188 00c5 04       		.byte	0x4
+ 189 00c6 F801     		.2byte	0x1f8
+ 190 00c8 1B010000 		.4byte	0x11b
+ 191 00cc 06       		.uleb128 0x6
+ 192 00cd 91020000 		.4byte	.LASF17
+ 193 00d1 04       		.byte	0x4
+ 194 00d2 FB01     		.2byte	0x1fb
+ 195 00d4 97000000 		.4byte	0x97
+ 196 00d8 00       		.byte	0
+ 197 00d9 06       		.uleb128 0x6
+ 198 00da C7010000 		.4byte	.LASF18
+ 199 00de 04       		.byte	0x4
+ 200 00df FD01     		.2byte	0x1fd
+ 201 00e1 97000000 		.4byte	0x97
+ 202 00e5 01       		.byte	0x1
+ 203 00e6 06       		.uleb128 0x6
+ 204 00e7 CC020000 		.4byte	.LASF19
+ 205 00eb 04       		.byte	0x4
+ 206 00ec FF01     		.2byte	0x1ff
+ 207 00ee 97000000 		.4byte	0x97
+ 208 00f2 02       		.byte	0x2
+ 209 00f3 06       		.uleb128 0x6
+ 210 00f4 A6000000 		.4byte	.LASF20
+ 211 00f8 04       		.byte	0x4
+ 212 00f9 0102     		.2byte	0x201
+ 213 00fb 97000000 		.4byte	0x97
+ 214 00ff 03       		.byte	0x3
+ 215 0100 06       		.uleb128 0x6
+ 216 0101 D7020000 		.4byte	.LASF21
+ 217 0105 04       		.byte	0x4
+ 218 0106 0302     		.2byte	0x203
+ 219 0108 97000000 		.4byte	0x97
+ 220 010c 04       		.byte	0x4
+ 221 010d 06       		.uleb128 0x6
+ 222 010e E7020000 		.4byte	.LASF22
+ 223 0112 04       		.byte	0x4
+ 224 0113 0502     		.2byte	0x205
+ 225 0115 97000000 		.4byte	0x97
+ 226 0119 05       		.byte	0x5
+ 227 011a 00       		.byte	0
+ 228 011b 07       		.uleb128 0x7
+ 229 011c 40010000 		.4byte	.LASF23
+ 230 0120 04       		.byte	0x4
+ 231 0121 0602     		.2byte	0x206
+ 232 0123 C3000000 		.4byte	0xc3
+ 233 0127 05       		.uleb128 0x5
+ 234 0128 04       		.byte	0x4
+ 235 0129 04       		.byte	0x4
+ 236 012a 0C02     		.2byte	0x20c
+ 237 012c 47010000 		.4byte	0x147
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 10
+
+
+ 238 0130 08       		.uleb128 0x8
+ 239 0131 7800     		.ascii	"x\000"
+ 240 0133 04       		.byte	0x4
+ 241 0134 0D02     		.2byte	0x20d
+ 242 0136 AD000000 		.4byte	0xad
+ 243 013a 00       		.byte	0
+ 244 013b 08       		.uleb128 0x8
+ 245 013c 7900     		.ascii	"y\000"
+ 246 013e 04       		.byte	0x4
+ 247 013f 0E02     		.2byte	0x20e
+ 248 0141 AD000000 		.4byte	0xad
+ 249 0145 02       		.byte	0x2
+ 250 0146 00       		.byte	0
+ 251 0147 07       		.uleb128 0x7
+ 252 0148 4B020000 		.4byte	.LASF24
+ 253 014c 04       		.byte	0x4
+ 254 014d 0F02     		.2byte	0x20f
+ 255 014f 27010000 		.4byte	0x127
+ 256 0153 09       		.uleb128 0x9
+ 257 0154 17010000 		.4byte	.LASF34
+ 258 0158 01       		.byte	0x1
+ 259 0159 25       		.byte	0x25
+ 260 015a B8000000 		.4byte	0xb8
+ 261 015e 00000000 		.4byte	.LFB0
+ 262 0162 1C000000 		.4byte	.LFE0-.LFB0
+ 263 0166 01       		.uleb128 0x1
+ 264 0167 9C       		.byte	0x9c
+ 265 0168 EF010000 		.4byte	0x1ef
+ 266 016c 0A       		.uleb128 0xa
+ 267 016d 91020000 		.4byte	.LASF17
+ 268 0171 01       		.byte	0x1
+ 269 0172 25       		.byte	0x25
+ 270 0173 B8000000 		.4byte	0xb8
+ 271 0177 00000000 		.4byte	.LLST0
+ 272 017b 0A       		.uleb128 0xa
+ 273 017c 9D020000 		.4byte	.LASF25
+ 274 0180 01       		.byte	0x1
+ 275 0181 25       		.byte	0x25
+ 276 0182 B8000000 		.4byte	0xb8
+ 277 0186 21000000 		.4byte	.LLST1
+ 278 018a 0B       		.uleb128 0xb
+ 279 018b 706F7300 		.ascii	"pos\000"
+ 280 018f 01       		.byte	0x1
+ 281 0190 25       		.byte	0x25
+ 282 0191 EF010000 		.4byte	0x1ef
+ 283 0195 42000000 		.4byte	.LLST2
+ 284 0199 0C       		.uleb128 0xc
+ 285 019a 87020000 		.4byte	.LASF26
+ 286 019e 01       		.byte	0x1
+ 287 019f 27       		.byte	0x27
+ 288 01a0 B8000000 		.4byte	0xb8
+ 289 01a4 63000000 		.4byte	.LLST3
+ 290 01a8 0D       		.uleb128 0xd
+ 291 01a9 7A020000 		.4byte	.LASF27
+ 292 01ad 01       		.byte	0x1
+ 293 01ae 2A       		.byte	0x2a
+ 294 01af B8000000 		.4byte	0xb8
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 11
+
+
+ 295 01b3 00       		.byte	0
+ 296 01b4 0C       		.uleb128 0xc
+ 297 01b5 39020000 		.4byte	.LASF28
+ 298 01b9 01       		.byte	0x1
+ 299 01ba 2D       		.byte	0x2d
+ 300 01bb B8000000 		.4byte	0xb8
+ 301 01bf 82000000 		.4byte	.LLST4
+ 302 01c3 0D       		.uleb128 0xd
+ 303 01c4 0A000000 		.4byte	.LASF29
+ 304 01c8 01       		.byte	0x1
+ 305 01c9 30       		.byte	0x30
+ 306 01ca B8000000 		.4byte	0xb8
+ 307 01ce 00       		.byte	0
+ 308 01cf 0E       		.uleb128 0xe
+ 309 01d0 08000000 		.4byte	.LVL3
+ 310 01d4 4C020000 		.4byte	0x24c
+ 311 01d8 0F       		.uleb128 0xf
+ 312 01d9 01       		.uleb128 0x1
+ 313 01da 50       		.byte	0x50
+ 314 01db 03       		.uleb128 0x3
+ 315 01dc F3       		.byte	0xf3
+ 316 01dd 01       		.uleb128 0x1
+ 317 01de 50       		.byte	0x50
+ 318 01df 0F       		.uleb128 0xf
+ 319 01e0 01       		.uleb128 0x1
+ 320 01e1 51       		.byte	0x51
+ 321 01e2 03       		.uleb128 0x3
+ 322 01e3 F3       		.byte	0xf3
+ 323 01e4 01       		.uleb128 0x1
+ 324 01e5 51       		.byte	0x51
+ 325 01e6 0F       		.uleb128 0xf
+ 326 01e7 01       		.uleb128 0x1
+ 327 01e8 52       		.byte	0x52
+ 328 01e9 03       		.uleb128 0x3
+ 329 01ea F3       		.byte	0xf3
+ 330 01eb 01       		.uleb128 0x1
+ 331 01ec 52       		.byte	0x52
+ 332 01ed 00       		.byte	0
+ 333 01ee 00       		.byte	0
+ 334 01ef 10       		.uleb128 0x10
+ 335 01f0 04       		.byte	0x4
+ 336 01f1 F5010000 		.4byte	0x1f5
+ 337 01f5 11       		.uleb128 0x11
+ 338 01f6 47010000 		.4byte	0x147
+ 339 01fa 12       		.uleb128 0x12
+ 340 01fb 04020000 		.4byte	.LASF35
+ 341 01ff 01       		.byte	0x1
+ 342 0200 0B01     		.2byte	0x10b
+ 343 0202 00000000 		.4byte	.LFB1
+ 344 0206 02000000 		.4byte	.LFE1-.LFB1
+ 345 020a 01       		.uleb128 0x1
+ 346 020b 9C       		.byte	0x9c
+ 347 020c 3B020000 		.4byte	0x23b
+ 348 0210 13       		.uleb128 0x13
+ 349 0211 B8020000 		.4byte	.LASF30
+ 350 0215 01       		.byte	0x1
+ 351 0216 0B01     		.2byte	0x10b
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 12
+
+
+ 352 0218 3B020000 		.4byte	0x23b
+ 353 021c 01       		.uleb128 0x1
+ 354 021d 50       		.byte	0x50
+ 355 021e 13       		.uleb128 0x13
+ 356 021f 9D020000 		.4byte	.LASF25
+ 357 0223 01       		.byte	0x1
+ 358 0224 0B01     		.2byte	0x10b
+ 359 0226 B8000000 		.4byte	0xb8
+ 360 022a 01       		.uleb128 0x1
+ 361 022b 51       		.byte	0x51
+ 362 022c 14       		.uleb128 0x14
+ 363 022d 706F7300 		.ascii	"pos\000"
+ 364 0231 01       		.byte	0x1
+ 365 0232 0B01     		.2byte	0x10b
+ 366 0234 46020000 		.4byte	0x246
+ 367 0238 01       		.uleb128 0x1
+ 368 0239 52       		.byte	0x52
+ 369 023a 00       		.byte	0
+ 370 023b 10       		.uleb128 0x10
+ 371 023c 04       		.byte	0x4
+ 372 023d 41020000 		.4byte	0x241
+ 373 0241 11       		.uleb128 0x11
+ 374 0242 1B010000 		.4byte	0x11b
+ 375 0246 10       		.uleb128 0x10
+ 376 0247 04       		.byte	0x4
+ 377 0248 A2000000 		.4byte	0xa2
+ 378 024c 15       		.uleb128 0x15
+ 379 024d E8010000 		.4byte	.LASF36
+ 380 0251 E8010000 		.4byte	.LASF36
+ 381 0255 04       		.byte	0x4
+ 382 0256 A502     		.2byte	0x2a5
+ 383 0258 00       		.byte	0
+ 384              		.section	.debug_abbrev,"",%progbits
+ 385              	.Ldebug_abbrev0:
+ 386 0000 01       		.uleb128 0x1
+ 387 0001 11       		.uleb128 0x11
+ 388 0002 01       		.byte	0x1
+ 389 0003 25       		.uleb128 0x25
+ 390 0004 0E       		.uleb128 0xe
+ 391 0005 13       		.uleb128 0x13
+ 392 0006 0B       		.uleb128 0xb
+ 393 0007 03       		.uleb128 0x3
+ 394 0008 0E       		.uleb128 0xe
+ 395 0009 1B       		.uleb128 0x1b
+ 396 000a 0E       		.uleb128 0xe
+ 397 000b 55       		.uleb128 0x55
+ 398 000c 17       		.uleb128 0x17
+ 399 000d 11       		.uleb128 0x11
+ 400 000e 01       		.uleb128 0x1
+ 401 000f 10       		.uleb128 0x10
+ 402 0010 17       		.uleb128 0x17
+ 403 0011 00       		.byte	0
+ 404 0012 00       		.byte	0
+ 405 0013 02       		.uleb128 0x2
+ 406 0014 24       		.uleb128 0x24
+ 407 0015 00       		.byte	0
+ 408 0016 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 13
+
+
+ 409 0017 0B       		.uleb128 0xb
+ 410 0018 3E       		.uleb128 0x3e
+ 411 0019 0B       		.uleb128 0xb
+ 412 001a 03       		.uleb128 0x3
+ 413 001b 0E       		.uleb128 0xe
+ 414 001c 00       		.byte	0
+ 415 001d 00       		.byte	0
+ 416 001e 03       		.uleb128 0x3
+ 417 001f 16       		.uleb128 0x16
+ 418 0020 00       		.byte	0
+ 419 0021 03       		.uleb128 0x3
+ 420 0022 0E       		.uleb128 0xe
+ 421 0023 3A       		.uleb128 0x3a
+ 422 0024 0B       		.uleb128 0xb
+ 423 0025 3B       		.uleb128 0x3b
+ 424 0026 0B       		.uleb128 0xb
+ 425 0027 49       		.uleb128 0x49
+ 426 0028 13       		.uleb128 0x13
+ 427 0029 00       		.byte	0
+ 428 002a 00       		.byte	0
+ 429 002b 04       		.uleb128 0x4
+ 430 002c 24       		.uleb128 0x24
+ 431 002d 00       		.byte	0
+ 432 002e 0B       		.uleb128 0xb
+ 433 002f 0B       		.uleb128 0xb
+ 434 0030 3E       		.uleb128 0x3e
+ 435 0031 0B       		.uleb128 0xb
+ 436 0032 03       		.uleb128 0x3
+ 437 0033 08       		.uleb128 0x8
+ 438 0034 00       		.byte	0
+ 439 0035 00       		.byte	0
+ 440 0036 05       		.uleb128 0x5
+ 441 0037 13       		.uleb128 0x13
+ 442 0038 01       		.byte	0x1
+ 443 0039 0B       		.uleb128 0xb
+ 444 003a 0B       		.uleb128 0xb
+ 445 003b 3A       		.uleb128 0x3a
+ 446 003c 0B       		.uleb128 0xb
+ 447 003d 3B       		.uleb128 0x3b
+ 448 003e 05       		.uleb128 0x5
+ 449 003f 01       		.uleb128 0x1
+ 450 0040 13       		.uleb128 0x13
+ 451 0041 00       		.byte	0
+ 452 0042 00       		.byte	0
+ 453 0043 06       		.uleb128 0x6
+ 454 0044 0D       		.uleb128 0xd
+ 455 0045 00       		.byte	0
+ 456 0046 03       		.uleb128 0x3
+ 457 0047 0E       		.uleb128 0xe
+ 458 0048 3A       		.uleb128 0x3a
+ 459 0049 0B       		.uleb128 0xb
+ 460 004a 3B       		.uleb128 0x3b
+ 461 004b 05       		.uleb128 0x5
+ 462 004c 49       		.uleb128 0x49
+ 463 004d 13       		.uleb128 0x13
+ 464 004e 38       		.uleb128 0x38
+ 465 004f 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 14
+
+
+ 466 0050 00       		.byte	0
+ 467 0051 00       		.byte	0
+ 468 0052 07       		.uleb128 0x7
+ 469 0053 16       		.uleb128 0x16
+ 470 0054 00       		.byte	0
+ 471 0055 03       		.uleb128 0x3
+ 472 0056 0E       		.uleb128 0xe
+ 473 0057 3A       		.uleb128 0x3a
+ 474 0058 0B       		.uleb128 0xb
+ 475 0059 3B       		.uleb128 0x3b
+ 476 005a 05       		.uleb128 0x5
+ 477 005b 49       		.uleb128 0x49
+ 478 005c 13       		.uleb128 0x13
+ 479 005d 00       		.byte	0
+ 480 005e 00       		.byte	0
+ 481 005f 08       		.uleb128 0x8
+ 482 0060 0D       		.uleb128 0xd
+ 483 0061 00       		.byte	0
+ 484 0062 03       		.uleb128 0x3
+ 485 0063 08       		.uleb128 0x8
+ 486 0064 3A       		.uleb128 0x3a
+ 487 0065 0B       		.uleb128 0xb
+ 488 0066 3B       		.uleb128 0x3b
+ 489 0067 05       		.uleb128 0x5
+ 490 0068 49       		.uleb128 0x49
+ 491 0069 13       		.uleb128 0x13
+ 492 006a 38       		.uleb128 0x38
+ 493 006b 0B       		.uleb128 0xb
+ 494 006c 00       		.byte	0
+ 495 006d 00       		.byte	0
+ 496 006e 09       		.uleb128 0x9
+ 497 006f 2E       		.uleb128 0x2e
+ 498 0070 01       		.byte	0x1
+ 499 0071 3F       		.uleb128 0x3f
+ 500 0072 19       		.uleb128 0x19
+ 501 0073 03       		.uleb128 0x3
+ 502 0074 0E       		.uleb128 0xe
+ 503 0075 3A       		.uleb128 0x3a
+ 504 0076 0B       		.uleb128 0xb
+ 505 0077 3B       		.uleb128 0x3b
+ 506 0078 0B       		.uleb128 0xb
+ 507 0079 27       		.uleb128 0x27
+ 508 007a 19       		.uleb128 0x19
+ 509 007b 49       		.uleb128 0x49
+ 510 007c 13       		.uleb128 0x13
+ 511 007d 11       		.uleb128 0x11
+ 512 007e 01       		.uleb128 0x1
+ 513 007f 12       		.uleb128 0x12
+ 514 0080 06       		.uleb128 0x6
+ 515 0081 40       		.uleb128 0x40
+ 516 0082 18       		.uleb128 0x18
+ 517 0083 9742     		.uleb128 0x2117
+ 518 0085 19       		.uleb128 0x19
+ 519 0086 01       		.uleb128 0x1
+ 520 0087 13       		.uleb128 0x13
+ 521 0088 00       		.byte	0
+ 522 0089 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 15
+
+
+ 523 008a 0A       		.uleb128 0xa
+ 524 008b 05       		.uleb128 0x5
+ 525 008c 00       		.byte	0
+ 526 008d 03       		.uleb128 0x3
+ 527 008e 0E       		.uleb128 0xe
+ 528 008f 3A       		.uleb128 0x3a
+ 529 0090 0B       		.uleb128 0xb
+ 530 0091 3B       		.uleb128 0x3b
+ 531 0092 0B       		.uleb128 0xb
+ 532 0093 49       		.uleb128 0x49
+ 533 0094 13       		.uleb128 0x13
+ 534 0095 02       		.uleb128 0x2
+ 535 0096 17       		.uleb128 0x17
+ 536 0097 00       		.byte	0
+ 537 0098 00       		.byte	0
+ 538 0099 0B       		.uleb128 0xb
+ 539 009a 05       		.uleb128 0x5
+ 540 009b 00       		.byte	0
+ 541 009c 03       		.uleb128 0x3
+ 542 009d 08       		.uleb128 0x8
+ 543 009e 3A       		.uleb128 0x3a
+ 544 009f 0B       		.uleb128 0xb
+ 545 00a0 3B       		.uleb128 0x3b
+ 546 00a1 0B       		.uleb128 0xb
+ 547 00a2 49       		.uleb128 0x49
+ 548 00a3 13       		.uleb128 0x13
+ 549 00a4 02       		.uleb128 0x2
+ 550 00a5 17       		.uleb128 0x17
+ 551 00a6 00       		.byte	0
+ 552 00a7 00       		.byte	0
+ 553 00a8 0C       		.uleb128 0xc
+ 554 00a9 34       		.uleb128 0x34
+ 555 00aa 00       		.byte	0
+ 556 00ab 03       		.uleb128 0x3
+ 557 00ac 0E       		.uleb128 0xe
+ 558 00ad 3A       		.uleb128 0x3a
+ 559 00ae 0B       		.uleb128 0xb
+ 560 00af 3B       		.uleb128 0x3b
+ 561 00b0 0B       		.uleb128 0xb
+ 562 00b1 49       		.uleb128 0x49
+ 563 00b2 13       		.uleb128 0x13
+ 564 00b3 02       		.uleb128 0x2
+ 565 00b4 17       		.uleb128 0x17
+ 566 00b5 00       		.byte	0
+ 567 00b6 00       		.byte	0
+ 568 00b7 0D       		.uleb128 0xd
+ 569 00b8 34       		.uleb128 0x34
+ 570 00b9 00       		.byte	0
+ 571 00ba 03       		.uleb128 0x3
+ 572 00bb 0E       		.uleb128 0xe
+ 573 00bc 3A       		.uleb128 0x3a
+ 574 00bd 0B       		.uleb128 0xb
+ 575 00be 3B       		.uleb128 0x3b
+ 576 00bf 0B       		.uleb128 0xb
+ 577 00c0 49       		.uleb128 0x49
+ 578 00c1 13       		.uleb128 0x13
+ 579 00c2 1C       		.uleb128 0x1c
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 16
+
+
+ 580 00c3 0B       		.uleb128 0xb
+ 581 00c4 00       		.byte	0
+ 582 00c5 00       		.byte	0
+ 583 00c6 0E       		.uleb128 0xe
+ 584 00c7 898201   		.uleb128 0x4109
+ 585 00ca 01       		.byte	0x1
+ 586 00cb 11       		.uleb128 0x11
+ 587 00cc 01       		.uleb128 0x1
+ 588 00cd 31       		.uleb128 0x31
+ 589 00ce 13       		.uleb128 0x13
+ 590 00cf 00       		.byte	0
+ 591 00d0 00       		.byte	0
+ 592 00d1 0F       		.uleb128 0xf
+ 593 00d2 8A8201   		.uleb128 0x410a
+ 594 00d5 00       		.byte	0
+ 595 00d6 02       		.uleb128 0x2
+ 596 00d7 18       		.uleb128 0x18
+ 597 00d8 9142     		.uleb128 0x2111
+ 598 00da 18       		.uleb128 0x18
+ 599 00db 00       		.byte	0
+ 600 00dc 00       		.byte	0
+ 601 00dd 10       		.uleb128 0x10
+ 602 00de 0F       		.uleb128 0xf
+ 603 00df 00       		.byte	0
+ 604 00e0 0B       		.uleb128 0xb
+ 605 00e1 0B       		.uleb128 0xb
+ 606 00e2 49       		.uleb128 0x49
+ 607 00e3 13       		.uleb128 0x13
+ 608 00e4 00       		.byte	0
+ 609 00e5 00       		.byte	0
+ 610 00e6 11       		.uleb128 0x11
+ 611 00e7 26       		.uleb128 0x26
+ 612 00e8 00       		.byte	0
+ 613 00e9 49       		.uleb128 0x49
+ 614 00ea 13       		.uleb128 0x13
+ 615 00eb 00       		.byte	0
+ 616 00ec 00       		.byte	0
+ 617 00ed 12       		.uleb128 0x12
+ 618 00ee 2E       		.uleb128 0x2e
+ 619 00ef 01       		.byte	0x1
+ 620 00f0 3F       		.uleb128 0x3f
+ 621 00f1 19       		.uleb128 0x19
+ 622 00f2 03       		.uleb128 0x3
+ 623 00f3 0E       		.uleb128 0xe
+ 624 00f4 3A       		.uleb128 0x3a
+ 625 00f5 0B       		.uleb128 0xb
+ 626 00f6 3B       		.uleb128 0x3b
+ 627 00f7 05       		.uleb128 0x5
+ 628 00f8 27       		.uleb128 0x27
+ 629 00f9 19       		.uleb128 0x19
+ 630 00fa 11       		.uleb128 0x11
+ 631 00fb 01       		.uleb128 0x1
+ 632 00fc 12       		.uleb128 0x12
+ 633 00fd 06       		.uleb128 0x6
+ 634 00fe 40       		.uleb128 0x40
+ 635 00ff 18       		.uleb128 0x18
+ 636 0100 9742     		.uleb128 0x2117
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 17
+
+
+ 637 0102 19       		.uleb128 0x19
+ 638 0103 01       		.uleb128 0x1
+ 639 0104 13       		.uleb128 0x13
+ 640 0105 00       		.byte	0
+ 641 0106 00       		.byte	0
+ 642 0107 13       		.uleb128 0x13
+ 643 0108 05       		.uleb128 0x5
+ 644 0109 00       		.byte	0
+ 645 010a 03       		.uleb128 0x3
+ 646 010b 0E       		.uleb128 0xe
+ 647 010c 3A       		.uleb128 0x3a
+ 648 010d 0B       		.uleb128 0xb
+ 649 010e 3B       		.uleb128 0x3b
+ 650 010f 05       		.uleb128 0x5
+ 651 0110 49       		.uleb128 0x49
+ 652 0111 13       		.uleb128 0x13
+ 653 0112 02       		.uleb128 0x2
+ 654 0113 18       		.uleb128 0x18
+ 655 0114 00       		.byte	0
+ 656 0115 00       		.byte	0
+ 657 0116 14       		.uleb128 0x14
+ 658 0117 05       		.uleb128 0x5
+ 659 0118 00       		.byte	0
+ 660 0119 03       		.uleb128 0x3
+ 661 011a 08       		.uleb128 0x8
+ 662 011b 3A       		.uleb128 0x3a
+ 663 011c 0B       		.uleb128 0xb
+ 664 011d 3B       		.uleb128 0x3b
+ 665 011e 05       		.uleb128 0x5
+ 666 011f 49       		.uleb128 0x49
+ 667 0120 13       		.uleb128 0x13
+ 668 0121 02       		.uleb128 0x2
+ 669 0122 18       		.uleb128 0x18
+ 670 0123 00       		.byte	0
+ 671 0124 00       		.byte	0
+ 672 0125 15       		.uleb128 0x15
+ 673 0126 2E       		.uleb128 0x2e
+ 674 0127 00       		.byte	0
+ 675 0128 3F       		.uleb128 0x3f
+ 676 0129 19       		.uleb128 0x19
+ 677 012a 3C       		.uleb128 0x3c
+ 678 012b 19       		.uleb128 0x19
+ 679 012c 6E       		.uleb128 0x6e
+ 680 012d 0E       		.uleb128 0xe
+ 681 012e 03       		.uleb128 0x3
+ 682 012f 0E       		.uleb128 0xe
+ 683 0130 3A       		.uleb128 0x3a
+ 684 0131 0B       		.uleb128 0xb
+ 685 0132 3B       		.uleb128 0x3b
+ 686 0133 05       		.uleb128 0x5
+ 687 0134 00       		.byte	0
+ 688 0135 00       		.byte	0
+ 689 0136 00       		.byte	0
+ 690              		.section	.debug_loc,"",%progbits
+ 691              	.Ldebug_loc0:
+ 692              	.LLST0:
+ 693 0000 00000000 		.4byte	.LVL0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 18
+
+
+ 694 0004 04000000 		.4byte	.LVL2
+ 695 0008 0100     		.2byte	0x1
+ 696 000a 50       		.byte	0x50
+ 697 000b 04000000 		.4byte	.LVL2
+ 698 000f 1C000000 		.4byte	.LFE0
+ 699 0013 0400     		.2byte	0x4
+ 700 0015 F3       		.byte	0xf3
+ 701 0016 01       		.uleb128 0x1
+ 702 0017 50       		.byte	0x50
+ 703 0018 9F       		.byte	0x9f
+ 704 0019 00000000 		.4byte	0
+ 705 001d 00000000 		.4byte	0
+ 706              	.LLST1:
+ 707 0021 00000000 		.4byte	.LVL0
+ 708 0025 07000000 		.4byte	.LVL3-1
+ 709 0029 0100     		.2byte	0x1
+ 710 002b 51       		.byte	0x51
+ 711 002c 07000000 		.4byte	.LVL3-1
+ 712 0030 1C000000 		.4byte	.LFE0
+ 713 0034 0400     		.2byte	0x4
+ 714 0036 F3       		.byte	0xf3
+ 715 0037 01       		.uleb128 0x1
+ 716 0038 51       		.byte	0x51
+ 717 0039 9F       		.byte	0x9f
+ 718 003a 00000000 		.4byte	0
+ 719 003e 00000000 		.4byte	0
+ 720              	.LLST2:
+ 721 0042 00000000 		.4byte	.LVL0
+ 722 0046 07000000 		.4byte	.LVL3-1
+ 723 004a 0100     		.2byte	0x1
+ 724 004c 52       		.byte	0x52
+ 725 004d 07000000 		.4byte	.LVL3-1
+ 726 0051 1C000000 		.4byte	.LFE0
+ 727 0055 0400     		.2byte	0x4
+ 728 0057 F3       		.byte	0xf3
+ 729 0058 01       		.uleb128 0x1
+ 730 0059 52       		.byte	0x52
+ 731 005a 9F       		.byte	0x9f
+ 732 005b 00000000 		.4byte	0
+ 733 005f 00000000 		.4byte	0
+ 734              	.LLST3:
+ 735 0063 02000000 		.4byte	.LVL1
+ 736 0067 1A000000 		.4byte	.LVL6
+ 737 006b 0200     		.2byte	0x2
+ 738 006d 30       		.byte	0x30
+ 739 006e 9F       		.byte	0x9f
+ 740 006f 1A000000 		.4byte	.LVL6
+ 741 0073 1C000000 		.4byte	.LFE0
+ 742 0077 0100     		.2byte	0x1
+ 743 0079 50       		.byte	0x50
+ 744 007a 00000000 		.4byte	0
+ 745 007e 00000000 		.4byte	0
+ 746              	.LLST4:
+ 747 0082 02000000 		.4byte	.LVL1
+ 748 0086 08000000 		.4byte	.LVL3
+ 749 008a 0200     		.2byte	0x2
+ 750 008c 30       		.byte	0x30
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 19
+
+
+ 751 008d 9F       		.byte	0x9f
+ 752 008e 08000000 		.4byte	.LVL3
+ 753 0092 16000000 		.4byte	.LVL4
+ 754 0096 0100     		.2byte	0x1
+ 755 0098 50       		.byte	0x50
+ 756 0099 18000000 		.4byte	.LVL5
+ 757 009d 1A000000 		.4byte	.LVL6
+ 758 00a1 0100     		.2byte	0x1
+ 759 00a3 50       		.byte	0x50
+ 760 00a4 00000000 		.4byte	0
+ 761 00a8 00000000 		.4byte	0
+ 762              		.section	.debug_aranges,"",%progbits
+ 763 0000 24000000 		.4byte	0x24
+ 764 0004 0200     		.2byte	0x2
+ 765 0006 00000000 		.4byte	.Ldebug_info0
+ 766 000a 04       		.byte	0x4
+ 767 000b 00       		.byte	0
+ 768 000c 0000     		.2byte	0
+ 769 000e 0000     		.2byte	0
+ 770 0010 00000000 		.4byte	.LFB0
+ 771 0014 1C000000 		.4byte	.LFE0-.LFB0
+ 772 0018 00000000 		.4byte	.LFB1
+ 773 001c 02000000 		.4byte	.LFE1-.LFB1
+ 774 0020 00000000 		.4byte	0
+ 775 0024 00000000 		.4byte	0
+ 776              		.section	.debug_ranges,"",%progbits
+ 777              	.Ldebug_ranges0:
+ 778 0000 00000000 		.4byte	.LFB0
+ 779 0004 1C000000 		.4byte	.LFE0
+ 780 0008 00000000 		.4byte	.LFB1
+ 781 000c 02000000 		.4byte	.LFE1
+ 782 0010 00000000 		.4byte	0
+ 783 0014 00000000 		.4byte	0
+ 784              		.section	.debug_line,"",%progbits
+ 785              	.Ldebug_line0:
+ 786 0000 88010000 		.section	.debug_str,"MS",%progbits,1
+ 786      02004B01 
+ 786      00000201 
+ 786      FB0E0D00 
+ 786      01010101 
+ 787              	.LASF4:
+ 788 0000 73686F72 		.ascii	"short int\000"
+ 788      7420696E 
+ 788      7400
+ 789              	.LASF29:
+ 790 000a 64744765 		.ascii	"dtGesture\000"
+ 790      73747572 
+ 790      6500
+ 791              	.LASF31:
+ 792 0014 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 792      43313120 
+ 792      352E342E 
+ 792      31203230 
+ 792      31363036 
+ 793 0047 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 793      20726576 
+ 793      6973696F 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 20
+
+
+ 793      6E203233 
+ 793      37373135 
+ 794 007a 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 794      67202D66 
+ 794      66756E63 
+ 794      74696F6E 
+ 794      2D736563 
+ 795              	.LASF20:
+ 796 00a6 64697669 		.ascii	"divisorValue\000"
+ 796      736F7256 
+ 796      616C7565 
+ 796      00
+ 797              	.LASF8:
+ 798 00b3 5F5F7569 		.ascii	"__uint32_t\000"
+ 798      6E743332 
+ 798      5F7400
+ 799              	.LASF5:
+ 800 00be 5F5F7569 		.ascii	"__uint16_t\000"
+ 800      6E743136 
+ 800      5F7400
+ 801              	.LASF13:
+ 802 00c9 75696E74 		.ascii	"uint8_t\000"
+ 802      385F7400 
+ 803              	.LASF32:
+ 804 00d1 47656E65 		.ascii	"Generated_Source\\PSoC6\\CapSense_TMG.c\000"
+ 804      72617465 
+ 804      645F536F 
+ 804      75726365 
+ 804      5C50536F 
+ 805              	.LASF16:
+ 806 00f7 75696E74 		.ascii	"uint32_t\000"
+ 806      33325F74 
+ 806      00
+ 807              	.LASF10:
+ 808 0100 6C6F6E67 		.ascii	"long long int\000"
+ 808      206C6F6E 
+ 808      6720696E 
+ 808      7400
+ 809              	.LASF7:
+ 810 010e 6C6F6E67 		.ascii	"long int\000"
+ 810      20696E74 
+ 810      00
+ 811              	.LASF34:
+ 812 0117 43617053 		.ascii	"CapSense_TMG_DecodeAllGestures\000"
+ 812      656E7365 
+ 812      5F544D47 
+ 812      5F446563 
+ 812      6F646541 
+ 813              	.LASF2:
+ 814 0136 5F5F7569 		.ascii	"__uint8_t\000"
+ 814      6E74385F 
+ 814      7400
+ 815              	.LASF23:
+ 816 0140 43617053 		.ascii	"CapSense_TMG_BALLISTIC_MULT\000"
+ 816      656E7365 
+ 816      5F544D47 
+ 816      5F42414C 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 21
+
+
+ 816      4C495354 
+ 817              	.LASF1:
+ 818 015c 756E7369 		.ascii	"unsigned char\000"
+ 818      676E6564 
+ 818      20636861 
+ 818      7200
+ 819              	.LASF0:
+ 820 016a 7369676E 		.ascii	"signed char\000"
+ 820      65642063 
+ 820      68617200 
+ 821              	.LASF11:
+ 822 0176 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 822      206C6F6E 
+ 822      6720756E 
+ 822      7369676E 
+ 822      65642069 
+ 823              	.LASF33:
+ 824 018d 433A5C55 		.ascii	"C:\\Users\\Agentos\\Documents\\PSoC Creator\\lab11\\"
+ 824      73657273 
+ 824      5C416765 
+ 824      6E746F73 
+ 824      5C446F63 
+ 825 01bb 6C616231 		.ascii	"lab11.cydsn\000"
+ 825      312E6379 
+ 825      64736E00 
+ 826              	.LASF18:
+ 827 01c7 61636365 		.ascii	"accelCoeff\000"
+ 827      6C436F65 
+ 827      666600
+ 828              	.LASF12:
+ 829 01d2 756E7369 		.ascii	"unsigned int\000"
+ 829      676E6564 
+ 829      20696E74 
+ 829      00
+ 830              	.LASF15:
+ 831 01df 75696E74 		.ascii	"uint16_t\000"
+ 831      31365F74 
+ 831      00
+ 832              	.LASF36:
+ 833 01e8 47657374 		.ascii	"Gesture_DecodeFlickGestures\000"
+ 833      7572655F 
+ 833      4465636F 
+ 833      6465466C 
+ 833      69636B47 
+ 834              	.LASF35:
+ 835 0204 43617053 		.ascii	"CapSense_TMG_BallisticsMultiplier\000"
+ 835      656E7365 
+ 835      5F544D47 
+ 835      5F42616C 
+ 835      6C697374 
+ 836              	.LASF6:
+ 837 0226 73686F72 		.ascii	"short unsigned int\000"
+ 837      7420756E 
+ 837      7369676E 
+ 837      65642069 
+ 837      6E7400
+ 838              	.LASF28:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 22
+
+
+ 839 0239 73744765 		.ascii	"stGesture\000"
+ 839      73747572 
+ 839      6500
+ 840              	.LASF14:
+ 841 0243 696E7431 		.ascii	"int16_t\000"
+ 841      365F7400 
+ 842              	.LASF24:
+ 843 024b 43617053 		.ascii	"CapSense_TMG_POSITION_STRUCT\000"
+ 843      656E7365 
+ 843      5F544D47 
+ 843      5F504F53 
+ 843      4954494F 
+ 844              	.LASF9:
+ 845 0268 6C6F6E67 		.ascii	"long unsigned int\000"
+ 845      20756E73 
+ 845      69676E65 
+ 845      6420696E 
+ 845      7400
+ 846              	.LASF27:
+ 847 027a 636C6963 		.ascii	"clickGesture\000"
+ 847      6B476573 
+ 847      74757265 
+ 847      00
+ 848              	.LASF26:
+ 849 0287 67657374 		.ascii	"gestureID\000"
+ 849      75726549 
+ 849      4400
+ 850              	.LASF17:
+ 851 0291 746F7563 		.ascii	"touchNumber\000"
+ 851      684E756D 
+ 851      62657200 
+ 852              	.LASF25:
+ 853 029d 63757272 		.ascii	"currentTimestamp\000"
+ 853      656E7454 
+ 853      696D6573 
+ 853      74616D70 
+ 853      00
+ 854              	.LASF3:
+ 855 02ae 5F5F696E 		.ascii	"__int16_t\000"
+ 855      7431365F 
+ 855      7400
+ 856              	.LASF30:
+ 857 02b8 62616C6C 		.ascii	"ballisticMultiplier\000"
+ 857      69737469 
+ 857      634D756C 
+ 857      7469706C 
+ 857      69657200 
+ 858              	.LASF19:
+ 859 02cc 73706565 		.ascii	"speedCoeff\000"
+ 859      64436F65 
+ 859      666600
+ 860              	.LASF21:
+ 861 02d7 73706565 		.ascii	"speedThresholdX\000"
+ 861      64546872 
+ 861      6573686F 
+ 861      6C645800 
+ 862              	.LASF22:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cckF0zzZ.s 			page 23
+
+
+ 863 02e7 73706565 		.ascii	"speedThresholdY\000"
+ 863      64546872 
+ 863      6573686F 
+ 863      6C645900 
+ 864              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

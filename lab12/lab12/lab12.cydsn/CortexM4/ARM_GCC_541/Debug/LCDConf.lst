@@ -1,0 +1,2566 @@
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 1
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.syntax unified
+  16              		.file	"LCDConf.c"
+  17              		.text
+  18              	.Ltext0:
+  19              		.cfi_sections	.debug_frame
+  20              		.section	.text.LCD_X_Config,"ax",%progbits
+  21              		.align	2
+  22              		.global	LCD_X_Config
+  23              		.thumb
+  24              		.thumb_func
+  25              		.type	LCD_X_Config, %function
+  26              	LCD_X_Config:
+  27              	.LFB1:
+  28              		.file 1 "LCDConf.c"
+   1:LCDConf.c     **** /*********************************************************************
+   2:LCDConf.c     **** *                SEGGER Microcontroller GmbH & Co. KG                *
+   3:LCDConf.c     **** *        Solutions for real time microcontroller applications        *
+   4:LCDConf.c     **** **********************************************************************
+   5:LCDConf.c     **** *                                                                    *
+   6:LCDConf.c     **** *        (c) 1996 - 2017  SEGGER Microcontroller GmbH & Co. KG       *
+   7:LCDConf.c     **** *                                                                    *
+   8:LCDConf.c     **** *        Internet: www.segger.com    Support:  support@segger.com    *
+   9:LCDConf.c     **** *                                                                    *
+  10:LCDConf.c     **** **********************************************************************
+  11:LCDConf.c     **** 
+  12:LCDConf.c     **** ** emWin V5.46 - Graphical user interface for embedded applications **
+  13:LCDConf.c     **** All  Intellectual Property rights  in the Software belongs to  SEGGER.
+  14:LCDConf.c     **** emWin is protected by  international copyright laws.  Knowledge of the
+  15:LCDConf.c     **** source code may not be used to write a similar product.  This file may
+  16:LCDConf.c     **** only be used in accordance with the following terms:
+  17:LCDConf.c     **** 
+  18:LCDConf.c     **** The software  has been licensed to  Cypress Semiconductor Corporation,
+  19:LCDConf.c     **** whose registered  office is situated  at 198 Champion Ct. San Jose, CA 
+  20:LCDConf.c     **** 95134 USA  solely for the  purposes of creating  libraries for Cypress
+  21:LCDConf.c     **** PSoC3 and  PSoC5 processor-based devices,  sublicensed and distributed
+  22:LCDConf.c     **** under  the  terms  and  conditions  of  the  Cypress  End User License
+  23:LCDConf.c     **** Agreement.
+  24:LCDConf.c     **** Full source code is available at: www.segger.com
+  25:LCDConf.c     **** 
+  26:LCDConf.c     **** We appreciate your understanding and fairness.
+  27:LCDConf.c     **** ----------------------------------------------------------------------
+  28:LCDConf.c     **** Licensing information
+  29:LCDConf.c     **** Licensor:                 SEGGER Microcontroller Systems LLC
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 2
+
+
+  30:LCDConf.c     **** Licensed to:              Cypress Semiconductor Corp, 198 Champion Ct., San Jose, CA 95134, USA
+  31:LCDConf.c     **** Licensed SEGGER software: emWin
+  32:LCDConf.c     **** License number:           GUI-00319
+  33:LCDConf.c     **** License model:            Services and License Agreement, signed June 10th, 2009
+  34:LCDConf.c     **** Licensed platform:        Any Cypress platform (Initial targets are: PSoC3, PSoC5)
+  35:LCDConf.c     **** ----------------------------------------------------------------------
+  36:LCDConf.c     **** Support and Update Agreement (SUA)
+  37:LCDConf.c     **** SUA period:               2009-06-12 - 2022-07-27
+  38:LCDConf.c     **** Contact to extend SUA:    sales@segger.com
+  39:LCDConf.c     **** ----------------------------------------------------------------------
+  40:LCDConf.c     **** File        : LCDConf.c
+  41:LCDConf.c     **** Purpose     : Display controller configuration (single layer)
+  42:LCDConf.c     **** ---------------------------END-OF-HEADER------------------------------
+  43:LCDConf.c     **** */
+  44:LCDConf.c     **** 
+  45:LCDConf.c     **** #include "GUI.h"
+  46:LCDConf.c     **** #include "GUIDRV_FlexColor.h"
+  47:LCDConf.c     **** 
+  48:LCDConf.c     **** /*********************************************************************
+  49:LCDConf.c     **** *
+  50:LCDConf.c     **** *       Layer configuration (to be modified)
+  51:LCDConf.c     **** *
+  52:LCDConf.c     **** **********************************************************************
+  53:LCDConf.c     **** */
+  54:LCDConf.c     **** //
+  55:LCDConf.c     **** // Physical display size
+  56:LCDConf.c     **** //   The display size should be adapted in order to match the size of
+  57:LCDConf.c     **** //   the target display.
+  58:LCDConf.c     **** //
+  59:LCDConf.c     **** #define XSIZE_PHYS 240
+  60:LCDConf.c     **** #define YSIZE_PHYS 320
+  61:LCDConf.c     **** 
+  62:LCDConf.c     **** //
+  63:LCDConf.c     **** // Color conversion
+  64:LCDConf.c     **** //   The color conversion functions should be selected according to
+  65:LCDConf.c     **** //   the color mode of the target display. Details can be found in
+  66:LCDConf.c     **** //   the chapter "Colors" in the emWin user manual.
+  67:LCDConf.c     **** //
+  68:LCDConf.c     **** #define COLOR_CONVERSION GUICC_M565
+  69:LCDConf.c     **** 
+  70:LCDConf.c     **** //
+  71:LCDConf.c     **** // Display driver
+  72:LCDConf.c     **** //
+  73:LCDConf.c     **** #define DISPLAY_DRIVER GUIDRV_FLEXCOLOR
+  74:LCDConf.c     **** 
+  75:LCDConf.c     **** /*********************************************************************
+  76:LCDConf.c     **** *
+  77:LCDConf.c     **** *       Configuration checking
+  78:LCDConf.c     **** *
+  79:LCDConf.c     **** **********************************************************************
+  80:LCDConf.c     **** */
+  81:LCDConf.c     **** #ifndef   VXSIZE_PHYS
+  82:LCDConf.c     ****   #define VXSIZE_PHYS XSIZE_PHYS
+  83:LCDConf.c     **** #endif
+  84:LCDConf.c     **** #ifndef   VYSIZE_PHYS
+  85:LCDConf.c     ****   #define VYSIZE_PHYS YSIZE_PHYS
+  86:LCDConf.c     **** #endif
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 3
+
+
+  87:LCDConf.c     **** #ifndef   XSIZE_PHYS
+  88:LCDConf.c     ****   #error Physical X size of display is not defined!
+  89:LCDConf.c     **** #endif
+  90:LCDConf.c     **** #ifndef   YSIZE_PHYS
+  91:LCDConf.c     ****   #error Physical Y size of display is not defined!
+  92:LCDConf.c     **** #endif
+  93:LCDConf.c     **** #ifndef   COLOR_CONVERSION
+  94:LCDConf.c     ****   #error Color conversion not defined!
+  95:LCDConf.c     **** #endif
+  96:LCDConf.c     **** #ifndef   DISPLAY_DRIVER
+  97:LCDConf.c     ****   #error No display driver defined!
+  98:LCDConf.c     **** #endif
+  99:LCDConf.c     **** 
+ 100:LCDConf.c     **** /********************************************************************
+ 101:LCDConf.c     **** *
+ 102:LCDConf.c     **** *       _InitController
+ 103:LCDConf.c     **** *
+ 104:LCDConf.c     **** * Purpose:
+ 105:LCDConf.c     **** *   Initializes the LCD controller
+ 106:LCDConf.c     **** *
+ 107:LCDConf.c     **** */
+ 108:LCDConf.c     **** static void _InitController(void) {
+ 109:LCDConf.c     ****   /* Set up the display controller and put it into operation. If the 
+ 110:LCDConf.c     ****   *  display controller is not initialized by any external routine 
+ 111:LCDConf.c     ****   *  this needs to be adapted by the customer.
+ 112:LCDConf.c     ****   */
+ 113:LCDConf.c     **** }
+ 114:LCDConf.c     **** 
+ 115:LCDConf.c     **** /*********************************************************************
+ 116:LCDConf.c     **** *
+ 117:LCDConf.c     **** *       Public code
+ 118:LCDConf.c     **** *
+ 119:LCDConf.c     **** **********************************************************************
+ 120:LCDConf.c     **** */
+ 121:LCDConf.c     **** /*********************************************************************
+ 122:LCDConf.c     **** *
+ 123:LCDConf.c     **** *       LCD_X_Config
+ 124:LCDConf.c     **** *
+ 125:LCDConf.c     **** * Function description
+ 126:LCDConf.c     **** *   Called during the initialization process in order to set up the
+ 127:LCDConf.c     **** *   display driver configuration.
+ 128:LCDConf.c     **** */
+ 129:LCDConf.c     **** void LCD_X_Config(void) {
+  29              		.loc 1 129 0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 128
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 30B5     		push	{r4, r5, lr}
+  34              		.cfi_def_cfa_offset 12
+  35              		.cfi_offset 4, -12
+  36              		.cfi_offset 5, -8
+  37              		.cfi_offset 14, -4
+  38 0002 A1B0     		sub	sp, sp, #132
+  39              		.cfi_def_cfa_offset 144
+ 130:LCDConf.c     ****   GUI_DEVICE * pDevice;
+ 131:LCDConf.c     ****   CONFIG_FLEXCOLOR Config = {0};
+  40              		.loc 1 131 0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 4
+
+
+  41 0004 0024     		movs	r4, #0
+  42 0006 1B94     		str	r4, [sp, #108]
+  43 0008 1C94     		str	r4, [sp, #112]
+  44 000a 1D94     		str	r4, [sp, #116]
+  45 000c 1E94     		str	r4, [sp, #120]
+  46 000e 1F94     		str	r4, [sp, #124]
+ 132:LCDConf.c     ****   GUI_PORT_API PortAPI = {0};
+  47              		.loc 1 132 0
+  48 0010 6822     		movs	r2, #104
+  49 0012 2146     		mov	r1, r4
+  50 0014 01A8     		add	r0, sp, #4
+  51 0016 FFF7FEFF 		bl	memset
+  52              	.LVL0:
+ 133:LCDConf.c     ****   //
+ 134:LCDConf.c     ****   // Set the display driver and color conversion
+ 135:LCDConf.c     ****   //
+ 136:LCDConf.c     ****   pDevice = GUI_DEVICE_CreateAndLink(DISPLAY_DRIVER, COLOR_CONVERSION, 0, 0);
+  53              		.loc 1 136 0
+  54 001a 2346     		mov	r3, r4
+  55 001c 2246     		mov	r2, r4
+  56 001e 0F49     		ldr	r1, .L3
+  57 0020 0F48     		ldr	r0, .L3+4
+  58 0022 FFF7FEFF 		bl	GUI_DEVICE_CreateAndLink
+  59              	.LVL1:
+  60 0026 0546     		mov	r5, r0
+  61              	.LVL2:
+ 137:LCDConf.c     ****   //
+ 138:LCDConf.c     ****   // Display driver configuration
+ 139:LCDConf.c     ****   //
+ 140:LCDConf.c     ****   LCD_SetSizeEx    (0, XSIZE_PHYS,   YSIZE_PHYS);
+  62              		.loc 1 140 0
+  63 0028 4FF4A072 		mov	r2, #320
+  64 002c F021     		movs	r1, #240
+  65 002e 2046     		mov	r0, r4
+  66              	.LVL3:
+  67 0030 FFF7FEFF 		bl	LCD_SetSizeEx
+  68              	.LVL4:
+ 141:LCDConf.c     ****   LCD_SetVSizeEx   (0, VXSIZE_PHYS,  VYSIZE_PHYS);
+  69              		.loc 1 141 0
+  70 0034 4FF4A072 		mov	r2, #320
+  71 0038 F021     		movs	r1, #240
+  72 003a 2046     		mov	r0, r4
+  73 003c FFF7FEFF 		bl	LCD_SetVSizeEx
+  74              	.LVL5:
+ 142:LCDConf.c     ****   //
+ 143:LCDConf.c     ****   // Orientation
+ 144:LCDConf.c     ****   //
+ 145:LCDConf.c     ****   Config.Orientation   = GUI_MIRROR_Y | GUI_SWAP_XY;
+  75              		.loc 1 145 0
+  76 0040 0623     		movs	r3, #6
+  77 0042 1D93     		str	r3, [sp, #116]
+ 146:LCDConf.c     ****   GUIDRV_FlexColor_Config(pDevice, &Config);
+  78              		.loc 1 146 0
+  79 0044 1BA9     		add	r1, sp, #108
+  80 0046 2846     		mov	r0, r5
+  81 0048 FFF7FEFF 		bl	GUIDRV_FlexColor_Config
+  82              	.LVL6:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 5
+
+
+ 147:LCDConf.c     ****   //
+ 148:LCDConf.c     ****   // Set controller and operation mode
+ 149:LCDConf.c     ****   //
+ 150:LCDConf.c     ****   #warning Set display access API pointers, LCD controller, driver mode and remove this line. For d
+ 151:LCDConf.c     ****   
+ 152:LCDConf.c     ****   GUIDRV_FlexColor_SetFunc(pDevice, &PortAPI, GUIDRV_FLEXCOLOR_F66709, GUIDRV_FLEXCOLOR_M16C0B8);
+  83              		.loc 1 152 0
+  84 004c 054B     		ldr	r3, .L3+8
+  85 004e 064A     		ldr	r2, .L3+12
+  86 0050 01A9     		add	r1, sp, #4
+  87 0052 2846     		mov	r0, r5
+  88 0054 FFF7FEFF 		bl	GUIDRV_FlexColor_SetFunc
+  89              	.LVL7:
+ 153:LCDConf.c     **** }
+  90              		.loc 1 153 0
+  91 0058 21B0     		add	sp, sp, #132
+  92              		.cfi_def_cfa_offset 12
+  93              		@ sp needed
+  94 005a 30BD     		pop	{r4, r5, pc}
+  95              	.LVL8:
+  96              	.L4:
+  97              		.align	2
+  98              	.L3:
+  99 005c 00000000 		.word	LCD_API_ColorConv_M565
+ 100 0060 00000000 		.word	GUIDRV_FlexColor_API
+ 101 0064 00000000 		.word	GUIDRV_FlexColor_SetMode16bppC0B8
+ 102 0068 00000000 		.word	GUIDRV_FlexColor_SetFunc66709
+ 103              		.cfi_endproc
+ 104              	.LFE1:
+ 105              		.size	LCD_X_Config, .-LCD_X_Config
+ 106              		.section	.text.LCD_X_DisplayDriver,"ax",%progbits
+ 107              		.align	2
+ 108              		.global	LCD_X_DisplayDriver
+ 109              		.thumb
+ 110              		.thumb_func
+ 111              		.type	LCD_X_DisplayDriver, %function
+ 112              	LCD_X_DisplayDriver:
+ 113              	.LFB2:
+ 154:LCDConf.c     **** 
+ 155:LCDConf.c     **** /*********************************************************************
+ 156:LCDConf.c     **** *
+ 157:LCDConf.c     **** *       LCD_X_DisplayDriver
+ 158:LCDConf.c     **** *
+ 159:LCDConf.c     **** * Purpose:
+ 160:LCDConf.c     **** *   This function is called by the display driver for several purposes.
+ 161:LCDConf.c     **** *   To support the according task, the routine needs to be adapted to
+ 162:LCDConf.c     **** *   the display controller. Note that the commands marked
+ 163:LCDConf.c     **** *   "optional" are not cogently required and should only be adapted if 
+ 164:LCDConf.c     **** *   the display controller supports these features.
+ 165:LCDConf.c     **** *
+ 166:LCDConf.c     **** * Parameter:
+ 167:LCDConf.c     **** *   LayerIndex - Zero based layer index
+ 168:LCDConf.c     **** *   Cmd        - Command to be executed
+ 169:LCDConf.c     **** *   pData      - Pointer to a data structure.
+ 170:LCDConf.c     **** * 
+ 171:LCDConf.c     **** * Return Value:
+ 172:LCDConf.c     **** *   < -1 - Error
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 6
+
+
+ 173:LCDConf.c     **** *     -1 - The command is not handled.
+ 174:LCDConf.c     **** *      0 - OK.
+ 175:LCDConf.c     **** */
+ 176:LCDConf.c     **** int LCD_X_DisplayDriver(unsigned LayerIndex, unsigned Cmd, void * pData) {
+ 114              		.loc 1 176 0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 0
+ 117              		@ frame_needed = 0, uses_anonymous_args = 0
+ 118              		@ link register save eliminated.
+ 119              	.LVL9:
+ 177:LCDConf.c     ****   int r;
+ 178:LCDConf.c     ****   
+ 179:LCDConf.c     ****   GUI_USE_PARA(LayerIndex);
+ 180:LCDConf.c     ****   GUI_USE_PARA(pData);
+ 181:LCDConf.c     ****   
+ 182:LCDConf.c     ****   switch (Cmd) {
+ 120              		.loc 1 182 0
+ 121 0000 0129     		cmp	r1, #1
+ 122 0002 02D0     		beq	.L8
+ 183:LCDConf.c     ****   case LCD_X_INITCONTROLLER: {
+ 184:LCDConf.c     ****     //
+ 185:LCDConf.c     ****     // Called during the initialization process in order to set up the
+ 186:LCDConf.c     ****     // display controller and put it into operation. If the display
+ 187:LCDConf.c     ****     // controller is not initialized by any external routine, this needs
+ 188:LCDConf.c     ****     // to be adapted by the customer...
+ 189:LCDConf.c     ****     //
+ 190:LCDConf.c     ****     // ...
+ 191:LCDConf.c     ****     _InitController();
+ 192:LCDConf.c     ****     return 0;
+ 193:LCDConf.c     ****   }
+ 194:LCDConf.c     ****   default:
+ 195:LCDConf.c     ****     r = -1;
+ 196:LCDConf.c     ****   }
+ 197:LCDConf.c     ****   return r;
+ 123              		.loc 1 197 0
+ 124 0004 4FF0FF30 		mov	r0, #-1
+ 125              	.LVL10:
+ 126 0008 7047     		bx	lr
+ 127              	.LVL11:
+ 128              	.L8:
+ 192:LCDConf.c     ****   }
+ 129              		.loc 1 192 0
+ 130 000a 0020     		movs	r0, #0
+ 131              	.LVL12:
+ 198:LCDConf.c     **** }
+ 132              		.loc 1 198 0
+ 133 000c 7047     		bx	lr
+ 134              		.cfi_endproc
+ 135              	.LFE2:
+ 136              		.size	LCD_X_DisplayDriver, .-LCD_X_DisplayDriver
+ 137 000e 00BF     		.text
+ 138              	.Letext0:
+ 139              		.file 2 "Generated_Source\\PSoC6\\pdl\\middleware/emWin/code/include/LCD.h"
+ 140              		.file 3 "Generated_Source\\PSoC6\\pdl\\middleware/emWin/code/include/GUI.h"
+ 141              		.file 4 "Generated_Source\\PSoC6\\pdl\\middleware/emWin/code/include/GUI_Type.h"
+ 142              		.file 5 "Generated_Source\\PSoC6\\pdl\\middleware/emWin/code/drivers/FlexColor/GUIDRV_FlexColor.h"
+ 143              		.section	.debug_info,"",%progbits
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 7
+
+
+ 144              	.Ldebug_info0:
+ 145 0000 86080000 		.4byte	0x886
+ 146 0004 0400     		.2byte	0x4
+ 147 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 148 000a 04       		.byte	0x4
+ 149 000b 01       		.uleb128 0x1
+ 150 000c CD000000 		.4byte	.LASF92
+ 151 0010 0C       		.byte	0xc
+ 152 0011 95010000 		.4byte	.LASF93
+ 153 0015 2E030000 		.4byte	.LASF94
+ 154 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 155 001d 00000000 		.4byte	0
+ 156 0021 00000000 		.4byte	.Ldebug_line0
+ 157 0025 02       		.uleb128 0x2
+ 158 0026 04       		.byte	0x4
+ 159 0027 05       		.byte	0x5
+ 160 0028 696E7400 		.ascii	"int\000"
+ 161 002c 03       		.uleb128 0x3
+ 162 002d 04       		.byte	0x4
+ 163 002e 07       		.byte	0x7
+ 164 002f AF030000 		.4byte	.LASF0
+ 165 0033 03       		.uleb128 0x3
+ 166 0034 08       		.byte	0x8
+ 167 0035 05       		.byte	0x5
+ 168 0036 42020000 		.4byte	.LASF1
+ 169 003a 03       		.uleb128 0x3
+ 170 003b 08       		.byte	0x8
+ 171 003c 04       		.byte	0x4
+ 172 003d 23020000 		.4byte	.LASF2
+ 173 0041 04       		.uleb128 0x4
+ 174 0042 BB010000 		.4byte	.LASF5
+ 175 0046 02       		.byte	0x2
+ 176 0047 6A       		.byte	0x6a
+ 177 0048 4C000000 		.4byte	0x4c
+ 178 004c 03       		.uleb128 0x3
+ 179 004d 04       		.byte	0x4
+ 180 004e 07       		.byte	0x7
+ 181 004f D5040000 		.4byte	.LASF3
+ 182 0053 03       		.uleb128 0x3
+ 183 0054 02       		.byte	0x2
+ 184 0055 05       		.byte	0x5
+ 185 0056 72000000 		.4byte	.LASF4
+ 186 005a 05       		.uleb128 0x5
+ 187 005b 08       		.byte	0x8
+ 188 005c 02       		.byte	0x2
+ 189 005d 71       		.byte	0x71
+ 190 005e 8F000000 		.4byte	0x8f
+ 191 0062 06       		.uleb128 0x6
+ 192 0063 783000   		.ascii	"x0\000"
+ 193 0066 02       		.byte	0x2
+ 194 0067 71       		.byte	0x71
+ 195 0068 53000000 		.4byte	0x53
+ 196 006c 00       		.byte	0
+ 197 006d 06       		.uleb128 0x6
+ 198 006e 793000   		.ascii	"y0\000"
+ 199 0071 02       		.byte	0x2
+ 200 0072 71       		.byte	0x71
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 8
+
+
+ 201 0073 53000000 		.4byte	0x53
+ 202 0077 02       		.byte	0x2
+ 203 0078 06       		.uleb128 0x6
+ 204 0079 783100   		.ascii	"x1\000"
+ 205 007c 02       		.byte	0x2
+ 206 007d 71       		.byte	0x71
+ 207 007e 53000000 		.4byte	0x53
+ 208 0082 04       		.byte	0x4
+ 209 0083 06       		.uleb128 0x6
+ 210 0084 793100   		.ascii	"y1\000"
+ 211 0087 02       		.byte	0x2
+ 212 0088 71       		.byte	0x71
+ 213 0089 53000000 		.4byte	0x53
+ 214 008d 06       		.byte	0x6
+ 215 008e 00       		.byte	0
+ 216 008f 04       		.uleb128 0x4
+ 217 0090 0D030000 		.4byte	.LASF6
+ 218 0094 02       		.byte	0x2
+ 219 0095 71       		.byte	0x71
+ 220 0096 5A000000 		.4byte	0x5a
+ 221 009a 03       		.uleb128 0x3
+ 222 009b 01       		.byte	0x1
+ 223 009c 08       		.byte	0x8
+ 224 009d 0A040000 		.4byte	.LASF7
+ 225 00a1 03       		.uleb128 0x3
+ 226 00a2 01       		.byte	0x1
+ 227 00a3 08       		.byte	0x8
+ 228 00a4 C9020000 		.4byte	.LASF8
+ 229 00a8 04       		.uleb128 0x4
+ 230 00a9 8B050000 		.4byte	.LASF9
+ 231 00ad 02       		.byte	0x2
+ 232 00ae 88       		.byte	0x88
+ 233 00af B3000000 		.4byte	0xb3
+ 234 00b3 07       		.uleb128 0x7
+ 235 00b4 41000000 		.4byte	0x41
+ 236 00b8 C2000000 		.4byte	0xc2
+ 237 00bc 08       		.uleb128 0x8
+ 238 00bd 4C000000 		.4byte	0x4c
+ 239 00c1 00       		.byte	0
+ 240 00c2 04       		.uleb128 0x4
+ 241 00c3 DC050000 		.4byte	.LASF10
+ 242 00c7 02       		.byte	0x2
+ 243 00c8 89       		.byte	0x89
+ 244 00c9 CD000000 		.4byte	0xcd
+ 245 00cd 07       		.uleb128 0x7
+ 246 00ce 4C000000 		.4byte	0x4c
+ 247 00d2 DC000000 		.4byte	0xdc
+ 248 00d6 08       		.uleb128 0x8
+ 249 00d7 41000000 		.4byte	0x41
+ 250 00db 00       		.byte	0
+ 251 00dc 04       		.uleb128 0x4
+ 252 00dd 6A020000 		.4byte	.LASF11
+ 253 00e1 02       		.byte	0x2
+ 254 00e2 8A       		.byte	0x8a
+ 255 00e3 E7000000 		.4byte	0xe7
+ 256 00e7 09       		.uleb128 0x9
+ 257 00e8 4C000000 		.4byte	0x4c
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 9
+
+
+ 258 00ec 04       		.uleb128 0x4
+ 259 00ed 73050000 		.4byte	.LASF12
+ 260 00f1 02       		.byte	0x2
+ 261 00f2 8C       		.byte	0x8c
+ 262 00f3 F7000000 		.4byte	0xf7
+ 263 00f7 0A       		.uleb128 0xa
+ 264 00f8 11010000 		.4byte	0x111
+ 265 00fc 08       		.uleb128 0x8
+ 266 00fd 11010000 		.4byte	0x111
+ 267 0101 08       		.uleb128 0x8
+ 268 0102 13010000 		.4byte	0x113
+ 269 0106 08       		.uleb128 0x8
+ 270 0107 4C000000 		.4byte	0x4c
+ 271 010b 08       		.uleb128 0x8
+ 272 010c A1000000 		.4byte	0xa1
+ 273 0110 00       		.byte	0
+ 274 0111 0B       		.uleb128 0xb
+ 275 0112 04       		.byte	0x4
+ 276 0113 0C       		.uleb128 0xc
+ 277 0114 04       		.byte	0x4
+ 278 0115 41000000 		.4byte	0x41
+ 279 0119 04       		.uleb128 0x4
+ 280 011a 16030000 		.4byte	.LASF13
+ 281 011e 02       		.byte	0x2
+ 282 011f 8D       		.byte	0x8d
+ 283 0120 24010000 		.4byte	0x124
+ 284 0124 0A       		.uleb128 0xa
+ 285 0125 3E010000 		.4byte	0x13e
+ 286 0129 08       		.uleb128 0x8
+ 287 012a 13010000 		.4byte	0x113
+ 288 012e 08       		.uleb128 0x8
+ 289 012f 11010000 		.4byte	0x111
+ 290 0133 08       		.uleb128 0x8
+ 291 0134 4C000000 		.4byte	0x4c
+ 292 0138 08       		.uleb128 0x8
+ 293 0139 A1000000 		.4byte	0xa1
+ 294 013d 00       		.byte	0
+ 295 013e 05       		.uleb128 0x5
+ 296 013f 18       		.byte	0x18
+ 297 0140 02       		.byte	0x2
+ 298 0141 93       		.byte	0x93
+ 299 0142 8F010000 		.4byte	0x18f
+ 300 0146 0D       		.uleb128 0xd
+ 301 0147 9F050000 		.4byte	.LASF14
+ 302 014b 02       		.byte	0x2
+ 303 014c 94       		.byte	0x94
+ 304 014d 8F010000 		.4byte	0x18f
+ 305 0151 00       		.byte	0
+ 306 0152 0D       		.uleb128 0xd
+ 307 0153 A1030000 		.4byte	.LASF15
+ 308 0157 02       		.byte	0x2
+ 309 0158 95       		.byte	0x95
+ 310 0159 95010000 		.4byte	0x195
+ 311 015d 04       		.byte	0x4
+ 312 015e 0D       		.uleb128 0xd
+ 313 015f D2010000 		.4byte	.LASF16
+ 314 0163 02       		.byte	0x2
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 10
+
+
+ 315 0164 96       		.byte	0x96
+ 316 0165 9B010000 		.4byte	0x19b
+ 317 0169 08       		.byte	0x8
+ 318 016a 0D       		.uleb128 0xd
+ 319 016b 99030000 		.4byte	.LASF17
+ 320 016f 02       		.byte	0x2
+ 321 0170 97       		.byte	0x97
+ 322 0171 25000000 		.4byte	0x25
+ 323 0175 0C       		.byte	0xc
+ 324 0176 0D       		.uleb128 0xd
+ 325 0177 EC010000 		.4byte	.LASF18
+ 326 017b 02       		.byte	0x2
+ 327 017c 98       		.byte	0x98
+ 328 017d A1010000 		.4byte	0x1a1
+ 329 0181 10       		.byte	0x10
+ 330 0182 0D       		.uleb128 0xd
+ 331 0183 4E040000 		.4byte	.LASF19
+ 332 0187 02       		.byte	0x2
+ 333 0188 99       		.byte	0x99
+ 334 0189 A7010000 		.4byte	0x1a7
+ 335 018d 14       		.byte	0x14
+ 336 018e 00       		.byte	0
+ 337 018f 0C       		.uleb128 0xc
+ 338 0190 04       		.byte	0x4
+ 339 0191 C2000000 		.4byte	0xc2
+ 340 0195 0C       		.uleb128 0xc
+ 341 0196 04       		.byte	0x4
+ 342 0197 A8000000 		.4byte	0xa8
+ 343 019b 0C       		.uleb128 0xc
+ 344 019c 04       		.byte	0x4
+ 345 019d DC000000 		.4byte	0xdc
+ 346 01a1 0C       		.uleb128 0xc
+ 347 01a2 04       		.byte	0x4
+ 348 01a3 19010000 		.4byte	0x119
+ 349 01a7 0C       		.uleb128 0xc
+ 350 01a8 04       		.byte	0x4
+ 351 01a9 EC000000 		.4byte	0xec
+ 352 01ad 04       		.uleb128 0x4
+ 353 01ae 98020000 		.4byte	.LASF20
+ 354 01b2 02       		.byte	0x2
+ 355 01b3 9A       		.byte	0x9a
+ 356 01b4 3E010000 		.4byte	0x13e
+ 357 01b8 0C       		.uleb128 0xc
+ 358 01b9 04       		.byte	0x4
+ 359 01ba 8F000000 		.4byte	0x8f
+ 360 01be 0E       		.uleb128 0xe
+ 361 01bf 03       		.uleb128 0x3
+ 362 01c0 04       		.byte	0x4
+ 363 01c1 05       		.byte	0x5
+ 364 01c2 7F020000 		.4byte	.LASF21
+ 365 01c6 0F       		.uleb128 0xf
+ 366 01c7 43040000 		.4byte	.LASF22
+ 367 01cb 02       		.byte	0x2
+ 368 01cc 4301     		.2byte	0x143
+ 369 01ce D2010000 		.4byte	0x1d2
+ 370 01d2 10       		.uleb128 0x10
+ 371 01d3 43040000 		.4byte	.LASF22
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 11
+
+
+ 372 01d7 1C       		.byte	0x1c
+ 373 01d8 03       		.byte	0x3
+ 374 01d9 B0       		.byte	0xb0
+ 375 01da 31020000 		.4byte	0x231
+ 376 01de 0D       		.uleb128 0xd
+ 377 01df 50020000 		.4byte	.LASF23
+ 378 01e3 03       		.byte	0x3
+ 379 01e4 B4       		.byte	0xb4
+ 380 01e5 5A050000 		.4byte	0x55a
+ 381 01e9 00       		.byte	0
+ 382 01ea 0D       		.uleb128 0xd
+ 383 01eb FE010000 		.4byte	.LASF24
+ 384 01ef 03       		.byte	0x3
+ 385 01f0 B5       		.byte	0xb5
+ 386 01f1 5A050000 		.4byte	0x55a
+ 387 01f5 04       		.byte	0x4
+ 388 01f6 06       		.uleb128 0x6
+ 389 01f7 7500     		.ascii	"u\000"
+ 390 01f9 03       		.byte	0x3
+ 391 01fa BC       		.byte	0xbc
+ 392 01fb 7A060000 		.4byte	0x67a
+ 393 01ff 08       		.byte	0x8
+ 394 0200 0D       		.uleb128 0xd
+ 395 0201 8A010000 		.4byte	.LASF25
+ 396 0205 03       		.byte	0x3
+ 397 0206 C0       		.byte	0xc0
+ 398 0207 99060000 		.4byte	0x699
+ 399 020b 0C       		.byte	0xc
+ 400 020c 0D       		.uleb128 0xd
+ 401 020d 00000000 		.4byte	.LASF26
+ 402 0211 03       		.byte	0x3
+ 403 0212 C1       		.byte	0xc1
+ 404 0213 08030000 		.4byte	0x308
+ 405 0217 10       		.byte	0x10
+ 406 0218 0D       		.uleb128 0xd
+ 407 0219 1D020000 		.4byte	.LASF27
+ 408 021d 03       		.byte	0x3
+ 409 021e C2       		.byte	0xc2
+ 410 021f 13030000 		.4byte	0x313
+ 411 0223 14       		.byte	0x14
+ 412 0224 0D       		.uleb128 0xd
+ 413 0225 37020000 		.4byte	.LASF28
+ 414 0229 03       		.byte	0x3
+ 415 022a C3       		.byte	0xc3
+ 416 022b 25000000 		.4byte	0x25
+ 417 022f 18       		.byte	0x18
+ 418 0230 00       		.byte	0
+ 419 0231 0F       		.uleb128 0xf
+ 420 0232 AC010000 		.4byte	.LASF29
+ 421 0236 02       		.byte	0x2
+ 422 0237 4401     		.2byte	0x144
+ 423 0239 3D020000 		.4byte	0x23d
+ 424 023d 10       		.uleb128 0x10
+ 425 023e AC010000 		.4byte	.LASF29
+ 426 0242 34       		.byte	0x34
+ 427 0243 03       		.byte	0x3
+ 428 0244 6A       		.byte	0x6a
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 12
+
+
+ 429 0245 E6020000 		.4byte	0x2e6
+ 430 0249 0D       		.uleb128 0xd
+ 431 024a 1E040000 		.4byte	.LASF30
+ 432 024e 03       		.byte	0x3
+ 433 024f 6E       		.byte	0x6e
+ 434 0250 25000000 		.4byte	0x25
+ 435 0254 00       		.byte	0
+ 436 0255 0D       		.uleb128 0xd
+ 437 0256 9B040000 		.4byte	.LASF31
+ 438 025a 03       		.byte	0x3
+ 439 025b 72       		.byte	0x72
+ 440 025c 6B050000 		.4byte	0x56b
+ 441 0260 04       		.byte	0x4
+ 442 0261 0D       		.uleb128 0xd
+ 443 0262 11020000 		.4byte	.LASF32
+ 444 0266 03       		.byte	0x3
+ 445 0267 73       		.byte	0x73
+ 446 0268 8B050000 		.4byte	0x58b
+ 447 026c 08       		.byte	0x8
+ 448 026d 0D       		.uleb128 0xd
+ 449 026e C1000000 		.4byte	.LASF33
+ 450 0272 03       		.byte	0x3
+ 451 0273 74       		.byte	0x74
+ 452 0274 8B050000 		.4byte	0x58b
+ 453 0278 0C       		.byte	0xc
+ 454 0279 0D       		.uleb128 0xd
+ 455 027a E1010000 		.4byte	.LASF34
+ 456 027e 03       		.byte	0x3
+ 457 027f 75       		.byte	0x75
+ 458 0280 B0050000 		.4byte	0x5b0
+ 459 0284 10       		.byte	0x10
+ 460 0285 0D       		.uleb128 0xd
+ 461 0286 88020000 		.4byte	.LASF35
+ 462 028a 03       		.byte	0x3
+ 463 028b 76       		.byte	0x76
+ 464 028c CF050000 		.4byte	0x5cf
+ 465 0290 14       		.byte	0x14
+ 466 0291 0D       		.uleb128 0xd
+ 467 0292 BC030000 		.4byte	.LASF36
+ 468 0296 03       		.byte	0x3
+ 469 0297 77       		.byte	0x77
+ 470 0298 EF050000 		.4byte	0x5ef
+ 471 029c 18       		.byte	0x18
+ 472 029d 0D       		.uleb128 0xd
+ 473 029e 45050000 		.4byte	.LASF37
+ 474 02a2 03       		.byte	0x3
+ 475 02a3 78       		.byte	0x78
+ 476 02a4 0A060000 		.4byte	0x60a
+ 477 02a8 1C       		.byte	0x1c
+ 478 02a9 0D       		.uleb128 0xd
+ 479 02aa 50050000 		.4byte	.LASF38
+ 480 02ae 03       		.byte	0x3
+ 481 02af 7C       		.byte	0x7c
+ 482 02b0 0A060000 		.4byte	0x60a
+ 483 02b4 20       		.byte	0x20
+ 484 02b5 0D       		.uleb128 0xd
+ 485 02b6 BB040000 		.4byte	.LASF39
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 13
+
+
+ 486 02ba 03       		.byte	0x3
+ 487 02bb 80       		.byte	0x80
+ 488 02bc 2A060000 		.4byte	0x62a
+ 489 02c0 24       		.byte	0x24
+ 490 02c1 0D       		.uleb128 0xd
+ 491 02c2 CF050000 		.4byte	.LASF40
+ 492 02c6 03       		.byte	0x3
+ 493 02c7 81       		.byte	0x81
+ 494 02c8 44060000 		.4byte	0x644
+ 495 02cc 28       		.byte	0x28
+ 496 02cd 0D       		.uleb128 0xd
+ 497 02ce 85000000 		.4byte	.LASF41
+ 498 02d2 03       		.byte	0x3
+ 499 02d3 82       		.byte	0x82
+ 500 02d4 5E060000 		.4byte	0x65e
+ 501 02d8 2C       		.byte	0x2c
+ 502 02d9 0D       		.uleb128 0xd
+ 503 02da 80010000 		.4byte	.LASF42
+ 504 02de 03       		.byte	0x3
+ 505 02df 83       		.byte	0x83
+ 506 02e0 74060000 		.4byte	0x674
+ 507 02e4 30       		.byte	0x30
+ 508 02e5 00       		.byte	0
+ 509 02e6 0C       		.uleb128 0xc
+ 510 02e7 04       		.byte	0x4
+ 511 02e8 EC020000 		.4byte	0x2ec
+ 512 02ec 11       		.uleb128 0x11
+ 513 02ed A1000000 		.4byte	0xa1
+ 514 02f1 0A       		.uleb128 0xa
+ 515 02f2 FC020000 		.4byte	0x2fc
+ 516 02f6 08       		.uleb128 0x8
+ 517 02f7 4C000000 		.4byte	0x4c
+ 518 02fb 00       		.byte	0
+ 519 02fc 0C       		.uleb128 0xc
+ 520 02fd 04       		.byte	0x4
+ 521 02fe F1020000 		.4byte	0x2f1
+ 522 0302 0C       		.uleb128 0xc
+ 523 0303 04       		.byte	0x4
+ 524 0304 BE010000 		.4byte	0x1be
+ 525 0308 0C       		.uleb128 0xc
+ 526 0309 04       		.byte	0x4
+ 527 030a 0E030000 		.4byte	0x30e
+ 528 030e 11       		.uleb128 0x11
+ 529 030f AD010000 		.4byte	0x1ad
+ 530 0313 03       		.uleb128 0x3
+ 531 0314 02       		.byte	0x2
+ 532 0315 07       		.byte	0x7
+ 533 0316 A8040000 		.4byte	.LASF43
+ 534 031a 03       		.uleb128 0x3
+ 535 031b 01       		.byte	0x1
+ 536 031c 06       		.byte	0x6
+ 537 031d 73030000 		.4byte	.LASF44
+ 538 0321 0A       		.uleb128 0xa
+ 539 0322 2C030000 		.4byte	0x32c
+ 540 0326 08       		.uleb128 0x8
+ 541 0327 13030000 		.4byte	0x313
+ 542 032b 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 14
+
+
+ 543 032c 03       		.uleb128 0x3
+ 544 032d 04       		.byte	0x4
+ 545 032e 07       		.byte	0x7
+ 546 032f 7C000000 		.4byte	.LASF45
+ 547 0333 12       		.uleb128 0x12
+ 548 0334 68       		.byte	0x68
+ 549 0335 04       		.byte	0x4
+ 550 0336 7102     		.2byte	0x271
+ 551 0338 8F040000 		.4byte	0x48f
+ 552 033c 13       		.uleb128 0x13
+ 553 033d E7040000 		.4byte	.LASF46
+ 554 0341 04       		.byte	0x4
+ 555 0342 7502     		.2byte	0x275
+ 556 0344 9A040000 		.4byte	0x49a
+ 557 0348 00       		.byte	0
+ 558 0349 13       		.uleb128 0x13
+ 559 034a F3040000 		.4byte	.LASF47
+ 560 034e 04       		.byte	0x4
+ 561 034f 7602     		.2byte	0x276
+ 562 0351 9A040000 		.4byte	0x49a
+ 563 0355 04       		.byte	0x4
+ 564 0356 13       		.uleb128 0x13
+ 565 0357 85040000 		.4byte	.LASF48
+ 566 035b 04       		.byte	0x4
+ 567 035c 7702     		.2byte	0x277
+ 568 035e B6040000 		.4byte	0x4b6
+ 569 0362 08       		.byte	0x8
+ 570 0363 13       		.uleb128 0x13
+ 571 0364 C5010000 		.4byte	.LASF49
+ 572 0368 04       		.byte	0x4
+ 573 0369 7802     		.2byte	0x278
+ 574 036b B6040000 		.4byte	0x4b6
+ 575 036f 0C       		.byte	0xc
+ 576 0370 13       		.uleb128 0x13
+ 577 0371 2F050000 		.4byte	.LASF50
+ 578 0375 04       		.byte	0x4
+ 579 0376 7902     		.2byte	0x279
+ 580 0378 C1040000 		.4byte	0x4c1
+ 581 037c 10       		.byte	0x10
+ 582 037d 13       		.uleb128 0x13
+ 583 037e 3A050000 		.4byte	.LASF51
+ 584 0382 04       		.byte	0x4
+ 585 0383 7A02     		.2byte	0x27a
+ 586 0385 C1040000 		.4byte	0x4c1
+ 587 0389 14       		.byte	0x14
+ 588 038a 13       		.uleb128 0x13
+ 589 038b 79040000 		.4byte	.LASF52
+ 590 038f 04       		.byte	0x4
+ 591 0390 7B02     		.2byte	0x27b
+ 592 0392 B6040000 		.4byte	0x4b6
+ 593 0396 18       		.byte	0x18
+ 594 0397 13       		.uleb128 0x13
+ 595 0398 01030000 		.4byte	.LASF53
+ 596 039c 04       		.byte	0x4
+ 597 039d 7C02     		.2byte	0x27c
+ 598 039f B6040000 		.4byte	0x4b6
+ 599 03a3 1C       		.byte	0x1c
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 15
+
+
+ 600 03a4 13       		.uleb128 0x13
+ 601 03a5 59050000 		.4byte	.LASF54
+ 602 03a9 04       		.byte	0x4
+ 603 03aa 8002     		.2byte	0x280
+ 604 03ac C7040000 		.4byte	0x4c7
+ 605 03b0 20       		.byte	0x20
+ 606 03b1 13       		.uleb128 0x13
+ 607 03b2 66050000 		.4byte	.LASF55
+ 608 03b6 04       		.byte	0x4
+ 609 03b7 8102     		.2byte	0x281
+ 610 03b9 C7040000 		.4byte	0x4c7
+ 611 03bd 24       		.byte	0x24
+ 612 03be 13       		.uleb128 0x13
+ 613 03bf E1030000 		.4byte	.LASF56
+ 614 03c3 04       		.byte	0x4
+ 615 03c4 8202     		.2byte	0x282
+ 616 03c6 E3040000 		.4byte	0x4e3
+ 617 03ca 28       		.byte	0x28
+ 618 03cb 13       		.uleb128 0x13
+ 619 03cc EF030000 		.4byte	.LASF57
+ 620 03d0 04       		.byte	0x4
+ 621 03d1 8302     		.2byte	0x283
+ 622 03d3 E3040000 		.4byte	0x4e3
+ 623 03d7 2C       		.byte	0x2c
+ 624 03d8 13       		.uleb128 0x13
+ 625 03d9 A9000000 		.4byte	.LASF58
+ 626 03dd 04       		.byte	0x4
+ 627 03de 8402     		.2byte	0x284
+ 628 03e0 EE040000 		.4byte	0x4ee
+ 629 03e4 30       		.byte	0x30
+ 630 03e5 13       		.uleb128 0x13
+ 631 03e6 B5000000 		.4byte	.LASF59
+ 632 03ea 04       		.byte	0x4
+ 633 03eb 8502     		.2byte	0x285
+ 634 03ed EE040000 		.4byte	0x4ee
+ 635 03f1 34       		.byte	0x34
+ 636 03f2 13       		.uleb128 0x13
+ 637 03f3 56020000 		.4byte	.LASF60
+ 638 03f7 04       		.byte	0x4
+ 639 03f8 8602     		.2byte	0x286
+ 640 03fa E3040000 		.4byte	0x4e3
+ 641 03fe 38       		.byte	0x38
+ 642 03ff 13       		.uleb128 0x13
+ 643 0400 FD030000 		.4byte	.LASF61
+ 644 0404 04       		.byte	0x4
+ 645 0405 8702     		.2byte	0x287
+ 646 0407 E3040000 		.4byte	0x4e3
+ 647 040b 3C       		.byte	0x3c
+ 648 040c 13       		.uleb128 0x13
+ 649 040d 7F030000 		.4byte	.LASF62
+ 650 0411 04       		.byte	0x4
+ 651 0412 8B02     		.2byte	0x28b
+ 652 0414 FC020000 		.4byte	0x2fc
+ 653 0418 40       		.byte	0x40
+ 654 0419 13       		.uleb128 0x13
+ 655 041a 8C030000 		.4byte	.LASF63
+ 656 041e 04       		.byte	0x4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 16
+
+
+ 657 041f 8C02     		.2byte	0x28c
+ 658 0421 FC020000 		.4byte	0x2fc
+ 659 0425 44       		.byte	0x44
+ 660 0426 13       		.uleb128 0x13
+ 661 0427 56000000 		.4byte	.LASF64
+ 662 042b 04       		.byte	0x4
+ 663 042c 8D02     		.2byte	0x28d
+ 664 042e 0A050000 		.4byte	0x50a
+ 665 0432 48       		.byte	0x48
+ 666 0433 13       		.uleb128 0x13
+ 667 0434 64000000 		.4byte	.LASF65
+ 668 0438 04       		.byte	0x4
+ 669 0439 8E02     		.2byte	0x28e
+ 670 043b 0A050000 		.4byte	0x50a
+ 671 043f 4C       		.byte	0x4c
+ 672 0440 13       		.uleb128 0x13
+ 673 0441 17050000 		.4byte	.LASF66
+ 674 0445 04       		.byte	0x4
+ 675 0446 8F02     		.2byte	0x28f
+ 676 0448 10050000 		.4byte	0x510
+ 677 044c 50       		.byte	0x50
+ 678 044d 13       		.uleb128 0x13
+ 679 044e 23050000 		.4byte	.LASF67
+ 680 0452 04       		.byte	0x4
+ 681 0453 9002     		.2byte	0x290
+ 682 0455 10050000 		.4byte	0x510
+ 683 0459 54       		.byte	0x54
+ 684 045a 13       		.uleb128 0x13
+ 685 045b D7020000 		.4byte	.LASF68
+ 686 045f 04       		.byte	0x4
+ 687 0460 9102     		.2byte	0x291
+ 688 0462 0A050000 		.4byte	0x50a
+ 689 0466 58       		.byte	0x58
+ 690 0467 13       		.uleb128 0x13
+ 691 0468 04020000 		.4byte	.LASF69
+ 692 046c 04       		.byte	0x4
+ 693 046d 9202     		.2byte	0x292
+ 694 046f 0A050000 		.4byte	0x50a
+ 695 0473 5C       		.byte	0x5c
+ 696 0474 13       		.uleb128 0x13
+ 697 0475 2F040000 		.4byte	.LASF70
+ 698 0479 04       		.byte	0x4
+ 699 047a 9602     		.2byte	0x296
+ 700 047c 9A040000 		.4byte	0x49a
+ 701 0480 60       		.byte	0x60
+ 702 0481 13       		.uleb128 0x13
+ 703 0482 AB020000 		.4byte	.LASF71
+ 704 0486 04       		.byte	0x4
+ 705 0487 9A02     		.2byte	0x29a
+ 706 0489 02030000 		.4byte	0x302
+ 707 048d 64       		.byte	0x64
+ 708 048e 00       		.byte	0
+ 709 048f 0A       		.uleb128 0xa
+ 710 0490 9A040000 		.4byte	0x49a
+ 711 0494 08       		.uleb128 0x8
+ 712 0495 A1000000 		.4byte	0xa1
+ 713 0499 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 17
+
+
+ 714 049a 0C       		.uleb128 0xc
+ 715 049b 04       		.byte	0x4
+ 716 049c 8F040000 		.4byte	0x48f
+ 717 04a0 0A       		.uleb128 0xa
+ 718 04a1 B0040000 		.4byte	0x4b0
+ 719 04a5 08       		.uleb128 0x8
+ 720 04a6 B0040000 		.4byte	0x4b0
+ 721 04aa 08       		.uleb128 0x8
+ 722 04ab 25000000 		.4byte	0x25
+ 723 04af 00       		.byte	0
+ 724 04b0 0C       		.uleb128 0xc
+ 725 04b1 04       		.byte	0x4
+ 726 04b2 A1000000 		.4byte	0xa1
+ 727 04b6 0C       		.uleb128 0xc
+ 728 04b7 04       		.byte	0x4
+ 729 04b8 A0040000 		.4byte	0x4a0
+ 730 04bc 09       		.uleb128 0x9
+ 731 04bd A1000000 		.4byte	0xa1
+ 732 04c1 0C       		.uleb128 0xc
+ 733 04c2 04       		.byte	0x4
+ 734 04c3 BC040000 		.4byte	0x4bc
+ 735 04c7 0C       		.uleb128 0xc
+ 736 04c8 04       		.byte	0x4
+ 737 04c9 21030000 		.4byte	0x321
+ 738 04cd 0A       		.uleb128 0xa
+ 739 04ce DD040000 		.4byte	0x4dd
+ 740 04d2 08       		.uleb128 0x8
+ 741 04d3 DD040000 		.4byte	0x4dd
+ 742 04d7 08       		.uleb128 0x8
+ 743 04d8 25000000 		.4byte	0x25
+ 744 04dc 00       		.byte	0
+ 745 04dd 0C       		.uleb128 0xc
+ 746 04de 04       		.byte	0x4
+ 747 04df 13030000 		.4byte	0x313
+ 748 04e3 0C       		.uleb128 0xc
+ 749 04e4 04       		.byte	0x4
+ 750 04e5 CD040000 		.4byte	0x4cd
+ 751 04e9 09       		.uleb128 0x9
+ 752 04ea 13030000 		.4byte	0x313
+ 753 04ee 0C       		.uleb128 0xc
+ 754 04ef 04       		.byte	0x4
+ 755 04f0 E9040000 		.4byte	0x4e9
+ 756 04f4 0A       		.uleb128 0xa
+ 757 04f5 04050000 		.4byte	0x504
+ 758 04f9 08       		.uleb128 0x8
+ 759 04fa 04050000 		.4byte	0x504
+ 760 04fe 08       		.uleb128 0x8
+ 761 04ff 25000000 		.4byte	0x25
+ 762 0503 00       		.byte	0
+ 763 0504 0C       		.uleb128 0xc
+ 764 0505 04       		.byte	0x4
+ 765 0506 4C000000 		.4byte	0x4c
+ 766 050a 0C       		.uleb128 0xc
+ 767 050b 04       		.byte	0x4
+ 768 050c F4040000 		.4byte	0x4f4
+ 769 0510 0C       		.uleb128 0xc
+ 770 0511 04       		.byte	0x4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 18
+
+
+ 771 0512 E7000000 		.4byte	0xe7
+ 772 0516 0F       		.uleb128 0xf
+ 773 0517 C8040000 		.4byte	.LASF72
+ 774 051b 04       		.byte	0x4
+ 775 051c 9B02     		.2byte	0x29b
+ 776 051e 33030000 		.4byte	0x333
+ 777 0522 0A       		.uleb128 0xa
+ 778 0523 5A050000 		.4byte	0x55a
+ 779 0527 08       		.uleb128 0x8
+ 780 0528 5A050000 		.4byte	0x55a
+ 781 052c 08       		.uleb128 0x8
+ 782 052d 25000000 		.4byte	0x25
+ 783 0531 08       		.uleb128 0x8
+ 784 0532 25000000 		.4byte	0x25
+ 785 0536 08       		.uleb128 0x8
+ 786 0537 25000000 		.4byte	0x25
+ 787 053b 08       		.uleb128 0x8
+ 788 053c 25000000 		.4byte	0x25
+ 789 0540 08       		.uleb128 0x8
+ 790 0541 25000000 		.4byte	0x25
+ 791 0545 08       		.uleb128 0x8
+ 792 0546 25000000 		.4byte	0x25
+ 793 054a 08       		.uleb128 0x8
+ 794 054b E6020000 		.4byte	0x2e6
+ 795 054f 08       		.uleb128 0x8
+ 796 0550 25000000 		.4byte	0x25
+ 797 0554 08       		.uleb128 0x8
+ 798 0555 60050000 		.4byte	0x560
+ 799 0559 00       		.byte	0
+ 800 055a 0C       		.uleb128 0xc
+ 801 055b 04       		.byte	0x4
+ 802 055c C6010000 		.4byte	0x1c6
+ 803 0560 0C       		.uleb128 0xc
+ 804 0561 04       		.byte	0x4
+ 805 0562 66050000 		.4byte	0x566
+ 806 0566 11       		.uleb128 0x11
+ 807 0567 4C000000 		.4byte	0x4c
+ 808 056b 0C       		.uleb128 0xc
+ 809 056c 04       		.byte	0x4
+ 810 056d 22050000 		.4byte	0x522
+ 811 0571 0A       		.uleb128 0xa
+ 812 0572 8B050000 		.4byte	0x58b
+ 813 0576 08       		.uleb128 0x8
+ 814 0577 5A050000 		.4byte	0x55a
+ 815 057b 08       		.uleb128 0x8
+ 816 057c 25000000 		.4byte	0x25
+ 817 0580 08       		.uleb128 0x8
+ 818 0581 25000000 		.4byte	0x25
+ 819 0585 08       		.uleb128 0x8
+ 820 0586 25000000 		.4byte	0x25
+ 821 058a 00       		.byte	0
+ 822 058b 0C       		.uleb128 0xc
+ 823 058c 04       		.byte	0x4
+ 824 058d 71050000 		.4byte	0x571
+ 825 0591 0A       		.uleb128 0xa
+ 826 0592 B0050000 		.4byte	0x5b0
+ 827 0596 08       		.uleb128 0x8
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 19
+
+
+ 828 0597 5A050000 		.4byte	0x55a
+ 829 059b 08       		.uleb128 0x8
+ 830 059c 25000000 		.4byte	0x25
+ 831 05a0 08       		.uleb128 0x8
+ 832 05a1 25000000 		.4byte	0x25
+ 833 05a5 08       		.uleb128 0x8
+ 834 05a6 25000000 		.4byte	0x25
+ 835 05aa 08       		.uleb128 0x8
+ 836 05ab 25000000 		.4byte	0x25
+ 837 05af 00       		.byte	0
+ 838 05b0 0C       		.uleb128 0xc
+ 839 05b1 04       		.byte	0x4
+ 840 05b2 91050000 		.4byte	0x591
+ 841 05b6 07       		.uleb128 0x7
+ 842 05b7 4C000000 		.4byte	0x4c
+ 843 05bb CF050000 		.4byte	0x5cf
+ 844 05bf 08       		.uleb128 0x8
+ 845 05c0 5A050000 		.4byte	0x55a
+ 846 05c4 08       		.uleb128 0x8
+ 847 05c5 25000000 		.4byte	0x25
+ 848 05c9 08       		.uleb128 0x8
+ 849 05ca 25000000 		.4byte	0x25
+ 850 05ce 00       		.byte	0
+ 851 05cf 0C       		.uleb128 0xc
+ 852 05d0 04       		.byte	0x4
+ 853 05d1 B6050000 		.4byte	0x5b6
+ 854 05d5 0A       		.uleb128 0xa
+ 855 05d6 EF050000 		.4byte	0x5ef
+ 856 05da 08       		.uleb128 0x8
+ 857 05db 5A050000 		.4byte	0x55a
+ 858 05df 08       		.uleb128 0x8
+ 859 05e0 25000000 		.4byte	0x25
+ 860 05e4 08       		.uleb128 0x8
+ 861 05e5 25000000 		.4byte	0x25
+ 862 05e9 08       		.uleb128 0x8
+ 863 05ea 4C000000 		.4byte	0x4c
+ 864 05ee 00       		.byte	0
+ 865 05ef 0C       		.uleb128 0xc
+ 866 05f0 04       		.byte	0x4
+ 867 05f1 D5050000 		.4byte	0x5d5
+ 868 05f5 0A       		.uleb128 0xa
+ 869 05f6 0A060000 		.4byte	0x60a
+ 870 05fa 08       		.uleb128 0x8
+ 871 05fb 5A050000 		.4byte	0x55a
+ 872 05ff 08       		.uleb128 0x8
+ 873 0600 25000000 		.4byte	0x25
+ 874 0604 08       		.uleb128 0x8
+ 875 0605 25000000 		.4byte	0x25
+ 876 0609 00       		.byte	0
+ 877 060a 0C       		.uleb128 0xc
+ 878 060b 04       		.byte	0x4
+ 879 060c F5050000 		.4byte	0x5f5
+ 880 0610 07       		.uleb128 0x7
+ 881 0611 02030000 		.4byte	0x302
+ 882 0615 24060000 		.4byte	0x624
+ 883 0619 08       		.uleb128 0x8
+ 884 061a 24060000 		.4byte	0x624
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 20
+
+
+ 885 061e 08       		.uleb128 0x8
+ 886 061f 25000000 		.4byte	0x25
+ 887 0623 00       		.byte	0
+ 888 0624 0C       		.uleb128 0xc
+ 889 0625 04       		.byte	0x4
+ 890 0626 5A050000 		.4byte	0x55a
+ 891 062a 0C       		.uleb128 0xc
+ 892 062b 04       		.byte	0x4
+ 893 062c 10060000 		.4byte	0x610
+ 894 0630 07       		.uleb128 0x7
+ 895 0631 BF010000 		.4byte	0x1bf
+ 896 0635 44060000 		.4byte	0x644
+ 897 0639 08       		.uleb128 0x8
+ 898 063a 5A050000 		.4byte	0x55a
+ 899 063e 08       		.uleb128 0x8
+ 900 063f 25000000 		.4byte	0x25
+ 901 0643 00       		.byte	0
+ 902 0644 0C       		.uleb128 0xc
+ 903 0645 04       		.byte	0x4
+ 904 0646 30060000 		.4byte	0x630
+ 905 064a 07       		.uleb128 0x7
+ 906 064b 11010000 		.4byte	0x111
+ 907 064f 5E060000 		.4byte	0x65e
+ 908 0653 08       		.uleb128 0x8
+ 909 0654 5A050000 		.4byte	0x55a
+ 910 0658 08       		.uleb128 0x8
+ 911 0659 25000000 		.4byte	0x25
+ 912 065d 00       		.byte	0
+ 913 065e 0C       		.uleb128 0xc
+ 914 065f 04       		.byte	0x4
+ 915 0660 4A060000 		.4byte	0x64a
+ 916 0664 0A       		.uleb128 0xa
+ 917 0665 74060000 		.4byte	0x674
+ 918 0669 08       		.uleb128 0x8
+ 919 066a 5A050000 		.4byte	0x55a
+ 920 066e 08       		.uleb128 0x8
+ 921 066f B8010000 		.4byte	0x1b8
+ 922 0673 00       		.byte	0
+ 923 0674 0C       		.uleb128 0xc
+ 924 0675 04       		.byte	0x4
+ 925 0676 64060000 		.4byte	0x664
+ 926 067a 14       		.uleb128 0x14
+ 927 067b 04       		.byte	0x4
+ 928 067c 03       		.byte	0x3
+ 929 067d B9       		.byte	0xb9
+ 930 067e 99060000 		.4byte	0x699
+ 931 0682 15       		.uleb128 0x15
+ 932 0683 E4020000 		.4byte	.LASF73
+ 933 0687 03       		.byte	0x3
+ 934 0688 BA       		.byte	0xba
+ 935 0689 BF010000 		.4byte	0x1bf
+ 936 068d 15       		.uleb128 0x15
+ 937 068e 92040000 		.4byte	.LASF74
+ 938 0692 03       		.byte	0x3
+ 939 0693 BB       		.byte	0xbb
+ 940 0694 11010000 		.4byte	0x111
+ 941 0698 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 21
+
+
+ 942 0699 0C       		.uleb128 0xc
+ 943 069a 04       		.byte	0x4
+ 944 069b 9F060000 		.4byte	0x69f
+ 945 069f 11       		.uleb128 0x11
+ 946 06a0 31020000 		.4byte	0x231
+ 947 06a4 05       		.uleb128 0x5
+ 948 06a5 14       		.byte	0x14
+ 949 06a6 05       		.byte	0x5
+ 950 06a7 72       		.byte	0x72
+ 951 06a8 E9060000 		.4byte	0x6e9
+ 952 06ac 0D       		.uleb128 0xd
+ 953 06ad B9020000 		.4byte	.LASF75
+ 954 06b1 05       		.byte	0x5
+ 955 06b2 76       		.byte	0x76
+ 956 06b3 25000000 		.4byte	0x25
+ 957 06b7 00       		.byte	0
+ 958 06b8 0D       		.uleb128 0xd
+ 959 06b9 AD050000 		.4byte	.LASF76
+ 960 06bd 05       		.byte	0x5
+ 961 06be 77       		.byte	0x77
+ 962 06bf 25000000 		.4byte	0x25
+ 963 06c3 04       		.byte	0x4
+ 964 06c4 0D       		.uleb128 0xd
+ 965 06c5 37040000 		.4byte	.LASF77
+ 966 06c9 05       		.byte	0x5
+ 967 06ca 78       		.byte	0x78
+ 968 06cb 25000000 		.4byte	0x25
+ 969 06cf 08       		.byte	0x8
+ 970 06d0 0D       		.uleb128 0xd
+ 971 06d1 9F010000 		.4byte	.LASF78
+ 972 06d5 05       		.byte	0x5
+ 973 06d6 79       		.byte	0x79
+ 974 06d7 13030000 		.4byte	0x313
+ 975 06db 0C       		.byte	0xc
+ 976 06dc 0D       		.uleb128 0xd
+ 977 06dd 29000000 		.4byte	.LASF79
+ 978 06e1 05       		.byte	0x5
+ 979 06e2 7A       		.byte	0x7a
+ 980 06e3 25000000 		.4byte	0x25
+ 981 06e7 10       		.byte	0x10
+ 982 06e8 00       		.byte	0
+ 983 06e9 04       		.uleb128 0x4
+ 984 06ea B6050000 		.4byte	.LASF80
+ 985 06ee 05       		.byte	0x5
+ 986 06ef 7B       		.byte	0x7b
+ 987 06f0 A4060000 		.4byte	0x6a4
+ 988 06f4 16       		.uleb128 0x16
+ 989 06f5 1C000000 		.4byte	.LASF95
+ 990 06f9 01       		.byte	0x1
+ 991 06fa 81       		.byte	0x81
+ 992 06fb 00000000 		.4byte	.LFB1
+ 993 06ff 6C000000 		.4byte	.LFE1-.LFB1
+ 994 0703 01       		.uleb128 0x1
+ 995 0704 9C       		.byte	0x9c
+ 996 0705 E4070000 		.4byte	0x7e4
+ 997 0709 17       		.uleb128 0x17
+ 998 070a C7050000 		.4byte	.LASF81
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 22
+
+
+ 999 070e 01       		.byte	0x1
+ 1000 070f 82       		.byte	0x82
+ 1001 0710 5A050000 		.4byte	0x55a
+ 1002 0714 00000000 		.4byte	.LLST0
+ 1003 0718 18       		.uleb128 0x18
+ 1004 0719 C2020000 		.4byte	.LASF82
+ 1005 071d 01       		.byte	0x1
+ 1006 071e 83       		.byte	0x83
+ 1007 071f E9060000 		.4byte	0x6e9
+ 1008 0723 02       		.uleb128 0x2
+ 1009 0724 91       		.byte	0x91
+ 1010 0725 5C       		.sleb128 -36
+ 1011 0726 18       		.uleb128 0x18
+ 1012 0727 2F020000 		.4byte	.LASF83
+ 1013 072b 01       		.byte	0x1
+ 1014 072c 84       		.byte	0x84
+ 1015 072d 16050000 		.4byte	0x516
+ 1016 0731 03       		.uleb128 0x3
+ 1017 0732 91       		.byte	0x91
+ 1018 0733 F47E     		.sleb128 -140
+ 1019 0735 19       		.uleb128 0x19
+ 1020 0736 1A000000 		.4byte	.LVL0
+ 1021 073a 46080000 		.4byte	0x846
+ 1022 073e 56070000 		.4byte	0x756
+ 1023 0742 1A       		.uleb128 0x1a
+ 1024 0743 01       		.uleb128 0x1
+ 1025 0744 50       		.byte	0x50
+ 1026 0745 03       		.uleb128 0x3
+ 1027 0746 91       		.byte	0x91
+ 1028 0747 F47E     		.sleb128 -140
+ 1029 0749 1A       		.uleb128 0x1a
+ 1030 074a 01       		.uleb128 0x1
+ 1031 074b 51       		.byte	0x51
+ 1032 074c 02       		.uleb128 0x2
+ 1033 074d 74       		.byte	0x74
+ 1034 074e 00       		.sleb128 0
+ 1035 074f 1A       		.uleb128 0x1a
+ 1036 0750 01       		.uleb128 0x1
+ 1037 0751 52       		.byte	0x52
+ 1038 0752 02       		.uleb128 0x2
+ 1039 0753 08       		.byte	0x8
+ 1040 0754 68       		.byte	0x68
+ 1041 0755 00       		.byte	0
+ 1042 0756 19       		.uleb128 0x19
+ 1043 0757 26000000 		.4byte	.LVL1
+ 1044 075b 4F080000 		.4byte	0x84f
+ 1045 075f 70070000 		.4byte	0x770
+ 1046 0763 1A       		.uleb128 0x1a
+ 1047 0764 01       		.uleb128 0x1
+ 1048 0765 52       		.byte	0x52
+ 1049 0766 02       		.uleb128 0x2
+ 1050 0767 74       		.byte	0x74
+ 1051 0768 00       		.sleb128 0
+ 1052 0769 1A       		.uleb128 0x1a
+ 1053 076a 01       		.uleb128 0x1
+ 1054 076b 53       		.byte	0x53
+ 1055 076c 02       		.uleb128 0x2
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 23
+
+
+ 1056 076d 74       		.byte	0x74
+ 1057 076e 00       		.sleb128 0
+ 1058 076f 00       		.byte	0
+ 1059 0770 19       		.uleb128 0x19
+ 1060 0771 34000000 		.4byte	.LVL4
+ 1061 0775 5B080000 		.4byte	0x85b
+ 1062 0779 91070000 		.4byte	0x791
+ 1063 077d 1A       		.uleb128 0x1a
+ 1064 077e 01       		.uleb128 0x1
+ 1065 077f 50       		.byte	0x50
+ 1066 0780 02       		.uleb128 0x2
+ 1067 0781 74       		.byte	0x74
+ 1068 0782 00       		.sleb128 0
+ 1069 0783 1A       		.uleb128 0x1a
+ 1070 0784 01       		.uleb128 0x1
+ 1071 0785 51       		.byte	0x51
+ 1072 0786 02       		.uleb128 0x2
+ 1073 0787 08       		.byte	0x8
+ 1074 0788 F0       		.byte	0xf0
+ 1075 0789 1A       		.uleb128 0x1a
+ 1076 078a 01       		.uleb128 0x1
+ 1077 078b 52       		.byte	0x52
+ 1078 078c 03       		.uleb128 0x3
+ 1079 078d 0A       		.byte	0xa
+ 1080 078e 4001     		.2byte	0x140
+ 1081 0790 00       		.byte	0
+ 1082 0791 19       		.uleb128 0x19
+ 1083 0792 40000000 		.4byte	.LVL5
+ 1084 0796 67080000 		.4byte	0x867
+ 1085 079a B2070000 		.4byte	0x7b2
+ 1086 079e 1A       		.uleb128 0x1a
+ 1087 079f 01       		.uleb128 0x1
+ 1088 07a0 50       		.byte	0x50
+ 1089 07a1 02       		.uleb128 0x2
+ 1090 07a2 74       		.byte	0x74
+ 1091 07a3 00       		.sleb128 0
+ 1092 07a4 1A       		.uleb128 0x1a
+ 1093 07a5 01       		.uleb128 0x1
+ 1094 07a6 51       		.byte	0x51
+ 1095 07a7 02       		.uleb128 0x2
+ 1096 07a8 08       		.byte	0x8
+ 1097 07a9 F0       		.byte	0xf0
+ 1098 07aa 1A       		.uleb128 0x1a
+ 1099 07ab 01       		.uleb128 0x1
+ 1100 07ac 52       		.byte	0x52
+ 1101 07ad 03       		.uleb128 0x3
+ 1102 07ae 0A       		.byte	0xa
+ 1103 07af 4001     		.2byte	0x140
+ 1104 07b1 00       		.byte	0
+ 1105 07b2 19       		.uleb128 0x19
+ 1106 07b3 4C000000 		.4byte	.LVL6
+ 1107 07b7 73080000 		.4byte	0x873
+ 1108 07bb CC070000 		.4byte	0x7cc
+ 1109 07bf 1A       		.uleb128 0x1a
+ 1110 07c0 01       		.uleb128 0x1
+ 1111 07c1 50       		.byte	0x50
+ 1112 07c2 02       		.uleb128 0x2
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 24
+
+
+ 1113 07c3 75       		.byte	0x75
+ 1114 07c4 00       		.sleb128 0
+ 1115 07c5 1A       		.uleb128 0x1a
+ 1116 07c6 01       		.uleb128 0x1
+ 1117 07c7 51       		.byte	0x51
+ 1118 07c8 02       		.uleb128 0x2
+ 1119 07c9 91       		.byte	0x91
+ 1120 07ca 5C       		.sleb128 -36
+ 1121 07cb 00       		.byte	0
+ 1122 07cc 1B       		.uleb128 0x1b
+ 1123 07cd 58000000 		.4byte	.LVL7
+ 1124 07d1 7E080000 		.4byte	0x87e
+ 1125 07d5 1A       		.uleb128 0x1a
+ 1126 07d6 01       		.uleb128 0x1
+ 1127 07d7 50       		.byte	0x50
+ 1128 07d8 02       		.uleb128 0x2
+ 1129 07d9 75       		.byte	0x75
+ 1130 07da 00       		.sleb128 0
+ 1131 07db 1A       		.uleb128 0x1a
+ 1132 07dc 01       		.uleb128 0x1
+ 1133 07dd 51       		.byte	0x51
+ 1134 07de 03       		.uleb128 0x3
+ 1135 07df 91       		.byte	0x91
+ 1136 07e0 F47E     		.sleb128 -140
+ 1137 07e2 00       		.byte	0
+ 1138 07e3 00       		.byte	0
+ 1139 07e4 1C       		.uleb128 0x1c
+ 1140 07e5 ED020000 		.4byte	.LASF96
+ 1141 07e9 01       		.byte	0x1
+ 1142 07ea B0       		.byte	0xb0
+ 1143 07eb 25000000 		.4byte	0x25
+ 1144 07ef 00000000 		.4byte	.LFB2
+ 1145 07f3 0E000000 		.4byte	.LFE2-.LFB2
+ 1146 07f7 01       		.uleb128 0x1
+ 1147 07f8 9C       		.byte	0x9c
+ 1148 07f9 30080000 		.4byte	0x830
+ 1149 07fd 1D       		.uleb128 0x1d
+ 1150 07fe 37020000 		.4byte	.LASF28
+ 1151 0802 01       		.byte	0x1
+ 1152 0803 B0       		.byte	0xb0
+ 1153 0804 2C000000 		.4byte	0x2c
+ 1154 0808 1E000000 		.4byte	.LLST1
+ 1155 080c 1E       		.uleb128 0x1e
+ 1156 080d 436D6400 		.ascii	"Cmd\000"
+ 1157 0811 01       		.byte	0x1
+ 1158 0812 B0       		.byte	0xb0
+ 1159 0813 2C000000 		.4byte	0x2c
+ 1160 0817 01       		.uleb128 0x1
+ 1161 0818 51       		.byte	0x51
+ 1162 0819 1F       		.uleb128 0x1f
+ 1163 081a 37000000 		.4byte	.LASF84
+ 1164 081e 01       		.byte	0x1
+ 1165 081f B0       		.byte	0xb0
+ 1166 0820 11010000 		.4byte	0x111
+ 1167 0824 01       		.uleb128 0x1
+ 1168 0825 52       		.byte	0x52
+ 1169 0826 20       		.uleb128 0x20
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 25
+
+
+ 1170 0827 7200     		.ascii	"r\000"
+ 1171 0829 01       		.byte	0x1
+ 1172 082a B1       		.byte	0xb1
+ 1173 082b 25000000 		.4byte	0x25
+ 1174 082f 00       		.byte	0
+ 1175 0830 21       		.uleb128 0x21
+ 1176 0831 92000000 		.4byte	.LASF85
+ 1177 0835 02       		.byte	0x2
+ 1178 0836 CB       		.byte	0xcb
+ 1179 0837 0E030000 		.4byte	0x30e
+ 1180 083b 21       		.uleb128 0x21
+ 1181 083c CC030000 		.4byte	.LASF86
+ 1182 0840 05       		.byte	0x5
+ 1183 0841 86       		.byte	0x86
+ 1184 0842 9F060000 		.4byte	0x69f
+ 1185 0846 22       		.uleb128 0x22
+ 1186 0847 63020000 		.4byte	.LASF97
+ 1187 084b 63020000 		.4byte	.LASF97
+ 1188 084f 23       		.uleb128 0x23
+ 1189 0850 60040000 		.4byte	.LASF87
+ 1190 0854 60040000 		.4byte	.LASF87
+ 1191 0858 03       		.byte	0x3
+ 1192 0859 2201     		.2byte	0x122
+ 1193 085b 23       		.uleb128 0x23
+ 1194 085c 0E000000 		.4byte	.LASF88
+ 1195 0860 0E000000 		.4byte	.LASF88
+ 1196 0864 02       		.byte	0x2
+ 1197 0865 4902     		.2byte	0x249
+ 1198 0867 23       		.uleb128 0x23
+ 1199 0868 0F040000 		.4byte	.LASF89
+ 1200 086c 0F040000 		.4byte	.LASF89
+ 1201 0870 02       		.byte	0x2
+ 1202 0871 4C02     		.2byte	0x24c
+ 1203 0873 24       		.uleb128 0x24
+ 1204 0874 FF040000 		.4byte	.LASF90
+ 1205 0878 FF040000 		.4byte	.LASF90
+ 1206 087c 05       		.byte	0x5
+ 1207 087d C6       		.byte	0xc6
+ 1208 087e 24       		.uleb128 0x24
+ 1209 087f 3D000000 		.4byte	.LASF91
+ 1210 0883 3D000000 		.4byte	.LASF91
+ 1211 0887 05       		.byte	0x5
+ 1212 0888 C5       		.byte	0xc5
+ 1213 0889 00       		.byte	0
+ 1214              		.section	.debug_abbrev,"",%progbits
+ 1215              	.Ldebug_abbrev0:
+ 1216 0000 01       		.uleb128 0x1
+ 1217 0001 11       		.uleb128 0x11
+ 1218 0002 01       		.byte	0x1
+ 1219 0003 25       		.uleb128 0x25
+ 1220 0004 0E       		.uleb128 0xe
+ 1221 0005 13       		.uleb128 0x13
+ 1222 0006 0B       		.uleb128 0xb
+ 1223 0007 03       		.uleb128 0x3
+ 1224 0008 0E       		.uleb128 0xe
+ 1225 0009 1B       		.uleb128 0x1b
+ 1226 000a 0E       		.uleb128 0xe
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 26
+
+
+ 1227 000b 55       		.uleb128 0x55
+ 1228 000c 17       		.uleb128 0x17
+ 1229 000d 11       		.uleb128 0x11
+ 1230 000e 01       		.uleb128 0x1
+ 1231 000f 10       		.uleb128 0x10
+ 1232 0010 17       		.uleb128 0x17
+ 1233 0011 00       		.byte	0
+ 1234 0012 00       		.byte	0
+ 1235 0013 02       		.uleb128 0x2
+ 1236 0014 24       		.uleb128 0x24
+ 1237 0015 00       		.byte	0
+ 1238 0016 0B       		.uleb128 0xb
+ 1239 0017 0B       		.uleb128 0xb
+ 1240 0018 3E       		.uleb128 0x3e
+ 1241 0019 0B       		.uleb128 0xb
+ 1242 001a 03       		.uleb128 0x3
+ 1243 001b 08       		.uleb128 0x8
+ 1244 001c 00       		.byte	0
+ 1245 001d 00       		.byte	0
+ 1246 001e 03       		.uleb128 0x3
+ 1247 001f 24       		.uleb128 0x24
+ 1248 0020 00       		.byte	0
+ 1249 0021 0B       		.uleb128 0xb
+ 1250 0022 0B       		.uleb128 0xb
+ 1251 0023 3E       		.uleb128 0x3e
+ 1252 0024 0B       		.uleb128 0xb
+ 1253 0025 03       		.uleb128 0x3
+ 1254 0026 0E       		.uleb128 0xe
+ 1255 0027 00       		.byte	0
+ 1256 0028 00       		.byte	0
+ 1257 0029 04       		.uleb128 0x4
+ 1258 002a 16       		.uleb128 0x16
+ 1259 002b 00       		.byte	0
+ 1260 002c 03       		.uleb128 0x3
+ 1261 002d 0E       		.uleb128 0xe
+ 1262 002e 3A       		.uleb128 0x3a
+ 1263 002f 0B       		.uleb128 0xb
+ 1264 0030 3B       		.uleb128 0x3b
+ 1265 0031 0B       		.uleb128 0xb
+ 1266 0032 49       		.uleb128 0x49
+ 1267 0033 13       		.uleb128 0x13
+ 1268 0034 00       		.byte	0
+ 1269 0035 00       		.byte	0
+ 1270 0036 05       		.uleb128 0x5
+ 1271 0037 13       		.uleb128 0x13
+ 1272 0038 01       		.byte	0x1
+ 1273 0039 0B       		.uleb128 0xb
+ 1274 003a 0B       		.uleb128 0xb
+ 1275 003b 3A       		.uleb128 0x3a
+ 1276 003c 0B       		.uleb128 0xb
+ 1277 003d 3B       		.uleb128 0x3b
+ 1278 003e 0B       		.uleb128 0xb
+ 1279 003f 01       		.uleb128 0x1
+ 1280 0040 13       		.uleb128 0x13
+ 1281 0041 00       		.byte	0
+ 1282 0042 00       		.byte	0
+ 1283 0043 06       		.uleb128 0x6
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 27
+
+
+ 1284 0044 0D       		.uleb128 0xd
+ 1285 0045 00       		.byte	0
+ 1286 0046 03       		.uleb128 0x3
+ 1287 0047 08       		.uleb128 0x8
+ 1288 0048 3A       		.uleb128 0x3a
+ 1289 0049 0B       		.uleb128 0xb
+ 1290 004a 3B       		.uleb128 0x3b
+ 1291 004b 0B       		.uleb128 0xb
+ 1292 004c 49       		.uleb128 0x49
+ 1293 004d 13       		.uleb128 0x13
+ 1294 004e 38       		.uleb128 0x38
+ 1295 004f 0B       		.uleb128 0xb
+ 1296 0050 00       		.byte	0
+ 1297 0051 00       		.byte	0
+ 1298 0052 07       		.uleb128 0x7
+ 1299 0053 15       		.uleb128 0x15
+ 1300 0054 01       		.byte	0x1
+ 1301 0055 27       		.uleb128 0x27
+ 1302 0056 19       		.uleb128 0x19
+ 1303 0057 49       		.uleb128 0x49
+ 1304 0058 13       		.uleb128 0x13
+ 1305 0059 01       		.uleb128 0x1
+ 1306 005a 13       		.uleb128 0x13
+ 1307 005b 00       		.byte	0
+ 1308 005c 00       		.byte	0
+ 1309 005d 08       		.uleb128 0x8
+ 1310 005e 05       		.uleb128 0x5
+ 1311 005f 00       		.byte	0
+ 1312 0060 49       		.uleb128 0x49
+ 1313 0061 13       		.uleb128 0x13
+ 1314 0062 00       		.byte	0
+ 1315 0063 00       		.byte	0
+ 1316 0064 09       		.uleb128 0x9
+ 1317 0065 15       		.uleb128 0x15
+ 1318 0066 00       		.byte	0
+ 1319 0067 27       		.uleb128 0x27
+ 1320 0068 19       		.uleb128 0x19
+ 1321 0069 49       		.uleb128 0x49
+ 1322 006a 13       		.uleb128 0x13
+ 1323 006b 00       		.byte	0
+ 1324 006c 00       		.byte	0
+ 1325 006d 0A       		.uleb128 0xa
+ 1326 006e 15       		.uleb128 0x15
+ 1327 006f 01       		.byte	0x1
+ 1328 0070 27       		.uleb128 0x27
+ 1329 0071 19       		.uleb128 0x19
+ 1330 0072 01       		.uleb128 0x1
+ 1331 0073 13       		.uleb128 0x13
+ 1332 0074 00       		.byte	0
+ 1333 0075 00       		.byte	0
+ 1334 0076 0B       		.uleb128 0xb
+ 1335 0077 0F       		.uleb128 0xf
+ 1336 0078 00       		.byte	0
+ 1337 0079 0B       		.uleb128 0xb
+ 1338 007a 0B       		.uleb128 0xb
+ 1339 007b 00       		.byte	0
+ 1340 007c 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 28
+
+
+ 1341 007d 0C       		.uleb128 0xc
+ 1342 007e 0F       		.uleb128 0xf
+ 1343 007f 00       		.byte	0
+ 1344 0080 0B       		.uleb128 0xb
+ 1345 0081 0B       		.uleb128 0xb
+ 1346 0082 49       		.uleb128 0x49
+ 1347 0083 13       		.uleb128 0x13
+ 1348 0084 00       		.byte	0
+ 1349 0085 00       		.byte	0
+ 1350 0086 0D       		.uleb128 0xd
+ 1351 0087 0D       		.uleb128 0xd
+ 1352 0088 00       		.byte	0
+ 1353 0089 03       		.uleb128 0x3
+ 1354 008a 0E       		.uleb128 0xe
+ 1355 008b 3A       		.uleb128 0x3a
+ 1356 008c 0B       		.uleb128 0xb
+ 1357 008d 3B       		.uleb128 0x3b
+ 1358 008e 0B       		.uleb128 0xb
+ 1359 008f 49       		.uleb128 0x49
+ 1360 0090 13       		.uleb128 0x13
+ 1361 0091 38       		.uleb128 0x38
+ 1362 0092 0B       		.uleb128 0xb
+ 1363 0093 00       		.byte	0
+ 1364 0094 00       		.byte	0
+ 1365 0095 0E       		.uleb128 0xe
+ 1366 0096 15       		.uleb128 0x15
+ 1367 0097 00       		.byte	0
+ 1368 0098 27       		.uleb128 0x27
+ 1369 0099 19       		.uleb128 0x19
+ 1370 009a 00       		.byte	0
+ 1371 009b 00       		.byte	0
+ 1372 009c 0F       		.uleb128 0xf
+ 1373 009d 16       		.uleb128 0x16
+ 1374 009e 00       		.byte	0
+ 1375 009f 03       		.uleb128 0x3
+ 1376 00a0 0E       		.uleb128 0xe
+ 1377 00a1 3A       		.uleb128 0x3a
+ 1378 00a2 0B       		.uleb128 0xb
+ 1379 00a3 3B       		.uleb128 0x3b
+ 1380 00a4 05       		.uleb128 0x5
+ 1381 00a5 49       		.uleb128 0x49
+ 1382 00a6 13       		.uleb128 0x13
+ 1383 00a7 00       		.byte	0
+ 1384 00a8 00       		.byte	0
+ 1385 00a9 10       		.uleb128 0x10
+ 1386 00aa 13       		.uleb128 0x13
+ 1387 00ab 01       		.byte	0x1
+ 1388 00ac 03       		.uleb128 0x3
+ 1389 00ad 0E       		.uleb128 0xe
+ 1390 00ae 0B       		.uleb128 0xb
+ 1391 00af 0B       		.uleb128 0xb
+ 1392 00b0 3A       		.uleb128 0x3a
+ 1393 00b1 0B       		.uleb128 0xb
+ 1394 00b2 3B       		.uleb128 0x3b
+ 1395 00b3 0B       		.uleb128 0xb
+ 1396 00b4 01       		.uleb128 0x1
+ 1397 00b5 13       		.uleb128 0x13
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 29
+
+
+ 1398 00b6 00       		.byte	0
+ 1399 00b7 00       		.byte	0
+ 1400 00b8 11       		.uleb128 0x11
+ 1401 00b9 26       		.uleb128 0x26
+ 1402 00ba 00       		.byte	0
+ 1403 00bb 49       		.uleb128 0x49
+ 1404 00bc 13       		.uleb128 0x13
+ 1405 00bd 00       		.byte	0
+ 1406 00be 00       		.byte	0
+ 1407 00bf 12       		.uleb128 0x12
+ 1408 00c0 13       		.uleb128 0x13
+ 1409 00c1 01       		.byte	0x1
+ 1410 00c2 0B       		.uleb128 0xb
+ 1411 00c3 0B       		.uleb128 0xb
+ 1412 00c4 3A       		.uleb128 0x3a
+ 1413 00c5 0B       		.uleb128 0xb
+ 1414 00c6 3B       		.uleb128 0x3b
+ 1415 00c7 05       		.uleb128 0x5
+ 1416 00c8 01       		.uleb128 0x1
+ 1417 00c9 13       		.uleb128 0x13
+ 1418 00ca 00       		.byte	0
+ 1419 00cb 00       		.byte	0
+ 1420 00cc 13       		.uleb128 0x13
+ 1421 00cd 0D       		.uleb128 0xd
+ 1422 00ce 00       		.byte	0
+ 1423 00cf 03       		.uleb128 0x3
+ 1424 00d0 0E       		.uleb128 0xe
+ 1425 00d1 3A       		.uleb128 0x3a
+ 1426 00d2 0B       		.uleb128 0xb
+ 1427 00d3 3B       		.uleb128 0x3b
+ 1428 00d4 05       		.uleb128 0x5
+ 1429 00d5 49       		.uleb128 0x49
+ 1430 00d6 13       		.uleb128 0x13
+ 1431 00d7 38       		.uleb128 0x38
+ 1432 00d8 0B       		.uleb128 0xb
+ 1433 00d9 00       		.byte	0
+ 1434 00da 00       		.byte	0
+ 1435 00db 14       		.uleb128 0x14
+ 1436 00dc 17       		.uleb128 0x17
+ 1437 00dd 01       		.byte	0x1
+ 1438 00de 0B       		.uleb128 0xb
+ 1439 00df 0B       		.uleb128 0xb
+ 1440 00e0 3A       		.uleb128 0x3a
+ 1441 00e1 0B       		.uleb128 0xb
+ 1442 00e2 3B       		.uleb128 0x3b
+ 1443 00e3 0B       		.uleb128 0xb
+ 1444 00e4 01       		.uleb128 0x1
+ 1445 00e5 13       		.uleb128 0x13
+ 1446 00e6 00       		.byte	0
+ 1447 00e7 00       		.byte	0
+ 1448 00e8 15       		.uleb128 0x15
+ 1449 00e9 0D       		.uleb128 0xd
+ 1450 00ea 00       		.byte	0
+ 1451 00eb 03       		.uleb128 0x3
+ 1452 00ec 0E       		.uleb128 0xe
+ 1453 00ed 3A       		.uleb128 0x3a
+ 1454 00ee 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 30
+
+
+ 1455 00ef 3B       		.uleb128 0x3b
+ 1456 00f0 0B       		.uleb128 0xb
+ 1457 00f1 49       		.uleb128 0x49
+ 1458 00f2 13       		.uleb128 0x13
+ 1459 00f3 00       		.byte	0
+ 1460 00f4 00       		.byte	0
+ 1461 00f5 16       		.uleb128 0x16
+ 1462 00f6 2E       		.uleb128 0x2e
+ 1463 00f7 01       		.byte	0x1
+ 1464 00f8 3F       		.uleb128 0x3f
+ 1465 00f9 19       		.uleb128 0x19
+ 1466 00fa 03       		.uleb128 0x3
+ 1467 00fb 0E       		.uleb128 0xe
+ 1468 00fc 3A       		.uleb128 0x3a
+ 1469 00fd 0B       		.uleb128 0xb
+ 1470 00fe 3B       		.uleb128 0x3b
+ 1471 00ff 0B       		.uleb128 0xb
+ 1472 0100 27       		.uleb128 0x27
+ 1473 0101 19       		.uleb128 0x19
+ 1474 0102 11       		.uleb128 0x11
+ 1475 0103 01       		.uleb128 0x1
+ 1476 0104 12       		.uleb128 0x12
+ 1477 0105 06       		.uleb128 0x6
+ 1478 0106 40       		.uleb128 0x40
+ 1479 0107 18       		.uleb128 0x18
+ 1480 0108 9742     		.uleb128 0x2117
+ 1481 010a 19       		.uleb128 0x19
+ 1482 010b 01       		.uleb128 0x1
+ 1483 010c 13       		.uleb128 0x13
+ 1484 010d 00       		.byte	0
+ 1485 010e 00       		.byte	0
+ 1486 010f 17       		.uleb128 0x17
+ 1487 0110 34       		.uleb128 0x34
+ 1488 0111 00       		.byte	0
+ 1489 0112 03       		.uleb128 0x3
+ 1490 0113 0E       		.uleb128 0xe
+ 1491 0114 3A       		.uleb128 0x3a
+ 1492 0115 0B       		.uleb128 0xb
+ 1493 0116 3B       		.uleb128 0x3b
+ 1494 0117 0B       		.uleb128 0xb
+ 1495 0118 49       		.uleb128 0x49
+ 1496 0119 13       		.uleb128 0x13
+ 1497 011a 02       		.uleb128 0x2
+ 1498 011b 17       		.uleb128 0x17
+ 1499 011c 00       		.byte	0
+ 1500 011d 00       		.byte	0
+ 1501 011e 18       		.uleb128 0x18
+ 1502 011f 34       		.uleb128 0x34
+ 1503 0120 00       		.byte	0
+ 1504 0121 03       		.uleb128 0x3
+ 1505 0122 0E       		.uleb128 0xe
+ 1506 0123 3A       		.uleb128 0x3a
+ 1507 0124 0B       		.uleb128 0xb
+ 1508 0125 3B       		.uleb128 0x3b
+ 1509 0126 0B       		.uleb128 0xb
+ 1510 0127 49       		.uleb128 0x49
+ 1511 0128 13       		.uleb128 0x13
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 31
+
+
+ 1512 0129 02       		.uleb128 0x2
+ 1513 012a 18       		.uleb128 0x18
+ 1514 012b 00       		.byte	0
+ 1515 012c 00       		.byte	0
+ 1516 012d 19       		.uleb128 0x19
+ 1517 012e 898201   		.uleb128 0x4109
+ 1518 0131 01       		.byte	0x1
+ 1519 0132 11       		.uleb128 0x11
+ 1520 0133 01       		.uleb128 0x1
+ 1521 0134 31       		.uleb128 0x31
+ 1522 0135 13       		.uleb128 0x13
+ 1523 0136 01       		.uleb128 0x1
+ 1524 0137 13       		.uleb128 0x13
+ 1525 0138 00       		.byte	0
+ 1526 0139 00       		.byte	0
+ 1527 013a 1A       		.uleb128 0x1a
+ 1528 013b 8A8201   		.uleb128 0x410a
+ 1529 013e 00       		.byte	0
+ 1530 013f 02       		.uleb128 0x2
+ 1531 0140 18       		.uleb128 0x18
+ 1532 0141 9142     		.uleb128 0x2111
+ 1533 0143 18       		.uleb128 0x18
+ 1534 0144 00       		.byte	0
+ 1535 0145 00       		.byte	0
+ 1536 0146 1B       		.uleb128 0x1b
+ 1537 0147 898201   		.uleb128 0x4109
+ 1538 014a 01       		.byte	0x1
+ 1539 014b 11       		.uleb128 0x11
+ 1540 014c 01       		.uleb128 0x1
+ 1541 014d 31       		.uleb128 0x31
+ 1542 014e 13       		.uleb128 0x13
+ 1543 014f 00       		.byte	0
+ 1544 0150 00       		.byte	0
+ 1545 0151 1C       		.uleb128 0x1c
+ 1546 0152 2E       		.uleb128 0x2e
+ 1547 0153 01       		.byte	0x1
+ 1548 0154 3F       		.uleb128 0x3f
+ 1549 0155 19       		.uleb128 0x19
+ 1550 0156 03       		.uleb128 0x3
+ 1551 0157 0E       		.uleb128 0xe
+ 1552 0158 3A       		.uleb128 0x3a
+ 1553 0159 0B       		.uleb128 0xb
+ 1554 015a 3B       		.uleb128 0x3b
+ 1555 015b 0B       		.uleb128 0xb
+ 1556 015c 27       		.uleb128 0x27
+ 1557 015d 19       		.uleb128 0x19
+ 1558 015e 49       		.uleb128 0x49
+ 1559 015f 13       		.uleb128 0x13
+ 1560 0160 11       		.uleb128 0x11
+ 1561 0161 01       		.uleb128 0x1
+ 1562 0162 12       		.uleb128 0x12
+ 1563 0163 06       		.uleb128 0x6
+ 1564 0164 40       		.uleb128 0x40
+ 1565 0165 18       		.uleb128 0x18
+ 1566 0166 9742     		.uleb128 0x2117
+ 1567 0168 19       		.uleb128 0x19
+ 1568 0169 01       		.uleb128 0x1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 32
+
+
+ 1569 016a 13       		.uleb128 0x13
+ 1570 016b 00       		.byte	0
+ 1571 016c 00       		.byte	0
+ 1572 016d 1D       		.uleb128 0x1d
+ 1573 016e 05       		.uleb128 0x5
+ 1574 016f 00       		.byte	0
+ 1575 0170 03       		.uleb128 0x3
+ 1576 0171 0E       		.uleb128 0xe
+ 1577 0172 3A       		.uleb128 0x3a
+ 1578 0173 0B       		.uleb128 0xb
+ 1579 0174 3B       		.uleb128 0x3b
+ 1580 0175 0B       		.uleb128 0xb
+ 1581 0176 49       		.uleb128 0x49
+ 1582 0177 13       		.uleb128 0x13
+ 1583 0178 02       		.uleb128 0x2
+ 1584 0179 17       		.uleb128 0x17
+ 1585 017a 00       		.byte	0
+ 1586 017b 00       		.byte	0
+ 1587 017c 1E       		.uleb128 0x1e
+ 1588 017d 05       		.uleb128 0x5
+ 1589 017e 00       		.byte	0
+ 1590 017f 03       		.uleb128 0x3
+ 1591 0180 08       		.uleb128 0x8
+ 1592 0181 3A       		.uleb128 0x3a
+ 1593 0182 0B       		.uleb128 0xb
+ 1594 0183 3B       		.uleb128 0x3b
+ 1595 0184 0B       		.uleb128 0xb
+ 1596 0185 49       		.uleb128 0x49
+ 1597 0186 13       		.uleb128 0x13
+ 1598 0187 02       		.uleb128 0x2
+ 1599 0188 18       		.uleb128 0x18
+ 1600 0189 00       		.byte	0
+ 1601 018a 00       		.byte	0
+ 1602 018b 1F       		.uleb128 0x1f
+ 1603 018c 05       		.uleb128 0x5
+ 1604 018d 00       		.byte	0
+ 1605 018e 03       		.uleb128 0x3
+ 1606 018f 0E       		.uleb128 0xe
+ 1607 0190 3A       		.uleb128 0x3a
+ 1608 0191 0B       		.uleb128 0xb
+ 1609 0192 3B       		.uleb128 0x3b
+ 1610 0193 0B       		.uleb128 0xb
+ 1611 0194 49       		.uleb128 0x49
+ 1612 0195 13       		.uleb128 0x13
+ 1613 0196 02       		.uleb128 0x2
+ 1614 0197 18       		.uleb128 0x18
+ 1615 0198 00       		.byte	0
+ 1616 0199 00       		.byte	0
+ 1617 019a 20       		.uleb128 0x20
+ 1618 019b 34       		.uleb128 0x34
+ 1619 019c 00       		.byte	0
+ 1620 019d 03       		.uleb128 0x3
+ 1621 019e 08       		.uleb128 0x8
+ 1622 019f 3A       		.uleb128 0x3a
+ 1623 01a0 0B       		.uleb128 0xb
+ 1624 01a1 3B       		.uleb128 0x3b
+ 1625 01a2 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 33
+
+
+ 1626 01a3 49       		.uleb128 0x49
+ 1627 01a4 13       		.uleb128 0x13
+ 1628 01a5 00       		.byte	0
+ 1629 01a6 00       		.byte	0
+ 1630 01a7 21       		.uleb128 0x21
+ 1631 01a8 34       		.uleb128 0x34
+ 1632 01a9 00       		.byte	0
+ 1633 01aa 03       		.uleb128 0x3
+ 1634 01ab 0E       		.uleb128 0xe
+ 1635 01ac 3A       		.uleb128 0x3a
+ 1636 01ad 0B       		.uleb128 0xb
+ 1637 01ae 3B       		.uleb128 0x3b
+ 1638 01af 0B       		.uleb128 0xb
+ 1639 01b0 49       		.uleb128 0x49
+ 1640 01b1 13       		.uleb128 0x13
+ 1641 01b2 3F       		.uleb128 0x3f
+ 1642 01b3 19       		.uleb128 0x19
+ 1643 01b4 3C       		.uleb128 0x3c
+ 1644 01b5 19       		.uleb128 0x19
+ 1645 01b6 00       		.byte	0
+ 1646 01b7 00       		.byte	0
+ 1647 01b8 22       		.uleb128 0x22
+ 1648 01b9 2E       		.uleb128 0x2e
+ 1649 01ba 00       		.byte	0
+ 1650 01bb 3F       		.uleb128 0x3f
+ 1651 01bc 19       		.uleb128 0x19
+ 1652 01bd 3C       		.uleb128 0x3c
+ 1653 01be 19       		.uleb128 0x19
+ 1654 01bf 6E       		.uleb128 0x6e
+ 1655 01c0 0E       		.uleb128 0xe
+ 1656 01c1 03       		.uleb128 0x3
+ 1657 01c2 0E       		.uleb128 0xe
+ 1658 01c3 00       		.byte	0
+ 1659 01c4 00       		.byte	0
+ 1660 01c5 23       		.uleb128 0x23
+ 1661 01c6 2E       		.uleb128 0x2e
+ 1662 01c7 00       		.byte	0
+ 1663 01c8 3F       		.uleb128 0x3f
+ 1664 01c9 19       		.uleb128 0x19
+ 1665 01ca 3C       		.uleb128 0x3c
+ 1666 01cb 19       		.uleb128 0x19
+ 1667 01cc 6E       		.uleb128 0x6e
+ 1668 01cd 0E       		.uleb128 0xe
+ 1669 01ce 03       		.uleb128 0x3
+ 1670 01cf 0E       		.uleb128 0xe
+ 1671 01d0 3A       		.uleb128 0x3a
+ 1672 01d1 0B       		.uleb128 0xb
+ 1673 01d2 3B       		.uleb128 0x3b
+ 1674 01d3 05       		.uleb128 0x5
+ 1675 01d4 00       		.byte	0
+ 1676 01d5 00       		.byte	0
+ 1677 01d6 24       		.uleb128 0x24
+ 1678 01d7 2E       		.uleb128 0x2e
+ 1679 01d8 00       		.byte	0
+ 1680 01d9 3F       		.uleb128 0x3f
+ 1681 01da 19       		.uleb128 0x19
+ 1682 01db 3C       		.uleb128 0x3c
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 34
+
+
+ 1683 01dc 19       		.uleb128 0x19
+ 1684 01dd 6E       		.uleb128 0x6e
+ 1685 01de 0E       		.uleb128 0xe
+ 1686 01df 03       		.uleb128 0x3
+ 1687 01e0 0E       		.uleb128 0xe
+ 1688 01e1 3A       		.uleb128 0x3a
+ 1689 01e2 0B       		.uleb128 0xb
+ 1690 01e3 3B       		.uleb128 0x3b
+ 1691 01e4 0B       		.uleb128 0xb
+ 1692 01e5 00       		.byte	0
+ 1693 01e6 00       		.byte	0
+ 1694 01e7 00       		.byte	0
+ 1695              		.section	.debug_loc,"",%progbits
+ 1696              	.Ldebug_loc0:
+ 1697              	.LLST0:
+ 1698 0000 28000000 		.4byte	.LVL2
+ 1699 0004 30000000 		.4byte	.LVL3
+ 1700 0008 0100     		.2byte	0x1
+ 1701 000a 50       		.byte	0x50
+ 1702 000b 30000000 		.4byte	.LVL3
+ 1703 000f 5C000000 		.4byte	.LVL8
+ 1704 0013 0100     		.2byte	0x1
+ 1705 0015 55       		.byte	0x55
+ 1706 0016 00000000 		.4byte	0
+ 1707 001a 00000000 		.4byte	0
+ 1708              	.LLST1:
+ 1709 001e 00000000 		.4byte	.LVL9
+ 1710 0022 08000000 		.4byte	.LVL10
+ 1711 0026 0100     		.2byte	0x1
+ 1712 0028 50       		.byte	0x50
+ 1713 0029 08000000 		.4byte	.LVL10
+ 1714 002d 0A000000 		.4byte	.LVL11
+ 1715 0031 0400     		.2byte	0x4
+ 1716 0033 F3       		.byte	0xf3
+ 1717 0034 01       		.uleb128 0x1
+ 1718 0035 50       		.byte	0x50
+ 1719 0036 9F       		.byte	0x9f
+ 1720 0037 0A000000 		.4byte	.LVL11
+ 1721 003b 0C000000 		.4byte	.LVL12
+ 1722 003f 0100     		.2byte	0x1
+ 1723 0041 50       		.byte	0x50
+ 1724 0042 0C000000 		.4byte	.LVL12
+ 1725 0046 0E000000 		.4byte	.LFE2
+ 1726 004a 0400     		.2byte	0x4
+ 1727 004c F3       		.byte	0xf3
+ 1728 004d 01       		.uleb128 0x1
+ 1729 004e 50       		.byte	0x50
+ 1730 004f 9F       		.byte	0x9f
+ 1731 0050 00000000 		.4byte	0
+ 1732 0054 00000000 		.4byte	0
+ 1733              		.section	.debug_aranges,"",%progbits
+ 1734 0000 24000000 		.4byte	0x24
+ 1735 0004 0200     		.2byte	0x2
+ 1736 0006 00000000 		.4byte	.Ldebug_info0
+ 1737 000a 04       		.byte	0x4
+ 1738 000b 00       		.byte	0
+ 1739 000c 0000     		.2byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 35
+
+
+ 1740 000e 0000     		.2byte	0
+ 1741 0010 00000000 		.4byte	.LFB1
+ 1742 0014 6C000000 		.4byte	.LFE1-.LFB1
+ 1743 0018 00000000 		.4byte	.LFB2
+ 1744 001c 0E000000 		.4byte	.LFE2-.LFB2
+ 1745 0020 00000000 		.4byte	0
+ 1746 0024 00000000 		.4byte	0
+ 1747              		.section	.debug_ranges,"",%progbits
+ 1748              	.Ldebug_ranges0:
+ 1749 0000 00000000 		.4byte	.LFB1
+ 1750 0004 6C000000 		.4byte	.LFE1
+ 1751 0008 00000000 		.4byte	.LFB2
+ 1752 000c 0E000000 		.4byte	.LFE2
+ 1753 0010 00000000 		.4byte	0
+ 1754 0014 00000000 		.4byte	0
+ 1755              		.section	.debug_line,"",%progbits
+ 1756              	.Ldebug_line0:
+ 1757 0000 07010000 		.section	.debug_str,"MS",%progbits,1
+ 1757      0200D200 
+ 1757      00000201 
+ 1757      FB0E0D00 
+ 1757      01010101 
+ 1758              	.LASF26:
+ 1759 0000 70436F6C 		.ascii	"pColorConvAPI\000"
+ 1759      6F72436F 
+ 1759      6E764150 
+ 1759      4900
+ 1760              	.LASF88:
+ 1761 000e 4C43445F 		.ascii	"LCD_SetSizeEx\000"
+ 1761      53657453 
+ 1761      697A6545 
+ 1761      7800
+ 1762              	.LASF95:
+ 1763 001c 4C43445F 		.ascii	"LCD_X_Config\000"
+ 1763      585F436F 
+ 1763      6E666967 
+ 1763      00
+ 1764              	.LASF79:
+ 1765 0029 4E756D44 		.ascii	"NumDummyReads\000"
+ 1765      756D6D79 
+ 1765      52656164 
+ 1765      7300
+ 1766              	.LASF84:
+ 1767 0037 70446174 		.ascii	"pData\000"
+ 1767      6100
+ 1768              	.LASF91:
+ 1769 003d 47554944 		.ascii	"GUIDRV_FlexColor_SetFunc\000"
+ 1769      52565F46 
+ 1769      6C657843 
+ 1769      6F6C6F72 
+ 1769      5F536574 
+ 1770              	.LASF64:
+ 1771 0056 70665772 		.ascii	"pfWriteM32_A0\000"
+ 1771      6974654D 
+ 1771      33325F41 
+ 1771      3000
+ 1772              	.LASF65:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 36
+
+
+ 1773 0064 70665772 		.ascii	"pfWriteM32_A1\000"
+ 1773      6974654D 
+ 1773      33325F41 
+ 1773      3100
+ 1774              	.LASF4:
+ 1775 0072 73686F72 		.ascii	"short int\000"
+ 1775      7420696E 
+ 1775      7400
+ 1776              	.LASF45:
+ 1777 007c 73697A65 		.ascii	"sizetype\000"
+ 1777      74797065 
+ 1777      00
+ 1778              	.LASF41:
+ 1779 0085 70664765 		.ascii	"pfGetDevData\000"
+ 1779      74446576 
+ 1779      44617461 
+ 1779      00
+ 1780              	.LASF85:
+ 1781 0092 4C43445F 		.ascii	"LCD_API_ColorConv_M565\000"
+ 1781      4150495F 
+ 1781      436F6C6F 
+ 1781      72436F6E 
+ 1781      765F4D35 
+ 1782              	.LASF58:
+ 1783 00a9 70665265 		.ascii	"pfRead16_A0\000"
+ 1783      61643136 
+ 1783      5F413000 
+ 1784              	.LASF59:
+ 1785 00b5 70665265 		.ascii	"pfRead16_A1\000"
+ 1785      61643136 
+ 1785      5F413100 
+ 1786              	.LASF33:
+ 1787 00c1 70664472 		.ascii	"pfDrawVLine\000"
+ 1787      6177564C 
+ 1787      696E6500 
+ 1788              	.LASF92:
+ 1789 00cd 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1789      43313120 
+ 1789      352E342E 
+ 1789      31203230 
+ 1789      31363036 
+ 1790 0100 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m4 -mfloat-abi=s"
+ 1790      20726576 
+ 1790      6973696F 
+ 1790      6E203233 
+ 1790      37373135 
+ 1791 0133 6F667466 		.ascii	"oftfp -mfpu=fpv4-sp-d16 -mthumb -g -Og -ffunction-s"
+ 1791      70202D6D 
+ 1791      6670753D 
+ 1791      66707634 
+ 1791      2D73702D 
+ 1792 0166 65637469 		.ascii	"ections -ffat-lto-objects\000"
+ 1792      6F6E7320 
+ 1792      2D666661 
+ 1792      742D6C74 
+ 1792      6F2D6F62 
+ 1793              	.LASF42:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 37
+
+
+ 1794 0180 70664765 		.ascii	"pfGetRect\000"
+ 1794      74526563 
+ 1794      7400
+ 1795              	.LASF25:
+ 1796 018a 70446576 		.ascii	"pDeviceAPI\000"
+ 1796      69636541 
+ 1796      504900
+ 1797              	.LASF93:
+ 1798 0195 4C434443 		.ascii	"LCDConf.c\000"
+ 1798      6F6E662E 
+ 1798      6300
+ 1799              	.LASF78:
+ 1800 019f 52656745 		.ascii	"RegEntryMode\000"
+ 1800      6E747279 
+ 1800      4D6F6465 
+ 1800      00
+ 1801              	.LASF29:
+ 1802 01ac 4755495F 		.ascii	"GUI_DEVICE_API\000"
+ 1802      44455649 
+ 1802      43455F41 
+ 1802      504900
+ 1803              	.LASF5:
+ 1804 01bb 4C43445F 		.ascii	"LCD_COLOR\000"
+ 1804      434F4C4F 
+ 1804      5200
+ 1805              	.LASF49:
+ 1806 01c5 70665772 		.ascii	"pfWriteM8_A1\000"
+ 1806      6974654D 
+ 1806      385F4131 
+ 1806      00
+ 1807              	.LASF16:
+ 1808 01d2 70664765 		.ascii	"pfGetIndexMask\000"
+ 1808      74496E64 
+ 1808      65784D61 
+ 1808      736B00
+ 1809              	.LASF34:
+ 1810 01e1 70664669 		.ascii	"pfFillRect\000"
+ 1810      6C6C5265 
+ 1810      637400
+ 1811              	.LASF18:
+ 1812 01ec 7066436F 		.ascii	"pfColor2IndexBulk\000"
+ 1812      6C6F7232 
+ 1812      496E6465 
+ 1812      7842756C 
+ 1812      6B00
+ 1813              	.LASF24:
+ 1814 01fe 70507265 		.ascii	"pPrev\000"
+ 1814      7600
+ 1815              	.LASF69:
+ 1816 0204 70665265 		.ascii	"pfReadM32_A1\000"
+ 1816      61644D33 
+ 1816      325F4131 
+ 1816      00
+ 1817              	.LASF32:
+ 1818 0211 70664472 		.ascii	"pfDrawHLine\000"
+ 1818      6177484C 
+ 1818      696E6500 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 38
+
+
+ 1819              	.LASF27:
+ 1820 021d 466C6167 		.ascii	"Flags\000"
+ 1820      7300
+ 1821              	.LASF2:
+ 1822 0223 6C6F6E67 		.ascii	"long double\000"
+ 1822      20646F75 
+ 1822      626C6500 
+ 1823              	.LASF83:
+ 1824 022f 506F7274 		.ascii	"PortAPI\000"
+ 1824      41504900 
+ 1825              	.LASF28:
+ 1826 0237 4C617965 		.ascii	"LayerIndex\000"
+ 1826      72496E64 
+ 1826      657800
+ 1827              	.LASF1:
+ 1828 0242 6C6F6E67 		.ascii	"long long int\000"
+ 1828      206C6F6E 
+ 1828      6720696E 
+ 1828      7400
+ 1829              	.LASF23:
+ 1830 0250 704E6578 		.ascii	"pNext\000"
+ 1830      7400
+ 1831              	.LASF60:
+ 1832 0256 70665265 		.ascii	"pfReadM16_A0\000"
+ 1832      61644D31 
+ 1832      365F4130 
+ 1832      00
+ 1833              	.LASF97:
+ 1834 0263 6D656D73 		.ascii	"memset\000"
+ 1834      657400
+ 1835              	.LASF11:
+ 1836 026a 744C4344 		.ascii	"tLCDDEV_GetIndexMask\000"
+ 1836      4445565F 
+ 1836      47657449 
+ 1836      6E646578 
+ 1836      4D61736B 
+ 1837              	.LASF21:
+ 1838 027f 6C6F6E67 		.ascii	"long int\000"
+ 1838      20696E74 
+ 1838      00
+ 1839              	.LASF35:
+ 1840 0288 70664765 		.ascii	"pfGetPixelIndex\000"
+ 1840      74506978 
+ 1840      656C496E 
+ 1840      64657800 
+ 1841              	.LASF20:
+ 1842 0298 4C43445F 		.ascii	"LCD_API_COLOR_CONV\000"
+ 1842      4150495F 
+ 1842      434F4C4F 
+ 1842      525F434F 
+ 1842      4E5600
+ 1843              	.LASF71:
+ 1844 02ab 7066466C 		.ascii	"pfFlushBuffer\000"
+ 1844      75736842 
+ 1844      75666665 
+ 1844      7200
+ 1845              	.LASF75:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 39
+
+
+ 1846 02b9 46697273 		.ascii	"FirstSEG\000"
+ 1846      74534547 
+ 1846      00
+ 1847              	.LASF82:
+ 1848 02c2 436F6E66 		.ascii	"Config\000"
+ 1848      696700
+ 1849              	.LASF8:
+ 1850 02c9 756E7369 		.ascii	"unsigned char\000"
+ 1850      676E6564 
+ 1850      20636861 
+ 1850      7200
+ 1851              	.LASF68:
+ 1852 02d7 70665265 		.ascii	"pfReadM32_A0\000"
+ 1852      61644D33 
+ 1852      325F4130 
+ 1852      00
+ 1853              	.LASF73:
+ 1854 02e4 68436F6E 		.ascii	"hContext\000"
+ 1854      74657874 
+ 1854      00
+ 1855              	.LASF96:
+ 1856 02ed 4C43445F 		.ascii	"LCD_X_DisplayDriver\000"
+ 1856      585F4469 
+ 1856      73706C61 
+ 1856      79447269 
+ 1856      76657200 
+ 1857              	.LASF53:
+ 1858 0301 70665265 		.ascii	"pfReadM8_A1\000"
+ 1858      61644D38 
+ 1858      5F413100 
+ 1859              	.LASF6:
+ 1860 030d 4C43445F 		.ascii	"LCD_RECT\000"
+ 1860      52454354 
+ 1860      00
+ 1861              	.LASF13:
+ 1862 0316 744C4344 		.ascii	"tLCDDEV_Color2IndexBulk\000"
+ 1862      4445565F 
+ 1862      436F6C6F 
+ 1862      7232496E 
+ 1862      64657842 
+ 1863              	.LASF94:
+ 1864 032e 433A5C55 		.ascii	"C:\\Users\\Agentos\\Documents\\Univer\\psoc6-labs\\"
+ 1864      73657273 
+ 1864      5C416765 
+ 1864      6E746F73 
+ 1864      5C446F63 
+ 1865 035b 6C616231 		.ascii	"lab12\\lab12\\lab12.cydsn\000"
+ 1865      325C6C61 
+ 1865      6231325C 
+ 1865      6C616231 
+ 1865      322E6379 
+ 1866              	.LASF44:
+ 1867 0373 7369676E 		.ascii	"signed char\000"
+ 1867      65642063 
+ 1867      68617200 
+ 1868              	.LASF62:
+ 1869 037f 70665772 		.ascii	"pfWrite32_A0\000"
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 40
+
+
+ 1869      69746533 
+ 1869      325F4130 
+ 1869      00
+ 1870              	.LASF63:
+ 1871 038c 70665772 		.ascii	"pfWrite32_A1\000"
+ 1871      69746533 
+ 1871      325F4131 
+ 1871      00
+ 1872              	.LASF17:
+ 1873 0399 4E6F416C 		.ascii	"NoAlpha\000"
+ 1873      70686100 
+ 1874              	.LASF15:
+ 1875 03a1 7066496E 		.ascii	"pfIndex2Color\000"
+ 1875      64657832 
+ 1875      436F6C6F 
+ 1875      7200
+ 1876              	.LASF0:
+ 1877 03af 756E7369 		.ascii	"unsigned int\000"
+ 1877      676E6564 
+ 1877      20696E74 
+ 1877      00
+ 1878              	.LASF36:
+ 1879 03bc 70665365 		.ascii	"pfSetPixelIndex\000"
+ 1879      74506978 
+ 1879      656C496E 
+ 1879      64657800 
+ 1880              	.LASF86:
+ 1881 03cc 47554944 		.ascii	"GUIDRV_FlexColor_API\000"
+ 1881      52565F46 
+ 1881      6C657843 
+ 1881      6F6C6F72 
+ 1881      5F415049 
+ 1882              	.LASF56:
+ 1883 03e1 70665772 		.ascii	"pfWriteM16_A0\000"
+ 1883      6974654D 
+ 1883      31365F41 
+ 1883      3000
+ 1884              	.LASF57:
+ 1885 03ef 70665772 		.ascii	"pfWriteM16_A1\000"
+ 1885      6974654D 
+ 1885      31365F41 
+ 1885      3100
+ 1886              	.LASF61:
+ 1887 03fd 70665265 		.ascii	"pfReadM16_A1\000"
+ 1887      61644D31 
+ 1887      365F4131 
+ 1887      00
+ 1888              	.LASF7:
+ 1889 040a 63686172 		.ascii	"char\000"
+ 1889      00
+ 1890              	.LASF89:
+ 1891 040f 4C43445F 		.ascii	"LCD_SetVSizeEx\000"
+ 1891      53657456 
+ 1891      53697A65 
+ 1891      457800
+ 1892              	.LASF30:
+ 1893 041e 44657669 		.ascii	"DeviceClassIndex\000"
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 41
+
+
+ 1893      6365436C 
+ 1893      61737349 
+ 1893      6E646578 
+ 1893      00
+ 1894              	.LASF70:
+ 1895 042f 70665365 		.ascii	"pfSetCS\000"
+ 1895      74435300 
+ 1896              	.LASF77:
+ 1897 0437 4F726965 		.ascii	"Orientation\000"
+ 1897      6E746174 
+ 1897      696F6E00 
+ 1898              	.LASF22:
+ 1899 0443 4755495F 		.ascii	"GUI_DEVICE\000"
+ 1899      44455649 
+ 1899      434500
+ 1900              	.LASF19:
+ 1901 044e 7066496E 		.ascii	"pfIndex2ColorBulk\000"
+ 1901      64657832 
+ 1901      436F6C6F 
+ 1901      7242756C 
+ 1901      6B00
+ 1902              	.LASF87:
+ 1903 0460 4755495F 		.ascii	"GUI_DEVICE_CreateAndLink\000"
+ 1903      44455649 
+ 1903      43455F43 
+ 1903      72656174 
+ 1903      65416E64 
+ 1904              	.LASF52:
+ 1905 0479 70665265 		.ascii	"pfReadM8_A0\000"
+ 1905      61644D38 
+ 1905      5F413000 
+ 1906              	.LASF48:
+ 1907 0485 70665772 		.ascii	"pfWriteM8_A0\000"
+ 1907      6974654D 
+ 1907      385F4130 
+ 1907      00
+ 1908              	.LASF74:
+ 1909 0492 70436F6E 		.ascii	"pContext\000"
+ 1909      74657874 
+ 1909      00
+ 1910              	.LASF31:
+ 1911 049b 70664472 		.ascii	"pfDrawBitmap\000"
+ 1911      61774269 
+ 1911      746D6170 
+ 1911      00
+ 1912              	.LASF43:
+ 1913 04a8 73686F72 		.ascii	"short unsigned int\000"
+ 1913      7420756E 
+ 1913      7369676E 
+ 1913      65642069 
+ 1913      6E7400
+ 1914              	.LASF39:
+ 1915 04bb 70664765 		.ascii	"pfGetDevFunc\000"
+ 1915      74446576 
+ 1915      46756E63 
+ 1915      00
+ 1916              	.LASF72:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 42
+
+
+ 1917 04c8 4755495F 		.ascii	"GUI_PORT_API\000"
+ 1917      504F5254 
+ 1917      5F415049 
+ 1917      00
+ 1918              	.LASF3:
+ 1919 04d5 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1919      20756E73 
+ 1919      69676E65 
+ 1919      6420696E 
+ 1919      7400
+ 1920              	.LASF46:
+ 1921 04e7 70665772 		.ascii	"pfWrite8_A0\000"
+ 1921      69746538 
+ 1921      5F413000 
+ 1922              	.LASF47:
+ 1923 04f3 70665772 		.ascii	"pfWrite8_A1\000"
+ 1923      69746538 
+ 1923      5F413100 
+ 1924              	.LASF90:
+ 1925 04ff 47554944 		.ascii	"GUIDRV_FlexColor_Config\000"
+ 1925      52565F46 
+ 1925      6C657843 
+ 1925      6F6C6F72 
+ 1925      5F436F6E 
+ 1926              	.LASF66:
+ 1927 0517 70665265 		.ascii	"pfRead32_A0\000"
+ 1927      61643332 
+ 1927      5F413000 
+ 1928              	.LASF67:
+ 1929 0523 70665265 		.ascii	"pfRead32_A1\000"
+ 1929      61643332 
+ 1929      5F413100 
+ 1930              	.LASF50:
+ 1931 052f 70665265 		.ascii	"pfRead8_A0\000"
+ 1931      6164385F 
+ 1931      413000
+ 1932              	.LASF51:
+ 1933 053a 70665265 		.ascii	"pfRead8_A1\000"
+ 1933      6164385F 
+ 1933      413100
+ 1934              	.LASF37:
+ 1935 0545 7066586F 		.ascii	"pfXorPixel\000"
+ 1935      72506978 
+ 1935      656C00
+ 1936              	.LASF38:
+ 1937 0550 70665365 		.ascii	"pfSetOrg\000"
+ 1937      744F7267 
+ 1937      00
+ 1938              	.LASF54:
+ 1939 0559 70665772 		.ascii	"pfWrite16_A0\000"
+ 1939      69746531 
+ 1939      365F4130 
+ 1939      00
+ 1940              	.LASF55:
+ 1941 0566 70665772 		.ascii	"pfWrite16_A1\000"
+ 1941      69746531 
+ 1941      365F4131 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\cc4ZrSyY.s 			page 43
+
+
+ 1941      00
+ 1942              	.LASF12:
+ 1943 0573 744C4344 		.ascii	"tLCDDEV_Index2ColorBulk\000"
+ 1943      4445565F 
+ 1943      496E6465 
+ 1943      7832436F 
+ 1943      6C6F7242 
+ 1944              	.LASF9:
+ 1945 058b 744C4344 		.ascii	"tLCDDEV_Index2Color\000"
+ 1945      4445565F 
+ 1945      496E6465 
+ 1945      7832436F 
+ 1945      6C6F7200 
+ 1946              	.LASF14:
+ 1947 059f 7066436F 		.ascii	"pfColor2Index\000"
+ 1947      6C6F7232 
+ 1947      496E6465 
+ 1947      7800
+ 1948              	.LASF76:
+ 1949 05ad 46697273 		.ascii	"FirstCOM\000"
+ 1949      74434F4D 
+ 1949      00
+ 1950              	.LASF80:
+ 1951 05b6 434F4E46 		.ascii	"CONFIG_FLEXCOLOR\000"
+ 1951      49475F46 
+ 1951      4C455843 
+ 1951      4F4C4F52 
+ 1951      00
+ 1952              	.LASF81:
+ 1953 05c7 70446576 		.ascii	"pDevice\000"
+ 1953      69636500 
+ 1954              	.LASF40:
+ 1955 05cf 70664765 		.ascii	"pfGetDevProp\000"
+ 1955      74446576 
+ 1955      50726F70 
+ 1955      00
+ 1956              	.LASF10:
+ 1957 05dc 744C4344 		.ascii	"tLCDDEV_Color2Index\000"
+ 1957      4445565F 
+ 1957      436F6C6F 
+ 1957      7232496E 
+ 1957      64657800 
+ 1958              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

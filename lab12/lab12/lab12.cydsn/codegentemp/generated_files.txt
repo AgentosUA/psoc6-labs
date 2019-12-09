@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="us-ascii"?>
+
+<fileSet version="1" anchorPath="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp" xsi:schemaLocation="http://cypress.com/xsd/cypathdictionary cypathdictionary.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://cypress.com/xsd/cypathdictionary">
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cyfitter_cfg.h" value="HEADER;;;;;" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cyfitter_sysint_cfg.h" value="HEADER;;;;;Pins and Interrupts" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cyfitter_sysint_cfg.c" value="SOURCE_C;CortexM0p,CortexM4;;;;Pins and Interrupts" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cyfitter_cfg.c" value="SOURCE_C;CortexM0p;;;;" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cymetadata.c" value="SOURCE_C;CortexM0p,CortexM4;;;;" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cydevice_trm.h" value="HEADER;;;;;" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cydevicegnu_trm.inc" value="HEADER;;;;;" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cydevicerv_trm.inc" value="HEADER;;;;;" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cydeviceiar_trm.inc" value="HEADER;;;;;" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cyfitter.h" value="HEADER;;;;;" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cyfitter_gpio.h" value="HEADER;;;;;Pins and Interrupts" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cyfitter_sysint.h" value="HEADER;;;;;Pins and Interrupts" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cydisabledsheets.h" value="HEADER;;;;;" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\PWM_Trigger.c" value="SOURCE_C;CortexM0p,CortexM4;;;;PWM_Trigger" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\PWM_Trigger.h" value="HEADER;;;;;PWM_Trigger" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\Clock_1.h" value="HEADER;;;;;Clock_1" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\Clock_US_Echo.h" value="HEADER;;;;;Clock_US_Echo" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\Timer_Echo.c" value="SOURCE_C;CortexM0p,CortexM4;;;;Timer_Echo" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\Timer_Echo.h" value="HEADER;;;;;Timer_Echo" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\UART.c" value="SOURCE_C;CortexM0p,CortexM4;;;;UART" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\UART.h" value="HEADER;;;;;UART" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\UART_SCBCLK.h" value="HEADER;;;;;UART_SCBCLK" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\project.h" value="OTHER;;;;;" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cycodeshareimport.ld" value="OTHER;;;;;" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cycodeshareexport.ld" value="OTHER;;;;;" />
+  <file name="C:\Users\Agentos\Documents\Univer\psoc6-labs\lab12\lab12\lab12.cydsn\codegentemp\cycodeshareimport.scat" value="OTHER;;;;;" />
+</fileSet>

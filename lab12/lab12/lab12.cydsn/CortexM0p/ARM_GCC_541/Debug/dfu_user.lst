@@ -1,0 +1,3399 @@
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0plus
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"dfu_user.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	__aeabi_uidivmod
+  20              		.section	.text.IsMultipleOf,"ax",%progbits
+  21              		.align	2
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	IsMultipleOf, %function
+  25              	IsMultipleOf:
+  26              	.LFB45:
+  27              		.file 1 "dfu_user.c"
+   1:dfu_user.c    **** /***************************************************************************//**
+   2:dfu_user.c    **** * \file dfu_user.c
+   3:dfu_user.c    **** * \version 3.0
+   4:dfu_user.c    **** * 
+   5:dfu_user.c    **** * This file provides the custom API for a firmware application with 
+   6:dfu_user.c    **** * DFU SDK.
+   7:dfu_user.c    **** * - Cy_DFU_ReadData (address, length, ctl, params) - to read  the NVM block
+   8:dfu_user.c    **** * - Cy_Bootalod_WriteData(address, length, ctl, params) - to write the NVM block
+   9:dfu_user.c    **** *
+  10:dfu_user.c    **** * - Cy_DFU_TransportStart() to start a communication interface
+  11:dfu_user.c    **** * - Cy_DFU_TransportStop () to stop  a communication interface
+  12:dfu_user.c    **** * - Cy_DFU_TransportReset() to reset a communication interface
+  13:dfu_user.c    **** * - Cy_DFU_TransportRead (buffer, size, count, timeout)
+  14:dfu_user.c    **** * - Cy_DFU_TransportWrite(buffer, size, count, timeout)
+  15:dfu_user.c    **** *
+  16:dfu_user.c    **** ********************************************************************************
+  17:dfu_user.c    **** * \copyright
+  18:dfu_user.c    **** * Copyright 2016-2018, Cypress Semiconductor Corporation.  All rights reserved.
+  19:dfu_user.c    **** * You may use this file only in accordance with the license, terms, conditions,
+  20:dfu_user.c    **** * disclaimers, and limitations in the end user license agreement accompanying
+  21:dfu_user.c    **** * the software package with which this file was provided.
+  22:dfu_user.c    **** *******************************************************************************/
+  23:dfu_user.c    **** 
+  24:dfu_user.c    **** #include <string.h>
+  25:dfu_user.c    **** #include "transport_uart.h"
+  26:dfu_user.c    **** #include "cy_syslib.h"
+  27:dfu_user.c    **** #include "cy_flash.h"
+  28:dfu_user.c    **** #include "cy_dfu.h"
+  29:dfu_user.c    **** 
+  30:dfu_user.c    **** 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 2
+
+
+  31:dfu_user.c    **** /*
+  32:dfu_user.c    **** * The DFU SDK metadata initial value is placed here
+  33:dfu_user.c    **** * Note: the number of elements equal to the number of the app multiplies by 2 
+  34:dfu_user.c    **** *       because of the two fields per app plus one element for the CRC-32C field.
+  35:dfu_user.c    **** */
+  36:dfu_user.c    **** CY_SECTION(".cy_boot_metadata") __USED
+  37:dfu_user.c    **** static const uint32_t cy_dfu_metadata[CY_FLASH_SIZEOF_ROW / sizeof(uint32_t)] =
+  38:dfu_user.c    **** {
+  39:dfu_user.c    ****     CY_DFU_APP0_VERIFY_START, CY_DFU_APP0_VERIFY_LENGTH, /* The App0 base address and length */
+  40:dfu_user.c    ****     CY_DFU_APP1_VERIFY_START, CY_DFU_APP1_VERIFY_LENGTH, /* The App1 base address and length */
+  41:dfu_user.c    ****     0u                                                             /* The rest does not matter     
+  42:dfu_user.c    **** };
+  43:dfu_user.c    **** 
+  44:dfu_user.c    **** 
+  45:dfu_user.c    **** static uint32_t IsMultipleOf(uint32_t value, uint32_t multiple);
+  46:dfu_user.c    **** static void GetStartEndAddress(uint32_t appId, uint32_t *startAddress, uint32_t *endAddress);
+  47:dfu_user.c    **** 
+  48:dfu_user.c    **** 
+  49:dfu_user.c    **** /*******************************************************************************
+  50:dfu_user.c    **** * Function Name: IsMultipleOf
+  51:dfu_user.c    **** ****************************************************************************//**
+  52:dfu_user.c    **** *
+  53:dfu_user.c    **** * This internal function check if value parameter is a multiple of parameter 
+  54:dfu_user.c    **** * multiple
+  55:dfu_user.c    **** *
+  56:dfu_user.c    **** * \param value      value that will be checked
+  57:dfu_user.c    **** * \param multiple   value with which value is checked 
+  58:dfu_user.c    **** *
+  59:dfu_user.c    **** * \return 1 - value is multiple of parameter multiple, else 0  
+  60:dfu_user.c    **** *
+  61:dfu_user.c    **** *******************************************************************************/
+  62:dfu_user.c    **** static uint32_t IsMultipleOf(uint32_t value, uint32_t multiple)
+  63:dfu_user.c    **** {
+  28              		.loc 1 63 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 10B5     		push	{r4, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  64:dfu_user.c    ****     return ( ((value % multiple) == 0u)? 1ul : 0ul);
+  37              		.loc 1 64 0
+  38 0002 FFF7FEFF 		bl	__aeabi_uidivmod
+  39              	.LVL1:
+  40 0006 0029     		cmp	r1, #0
+  41 0008 01D1     		bne	.L3
+  42 000a 0120     		movs	r0, #1
+  43 000c 00E0     		b	.L2
+  44              	.L3:
+  45 000e 0020     		movs	r0, #0
+  46              	.L2:
+  65:dfu_user.c    **** }
+  47              		.loc 1 65 0 discriminator 4
+  48              		@ sp needed
+  49 0010 10BD     		pop	{r4, pc}
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 3
+
+
+  50              		.cfi_endproc
+  51              	.LFE45:
+  52              		.size	IsMultipleOf, .-IsMultipleOf
+  53 0012 C046     		.section	.text.GetStartEndAddress,"ax",%progbits
+  54              		.align	2
+  55              		.code	16
+  56              		.thumb_func
+  57              		.type	GetStartEndAddress, %function
+  58              	GetStartEndAddress:
+  59              	.LFB46:
+  66:dfu_user.c    **** 
+  67:dfu_user.c    **** 
+  68:dfu_user.c    **** /*******************************************************************************
+  69:dfu_user.c    **** * Function Name: GetStartEndAddress
+  70:dfu_user.c    **** ****************************************************************************//**
+  71:dfu_user.c    **** *
+  72:dfu_user.c    **** * This internal function returns start and end address of application
+  73:dfu_user.c    **** *
+  74:dfu_user.c    **** * \param appId          The application number
+  75:dfu_user.c    **** * \param startAddress   The pointer to a variable where an application start
+  76:dfu_user.c    **** *                       address is stored
+  77:dfu_user.c    **** * \param endAddress     The pointer to a variable where a size of application 
+  78:dfu_user.c    **** *                       area is stored.
+  79:dfu_user.c    **** *
+  80:dfu_user.c    **** *******************************************************************************/
+  81:dfu_user.c    **** static void GetStartEndAddress(uint32_t appId, uint32_t *startAddress, uint32_t *endAddress)
+  82:dfu_user.c    **** {
+  60              		.loc 1 82 0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 8
+  63              		@ frame_needed = 0, uses_anonymous_args = 0
+  64              	.LVL2:
+  65 0000 30B5     		push	{r4, r5, lr}
+  66              		.cfi_def_cfa_offset 12
+  67              		.cfi_offset 4, -12
+  68              		.cfi_offset 5, -8
+  69              		.cfi_offset 14, -4
+  70 0002 83B0     		sub	sp, sp, #12
+  71              		.cfi_def_cfa_offset 24
+  72 0004 0D00     		movs	r5, r1
+  73 0006 1400     		movs	r4, r2
+  83:dfu_user.c    ****     uint32_t verifyStart;
+  84:dfu_user.c    ****     uint32_t verifySize;
+  85:dfu_user.c    **** 
+  86:dfu_user.c    ****     (void)Cy_DFU_GetAppMetadata(appId, &verifyStart, &verifySize);
+  74              		.loc 1 86 0
+  75 0008 6A46     		mov	r2, sp
+  76              	.LVL3:
+  77 000a 01A9     		add	r1, sp, #4
+  78              	.LVL4:
+  79 000c FFF7FEFF 		bl	Cy_DFU_GetAppMetadata
+  80              	.LVL5:
+  87:dfu_user.c    **** 
+  88:dfu_user.c    **** #if (CY_DFU_APP_FORMAT == CY_DFU_SIMPLIFIED_APP)
+  89:dfu_user.c    ****     *startAddress = verifyStart - CY_DFU_SIGNATURE_SIZE; 
+  90:dfu_user.c    ****     *endAddress = verifyStart + verifySize;
+  91:dfu_user.c    **** #else
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 4
+
+
+  92:dfu_user.c    ****     *startAddress = verifyStart; 
+  81              		.loc 1 92 0
+  82 0010 019B     		ldr	r3, [sp, #4]
+  83 0012 2B60     		str	r3, [r5]
+  93:dfu_user.c    ****     *endAddress = verifyStart + verifySize + CY_DFU_SIGNATURE_SIZE;
+  84              		.loc 1 93 0
+  85 0014 009A     		ldr	r2, [sp]
+  86 0016 9446     		mov	ip, r2
+  87 0018 6344     		add	r3, r3, ip
+  88 001a 024A     		ldr	r2, .L5
+  89 001c 9B18     		adds	r3, r3, r2
+  90 001e 2360     		str	r3, [r4]
+  94:dfu_user.c    **** #endif
+  95:dfu_user.c    **** }
+  91              		.loc 1 95 0
+  92 0020 03B0     		add	sp, sp, #12
+  93              		@ sp needed
+  94              	.LVL6:
+  95              	.LVL7:
+  96 0022 30BD     		pop	{r4, r5, pc}
+  97              	.L6:
+  98              		.align	2
+  99              	.L5:
+ 100 0024 00000000 		.word	__cy_boot_signature_size
+ 101              		.cfi_endproc
+ 102              	.LFE46:
+ 103              		.size	GetStartEndAddress, .-GetStartEndAddress
+ 104              		.section	.text.Cy_DFU_WriteData,"ax",%progbits
+ 105              		.align	2
+ 106              		.global	Cy_DFU_WriteData
+ 107              		.code	16
+ 108              		.thumb_func
+ 109              		.type	Cy_DFU_WriteData, %function
+ 110              	Cy_DFU_WriteData:
+ 111              	.LFB47:
+  96:dfu_user.c    **** 
+  97:dfu_user.c    **** 
+  98:dfu_user.c    **** /*******************************************************************************
+  99:dfu_user.c    **** * Function Name: Cy_DFU_WriteData
+ 100:dfu_user.c    **** ****************************************************************************//**
+ 101:dfu_user.c    **** *
+ 102:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 103:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 104:dfu_user.c    **** *
+ 105:dfu_user.c    **** *******************************************************************************/
+ 106:dfu_user.c    **** cy_en_dfu_status_t Cy_DFU_WriteData (uint32_t address, uint32_t length, uint32_t ctl, 
+ 107:dfu_user.c    ****                                                cy_stc_dfu_params_t *params)
+ 108:dfu_user.c    **** {
+ 112              		.loc 1 108 0
+ 113              		.cfi_startproc
+ 114              		@ args = 0, pretend = 0, frame = 8
+ 115              		@ frame_needed = 0, uses_anonymous_args = 0
+ 116              	.LVL8:
+ 117 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 118              		.cfi_def_cfa_offset 20
+ 119              		.cfi_offset 4, -20
+ 120              		.cfi_offset 5, -16
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 5
+
+
+ 121              		.cfi_offset 6, -12
+ 122              		.cfi_offset 7, -8
+ 123              		.cfi_offset 14, -4
+ 124 0002 83B0     		sub	sp, sp, #12
+ 125              		.cfi_def_cfa_offset 32
+ 126 0004 0400     		movs	r4, r0
+ 127 0006 0D00     		movs	r5, r1
+ 128 0008 1600     		movs	r6, r2
+ 129 000a 1F00     		movs	r7, r3
+ 130              	.LVL9:
+ 109:dfu_user.c    ****     /* User Flash Limits */
+ 110:dfu_user.c    ****     /* Note that App0 is out of range */
+ 111:dfu_user.c    ****     const uint32_t minUFlashAddress = CY_FLASH_BASE + CY_DFU_APP0_VERIFY_LENGTH;
+ 112:dfu_user.c    ****     const uint32_t maxUFlashAddress = CY_FLASH_BASE + CY_FLASH_SIZE;
+ 113:dfu_user.c    ****     /* EM_EEPROM Limits*/
+ 114:dfu_user.c    ****     const uint32_t minEmEepromAddress = CY_EM_EEPROM_BASE;
+ 115:dfu_user.c    ****     const uint32_t maxEmEepromAddress = CY_EM_EEPROM_BASE + CY_EM_EEPROM_SIZE;
+ 116:dfu_user.c    ****     
+ 117:dfu_user.c    ****     cy_en_dfu_status_t status = CY_DFU_SUCCESS;
+ 118:dfu_user.c    **** 
+ 119:dfu_user.c    ****     uint32_t app = Cy_DFU_GetRunningApp();
+ 131              		.loc 1 119 0
+ 132 000c FFF7FEFF 		bl	Cy_DFU_GetRunningApp
+ 133              	.LVL10:
+ 120:dfu_user.c    ****     uint32_t startAddress;
+ 121:dfu_user.c    ****     uint32_t endAddress;
+ 122:dfu_user.c    ****     
+ 123:dfu_user.c    ****     GetStartEndAddress(app, &startAddress, &endAddress);
+ 134              		.loc 1 123 0
+ 135 0010 6A46     		mov	r2, sp
+ 136 0012 01A9     		add	r1, sp, #4
+ 137 0014 FFF7FEFF 		bl	GetStartEndAddress
+ 138              	.LVL11:
+ 124:dfu_user.c    **** 
+ 125:dfu_user.c    ****     /* Check if the address  and length are valid 
+ 126:dfu_user.c    ****      * Note Length = 0 is valid for erase command */
+ 127:dfu_user.c    ****     if ( (IsMultipleOf(address, CY_FLASH_SIZEOF_ROW) == 0u) || 
+ 139              		.loc 1 127 0
+ 140 0018 8021     		movs	r1, #128
+ 141 001a 8900     		lsls	r1, r1, #2
+ 142 001c 2000     		movs	r0, r4
+ 143 001e FFF7FEFF 		bl	IsMultipleOf
+ 144              	.LVL12:
+ 145 0022 0028     		cmp	r0, #0
+ 146 0024 07D0     		beq	.L14
+ 147              		.loc 1 127 0 is_stmt 0 discriminator 1
+ 148 0026 8023     		movs	r3, #128
+ 149 0028 9B00     		lsls	r3, r3, #2
+ 150 002a 9D42     		cmp	r5, r3
+ 151 002c 05D0     		beq	.L15
+ 128:dfu_user.c    ****          ( (length != CY_FLASH_SIZEOF_ROW) && ( (ctl & CY_DFU_IOCTL_ERASE) == 0u) ) )
+ 152              		.loc 1 128 0 is_stmt 1
+ 153 002e F307     		lsls	r3, r6, #31
+ 154 0030 05D5     		bpl	.L16
+ 117:dfu_user.c    **** 
+ 155              		.loc 1 117 0
+ 156 0032 0025     		movs	r5, #0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 6
+
+
+ 157              	.LVL13:
+ 158 0034 04E0     		b	.L8
+ 159              	.LVL14:
+ 160              	.L14:
+ 129:dfu_user.c    ****     {
+ 130:dfu_user.c    ****         status = CY_DFU_ERROR_LENGTH;   
+ 161              		.loc 1 130 0
+ 162 0036 184D     		ldr	r5, .L20
+ 163              	.LVL15:
+ 164 0038 02E0     		b	.L8
+ 165              	.LVL16:
+ 166              	.L15:
+ 117:dfu_user.c    **** 
+ 167              		.loc 1 117 0
+ 168 003a 0025     		movs	r5, #0
+ 169              	.LVL17:
+ 170 003c 00E0     		b	.L8
+ 171              	.LVL18:
+ 172              	.L16:
+ 173              		.loc 1 130 0
+ 174 003e 164D     		ldr	r5, .L20
+ 175              	.LVL19:
+ 176              	.L8:
+ 131:dfu_user.c    ****     }
+ 132:dfu_user.c    **** 
+ 133:dfu_user.c    ****     /* Refuse to write to a row within a range of the current application */ 
+ 134:dfu_user.c    ****     if ( (startAddress <= address) && (address < endAddress) )
+ 177              		.loc 1 134 0
+ 178 0040 019B     		ldr	r3, [sp, #4]
+ 179 0042 9C42     		cmp	r4, r3
+ 180 0044 03D3     		bcc	.L9
+ 181              		.loc 1 134 0 is_stmt 0 discriminator 1
+ 182 0046 009B     		ldr	r3, [sp]
+ 183 0048 9C42     		cmp	r4, r3
+ 184 004a 00D2     		bcs	.L9
+ 135:dfu_user.c    ****     {   /* It is forbidden to overwrite the currently running application */
+ 136:dfu_user.c    ****         status = CY_DFU_ERROR_ADDRESS;
+ 185              		.loc 1 136 0 is_stmt 1
+ 186 004c 134D     		ldr	r5, .L20+4
+ 187              	.LVL20:
+ 188              	.L9:
+ 137:dfu_user.c    ****     }
+ 138:dfu_user.c    **** #if CY_DFU_OPT_GOLDEN_IMAGE
+ 139:dfu_user.c    ****     if (status == CY_DFU_SUCCESS)
+ 140:dfu_user.c    ****     {
+ 141:dfu_user.c    ****         uint8_t goldenImages[] = { CY_DFU_GOLDEN_IMAGE_IDS() };
+ 142:dfu_user.c    ****         uint32_t count = sizeof(goldenImages) / sizeof(goldenImages[0]);
+ 143:dfu_user.c    ****         uint32_t idx;
+ 144:dfu_user.c    ****         for (idx = 0u; idx < count; ++idx)
+ 145:dfu_user.c    ****         {
+ 146:dfu_user.c    ****             app = goldenImages[idx];
+ 147:dfu_user.c    ****             GetStartEndAddress(app, &startAddress, &endAddress);
+ 148:dfu_user.c    **** 
+ 149:dfu_user.c    ****             if ( (startAddress <= address) && (address < endAddress) )
+ 150:dfu_user.c    ****             {
+ 151:dfu_user.c    ****                 status = Cy_DFU_ValidateApp(app, params);
+ 152:dfu_user.c    ****                 status = (status == CY_DFU_SUCCESS) ? CY_DFU_ERROR_ADDRESS : CY_DFU_SUCCESS;
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 7
+
+
+ 153:dfu_user.c    ****                 break;
+ 154:dfu_user.c    ****             }
+ 155:dfu_user.c    ****         }
+ 156:dfu_user.c    ****     } 
+ 157:dfu_user.c    **** #endif /* #if CY_DFU_OPT_GOLDEN_IMAGE != 0 */
+ 158:dfu_user.c    ****     
+ 159:dfu_user.c    ****     /* Check if the address is inside the valid range */
+ 160:dfu_user.c    ****     if ( ( (minUFlashAddress <= address) && (address < maxUFlashAddress) ) 
+ 189              		.loc 1 160 0
+ 190 004e 144B     		ldr	r3, .L20+8
+ 191 0050 8022     		movs	r2, #128
+ 192 0052 5205     		lsls	r2, r2, #21
+ 193 0054 9446     		mov	ip, r2
+ 194 0056 6344     		add	r3, r3, ip
+ 195 0058 9C42     		cmp	r4, r3
+ 196 005a 02D3     		bcc	.L10
+ 197              		.loc 1 160 0 is_stmt 0 discriminator 1
+ 198 005c 114B     		ldr	r3, .L20+12
+ 199 005e 9C42     		cmp	r4, r3
+ 200 0060 06D9     		bls	.L11
+ 201              	.L10:
+ 161:dfu_user.c    ****       || ( (minEmEepromAddress <= address) && (address < maxEmEepromAddress) )  )
+ 202              		.loc 1 161 0 is_stmt 1
+ 203 0062 114A     		ldr	r2, .L20+16
+ 204 0064 EC23     		movs	r3, #236
+ 205 0066 1B06     		lsls	r3, r3, #24
+ 206 0068 E318     		adds	r3, r4, r3
+ 207 006a 9342     		cmp	r3, r2
+ 208 006c 00D9     		bls	.L11
+ 162:dfu_user.c    ****     {   /* Do nothing, this is an allowed memory range to update to */
+ 163:dfu_user.c    ****     }
+ 164:dfu_user.c    ****     else
+ 165:dfu_user.c    ****     {
+ 166:dfu_user.c    ****         status = CY_DFU_ERROR_ADDRESS;   
+ 209              		.loc 1 166 0
+ 210 006e 0B4D     		ldr	r5, .L20+4
+ 211              	.LVL21:
+ 212              	.L11:
+ 167:dfu_user.c    ****     }
+ 168:dfu_user.c    ****     
+ 169:dfu_user.c    ****     if (status == CY_DFU_SUCCESS)
+ 213              		.loc 1 169 0
+ 214 0070 002D     		cmp	r5, #0
+ 215 0072 0ED1     		bne	.L12
+ 216              	.LBB2:
+ 170:dfu_user.c    ****     {
+ 171:dfu_user.c    ****         if ((ctl & CY_DFU_IOCTL_ERASE) != 0u)
+ 217              		.loc 1 171 0
+ 218 0074 F307     		lsls	r3, r6, #31
+ 219 0076 05D5     		bpl	.L13
+ 172:dfu_user.c    ****         {
+ 173:dfu_user.c    ****             (void) memset(params->dataBuffer, 0, CY_FLASH_SIZEOF_ROW);
+ 220              		.loc 1 173 0
+ 221 0078 8022     		movs	r2, #128
+ 222 007a 9200     		lsls	r2, r2, #2
+ 223 007c 0021     		movs	r1, #0
+ 224 007e 3868     		ldr	r0, [r7]
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 8
+
+
+ 225 0080 FFF7FEFF 		bl	memset
+ 226              	.LVL22:
+ 227              	.L13:
+ 174:dfu_user.c    ****         }
+ 175:dfu_user.c    ****         cy_en_flashdrv_status_t fstatus =  Cy_Flash_WriteRow(address, (uint32_t*)params->dataBuffer
+ 228              		.loc 1 175 0
+ 229 0084 3968     		ldr	r1, [r7]
+ 230 0086 2000     		movs	r0, r4
+ 231 0088 FFF7FEFF 		bl	Cy_Flash_WriteRow
+ 232              	.LVL23:
+ 176:dfu_user.c    ****         status = (fstatus == CY_FLASH_DRV_SUCCESS) ? CY_DFU_SUCCESS : CY_DFU_ERROR_DATA;
+ 233              		.loc 1 176 0
+ 234 008c 0028     		cmp	r0, #0
+ 235 008e 00D0     		beq	.L12
+ 236 0090 064D     		ldr	r5, .L20+20
+ 237              	.LVL24:
+ 238              	.L12:
+ 239              	.LBE2:
+ 177:dfu_user.c    ****     }
+ 178:dfu_user.c    ****     return (status);
+ 179:dfu_user.c    **** }
+ 240              		.loc 1 179 0
+ 241 0092 2800     		movs	r0, r5
+ 242 0094 03B0     		add	sp, sp, #12
+ 243              		@ sp needed
+ 244              	.LVL25:
+ 245              	.LVL26:
+ 246              	.LVL27:
+ 247              	.LVL28:
+ 248 0096 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 249              	.L21:
+ 250              		.align	2
+ 251              	.L20:
+ 252 0098 03001A00 		.word	1703939
+ 253 009c 0A001A00 		.word	1703946
+ 254 00a0 00000000 		.word	__cy_app0_verify_length
+ 255 00a4 FFFF0F10 		.word	269484031
+ 256 00a8 FF7F0000 		.word	32767
+ 257 00ac 04001A00 		.word	1703940
+ 258              		.cfi_endproc
+ 259              	.LFE47:
+ 260              		.size	Cy_DFU_WriteData, .-Cy_DFU_WriteData
+ 261              		.section	.text.Cy_DFU_ReadData,"ax",%progbits
+ 262              		.align	2
+ 263              		.global	Cy_DFU_ReadData
+ 264              		.code	16
+ 265              		.thumb_func
+ 266              		.type	Cy_DFU_ReadData, %function
+ 267              	Cy_DFU_ReadData:
+ 268              	.LFB48:
+ 180:dfu_user.c    **** 
+ 181:dfu_user.c    **** 
+ 182:dfu_user.c    **** /*******************************************************************************
+ 183:dfu_user.c    **** * Function Name: Cy_DFU_ReadData
+ 184:dfu_user.c    **** ****************************************************************************//**
+ 185:dfu_user.c    **** *
+ 186:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 9
+
+
+ 187:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 188:dfu_user.c    **** *
+ 189:dfu_user.c    **** *******************************************************************************/
+ 190:dfu_user.c    **** cy_en_dfu_status_t Cy_DFU_ReadData (uint32_t address, uint32_t length, uint32_t ctl, 
+ 191:dfu_user.c    ****                                               cy_stc_dfu_params_t *params)
+ 192:dfu_user.c    **** {
+ 269              		.loc 1 192 0
+ 270              		.cfi_startproc
+ 271              		@ args = 0, pretend = 0, frame = 8
+ 272              		@ frame_needed = 0, uses_anonymous_args = 0
+ 273              	.LVL29:
+ 274 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 275              		.cfi_def_cfa_offset 20
+ 276              		.cfi_offset 4, -20
+ 277              		.cfi_offset 5, -16
+ 278              		.cfi_offset 6, -12
+ 279              		.cfi_offset 7, -8
+ 280              		.cfi_offset 14, -4
+ 281 0002 83B0     		sub	sp, sp, #12
+ 282              		.cfi_def_cfa_offset 32
+ 283 0004 0600     		movs	r6, r0
+ 284 0006 0800     		movs	r0, r1
+ 285              	.LVL30:
+ 286 0008 0191     		str	r1, [sp, #4]
+ 287 000a 1500     		movs	r5, r2
+ 288 000c 1C00     		movs	r4, r3
+ 289              	.LVL31:
+ 193:dfu_user.c    ****     /* User Flash Limits */
+ 194:dfu_user.c    ****     /* Note that App0 is out of range */
+ 195:dfu_user.c    ****     const uint32_t minUFlashAddress = CY_FLASH_BASE + CY_DFU_APP0_VERIFY_LENGTH;
+ 196:dfu_user.c    ****     const uint32_t maxUFlashAddress = CY_FLASH_BASE + CY_FLASH_SIZE;
+ 197:dfu_user.c    ****     /* EM_EEPROM Limits*/
+ 198:dfu_user.c    ****     const uint32_t minEmEepromAddress = CY_EM_EEPROM_BASE;
+ 199:dfu_user.c    ****     const uint32_t maxEmEepromAddress = CY_EM_EEPROM_BASE + CY_EM_EEPROM_SIZE;
+ 200:dfu_user.c    ****     
+ 201:dfu_user.c    ****     cy_en_dfu_status_t status = CY_DFU_SUCCESS;
+ 202:dfu_user.c    **** 
+ 203:dfu_user.c    ****     /* Check if the length is valid */
+ 204:dfu_user.c    ****     if (IsMultipleOf(length, CY_FLASH_SIZEOF_ROW) == 0u) 
+ 290              		.loc 1 204 0
+ 291 000e 8021     		movs	r1, #128
+ 292              	.LVL32:
+ 293 0010 8900     		lsls	r1, r1, #2
+ 294 0012 FFF7FEFF 		bl	IsMultipleOf
+ 295              	.LVL33:
+ 296 0016 0028     		cmp	r0, #0
+ 297 0018 01D0     		beq	.L28
+ 201:dfu_user.c    **** 
+ 298              		.loc 1 201 0
+ 299 001a 0027     		movs	r7, #0
+ 300 001c 00E0     		b	.L23
+ 301              	.L28:
+ 205:dfu_user.c    ****     {
+ 206:dfu_user.c    ****         status = CY_DFU_ERROR_LENGTH;   
+ 302              		.loc 1 206 0
+ 303 001e 134F     		ldr	r7, .L31
+ 304              	.L23:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 10
+
+
+ 305              	.LVL34:
+ 207:dfu_user.c    ****     }
+ 208:dfu_user.c    **** 
+ 209:dfu_user.c    ****     /* Check if the address is inside the valid range */
+ 210:dfu_user.c    ****     if ( ( (minUFlashAddress <= address) && (address < maxUFlashAddress) ) 
+ 306              		.loc 1 210 0
+ 307 0020 134B     		ldr	r3, .L31+4
+ 308 0022 8022     		movs	r2, #128
+ 309 0024 5205     		lsls	r2, r2, #21
+ 310 0026 9446     		mov	ip, r2
+ 311 0028 6344     		add	r3, r3, ip
+ 312 002a B342     		cmp	r3, r6
+ 313 002c 02D8     		bhi	.L24
+ 314              		.loc 1 210 0 is_stmt 0 discriminator 1
+ 315 002e 114B     		ldr	r3, .L31+8
+ 316 0030 9E42     		cmp	r6, r3
+ 317 0032 06D9     		bls	.L25
+ 318              	.L24:
+ 211:dfu_user.c    ****       || ( (minEmEepromAddress <= address) && (address < maxEmEepromAddress) )  )
+ 319              		.loc 1 211 0 is_stmt 1
+ 320 0034 104A     		ldr	r2, .L31+12
+ 321 0036 EC23     		movs	r3, #236
+ 322 0038 1B06     		lsls	r3, r3, #24
+ 323 003a F318     		adds	r3, r6, r3
+ 324 003c 9342     		cmp	r3, r2
+ 325 003e 00D9     		bls	.L25
+ 212:dfu_user.c    ****     {   /* Do nothing, this is an allowed memory range to update to */
+ 213:dfu_user.c    ****     }
+ 214:dfu_user.c    ****     else
+ 215:dfu_user.c    ****     {
+ 216:dfu_user.c    ****         status = CY_DFU_ERROR_ADDRESS;   
+ 326              		.loc 1 216 0
+ 327 0040 0E4F     		ldr	r7, .L31+16
+ 328              	.LVL35:
+ 329              	.L25:
+ 217:dfu_user.c    ****     }
+ 218:dfu_user.c    **** 
+ 219:dfu_user.c    ****     /* Read or Compare */
+ 220:dfu_user.c    ****     if (status == CY_DFU_SUCCESS)
+ 330              		.loc 1 220 0
+ 331 0042 002F     		cmp	r7, #0
+ 332 0044 0FD1     		bne	.L26
+ 221:dfu_user.c    ****     {
+ 222:dfu_user.c    ****         if ((ctl & CY_DFU_IOCTL_COMPARE) == 0u)
+ 333              		.loc 1 222 0
+ 334 0046 EB07     		lsls	r3, r5, #31
+ 335 0048 05D4     		bmi	.L27
+ 223:dfu_user.c    ****         {
+ 224:dfu_user.c    ****             (void) memcpy(params->dataBuffer, (const void *)address, length);
+ 336              		.loc 1 224 0
+ 337 004a 2068     		ldr	r0, [r4]
+ 338 004c 019A     		ldr	r2, [sp, #4]
+ 339 004e 3100     		movs	r1, r6
+ 340 0050 FFF7FEFF 		bl	memcpy
+ 341              	.LVL36:
+ 342 0054 07E0     		b	.L26
+ 343              	.LVL37:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 11
+
+
+ 344              	.L27:
+ 225:dfu_user.c    ****             status = CY_DFU_SUCCESS;
+ 226:dfu_user.c    ****         }
+ 227:dfu_user.c    ****         else
+ 228:dfu_user.c    ****         {
+ 229:dfu_user.c    ****             status = ( memcmp(params->dataBuffer, (const void *)address, length) == 0 )
+ 345              		.loc 1 229 0
+ 346 0056 2068     		ldr	r0, [r4]
+ 347 0058 019A     		ldr	r2, [sp, #4]
+ 348 005a 3100     		movs	r1, r6
+ 349 005c FFF7FEFF 		bl	memcmp
+ 350              	.LVL38:
+ 351 0060 0028     		cmp	r0, #0
+ 352 0062 00D0     		beq	.L26
+ 353 0064 064F     		ldr	r7, .L31+20
+ 354              	.LVL39:
+ 355              	.L26:
+ 230:dfu_user.c    ****                      ? CY_DFU_SUCCESS : CY_DFU_ERROR_VERIFY;
+ 231:dfu_user.c    ****         }
+ 232:dfu_user.c    ****     }
+ 233:dfu_user.c    ****     return (status);
+ 234:dfu_user.c    **** }
+ 356              		.loc 1 234 0
+ 357 0066 3800     		movs	r0, r7
+ 358 0068 03B0     		add	sp, sp, #12
+ 359              		@ sp needed
+ 360              	.LVL40:
+ 361              	.LVL41:
+ 362              	.LVL42:
+ 363              	.LVL43:
+ 364 006a F0BD     		pop	{r4, r5, r6, r7, pc}
+ 365              	.L32:
+ 366              		.align	2
+ 367              	.L31:
+ 368 006c 03001A00 		.word	1703939
+ 369 0070 00000000 		.word	__cy_app0_verify_length
+ 370 0074 FFFF0F10 		.word	269484031
+ 371 0078 FF7F0000 		.word	32767
+ 372 007c 0A001A00 		.word	1703946
+ 373 0080 02001A00 		.word	1703938
+ 374              		.cfi_endproc
+ 375              	.LFE48:
+ 376              		.size	Cy_DFU_ReadData, .-Cy_DFU_ReadData
+ 377              		.section	.text.Cy_DFU_TransportRead,"ax",%progbits
+ 378              		.align	2
+ 379              		.global	Cy_DFU_TransportRead
+ 380              		.code	16
+ 381              		.thumb_func
+ 382              		.type	Cy_DFU_TransportRead, %function
+ 383              	Cy_DFU_TransportRead:
+ 384              	.LFB49:
+ 235:dfu_user.c    **** 
+ 236:dfu_user.c    **** 
+ 237:dfu_user.c    **** /*******************************************************************************
+ 238:dfu_user.c    **** * Function Name: Cy_DFU_TransportRead
+ 239:dfu_user.c    **** ****************************************************************************//**
+ 240:dfu_user.c    **** *
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 12
+
+
+ 241:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 242:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 243:dfu_user.c    **** *
+ 244:dfu_user.c    **** *******************************************************************************/
+ 245:dfu_user.c    **** cy_en_dfu_status_t Cy_DFU_TransportRead (uint8_t *buffer, uint32_t size, uint32_t *count, uint32_t 
+ 246:dfu_user.c    **** {
+ 385              		.loc 1 246 0
+ 386              		.cfi_startproc
+ 387              		@ args = 0, pretend = 0, frame = 0
+ 388              		@ frame_needed = 0, uses_anonymous_args = 0
+ 389              	.LVL44:
+ 390 0000 10B5     		push	{r4, lr}
+ 391              		.cfi_def_cfa_offset 8
+ 392              		.cfi_offset 4, -8
+ 393              		.cfi_offset 14, -4
+ 247:dfu_user.c    ****     return (UART_UartCyBtldrCommRead(buffer, size, count, timeout));
+ 394              		.loc 1 247 0
+ 395 0002 FFF7FEFF 		bl	UART_UartCyBtldrCommRead
+ 396              	.LVL45:
+ 248:dfu_user.c    **** }
+ 397              		.loc 1 248 0
+ 398              		@ sp needed
+ 399 0006 10BD     		pop	{r4, pc}
+ 400              		.cfi_endproc
+ 401              	.LFE49:
+ 402              		.size	Cy_DFU_TransportRead, .-Cy_DFU_TransportRead
+ 403              		.section	.text.Cy_DFU_TransportWrite,"ax",%progbits
+ 404              		.align	2
+ 405              		.global	Cy_DFU_TransportWrite
+ 406              		.code	16
+ 407              		.thumb_func
+ 408              		.type	Cy_DFU_TransportWrite, %function
+ 409              	Cy_DFU_TransportWrite:
+ 410              	.LFB50:
+ 249:dfu_user.c    **** 
+ 250:dfu_user.c    **** /*******************************************************************************
+ 251:dfu_user.c    **** * Function Name: Cy_DFU_TransportWrite
+ 252:dfu_user.c    **** ****************************************************************************//**
+ 253:dfu_user.c    **** *
+ 254:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 255:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 256:dfu_user.c    **** *
+ 257:dfu_user.c    **** *******************************************************************************/
+ 258:dfu_user.c    **** cy_en_dfu_status_t Cy_DFU_TransportWrite(uint8_t *buffer, uint32_t size, uint32_t *count, uint32_t 
+ 259:dfu_user.c    **** {
+ 411              		.loc 1 259 0
+ 412              		.cfi_startproc
+ 413              		@ args = 0, pretend = 0, frame = 0
+ 414              		@ frame_needed = 0, uses_anonymous_args = 0
+ 415              	.LVL46:
+ 416 0000 10B5     		push	{r4, lr}
+ 417              		.cfi_def_cfa_offset 8
+ 418              		.cfi_offset 4, -8
+ 419              		.cfi_offset 14, -4
+ 260:dfu_user.c    ****     return (UART_UartCyBtldrCommWrite(buffer, size, count, timeout));
+ 420              		.loc 1 260 0
+ 421 0002 FFF7FEFF 		bl	UART_UartCyBtldrCommWrite
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 13
+
+
+ 422              	.LVL47:
+ 261:dfu_user.c    **** }
+ 423              		.loc 1 261 0
+ 424              		@ sp needed
+ 425 0006 10BD     		pop	{r4, pc}
+ 426              		.cfi_endproc
+ 427              	.LFE50:
+ 428              		.size	Cy_DFU_TransportWrite, .-Cy_DFU_TransportWrite
+ 429              		.section	.text.Cy_DFU_TransportReset,"ax",%progbits
+ 430              		.align	2
+ 431              		.global	Cy_DFU_TransportReset
+ 432              		.code	16
+ 433              		.thumb_func
+ 434              		.type	Cy_DFU_TransportReset, %function
+ 435              	Cy_DFU_TransportReset:
+ 436              	.LFB51:
+ 262:dfu_user.c    **** 
+ 263:dfu_user.c    **** /*******************************************************************************
+ 264:dfu_user.c    **** * Function Name: Cy_DFU_TransportReset
+ 265:dfu_user.c    **** ****************************************************************************//**
+ 266:dfu_user.c    **** *
+ 267:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 268:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 269:dfu_user.c    **** *
+ 270:dfu_user.c    **** *******************************************************************************/
+ 271:dfu_user.c    **** void Cy_DFU_TransportReset(void)
+ 272:dfu_user.c    **** {
+ 437              		.loc 1 272 0
+ 438              		.cfi_startproc
+ 439              		@ args = 0, pretend = 0, frame = 0
+ 440              		@ frame_needed = 0, uses_anonymous_args = 0
+ 441 0000 10B5     		push	{r4, lr}
+ 442              		.cfi_def_cfa_offset 8
+ 443              		.cfi_offset 4, -8
+ 444              		.cfi_offset 14, -4
+ 273:dfu_user.c    ****     UART_UartCyBtldrCommReset();
+ 445              		.loc 1 273 0
+ 446 0002 FFF7FEFF 		bl	UART_UartCyBtldrCommReset
+ 447              	.LVL48:
+ 274:dfu_user.c    **** }
+ 448              		.loc 1 274 0
+ 449              		@ sp needed
+ 450 0006 10BD     		pop	{r4, pc}
+ 451              		.cfi_endproc
+ 452              	.LFE51:
+ 453              		.size	Cy_DFU_TransportReset, .-Cy_DFU_TransportReset
+ 454              		.section	.text.Cy_DFU_TransportStart,"ax",%progbits
+ 455              		.align	2
+ 456              		.global	Cy_DFU_TransportStart
+ 457              		.code	16
+ 458              		.thumb_func
+ 459              		.type	Cy_DFU_TransportStart, %function
+ 460              	Cy_DFU_TransportStart:
+ 461              	.LFB52:
+ 275:dfu_user.c    **** 
+ 276:dfu_user.c    **** /*******************************************************************************
+ 277:dfu_user.c    **** * Function Name: Cy_DFU_TransportStart
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 14
+
+
+ 278:dfu_user.c    **** ****************************************************************************//**
+ 279:dfu_user.c    **** *
+ 280:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 281:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 282:dfu_user.c    **** *
+ 283:dfu_user.c    **** *******************************************************************************/
+ 284:dfu_user.c    **** void Cy_DFU_TransportStart(void)
+ 285:dfu_user.c    **** {
+ 462              		.loc 1 285 0
+ 463              		.cfi_startproc
+ 464              		@ args = 0, pretend = 0, frame = 0
+ 465              		@ frame_needed = 0, uses_anonymous_args = 0
+ 466 0000 10B5     		push	{r4, lr}
+ 467              		.cfi_def_cfa_offset 8
+ 468              		.cfi_offset 4, -8
+ 469              		.cfi_offset 14, -4
+ 286:dfu_user.c    ****     UART_UartCyBtldrCommStart();
+ 470              		.loc 1 286 0
+ 471 0002 FFF7FEFF 		bl	UART_UartCyBtldrCommStart
+ 472              	.LVL49:
+ 287:dfu_user.c    **** }
+ 473              		.loc 1 287 0
+ 474              		@ sp needed
+ 475 0006 10BD     		pop	{r4, pc}
+ 476              		.cfi_endproc
+ 477              	.LFE52:
+ 478              		.size	Cy_DFU_TransportStart, .-Cy_DFU_TransportStart
+ 479              		.section	.text.Cy_DFU_TransportStop,"ax",%progbits
+ 480              		.align	2
+ 481              		.global	Cy_DFU_TransportStop
+ 482              		.code	16
+ 483              		.thumb_func
+ 484              		.type	Cy_DFU_TransportStop, %function
+ 485              	Cy_DFU_TransportStop:
+ 486              	.LFB53:
+ 288:dfu_user.c    **** 
+ 289:dfu_user.c    **** /*******************************************************************************
+ 290:dfu_user.c    **** * Function Name: Cy_DFU_TransportStop
+ 291:dfu_user.c    **** ****************************************************************************//**
+ 292:dfu_user.c    **** *
+ 293:dfu_user.c    **** * This function documentation is part of the DFU SDK API, see the
+ 294:dfu_user.c    **** * cy_dfu.h file or DFU SDK API Reference Manual for details.
+ 295:dfu_user.c    **** *
+ 296:dfu_user.c    **** *******************************************************************************/
+ 297:dfu_user.c    **** void Cy_DFU_TransportStop(void)
+ 298:dfu_user.c    **** {
+ 487              		.loc 1 298 0
+ 488              		.cfi_startproc
+ 489              		@ args = 0, pretend = 0, frame = 0
+ 490              		@ frame_needed = 0, uses_anonymous_args = 0
+ 491 0000 10B5     		push	{r4, lr}
+ 492              		.cfi_def_cfa_offset 8
+ 493              		.cfi_offset 4, -8
+ 494              		.cfi_offset 14, -4
+ 299:dfu_user.c    ****     UART_UartCyBtldrCommStop();
+ 495              		.loc 1 299 0
+ 496 0002 FFF7FEFF 		bl	UART_UartCyBtldrCommStop
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 15
+
+
+ 497              	.LVL50:
+ 300:dfu_user.c    **** }
+ 498              		.loc 1 300 0
+ 499              		@ sp needed
+ 500 0006 10BD     		pop	{r4, pc}
+ 501              		.cfi_endproc
+ 502              	.LFE53:
+ 503              		.size	Cy_DFU_TransportStop, .-Cy_DFU_TransportStop
+ 504              		.section	.cy_boot_metadata,"a",%progbits
+ 505              		.align	2
+ 506              		.type	cy_dfu_metadata, %object
+ 507              		.size	cy_dfu_metadata, 512
+ 508              	cy_dfu_metadata:
+ 509 0000 00000000 		.word	__cy_app0_verify_start
+ 510 0004 00000000 		.word	__cy_app0_verify_length
+ 511 0008 00000000 		.word	__cy_app1_verify_start
+ 512 000c 00000000 		.word	__cy_app1_verify_length
+ 513 0010 00000000 		.word	0
+ 514 0014 00000000 		.space	492
+ 514      00000000 
+ 514      00000000 
+ 514      00000000 
+ 514      00000000 
+ 515              		.text
+ 516              	.Letext0:
+ 517              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 518              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 519              		.file 4 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/flash/cy_flash.h"
+ 520              		.file 5 "Generated_Source\\PSoC6\\pdl\\dfu/cy_dfu.h"
+ 521              		.file 6 "./dfu_user.h"
+ 522              		.file 7 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 523              		.file 8 "transport_uart.h"
+ 524              		.section	.debug_info,"",%progbits
+ 525              	.Ldebug_info0:
+ 526 0000 48070000 		.4byte	0x748
+ 527 0004 0400     		.2byte	0x4
+ 528 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 529 000a 04       		.byte	0x4
+ 530 000b 01       		.uleb128 0x1
+ 531 000c EE000000 		.4byte	.LASF91
+ 532 0010 0C       		.byte	0xc
+ 533 0011 00000000 		.4byte	.LASF92
+ 534 0015 80030000 		.4byte	.LASF93
+ 535 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 536 001d 00000000 		.4byte	0
+ 537 0021 00000000 		.4byte	.Ldebug_line0
+ 538 0025 02       		.uleb128 0x2
+ 539 0026 04       		.byte	0x4
+ 540 0027 05       		.byte	0x5
+ 541 0028 696E7400 		.ascii	"int\000"
+ 542 002c 03       		.uleb128 0x3
+ 543 002d 04       		.byte	0x4
+ 544 002e 07       		.byte	0x7
+ 545 002f 66030000 		.4byte	.LASF0
+ 546 0033 03       		.uleb128 0x3
+ 547 0034 08       		.byte	0x8
+ 548 0035 05       		.byte	0x5
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 16
+
+
+ 549 0036 7A020000 		.4byte	.LASF1
+ 550 003a 03       		.uleb128 0x3
+ 551 003b 08       		.byte	0x8
+ 552 003c 04       		.byte	0x4
+ 553 003d 5A030000 		.4byte	.LASF2
+ 554 0041 03       		.uleb128 0x3
+ 555 0042 01       		.byte	0x1
+ 556 0043 06       		.byte	0x6
+ 557 0044 D0030000 		.4byte	.LASF3
+ 558 0048 04       		.uleb128 0x4
+ 559 0049 F5020000 		.4byte	.LASF8
+ 560 004d 02       		.byte	0x2
+ 561 004e 1D       		.byte	0x1d
+ 562 004f 53000000 		.4byte	0x53
+ 563 0053 03       		.uleb128 0x3
+ 564 0054 01       		.byte	0x1
+ 565 0055 08       		.byte	0x8
+ 566 0056 1F030000 		.4byte	.LASF4
+ 567 005a 03       		.uleb128 0x3
+ 568 005b 02       		.byte	0x2
+ 569 005c 05       		.byte	0x5
+ 570 005d B4010000 		.4byte	.LASF5
+ 571 0061 03       		.uleb128 0x3
+ 572 0062 02       		.byte	0x2
+ 573 0063 07       		.byte	0x7
+ 574 0064 5C040000 		.4byte	.LASF6
+ 575 0068 03       		.uleb128 0x3
+ 576 0069 04       		.byte	0x4
+ 577 006a 05       		.byte	0x5
+ 578 006b DB020000 		.4byte	.LASF7
+ 579 006f 04       		.uleb128 0x4
+ 580 0070 86050000 		.4byte	.LASF9
+ 581 0074 02       		.byte	0x2
+ 582 0075 41       		.byte	0x41
+ 583 0076 7A000000 		.4byte	0x7a
+ 584 007a 03       		.uleb128 0x3
+ 585 007b 04       		.byte	0x4
+ 586 007c 07       		.byte	0x7
+ 587 007d 38050000 		.4byte	.LASF10
+ 588 0081 03       		.uleb128 0x3
+ 589 0082 08       		.byte	0x8
+ 590 0083 07       		.byte	0x7
+ 591 0084 88020000 		.4byte	.LASF11
+ 592 0088 03       		.uleb128 0x3
+ 593 0089 04       		.byte	0x4
+ 594 008a 07       		.byte	0x7
+ 595 008b CD000000 		.4byte	.LASF12
+ 596 008f 03       		.uleb128 0x3
+ 597 0090 01       		.byte	0x1
+ 598 0091 08       		.byte	0x8
+ 599 0092 81050000 		.4byte	.LASF13
+ 600 0096 04       		.uleb128 0x4
+ 601 0097 D6010000 		.4byte	.LASF14
+ 602 009b 03       		.byte	0x3
+ 603 009c 18       		.byte	0x18
+ 604 009d 48000000 		.4byte	0x48
+ 605 00a1 04       		.uleb128 0x4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 17
+
+
+ 606 00a2 E4030000 		.4byte	.LASF15
+ 607 00a6 03       		.byte	0x3
+ 608 00a7 30       		.byte	0x30
+ 609 00a8 6F000000 		.4byte	0x6f
+ 610 00ac 03       		.uleb128 0x3
+ 611 00ad 04       		.byte	0x4
+ 612 00ae 04       		.byte	0x4
+ 613 00af 61020000 		.4byte	.LASF16
+ 614 00b3 03       		.uleb128 0x3
+ 615 00b4 08       		.byte	0x8
+ 616 00b5 04       		.byte	0x4
+ 617 00b6 69050000 		.4byte	.LASF17
+ 618 00ba 05       		.uleb128 0x5
+ 619 00bb BE020000 		.4byte	.LASF94
+ 620 00bf 04       		.byte	0x4
+ 621 00c0 2C000000 		.4byte	0x2c
+ 622 00c4 04       		.byte	0x4
+ 623 00c5 7E01     		.2byte	0x17e
+ 624 00c7 35010000 		.4byte	0x135
+ 625 00cb 06       		.uleb128 0x6
+ 626 00cc 97060000 		.4byte	.LASF18
+ 627 00d0 00       		.byte	0
+ 628 00d1 07       		.uleb128 0x7
+ 629 00d2 EE060000 		.4byte	.LASF19
+ 630 00d6 00005200 		.4byte	0x520000
+ 631 00da 07       		.uleb128 0x7
+ 632 00db 91050000 		.4byte	.LASF20
+ 633 00df 01005200 		.4byte	0x520001
+ 634 00e3 07       		.uleb128 0x7
+ 635 00e4 18050000 		.4byte	.LASF21
+ 636 00e8 02005200 		.4byte	0x520002
+ 637 00ec 07       		.uleb128 0x7
+ 638 00ed E4050000 		.4byte	.LASF22
+ 639 00f1 03005200 		.4byte	0x520003
+ 640 00f5 07       		.uleb128 0x7
+ 641 00f6 CE050000 		.4byte	.LASF23
+ 642 00fa 05005200 		.4byte	0x520005
+ 643 00fe 07       		.uleb128 0x7
+ 644 00ff 25020000 		.4byte	.LASF24
+ 645 0103 06005200 		.4byte	0x520006
+ 646 0107 07       		.uleb128 0x7
+ 647 0108 18040000 		.4byte	.LASF25
+ 648 010c 22005200 		.4byte	0x520022
+ 649 0110 07       		.uleb128 0x7
+ 650 0111 FF050000 		.4byte	.LASF26
+ 651 0115 FF005200 		.4byte	0x5200ff
+ 652 0119 07       		.uleb128 0x7
+ 653 011a 4A050000 		.4byte	.LASF27
+ 654 011e 00005000 		.4byte	0x500000
+ 655 0122 07       		.uleb128 0x7
+ 656 0123 9F020000 		.4byte	.LASF28
+ 657 0127 01005000 		.4byte	0x500001
+ 658 012b 07       		.uleb128 0x7
+ 659 012c D1040000 		.4byte	.LASF29
+ 660 0130 02005000 		.4byte	0x500002
+ 661 0134 00       		.byte	0
+ 662 0135 08       		.uleb128 0x8
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 18
+
+
+ 663 0136 D6000000 		.4byte	.LASF30
+ 664 013a 04       		.byte	0x4
+ 665 013b 8C01     		.2byte	0x18c
+ 666 013d BA000000 		.4byte	0xba
+ 667 0141 09       		.uleb128 0x9
+ 668 0142 1C       		.byte	0x1c
+ 669 0143 05       		.byte	0x5
+ 670 0144 5102     		.2byte	0x251
+ 671 0146 A6010000 		.4byte	0x1a6
+ 672 014a 0A       		.uleb128 0xa
+ 673 014b C5030000 		.4byte	.LASF31
+ 674 014f 05       		.byte	0x5
+ 675 0150 5702     		.2byte	0x257
+ 676 0152 A6010000 		.4byte	0x1a6
+ 677 0156 00       		.byte	0
+ 678 0157 0A       		.uleb128 0xa
+ 679 0158 8F010000 		.4byte	.LASF32
+ 680 015c 05       		.byte	0x5
+ 681 015d 5802     		.2byte	0x258
+ 682 015f A1000000 		.4byte	0xa1
+ 683 0163 04       		.byte	0x4
+ 684 0164 0A       		.uleb128 0xa
+ 685 0165 73030000 		.4byte	.LASF33
+ 686 0169 05       		.byte	0x5
+ 687 016a 5D02     		.2byte	0x25d
+ 688 016c A6010000 		.4byte	0x1a6
+ 689 0170 08       		.byte	0x8
+ 690 0171 0A       		.uleb128 0xa
+ 691 0172 E6060000 		.4byte	.LASF34
+ 692 0176 05       		.byte	0x5
+ 693 0177 5E02     		.2byte	0x25e
+ 694 0179 A1000000 		.4byte	0xa1
+ 695 017d 0C       		.byte	0xc
+ 696 017e 0A       		.uleb128 0xa
+ 697 017f 70050000 		.4byte	.LASF35
+ 698 0183 05       		.byte	0x5
+ 699 0184 5F02     		.2byte	0x25f
+ 700 0186 A1000000 		.4byte	0xa1
+ 701 018a 10       		.byte	0x10
+ 702 018b 0A       		.uleb128 0xa
+ 703 018c 67020000 		.4byte	.LASF36
+ 704 0190 05       		.byte	0x5
+ 705 0191 6102     		.2byte	0x261
+ 706 0193 A1000000 		.4byte	0xa1
+ 707 0197 14       		.byte	0x14
+ 708 0198 0A       		.uleb128 0xa
+ 709 0199 F3010000 		.4byte	.LASF37
+ 710 019d 05       		.byte	0x5
+ 711 019e 6902     		.2byte	0x269
+ 712 01a0 A1000000 		.4byte	0xa1
+ 713 01a4 18       		.byte	0x18
+ 714 01a5 00       		.byte	0
+ 715 01a6 0B       		.uleb128 0xb
+ 716 01a7 04       		.byte	0x4
+ 717 01a8 96000000 		.4byte	0x96
+ 718 01ac 08       		.uleb128 0x8
+ 719 01ad 76040000 		.4byte	.LASF38
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 19
+
+
+ 720 01b1 05       		.byte	0x5
+ 721 01b2 7602     		.2byte	0x276
+ 722 01b4 41010000 		.4byte	0x141
+ 723 01b8 0C       		.uleb128 0xc
+ 724 01b9 04       		.byte	0x4
+ 725 01ba 2C000000 		.4byte	0x2c
+ 726 01be 05       		.byte	0x5
+ 727 01bf 8C02     		.2byte	0x28c
+ 728 01c1 14020000 		.4byte	0x214
+ 729 01c5 06       		.uleb128 0x6
+ 730 01c6 71060000 		.4byte	.LASF39
+ 731 01ca 00       		.byte	0
+ 732 01cb 07       		.uleb128 0x7
+ 733 01cc 11020000 		.4byte	.LASF40
+ 734 01d0 02001A00 		.4byte	0x1a0002
+ 735 01d4 07       		.uleb128 0x7
+ 736 01d5 BD040000 		.4byte	.LASF41
+ 737 01d9 03001A00 		.4byte	0x1a0003
+ 738 01dd 07       		.uleb128 0x7
+ 739 01de 6B000000 		.4byte	.LASF42
+ 740 01e2 04001A00 		.4byte	0x1a0004
+ 741 01e6 07       		.uleb128 0x7
+ 742 01e7 E4020000 		.4byte	.LASF43
+ 743 01eb 05001A00 		.4byte	0x1a0005
+ 744 01ef 07       		.uleb128 0x7
+ 745 01f0 C5060000 		.4byte	.LASF44
+ 746 01f4 08001A00 		.4byte	0x1a0008
+ 747 01f8 07       		.uleb128 0x7
+ 748 01f9 0B000000 		.4byte	.LASF45
+ 749 01fd 0A001A00 		.4byte	0x1a000a
+ 750 0201 07       		.uleb128 0x7
+ 751 0202 2D030000 		.4byte	.LASF46
+ 752 0206 40001A00 		.4byte	0x1a0040
+ 753 020a 07       		.uleb128 0x7
+ 754 020b 47040000 		.4byte	.LASF47
+ 755 020f 0F001A00 		.4byte	0x1a000f
+ 756 0213 00       		.byte	0
+ 757 0214 08       		.uleb128 0x8
+ 758 0215 34040000 		.4byte	.LASF48
+ 759 0219 05       		.byte	0x5
+ 760 021a 9F02     		.2byte	0x29f
+ 761 021c B8010000 		.4byte	0x1b8
+ 762 0220 0D       		.uleb128 0xd
+ 763 0221 04050000 		.4byte	.LASF95
+ 764 0225 01       		.byte	0x1
+ 765 0226 3E       		.byte	0x3e
+ 766 0227 A1000000 		.4byte	0xa1
+ 767 022b 00000000 		.4byte	.LFB45
+ 768 022f 12000000 		.4byte	.LFE45-.LFB45
+ 769 0233 01       		.uleb128 0x1
+ 770 0234 9C       		.byte	0x9c
+ 771 0235 58020000 		.4byte	0x258
+ 772 0239 0E       		.uleb128 0xe
+ 773 023a D0010000 		.4byte	.LASF49
+ 774 023e 01       		.byte	0x1
+ 775 023f 3E       		.byte	0x3e
+ 776 0240 A1000000 		.4byte	0xa1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 20
+
+
+ 777 0244 00000000 		.4byte	.LLST0
+ 778 0248 0E       		.uleb128 0xe
+ 779 0249 33000000 		.4byte	.LASF50
+ 780 024d 01       		.byte	0x1
+ 781 024e 3E       		.byte	0x3e
+ 782 024f A1000000 		.4byte	0xa1
+ 783 0253 21000000 		.4byte	.LLST1
+ 784 0257 00       		.byte	0
+ 785 0258 0F       		.uleb128 0xf
+ 786 0259 A1010000 		.4byte	.LASF96
+ 787 025d 01       		.byte	0x1
+ 788 025e 51       		.byte	0x51
+ 789 025f 00000000 		.4byte	.LFB46
+ 790 0263 28000000 		.4byte	.LFE46-.LFB46
+ 791 0267 01       		.uleb128 0x1
+ 792 0268 9C       		.byte	0x9c
+ 793 0269 D4020000 		.4byte	0x2d4
+ 794 026d 0E       		.uleb128 0xe
+ 795 026e 70050000 		.4byte	.LASF35
+ 796 0272 01       		.byte	0x1
+ 797 0273 51       		.byte	0x51
+ 798 0274 A1000000 		.4byte	0xa1
+ 799 0278 42000000 		.4byte	.LLST2
+ 800 027c 0E       		.uleb128 0xe
+ 801 027d C0000000 		.4byte	.LASF51
+ 802 0281 01       		.byte	0x1
+ 803 0282 51       		.byte	0x51
+ 804 0283 D4020000 		.4byte	0x2d4
+ 805 0287 63000000 		.4byte	.LLST3
+ 806 028b 0E       		.uleb128 0xe
+ 807 028c 76050000 		.4byte	.LASF52
+ 808 0290 01       		.byte	0x1
+ 809 0291 51       		.byte	0x51
+ 810 0292 D4020000 		.4byte	0x2d4
+ 811 0296 8F000000 		.4byte	.LLST4
+ 812 029a 10       		.uleb128 0x10
+ 813 029b 25060000 		.4byte	.LASF53
+ 814 029f 01       		.byte	0x1
+ 815 02a0 53       		.byte	0x53
+ 816 02a1 A1000000 		.4byte	0xa1
+ 817 02a5 02       		.uleb128 0x2
+ 818 02a6 91       		.byte	0x91
+ 819 02a7 6C       		.sleb128 -20
+ 820 02a8 10       		.uleb128 0x10
+ 821 02a9 DB060000 		.4byte	.LASF54
+ 822 02ad 01       		.byte	0x1
+ 823 02ae 54       		.byte	0x54
+ 824 02af A1000000 		.4byte	0xa1
+ 825 02b3 02       		.uleb128 0x2
+ 826 02b4 91       		.byte	0x91
+ 827 02b5 68       		.sleb128 -24
+ 828 02b6 11       		.uleb128 0x11
+ 829 02b7 10000000 		.4byte	.LVL5
+ 830 02bb D3060000 		.4byte	0x6d3
+ 831 02bf 12       		.uleb128 0x12
+ 832 02c0 01       		.uleb128 0x1
+ 833 02c1 50       		.byte	0x50
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 21
+
+
+ 834 02c2 03       		.uleb128 0x3
+ 835 02c3 F3       		.byte	0xf3
+ 836 02c4 01       		.uleb128 0x1
+ 837 02c5 50       		.byte	0x50
+ 838 02c6 12       		.uleb128 0x12
+ 839 02c7 01       		.uleb128 0x1
+ 840 02c8 51       		.byte	0x51
+ 841 02c9 02       		.uleb128 0x2
+ 842 02ca 91       		.byte	0x91
+ 843 02cb 6C       		.sleb128 -20
+ 844 02cc 12       		.uleb128 0x12
+ 845 02cd 01       		.uleb128 0x1
+ 846 02ce 52       		.byte	0x52
+ 847 02cf 02       		.uleb128 0x2
+ 848 02d0 7D       		.byte	0x7d
+ 849 02d1 00       		.sleb128 0
+ 850 02d2 00       		.byte	0
+ 851 02d3 00       		.byte	0
+ 852 02d4 0B       		.uleb128 0xb
+ 853 02d5 04       		.byte	0x4
+ 854 02d6 A1000000 		.4byte	0xa1
+ 855 02da 13       		.uleb128 0x13
+ 856 02db BD050000 		.4byte	.LASF63
+ 857 02df 01       		.byte	0x1
+ 858 02e0 6A       		.byte	0x6a
+ 859 02e1 14020000 		.4byte	0x214
+ 860 02e5 00000000 		.4byte	.LFB47
+ 861 02e9 B0000000 		.4byte	.LFE47-.LFB47
+ 862 02ed 01       		.uleb128 0x1
+ 863 02ee 9C       		.byte	0x9c
+ 864 02ef 23040000 		.4byte	0x423
+ 865 02f3 0E       		.uleb128 0xe
+ 866 02f4 DC030000 		.4byte	.LASF55
+ 867 02f8 01       		.byte	0x1
+ 868 02f9 6A       		.byte	0x6a
+ 869 02fa A1000000 		.4byte	0xa1
+ 870 02fe BB000000 		.4byte	.LLST5
+ 871 0302 0E       		.uleb128 0xe
+ 872 0303 80010000 		.4byte	.LASF56
+ 873 0307 01       		.byte	0x1
+ 874 0308 6A       		.byte	0x6a
+ 875 0309 A1000000 		.4byte	0xa1
+ 876 030d E7000000 		.4byte	.LLST6
+ 877 0311 14       		.uleb128 0x14
+ 878 0312 63746C00 		.ascii	"ctl\000"
+ 879 0316 01       		.byte	0x1
+ 880 0317 6A       		.byte	0x6a
+ 881 0318 A1000000 		.4byte	0xa1
+ 882 031c 5E010000 		.4byte	.LLST7
+ 883 0320 0E       		.uleb128 0xe
+ 884 0321 18030000 		.4byte	.LASF57
+ 885 0325 01       		.byte	0x1
+ 886 0326 6B       		.byte	0x6b
+ 887 0327 23040000 		.4byte	0x423
+ 888 032b 8A010000 		.4byte	.LLST8
+ 889 032f 15       		.uleb128 0x15
+ 890 0330 AC050000 		.4byte	.LASF65
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 22
+
+
+ 891 0334 01       		.byte	0x1
+ 892 0335 6F       		.byte	0x6f
+ 893 0336 29040000 		.4byte	0x429
+ 894 033a 16       		.uleb128 0x16
+ 895 033b 14060000 		.4byte	.LASF58
+ 896 033f 01       		.byte	0x1
+ 897 0340 70       		.byte	0x70
+ 898 0341 29040000 		.4byte	0x429
+ 899 0345 00001010 		.4byte	0x10100000
+ 900 0349 16       		.uleb128 0x16
+ 901 034a 20000000 		.4byte	.LASF59
+ 902 034e 01       		.byte	0x1
+ 903 034f 72       		.byte	0x72
+ 904 0350 29040000 		.4byte	0x429
+ 905 0354 00000014 		.4byte	0x14000000
+ 906 0358 16       		.uleb128 0x16
+ 907 0359 7D000000 		.4byte	.LASF60
+ 908 035d 01       		.byte	0x1
+ 909 035e 73       		.byte	0x73
+ 910 035f 29040000 		.4byte	0x429
+ 911 0363 00800014 		.4byte	0x14008000
+ 912 0367 17       		.uleb128 0x17
+ 913 0368 6F040000 		.4byte	.LASF61
+ 914 036c 01       		.byte	0x1
+ 915 036d 75       		.byte	0x75
+ 916 036e 14020000 		.4byte	0x214
+ 917 0372 B6010000 		.4byte	.LLST9
+ 918 0376 18       		.uleb128 0x18
+ 919 0377 61707000 		.ascii	"app\000"
+ 920 037b 01       		.byte	0x1
+ 921 037c 77       		.byte	0x77
+ 922 037d A1000000 		.4byte	0xa1
+ 923 0381 E0010000 		.4byte	.LLST10
+ 924 0385 10       		.uleb128 0x10
+ 925 0386 C0000000 		.4byte	.LASF51
+ 926 038a 01       		.byte	0x1
+ 927 038b 78       		.byte	0x78
+ 928 038c A1000000 		.4byte	0xa1
+ 929 0390 02       		.uleb128 0x2
+ 930 0391 91       		.byte	0x91
+ 931 0392 64       		.sleb128 -28
+ 932 0393 10       		.uleb128 0x10
+ 933 0394 76050000 		.4byte	.LASF52
+ 934 0398 01       		.byte	0x1
+ 935 0399 79       		.byte	0x79
+ 936 039a A1000000 		.4byte	0xa1
+ 937 039e 02       		.uleb128 0x2
+ 938 039f 91       		.byte	0x91
+ 939 03a0 60       		.sleb128 -32
+ 940 03a1 19       		.uleb128 0x19
+ 941 03a2 74000000 		.4byte	.LBB2
+ 942 03a6 1E000000 		.4byte	.LBE2-.LBB2
+ 943 03aa E8030000 		.4byte	0x3e8
+ 944 03ae 17       		.uleb128 0x17
+ 945 03af 87010000 		.4byte	.LASF62
+ 946 03b3 01       		.byte	0x1
+ 947 03b4 AF       		.byte	0xaf
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 23
+
+
+ 948 03b5 35010000 		.4byte	0x135
+ 949 03b9 F3010000 		.4byte	.LLST11
+ 950 03bd 1A       		.uleb128 0x1a
+ 951 03be 84000000 		.4byte	.LVL22
+ 952 03c2 DF060000 		.4byte	0x6df
+ 953 03c6 D7030000 		.4byte	0x3d7
+ 954 03ca 12       		.uleb128 0x12
+ 955 03cb 01       		.uleb128 0x1
+ 956 03cc 51       		.byte	0x51
+ 957 03cd 01       		.uleb128 0x1
+ 958 03ce 30       		.byte	0x30
+ 959 03cf 12       		.uleb128 0x12
+ 960 03d0 01       		.uleb128 0x1
+ 961 03d1 52       		.byte	0x52
+ 962 03d2 03       		.uleb128 0x3
+ 963 03d3 0A       		.byte	0xa
+ 964 03d4 0002     		.2byte	0x200
+ 965 03d6 00       		.byte	0
+ 966 03d7 11       		.uleb128 0x11
+ 967 03d8 8C000000 		.4byte	.LVL23
+ 968 03dc E8060000 		.4byte	0x6e8
+ 969 03e0 12       		.uleb128 0x12
+ 970 03e1 01       		.uleb128 0x1
+ 971 03e2 50       		.byte	0x50
+ 972 03e3 02       		.uleb128 0x2
+ 973 03e4 74       		.byte	0x74
+ 974 03e5 00       		.sleb128 0
+ 975 03e6 00       		.byte	0
+ 976 03e7 00       		.byte	0
+ 977 03e8 1B       		.uleb128 0x1b
+ 978 03e9 10000000 		.4byte	.LVL10
+ 979 03ed F4060000 		.4byte	0x6f4
+ 980 03f1 1A       		.uleb128 0x1a
+ 981 03f2 18000000 		.4byte	.LVL11
+ 982 03f6 58020000 		.4byte	0x258
+ 983 03fa 0B040000 		.4byte	0x40b
+ 984 03fe 12       		.uleb128 0x12
+ 985 03ff 01       		.uleb128 0x1
+ 986 0400 51       		.byte	0x51
+ 987 0401 02       		.uleb128 0x2
+ 988 0402 91       		.byte	0x91
+ 989 0403 64       		.sleb128 -28
+ 990 0404 12       		.uleb128 0x12
+ 991 0405 01       		.uleb128 0x1
+ 992 0406 52       		.byte	0x52
+ 993 0407 02       		.uleb128 0x2
+ 994 0408 7D       		.byte	0x7d
+ 995 0409 00       		.sleb128 0
+ 996 040a 00       		.byte	0
+ 997 040b 11       		.uleb128 0x11
+ 998 040c 22000000 		.4byte	.LVL12
+ 999 0410 20020000 		.4byte	0x220
+ 1000 0414 12       		.uleb128 0x12
+ 1001 0415 01       		.uleb128 0x1
+ 1002 0416 50       		.byte	0x50
+ 1003 0417 02       		.uleb128 0x2
+ 1004 0418 74       		.byte	0x74
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 24
+
+
+ 1005 0419 00       		.sleb128 0
+ 1006 041a 12       		.uleb128 0x12
+ 1007 041b 01       		.uleb128 0x1
+ 1008 041c 51       		.byte	0x51
+ 1009 041d 03       		.uleb128 0x3
+ 1010 041e 0A       		.byte	0xa
+ 1011 041f 0002     		.2byte	0x200
+ 1012 0421 00       		.byte	0
+ 1013 0422 00       		.byte	0
+ 1014 0423 0B       		.uleb128 0xb
+ 1015 0424 04       		.byte	0x4
+ 1016 0425 AC010000 		.4byte	0x1ac
+ 1017 0429 1C       		.uleb128 0x1c
+ 1018 042a A1000000 		.4byte	0xa1
+ 1019 042e 13       		.uleb128 0x13
+ 1020 042f 31060000 		.4byte	.LASF64
+ 1021 0433 01       		.byte	0x1
+ 1022 0434 BE       		.byte	0xbe
+ 1023 0435 14020000 		.4byte	0x214
+ 1024 0439 00000000 		.4byte	.LFB48
+ 1025 043d 84000000 		.4byte	.LFE48-.LFB48
+ 1026 0441 01       		.uleb128 0x1
+ 1027 0442 9C       		.byte	0x9c
+ 1028 0443 19050000 		.4byte	0x519
+ 1029 0447 0E       		.uleb128 0xe
+ 1030 0448 DC030000 		.4byte	.LASF55
+ 1031 044c 01       		.byte	0x1
+ 1032 044d BE       		.byte	0xbe
+ 1033 044e A1000000 		.4byte	0xa1
+ 1034 0452 06020000 		.4byte	.LLST12
+ 1035 0456 0E       		.uleb128 0xe
+ 1036 0457 80010000 		.4byte	.LASF56
+ 1037 045b 01       		.byte	0x1
+ 1038 045c BE       		.byte	0xbe
+ 1039 045d A1000000 		.4byte	0xa1
+ 1040 0461 32020000 		.4byte	.LLST13
+ 1041 0465 14       		.uleb128 0x14
+ 1042 0466 63746C00 		.ascii	"ctl\000"
+ 1043 046a 01       		.byte	0x1
+ 1044 046b BE       		.byte	0xbe
+ 1045 046c A1000000 		.4byte	0xa1
+ 1046 0470 5C020000 		.4byte	.LLST14
+ 1047 0474 0E       		.uleb128 0xe
+ 1048 0475 18030000 		.4byte	.LASF57
+ 1049 0479 01       		.byte	0x1
+ 1050 047a BF       		.byte	0xbf
+ 1051 047b 23040000 		.4byte	0x423
+ 1052 047f 88020000 		.4byte	.LLST15
+ 1053 0483 15       		.uleb128 0x15
+ 1054 0484 AC050000 		.4byte	.LASF65
+ 1055 0488 01       		.byte	0x1
+ 1056 0489 C3       		.byte	0xc3
+ 1057 048a 29040000 		.4byte	0x429
+ 1058 048e 16       		.uleb128 0x16
+ 1059 048f 14060000 		.4byte	.LASF58
+ 1060 0493 01       		.byte	0x1
+ 1061 0494 C4       		.byte	0xc4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 25
+
+
+ 1062 0495 29040000 		.4byte	0x429
+ 1063 0499 00001010 		.4byte	0x10100000
+ 1064 049d 16       		.uleb128 0x16
+ 1065 049e 20000000 		.4byte	.LASF59
+ 1066 04a2 01       		.byte	0x1
+ 1067 04a3 C6       		.byte	0xc6
+ 1068 04a4 29040000 		.4byte	0x429
+ 1069 04a8 00000014 		.4byte	0x14000000
+ 1070 04ac 16       		.uleb128 0x16
+ 1071 04ad 7D000000 		.4byte	.LASF60
+ 1072 04b1 01       		.byte	0x1
+ 1073 04b2 C7       		.byte	0xc7
+ 1074 04b3 29040000 		.4byte	0x429
+ 1075 04b7 00800014 		.4byte	0x14008000
+ 1076 04bb 17       		.uleb128 0x17
+ 1077 04bc 6F040000 		.4byte	.LASF61
+ 1078 04c0 01       		.byte	0x1
+ 1079 04c1 C9       		.byte	0xc9
+ 1080 04c2 14020000 		.4byte	0x214
+ 1081 04c6 B4020000 		.4byte	.LLST16
+ 1082 04ca 1A       		.uleb128 0x1a
+ 1083 04cb 16000000 		.4byte	.LVL33
+ 1084 04cf 20020000 		.4byte	0x220
+ 1085 04d3 E6040000 		.4byte	0x4e6
+ 1086 04d7 12       		.uleb128 0x12
+ 1087 04d8 01       		.uleb128 0x1
+ 1088 04d9 50       		.byte	0x50
+ 1089 04da 03       		.uleb128 0x3
+ 1090 04db 91       		.byte	0x91
+ 1091 04dc 64       		.sleb128 -28
+ 1092 04dd 06       		.byte	0x6
+ 1093 04de 12       		.uleb128 0x12
+ 1094 04df 01       		.uleb128 0x1
+ 1095 04e0 51       		.byte	0x51
+ 1096 04e1 03       		.uleb128 0x3
+ 1097 04e2 0A       		.byte	0xa
+ 1098 04e3 0002     		.2byte	0x200
+ 1099 04e5 00       		.byte	0
+ 1100 04e6 1A       		.uleb128 0x1a
+ 1101 04e7 54000000 		.4byte	.LVL36
+ 1102 04eb 00070000 		.4byte	0x700
+ 1103 04ef 01050000 		.4byte	0x501
+ 1104 04f3 12       		.uleb128 0x12
+ 1105 04f4 01       		.uleb128 0x1
+ 1106 04f5 51       		.byte	0x51
+ 1107 04f6 02       		.uleb128 0x2
+ 1108 04f7 76       		.byte	0x76
+ 1109 04f8 00       		.sleb128 0
+ 1110 04f9 12       		.uleb128 0x12
+ 1111 04fa 01       		.uleb128 0x1
+ 1112 04fb 52       		.byte	0x52
+ 1113 04fc 03       		.uleb128 0x3
+ 1114 04fd 91       		.byte	0x91
+ 1115 04fe 64       		.sleb128 -28
+ 1116 04ff 06       		.byte	0x6
+ 1117 0500 00       		.byte	0
+ 1118 0501 11       		.uleb128 0x11
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 26
+
+
+ 1119 0502 60000000 		.4byte	.LVL38
+ 1120 0506 09070000 		.4byte	0x709
+ 1121 050a 12       		.uleb128 0x12
+ 1122 050b 01       		.uleb128 0x1
+ 1123 050c 51       		.byte	0x51
+ 1124 050d 02       		.uleb128 0x2
+ 1125 050e 76       		.byte	0x76
+ 1126 050f 00       		.sleb128 0
+ 1127 0510 12       		.uleb128 0x12
+ 1128 0511 01       		.uleb128 0x1
+ 1129 0512 52       		.byte	0x52
+ 1130 0513 03       		.uleb128 0x3
+ 1131 0514 91       		.byte	0x91
+ 1132 0515 64       		.sleb128 -28
+ 1133 0516 06       		.byte	0x6
+ 1134 0517 00       		.byte	0
+ 1135 0518 00       		.byte	0
+ 1136 0519 13       		.uleb128 0x13
+ 1137 051a DE010000 		.4byte	.LASF66
+ 1138 051e 01       		.byte	0x1
+ 1139 051f F5       		.byte	0xf5
+ 1140 0520 14020000 		.4byte	0x214
+ 1141 0524 00000000 		.4byte	.LFB49
+ 1142 0528 08000000 		.4byte	.LFE49-.LFB49
+ 1143 052c 01       		.uleb128 0x1
+ 1144 052d 9C       		.byte	0x9c
+ 1145 052e 95050000 		.4byte	0x595
+ 1146 0532 0E       		.uleb128 0xe
+ 1147 0533 11050000 		.4byte	.LASF67
+ 1148 0537 01       		.byte	0x1
+ 1149 0538 F5       		.byte	0xf5
+ 1150 0539 A6010000 		.4byte	0x1a6
+ 1151 053d F5020000 		.4byte	.LLST17
+ 1152 0541 0E       		.uleb128 0xe
+ 1153 0542 FF040000 		.4byte	.LASF68
+ 1154 0546 01       		.byte	0x1
+ 1155 0547 F5       		.byte	0xf5
+ 1156 0548 A1000000 		.4byte	0xa1
+ 1157 054c 16030000 		.4byte	.LLST18
+ 1158 0550 0E       		.uleb128 0xe
+ 1159 0551 0B020000 		.4byte	.LASF69
+ 1160 0555 01       		.byte	0x1
+ 1161 0556 F5       		.byte	0xf5
+ 1162 0557 D4020000 		.4byte	0x2d4
+ 1163 055b 37030000 		.4byte	.LLST19
+ 1164 055f 0E       		.uleb128 0xe
+ 1165 0560 E6060000 		.4byte	.LASF34
+ 1166 0564 01       		.byte	0x1
+ 1167 0565 F5       		.byte	0xf5
+ 1168 0566 A1000000 		.4byte	0xa1
+ 1169 056a 58030000 		.4byte	.LLST20
+ 1170 056e 11       		.uleb128 0x11
+ 1171 056f 06000000 		.4byte	.LVL45
+ 1172 0573 14070000 		.4byte	0x714
+ 1173 0577 12       		.uleb128 0x12
+ 1174 0578 01       		.uleb128 0x1
+ 1175 0579 50       		.byte	0x50
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 27
+
+
+ 1176 057a 03       		.uleb128 0x3
+ 1177 057b F3       		.byte	0xf3
+ 1178 057c 01       		.uleb128 0x1
+ 1179 057d 50       		.byte	0x50
+ 1180 057e 12       		.uleb128 0x12
+ 1181 057f 01       		.uleb128 0x1
+ 1182 0580 51       		.byte	0x51
+ 1183 0581 03       		.uleb128 0x3
+ 1184 0582 F3       		.byte	0xf3
+ 1185 0583 01       		.uleb128 0x1
+ 1186 0584 51       		.byte	0x51
+ 1187 0585 12       		.uleb128 0x12
+ 1188 0586 01       		.uleb128 0x1
+ 1189 0587 52       		.byte	0x52
+ 1190 0588 03       		.uleb128 0x3
+ 1191 0589 F3       		.byte	0xf3
+ 1192 058a 01       		.uleb128 0x1
+ 1193 058b 52       		.byte	0x52
+ 1194 058c 12       		.uleb128 0x12
+ 1195 058d 01       		.uleb128 0x1
+ 1196 058e 53       		.byte	0x53
+ 1197 058f 03       		.uleb128 0x3
+ 1198 0590 F3       		.byte	0xf3
+ 1199 0591 01       		.uleb128 0x1
+ 1200 0592 53       		.byte	0x53
+ 1201 0593 00       		.byte	0
+ 1202 0594 00       		.byte	0
+ 1203 0595 1D       		.uleb128 0x1d
+ 1204 0596 4B020000 		.4byte	.LASF70
+ 1205 059a 01       		.byte	0x1
+ 1206 059b 0201     		.2byte	0x102
+ 1207 059d 14020000 		.4byte	0x214
+ 1208 05a1 00000000 		.4byte	.LFB50
+ 1209 05a5 08000000 		.4byte	.LFE50-.LFB50
+ 1210 05a9 01       		.uleb128 0x1
+ 1211 05aa 9C       		.byte	0x9c
+ 1212 05ab 16060000 		.4byte	0x616
+ 1213 05af 1E       		.uleb128 0x1e
+ 1214 05b0 11050000 		.4byte	.LASF67
+ 1215 05b4 01       		.byte	0x1
+ 1216 05b5 0201     		.2byte	0x102
+ 1217 05b7 A6010000 		.4byte	0x1a6
+ 1218 05bb 79030000 		.4byte	.LLST21
+ 1219 05bf 1E       		.uleb128 0x1e
+ 1220 05c0 FF040000 		.4byte	.LASF68
+ 1221 05c4 01       		.byte	0x1
+ 1222 05c5 0201     		.2byte	0x102
+ 1223 05c7 A1000000 		.4byte	0xa1
+ 1224 05cb 9A030000 		.4byte	.LLST22
+ 1225 05cf 1E       		.uleb128 0x1e
+ 1226 05d0 0B020000 		.4byte	.LASF69
+ 1227 05d4 01       		.byte	0x1
+ 1228 05d5 0201     		.2byte	0x102
+ 1229 05d7 D4020000 		.4byte	0x2d4
+ 1230 05db BB030000 		.4byte	.LLST23
+ 1231 05df 1E       		.uleb128 0x1e
+ 1232 05e0 E6060000 		.4byte	.LASF34
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 28
+
+
+ 1233 05e4 01       		.byte	0x1
+ 1234 05e5 0201     		.2byte	0x102
+ 1235 05e7 A1000000 		.4byte	0xa1
+ 1236 05eb DC030000 		.4byte	.LLST24
+ 1237 05ef 11       		.uleb128 0x11
+ 1238 05f0 06000000 		.4byte	.LVL47
+ 1239 05f4 1F070000 		.4byte	0x71f
+ 1240 05f8 12       		.uleb128 0x12
+ 1241 05f9 01       		.uleb128 0x1
+ 1242 05fa 50       		.byte	0x50
+ 1243 05fb 03       		.uleb128 0x3
+ 1244 05fc F3       		.byte	0xf3
+ 1245 05fd 01       		.uleb128 0x1
+ 1246 05fe 50       		.byte	0x50
+ 1247 05ff 12       		.uleb128 0x12
+ 1248 0600 01       		.uleb128 0x1
+ 1249 0601 51       		.byte	0x51
+ 1250 0602 03       		.uleb128 0x3
+ 1251 0603 F3       		.byte	0xf3
+ 1252 0604 01       		.uleb128 0x1
+ 1253 0605 51       		.byte	0x51
+ 1254 0606 12       		.uleb128 0x12
+ 1255 0607 01       		.uleb128 0x1
+ 1256 0608 52       		.byte	0x52
+ 1257 0609 03       		.uleb128 0x3
+ 1258 060a F3       		.byte	0xf3
+ 1259 060b 01       		.uleb128 0x1
+ 1260 060c 52       		.byte	0x52
+ 1261 060d 12       		.uleb128 0x12
+ 1262 060e 01       		.uleb128 0x1
+ 1263 060f 53       		.byte	0x53
+ 1264 0610 03       		.uleb128 0x3
+ 1265 0611 F3       		.byte	0xf3
+ 1266 0612 01       		.uleb128 0x1
+ 1267 0613 53       		.byte	0x53
+ 1268 0614 00       		.byte	0
+ 1269 0615 00       		.byte	0
+ 1270 0616 1F       		.uleb128 0x1f
+ 1271 0617 90000000 		.4byte	.LASF71
+ 1272 061b 01       		.byte	0x1
+ 1273 061c 0F01     		.2byte	0x10f
+ 1274 061e 00000000 		.4byte	.LFB51
+ 1275 0622 08000000 		.4byte	.LFE51-.LFB51
+ 1276 0626 01       		.uleb128 0x1
+ 1277 0627 9C       		.byte	0x9c
+ 1278 0628 36060000 		.4byte	0x636
+ 1279 062c 1B       		.uleb128 0x1b
+ 1280 062d 06000000 		.4byte	.LVL48
+ 1281 0631 2A070000 		.4byte	0x72a
+ 1282 0635 00       		.byte	0
+ 1283 0636 1F       		.uleb128 0x1f
+ 1284 0637 41060000 		.4byte	.LASF72
+ 1285 063b 01       		.byte	0x1
+ 1286 063c 1C01     		.2byte	0x11c
+ 1287 063e 00000000 		.4byte	.LFB52
+ 1288 0642 08000000 		.4byte	.LFE52-.LFB52
+ 1289 0646 01       		.uleb128 0x1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 29
+
+
+ 1290 0647 9C       		.byte	0x9c
+ 1291 0648 56060000 		.4byte	0x656
+ 1292 064c 1B       		.uleb128 0x1b
+ 1293 064d 06000000 		.4byte	.LVL49
+ 1294 0651 35070000 		.4byte	0x735
+ 1295 0655 00       		.byte	0
+ 1296 0656 1F       		.uleb128 0x1f
+ 1297 0657 ED030000 		.4byte	.LASF73
+ 1298 065b 01       		.byte	0x1
+ 1299 065c 2901     		.2byte	0x129
+ 1300 065e 00000000 		.4byte	.LFB53
+ 1301 0662 08000000 		.4byte	.LFE53-.LFB53
+ 1302 0666 01       		.uleb128 0x1
+ 1303 0667 9C       		.byte	0x9c
+ 1304 0668 76060000 		.4byte	0x676
+ 1305 066c 1B       		.uleb128 0x1b
+ 1306 066d 06000000 		.4byte	.LVL50
+ 1307 0671 40070000 		.4byte	0x740
+ 1308 0675 00       		.byte	0
+ 1309 0676 20       		.uleb128 0x20
+ 1310 0677 29040000 		.4byte	0x429
+ 1311 067b 86060000 		.4byte	0x686
+ 1312 067f 21       		.uleb128 0x21
+ 1313 0680 88000000 		.4byte	0x88
+ 1314 0684 7F       		.byte	0x7f
+ 1315 0685 00       		.byte	0
+ 1316 0686 10       		.uleb128 0x10
+ 1317 0687 FB010000 		.4byte	.LASF74
+ 1318 068b 01       		.byte	0x1
+ 1319 068c 25       		.byte	0x25
+ 1320 068d 97060000 		.4byte	0x697
+ 1321 0691 05       		.uleb128 0x5
+ 1322 0692 03       		.byte	0x3
+ 1323 0693 00000000 		.4byte	cy_dfu_metadata
+ 1324 0697 1C       		.uleb128 0x1c
+ 1325 0698 76060000 		.4byte	0x676
+ 1326 069c 22       		.uleb128 0x22
+ 1327 069d 3C000000 		.4byte	.LASF75
+ 1328 06a1 06       		.byte	0x6
+ 1329 06a2 77       		.byte	0x77
+ 1330 06a3 96000000 		.4byte	0x96
+ 1331 06a7 22       		.uleb128 0x22
+ 1332 06a8 42030000 		.4byte	.LASF76
+ 1333 06ac 06       		.byte	0x6
+ 1334 06ad 78       		.byte	0x78
+ 1335 06ae 96000000 		.4byte	0x96
+ 1336 06b2 22       		.uleb128 0x22
+ 1337 06b3 80060000 		.4byte	.LASF77
+ 1338 06b7 06       		.byte	0x6
+ 1339 06b8 79       		.byte	0x79
+ 1340 06b9 96000000 		.4byte	0x96
+ 1341 06bd 22       		.uleb128 0x22
+ 1342 06be 53000000 		.4byte	.LASF78
+ 1343 06c2 06       		.byte	0x6
+ 1344 06c3 7A       		.byte	0x7a
+ 1345 06c4 96000000 		.4byte	0x96
+ 1346 06c8 22       		.uleb128 0x22
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 30
+
+
+ 1347 06c9 FF020000 		.4byte	.LASF79
+ 1348 06cd 06       		.byte	0x6
+ 1349 06ce 7B       		.byte	0x7b
+ 1350 06cf 96000000 		.4byte	0x96
+ 1351 06d3 23       		.uleb128 0x23
+ 1352 06d4 02040000 		.4byte	.LASF80
+ 1353 06d8 02040000 		.4byte	.LASF80
+ 1354 06dc 05       		.byte	0x5
+ 1355 06dd CF02     		.2byte	0x2cf
+ 1356 06df 24       		.uleb128 0x24
+ 1357 06e0 D4020000 		.4byte	.LASF83
+ 1358 06e4 D4020000 		.4byte	.LASF83
+ 1359 06e8 23       		.uleb128 0x23
+ 1360 06e9 BE010000 		.4byte	.LASF81
+ 1361 06ed BE010000 		.4byte	.LASF81
+ 1362 06f1 04       		.byte	0x4
+ 1363 06f2 A601     		.2byte	0x1a6
+ 1364 06f4 23       		.uleb128 0x23
+ 1365 06f5 EA040000 		.4byte	.LASF82
+ 1366 06f9 EA040000 		.4byte	.LASF82
+ 1367 06fd 05       		.byte	0x5
+ 1368 06fe CD02     		.2byte	0x2cd
+ 1369 0700 24       		.uleb128 0x24
+ 1370 0701 9A010000 		.4byte	.LASF84
+ 1371 0705 9A010000 		.4byte	.LASF84
+ 1372 0709 25       		.uleb128 0x25
+ 1373 070a 73020000 		.4byte	.LASF85
+ 1374 070e 73020000 		.4byte	.LASF85
+ 1375 0712 07       		.byte	0x7
+ 1376 0713 16       		.byte	0x16
+ 1377 0714 25       		.uleb128 0x25
+ 1378 0715 8A040000 		.4byte	.LASF86
+ 1379 0719 8A040000 		.4byte	.LASF86
+ 1380 071d 08       		.byte	0x8
+ 1381 071e 20       		.byte	0x20
+ 1382 071f 25       		.uleb128 0x25
+ 1383 0720 A6000000 		.4byte	.LASF87
+ 1384 0724 A6000000 		.4byte	.LASF87
+ 1385 0728 08       		.byte	0x8
+ 1386 0729 21       		.byte	0x21
+ 1387 072a 25       		.uleb128 0x25
+ 1388 072b 57060000 		.4byte	.LASF88
+ 1389 072f 57060000 		.4byte	.LASF88
+ 1390 0733 08       		.byte	0x8
+ 1391 0734 1F       		.byte	0x1f
+ 1392 0735 25       		.uleb128 0x25
+ 1393 0736 A3040000 		.4byte	.LASF89
+ 1394 073a A3040000 		.4byte	.LASF89
+ 1395 073e 08       		.byte	0x8
+ 1396 073f 1D       		.byte	0x1d
+ 1397 0740 25       		.uleb128 0x25
+ 1398 0741 AC060000 		.4byte	.LASF90
+ 1399 0745 AC060000 		.4byte	.LASF90
+ 1400 0749 08       		.byte	0x8
+ 1401 074a 1E       		.byte	0x1e
+ 1402 074b 00       		.byte	0
+ 1403              		.section	.debug_abbrev,"",%progbits
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 31
+
+
+ 1404              	.Ldebug_abbrev0:
+ 1405 0000 01       		.uleb128 0x1
+ 1406 0001 11       		.uleb128 0x11
+ 1407 0002 01       		.byte	0x1
+ 1408 0003 25       		.uleb128 0x25
+ 1409 0004 0E       		.uleb128 0xe
+ 1410 0005 13       		.uleb128 0x13
+ 1411 0006 0B       		.uleb128 0xb
+ 1412 0007 03       		.uleb128 0x3
+ 1413 0008 0E       		.uleb128 0xe
+ 1414 0009 1B       		.uleb128 0x1b
+ 1415 000a 0E       		.uleb128 0xe
+ 1416 000b 55       		.uleb128 0x55
+ 1417 000c 17       		.uleb128 0x17
+ 1418 000d 11       		.uleb128 0x11
+ 1419 000e 01       		.uleb128 0x1
+ 1420 000f 10       		.uleb128 0x10
+ 1421 0010 17       		.uleb128 0x17
+ 1422 0011 00       		.byte	0
+ 1423 0012 00       		.byte	0
+ 1424 0013 02       		.uleb128 0x2
+ 1425 0014 24       		.uleb128 0x24
+ 1426 0015 00       		.byte	0
+ 1427 0016 0B       		.uleb128 0xb
+ 1428 0017 0B       		.uleb128 0xb
+ 1429 0018 3E       		.uleb128 0x3e
+ 1430 0019 0B       		.uleb128 0xb
+ 1431 001a 03       		.uleb128 0x3
+ 1432 001b 08       		.uleb128 0x8
+ 1433 001c 00       		.byte	0
+ 1434 001d 00       		.byte	0
+ 1435 001e 03       		.uleb128 0x3
+ 1436 001f 24       		.uleb128 0x24
+ 1437 0020 00       		.byte	0
+ 1438 0021 0B       		.uleb128 0xb
+ 1439 0022 0B       		.uleb128 0xb
+ 1440 0023 3E       		.uleb128 0x3e
+ 1441 0024 0B       		.uleb128 0xb
+ 1442 0025 03       		.uleb128 0x3
+ 1443 0026 0E       		.uleb128 0xe
+ 1444 0027 00       		.byte	0
+ 1445 0028 00       		.byte	0
+ 1446 0029 04       		.uleb128 0x4
+ 1447 002a 16       		.uleb128 0x16
+ 1448 002b 00       		.byte	0
+ 1449 002c 03       		.uleb128 0x3
+ 1450 002d 0E       		.uleb128 0xe
+ 1451 002e 3A       		.uleb128 0x3a
+ 1452 002f 0B       		.uleb128 0xb
+ 1453 0030 3B       		.uleb128 0x3b
+ 1454 0031 0B       		.uleb128 0xb
+ 1455 0032 49       		.uleb128 0x49
+ 1456 0033 13       		.uleb128 0x13
+ 1457 0034 00       		.byte	0
+ 1458 0035 00       		.byte	0
+ 1459 0036 05       		.uleb128 0x5
+ 1460 0037 04       		.uleb128 0x4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 32
+
+
+ 1461 0038 01       		.byte	0x1
+ 1462 0039 03       		.uleb128 0x3
+ 1463 003a 0E       		.uleb128 0xe
+ 1464 003b 0B       		.uleb128 0xb
+ 1465 003c 0B       		.uleb128 0xb
+ 1466 003d 49       		.uleb128 0x49
+ 1467 003e 13       		.uleb128 0x13
+ 1468 003f 3A       		.uleb128 0x3a
+ 1469 0040 0B       		.uleb128 0xb
+ 1470 0041 3B       		.uleb128 0x3b
+ 1471 0042 05       		.uleb128 0x5
+ 1472 0043 01       		.uleb128 0x1
+ 1473 0044 13       		.uleb128 0x13
+ 1474 0045 00       		.byte	0
+ 1475 0046 00       		.byte	0
+ 1476 0047 06       		.uleb128 0x6
+ 1477 0048 28       		.uleb128 0x28
+ 1478 0049 00       		.byte	0
+ 1479 004a 03       		.uleb128 0x3
+ 1480 004b 0E       		.uleb128 0xe
+ 1481 004c 1C       		.uleb128 0x1c
+ 1482 004d 0B       		.uleb128 0xb
+ 1483 004e 00       		.byte	0
+ 1484 004f 00       		.byte	0
+ 1485 0050 07       		.uleb128 0x7
+ 1486 0051 28       		.uleb128 0x28
+ 1487 0052 00       		.byte	0
+ 1488 0053 03       		.uleb128 0x3
+ 1489 0054 0E       		.uleb128 0xe
+ 1490 0055 1C       		.uleb128 0x1c
+ 1491 0056 06       		.uleb128 0x6
+ 1492 0057 00       		.byte	0
+ 1493 0058 00       		.byte	0
+ 1494 0059 08       		.uleb128 0x8
+ 1495 005a 16       		.uleb128 0x16
+ 1496 005b 00       		.byte	0
+ 1497 005c 03       		.uleb128 0x3
+ 1498 005d 0E       		.uleb128 0xe
+ 1499 005e 3A       		.uleb128 0x3a
+ 1500 005f 0B       		.uleb128 0xb
+ 1501 0060 3B       		.uleb128 0x3b
+ 1502 0061 05       		.uleb128 0x5
+ 1503 0062 49       		.uleb128 0x49
+ 1504 0063 13       		.uleb128 0x13
+ 1505 0064 00       		.byte	0
+ 1506 0065 00       		.byte	0
+ 1507 0066 09       		.uleb128 0x9
+ 1508 0067 13       		.uleb128 0x13
+ 1509 0068 01       		.byte	0x1
+ 1510 0069 0B       		.uleb128 0xb
+ 1511 006a 0B       		.uleb128 0xb
+ 1512 006b 3A       		.uleb128 0x3a
+ 1513 006c 0B       		.uleb128 0xb
+ 1514 006d 3B       		.uleb128 0x3b
+ 1515 006e 05       		.uleb128 0x5
+ 1516 006f 01       		.uleb128 0x1
+ 1517 0070 13       		.uleb128 0x13
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 33
+
+
+ 1518 0071 00       		.byte	0
+ 1519 0072 00       		.byte	0
+ 1520 0073 0A       		.uleb128 0xa
+ 1521 0074 0D       		.uleb128 0xd
+ 1522 0075 00       		.byte	0
+ 1523 0076 03       		.uleb128 0x3
+ 1524 0077 0E       		.uleb128 0xe
+ 1525 0078 3A       		.uleb128 0x3a
+ 1526 0079 0B       		.uleb128 0xb
+ 1527 007a 3B       		.uleb128 0x3b
+ 1528 007b 05       		.uleb128 0x5
+ 1529 007c 49       		.uleb128 0x49
+ 1530 007d 13       		.uleb128 0x13
+ 1531 007e 38       		.uleb128 0x38
+ 1532 007f 0B       		.uleb128 0xb
+ 1533 0080 00       		.byte	0
+ 1534 0081 00       		.byte	0
+ 1535 0082 0B       		.uleb128 0xb
+ 1536 0083 0F       		.uleb128 0xf
+ 1537 0084 00       		.byte	0
+ 1538 0085 0B       		.uleb128 0xb
+ 1539 0086 0B       		.uleb128 0xb
+ 1540 0087 49       		.uleb128 0x49
+ 1541 0088 13       		.uleb128 0x13
+ 1542 0089 00       		.byte	0
+ 1543 008a 00       		.byte	0
+ 1544 008b 0C       		.uleb128 0xc
+ 1545 008c 04       		.uleb128 0x4
+ 1546 008d 01       		.byte	0x1
+ 1547 008e 0B       		.uleb128 0xb
+ 1548 008f 0B       		.uleb128 0xb
+ 1549 0090 49       		.uleb128 0x49
+ 1550 0091 13       		.uleb128 0x13
+ 1551 0092 3A       		.uleb128 0x3a
+ 1552 0093 0B       		.uleb128 0xb
+ 1553 0094 3B       		.uleb128 0x3b
+ 1554 0095 05       		.uleb128 0x5
+ 1555 0096 01       		.uleb128 0x1
+ 1556 0097 13       		.uleb128 0x13
+ 1557 0098 00       		.byte	0
+ 1558 0099 00       		.byte	0
+ 1559 009a 0D       		.uleb128 0xd
+ 1560 009b 2E       		.uleb128 0x2e
+ 1561 009c 01       		.byte	0x1
+ 1562 009d 03       		.uleb128 0x3
+ 1563 009e 0E       		.uleb128 0xe
+ 1564 009f 3A       		.uleb128 0x3a
+ 1565 00a0 0B       		.uleb128 0xb
+ 1566 00a1 3B       		.uleb128 0x3b
+ 1567 00a2 0B       		.uleb128 0xb
+ 1568 00a3 27       		.uleb128 0x27
+ 1569 00a4 19       		.uleb128 0x19
+ 1570 00a5 49       		.uleb128 0x49
+ 1571 00a6 13       		.uleb128 0x13
+ 1572 00a7 11       		.uleb128 0x11
+ 1573 00a8 01       		.uleb128 0x1
+ 1574 00a9 12       		.uleb128 0x12
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 34
+
+
+ 1575 00aa 06       		.uleb128 0x6
+ 1576 00ab 40       		.uleb128 0x40
+ 1577 00ac 18       		.uleb128 0x18
+ 1578 00ad 9642     		.uleb128 0x2116
+ 1579 00af 19       		.uleb128 0x19
+ 1580 00b0 01       		.uleb128 0x1
+ 1581 00b1 13       		.uleb128 0x13
+ 1582 00b2 00       		.byte	0
+ 1583 00b3 00       		.byte	0
+ 1584 00b4 0E       		.uleb128 0xe
+ 1585 00b5 05       		.uleb128 0x5
+ 1586 00b6 00       		.byte	0
+ 1587 00b7 03       		.uleb128 0x3
+ 1588 00b8 0E       		.uleb128 0xe
+ 1589 00b9 3A       		.uleb128 0x3a
+ 1590 00ba 0B       		.uleb128 0xb
+ 1591 00bb 3B       		.uleb128 0x3b
+ 1592 00bc 0B       		.uleb128 0xb
+ 1593 00bd 49       		.uleb128 0x49
+ 1594 00be 13       		.uleb128 0x13
+ 1595 00bf 02       		.uleb128 0x2
+ 1596 00c0 17       		.uleb128 0x17
+ 1597 00c1 00       		.byte	0
+ 1598 00c2 00       		.byte	0
+ 1599 00c3 0F       		.uleb128 0xf
+ 1600 00c4 2E       		.uleb128 0x2e
+ 1601 00c5 01       		.byte	0x1
+ 1602 00c6 03       		.uleb128 0x3
+ 1603 00c7 0E       		.uleb128 0xe
+ 1604 00c8 3A       		.uleb128 0x3a
+ 1605 00c9 0B       		.uleb128 0xb
+ 1606 00ca 3B       		.uleb128 0x3b
+ 1607 00cb 0B       		.uleb128 0xb
+ 1608 00cc 27       		.uleb128 0x27
+ 1609 00cd 19       		.uleb128 0x19
+ 1610 00ce 11       		.uleb128 0x11
+ 1611 00cf 01       		.uleb128 0x1
+ 1612 00d0 12       		.uleb128 0x12
+ 1613 00d1 06       		.uleb128 0x6
+ 1614 00d2 40       		.uleb128 0x40
+ 1615 00d3 18       		.uleb128 0x18
+ 1616 00d4 9742     		.uleb128 0x2117
+ 1617 00d6 19       		.uleb128 0x19
+ 1618 00d7 01       		.uleb128 0x1
+ 1619 00d8 13       		.uleb128 0x13
+ 1620 00d9 00       		.byte	0
+ 1621 00da 00       		.byte	0
+ 1622 00db 10       		.uleb128 0x10
+ 1623 00dc 34       		.uleb128 0x34
+ 1624 00dd 00       		.byte	0
+ 1625 00de 03       		.uleb128 0x3
+ 1626 00df 0E       		.uleb128 0xe
+ 1627 00e0 3A       		.uleb128 0x3a
+ 1628 00e1 0B       		.uleb128 0xb
+ 1629 00e2 3B       		.uleb128 0x3b
+ 1630 00e3 0B       		.uleb128 0xb
+ 1631 00e4 49       		.uleb128 0x49
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 35
+
+
+ 1632 00e5 13       		.uleb128 0x13
+ 1633 00e6 02       		.uleb128 0x2
+ 1634 00e7 18       		.uleb128 0x18
+ 1635 00e8 00       		.byte	0
+ 1636 00e9 00       		.byte	0
+ 1637 00ea 11       		.uleb128 0x11
+ 1638 00eb 898201   		.uleb128 0x4109
+ 1639 00ee 01       		.byte	0x1
+ 1640 00ef 11       		.uleb128 0x11
+ 1641 00f0 01       		.uleb128 0x1
+ 1642 00f1 31       		.uleb128 0x31
+ 1643 00f2 13       		.uleb128 0x13
+ 1644 00f3 00       		.byte	0
+ 1645 00f4 00       		.byte	0
+ 1646 00f5 12       		.uleb128 0x12
+ 1647 00f6 8A8201   		.uleb128 0x410a
+ 1648 00f9 00       		.byte	0
+ 1649 00fa 02       		.uleb128 0x2
+ 1650 00fb 18       		.uleb128 0x18
+ 1651 00fc 9142     		.uleb128 0x2111
+ 1652 00fe 18       		.uleb128 0x18
+ 1653 00ff 00       		.byte	0
+ 1654 0100 00       		.byte	0
+ 1655 0101 13       		.uleb128 0x13
+ 1656 0102 2E       		.uleb128 0x2e
+ 1657 0103 01       		.byte	0x1
+ 1658 0104 3F       		.uleb128 0x3f
+ 1659 0105 19       		.uleb128 0x19
+ 1660 0106 03       		.uleb128 0x3
+ 1661 0107 0E       		.uleb128 0xe
+ 1662 0108 3A       		.uleb128 0x3a
+ 1663 0109 0B       		.uleb128 0xb
+ 1664 010a 3B       		.uleb128 0x3b
+ 1665 010b 0B       		.uleb128 0xb
+ 1666 010c 27       		.uleb128 0x27
+ 1667 010d 19       		.uleb128 0x19
+ 1668 010e 49       		.uleb128 0x49
+ 1669 010f 13       		.uleb128 0x13
+ 1670 0110 11       		.uleb128 0x11
+ 1671 0111 01       		.uleb128 0x1
+ 1672 0112 12       		.uleb128 0x12
+ 1673 0113 06       		.uleb128 0x6
+ 1674 0114 40       		.uleb128 0x40
+ 1675 0115 18       		.uleb128 0x18
+ 1676 0116 9742     		.uleb128 0x2117
+ 1677 0118 19       		.uleb128 0x19
+ 1678 0119 01       		.uleb128 0x1
+ 1679 011a 13       		.uleb128 0x13
+ 1680 011b 00       		.byte	0
+ 1681 011c 00       		.byte	0
+ 1682 011d 14       		.uleb128 0x14
+ 1683 011e 05       		.uleb128 0x5
+ 1684 011f 00       		.byte	0
+ 1685 0120 03       		.uleb128 0x3
+ 1686 0121 08       		.uleb128 0x8
+ 1687 0122 3A       		.uleb128 0x3a
+ 1688 0123 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 36
+
+
+ 1689 0124 3B       		.uleb128 0x3b
+ 1690 0125 0B       		.uleb128 0xb
+ 1691 0126 49       		.uleb128 0x49
+ 1692 0127 13       		.uleb128 0x13
+ 1693 0128 02       		.uleb128 0x2
+ 1694 0129 17       		.uleb128 0x17
+ 1695 012a 00       		.byte	0
+ 1696 012b 00       		.byte	0
+ 1697 012c 15       		.uleb128 0x15
+ 1698 012d 34       		.uleb128 0x34
+ 1699 012e 00       		.byte	0
+ 1700 012f 03       		.uleb128 0x3
+ 1701 0130 0E       		.uleb128 0xe
+ 1702 0131 3A       		.uleb128 0x3a
+ 1703 0132 0B       		.uleb128 0xb
+ 1704 0133 3B       		.uleb128 0x3b
+ 1705 0134 0B       		.uleb128 0xb
+ 1706 0135 49       		.uleb128 0x49
+ 1707 0136 13       		.uleb128 0x13
+ 1708 0137 00       		.byte	0
+ 1709 0138 00       		.byte	0
+ 1710 0139 16       		.uleb128 0x16
+ 1711 013a 34       		.uleb128 0x34
+ 1712 013b 00       		.byte	0
+ 1713 013c 03       		.uleb128 0x3
+ 1714 013d 0E       		.uleb128 0xe
+ 1715 013e 3A       		.uleb128 0x3a
+ 1716 013f 0B       		.uleb128 0xb
+ 1717 0140 3B       		.uleb128 0x3b
+ 1718 0141 0B       		.uleb128 0xb
+ 1719 0142 49       		.uleb128 0x49
+ 1720 0143 13       		.uleb128 0x13
+ 1721 0144 1C       		.uleb128 0x1c
+ 1722 0145 06       		.uleb128 0x6
+ 1723 0146 00       		.byte	0
+ 1724 0147 00       		.byte	0
+ 1725 0148 17       		.uleb128 0x17
+ 1726 0149 34       		.uleb128 0x34
+ 1727 014a 00       		.byte	0
+ 1728 014b 03       		.uleb128 0x3
+ 1729 014c 0E       		.uleb128 0xe
+ 1730 014d 3A       		.uleb128 0x3a
+ 1731 014e 0B       		.uleb128 0xb
+ 1732 014f 3B       		.uleb128 0x3b
+ 1733 0150 0B       		.uleb128 0xb
+ 1734 0151 49       		.uleb128 0x49
+ 1735 0152 13       		.uleb128 0x13
+ 1736 0153 02       		.uleb128 0x2
+ 1737 0154 17       		.uleb128 0x17
+ 1738 0155 00       		.byte	0
+ 1739 0156 00       		.byte	0
+ 1740 0157 18       		.uleb128 0x18
+ 1741 0158 34       		.uleb128 0x34
+ 1742 0159 00       		.byte	0
+ 1743 015a 03       		.uleb128 0x3
+ 1744 015b 08       		.uleb128 0x8
+ 1745 015c 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 37
+
+
+ 1746 015d 0B       		.uleb128 0xb
+ 1747 015e 3B       		.uleb128 0x3b
+ 1748 015f 0B       		.uleb128 0xb
+ 1749 0160 49       		.uleb128 0x49
+ 1750 0161 13       		.uleb128 0x13
+ 1751 0162 02       		.uleb128 0x2
+ 1752 0163 17       		.uleb128 0x17
+ 1753 0164 00       		.byte	0
+ 1754 0165 00       		.byte	0
+ 1755 0166 19       		.uleb128 0x19
+ 1756 0167 0B       		.uleb128 0xb
+ 1757 0168 01       		.byte	0x1
+ 1758 0169 11       		.uleb128 0x11
+ 1759 016a 01       		.uleb128 0x1
+ 1760 016b 12       		.uleb128 0x12
+ 1761 016c 06       		.uleb128 0x6
+ 1762 016d 01       		.uleb128 0x1
+ 1763 016e 13       		.uleb128 0x13
+ 1764 016f 00       		.byte	0
+ 1765 0170 00       		.byte	0
+ 1766 0171 1A       		.uleb128 0x1a
+ 1767 0172 898201   		.uleb128 0x4109
+ 1768 0175 01       		.byte	0x1
+ 1769 0176 11       		.uleb128 0x11
+ 1770 0177 01       		.uleb128 0x1
+ 1771 0178 31       		.uleb128 0x31
+ 1772 0179 13       		.uleb128 0x13
+ 1773 017a 01       		.uleb128 0x1
+ 1774 017b 13       		.uleb128 0x13
+ 1775 017c 00       		.byte	0
+ 1776 017d 00       		.byte	0
+ 1777 017e 1B       		.uleb128 0x1b
+ 1778 017f 898201   		.uleb128 0x4109
+ 1779 0182 00       		.byte	0
+ 1780 0183 11       		.uleb128 0x11
+ 1781 0184 01       		.uleb128 0x1
+ 1782 0185 31       		.uleb128 0x31
+ 1783 0186 13       		.uleb128 0x13
+ 1784 0187 00       		.byte	0
+ 1785 0188 00       		.byte	0
+ 1786 0189 1C       		.uleb128 0x1c
+ 1787 018a 26       		.uleb128 0x26
+ 1788 018b 00       		.byte	0
+ 1789 018c 49       		.uleb128 0x49
+ 1790 018d 13       		.uleb128 0x13
+ 1791 018e 00       		.byte	0
+ 1792 018f 00       		.byte	0
+ 1793 0190 1D       		.uleb128 0x1d
+ 1794 0191 2E       		.uleb128 0x2e
+ 1795 0192 01       		.byte	0x1
+ 1796 0193 3F       		.uleb128 0x3f
+ 1797 0194 19       		.uleb128 0x19
+ 1798 0195 03       		.uleb128 0x3
+ 1799 0196 0E       		.uleb128 0xe
+ 1800 0197 3A       		.uleb128 0x3a
+ 1801 0198 0B       		.uleb128 0xb
+ 1802 0199 3B       		.uleb128 0x3b
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 38
+
+
+ 1803 019a 05       		.uleb128 0x5
+ 1804 019b 27       		.uleb128 0x27
+ 1805 019c 19       		.uleb128 0x19
+ 1806 019d 49       		.uleb128 0x49
+ 1807 019e 13       		.uleb128 0x13
+ 1808 019f 11       		.uleb128 0x11
+ 1809 01a0 01       		.uleb128 0x1
+ 1810 01a1 12       		.uleb128 0x12
+ 1811 01a2 06       		.uleb128 0x6
+ 1812 01a3 40       		.uleb128 0x40
+ 1813 01a4 18       		.uleb128 0x18
+ 1814 01a5 9742     		.uleb128 0x2117
+ 1815 01a7 19       		.uleb128 0x19
+ 1816 01a8 01       		.uleb128 0x1
+ 1817 01a9 13       		.uleb128 0x13
+ 1818 01aa 00       		.byte	0
+ 1819 01ab 00       		.byte	0
+ 1820 01ac 1E       		.uleb128 0x1e
+ 1821 01ad 05       		.uleb128 0x5
+ 1822 01ae 00       		.byte	0
+ 1823 01af 03       		.uleb128 0x3
+ 1824 01b0 0E       		.uleb128 0xe
+ 1825 01b1 3A       		.uleb128 0x3a
+ 1826 01b2 0B       		.uleb128 0xb
+ 1827 01b3 3B       		.uleb128 0x3b
+ 1828 01b4 05       		.uleb128 0x5
+ 1829 01b5 49       		.uleb128 0x49
+ 1830 01b6 13       		.uleb128 0x13
+ 1831 01b7 02       		.uleb128 0x2
+ 1832 01b8 17       		.uleb128 0x17
+ 1833 01b9 00       		.byte	0
+ 1834 01ba 00       		.byte	0
+ 1835 01bb 1F       		.uleb128 0x1f
+ 1836 01bc 2E       		.uleb128 0x2e
+ 1837 01bd 01       		.byte	0x1
+ 1838 01be 3F       		.uleb128 0x3f
+ 1839 01bf 19       		.uleb128 0x19
+ 1840 01c0 03       		.uleb128 0x3
+ 1841 01c1 0E       		.uleb128 0xe
+ 1842 01c2 3A       		.uleb128 0x3a
+ 1843 01c3 0B       		.uleb128 0xb
+ 1844 01c4 3B       		.uleb128 0x3b
+ 1845 01c5 05       		.uleb128 0x5
+ 1846 01c6 27       		.uleb128 0x27
+ 1847 01c7 19       		.uleb128 0x19
+ 1848 01c8 11       		.uleb128 0x11
+ 1849 01c9 01       		.uleb128 0x1
+ 1850 01ca 12       		.uleb128 0x12
+ 1851 01cb 06       		.uleb128 0x6
+ 1852 01cc 40       		.uleb128 0x40
+ 1853 01cd 18       		.uleb128 0x18
+ 1854 01ce 9742     		.uleb128 0x2117
+ 1855 01d0 19       		.uleb128 0x19
+ 1856 01d1 01       		.uleb128 0x1
+ 1857 01d2 13       		.uleb128 0x13
+ 1858 01d3 00       		.byte	0
+ 1859 01d4 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 39
+
+
+ 1860 01d5 20       		.uleb128 0x20
+ 1861 01d6 01       		.uleb128 0x1
+ 1862 01d7 01       		.byte	0x1
+ 1863 01d8 49       		.uleb128 0x49
+ 1864 01d9 13       		.uleb128 0x13
+ 1865 01da 01       		.uleb128 0x1
+ 1866 01db 13       		.uleb128 0x13
+ 1867 01dc 00       		.byte	0
+ 1868 01dd 00       		.byte	0
+ 1869 01de 21       		.uleb128 0x21
+ 1870 01df 21       		.uleb128 0x21
+ 1871 01e0 00       		.byte	0
+ 1872 01e1 49       		.uleb128 0x49
+ 1873 01e2 13       		.uleb128 0x13
+ 1874 01e3 2F       		.uleb128 0x2f
+ 1875 01e4 0B       		.uleb128 0xb
+ 1876 01e5 00       		.byte	0
+ 1877 01e6 00       		.byte	0
+ 1878 01e7 22       		.uleb128 0x22
+ 1879 01e8 34       		.uleb128 0x34
+ 1880 01e9 00       		.byte	0
+ 1881 01ea 03       		.uleb128 0x3
+ 1882 01eb 0E       		.uleb128 0xe
+ 1883 01ec 3A       		.uleb128 0x3a
+ 1884 01ed 0B       		.uleb128 0xb
+ 1885 01ee 3B       		.uleb128 0x3b
+ 1886 01ef 0B       		.uleb128 0xb
+ 1887 01f0 49       		.uleb128 0x49
+ 1888 01f1 13       		.uleb128 0x13
+ 1889 01f2 3F       		.uleb128 0x3f
+ 1890 01f3 19       		.uleb128 0x19
+ 1891 01f4 3C       		.uleb128 0x3c
+ 1892 01f5 19       		.uleb128 0x19
+ 1893 01f6 00       		.byte	0
+ 1894 01f7 00       		.byte	0
+ 1895 01f8 23       		.uleb128 0x23
+ 1896 01f9 2E       		.uleb128 0x2e
+ 1897 01fa 00       		.byte	0
+ 1898 01fb 3F       		.uleb128 0x3f
+ 1899 01fc 19       		.uleb128 0x19
+ 1900 01fd 3C       		.uleb128 0x3c
+ 1901 01fe 19       		.uleb128 0x19
+ 1902 01ff 6E       		.uleb128 0x6e
+ 1903 0200 0E       		.uleb128 0xe
+ 1904 0201 03       		.uleb128 0x3
+ 1905 0202 0E       		.uleb128 0xe
+ 1906 0203 3A       		.uleb128 0x3a
+ 1907 0204 0B       		.uleb128 0xb
+ 1908 0205 3B       		.uleb128 0x3b
+ 1909 0206 05       		.uleb128 0x5
+ 1910 0207 00       		.byte	0
+ 1911 0208 00       		.byte	0
+ 1912 0209 24       		.uleb128 0x24
+ 1913 020a 2E       		.uleb128 0x2e
+ 1914 020b 00       		.byte	0
+ 1915 020c 3F       		.uleb128 0x3f
+ 1916 020d 19       		.uleb128 0x19
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 40
+
+
+ 1917 020e 3C       		.uleb128 0x3c
+ 1918 020f 19       		.uleb128 0x19
+ 1919 0210 6E       		.uleb128 0x6e
+ 1920 0211 0E       		.uleb128 0xe
+ 1921 0212 03       		.uleb128 0x3
+ 1922 0213 0E       		.uleb128 0xe
+ 1923 0214 00       		.byte	0
+ 1924 0215 00       		.byte	0
+ 1925 0216 25       		.uleb128 0x25
+ 1926 0217 2E       		.uleb128 0x2e
+ 1927 0218 00       		.byte	0
+ 1928 0219 3F       		.uleb128 0x3f
+ 1929 021a 19       		.uleb128 0x19
+ 1930 021b 3C       		.uleb128 0x3c
+ 1931 021c 19       		.uleb128 0x19
+ 1932 021d 6E       		.uleb128 0x6e
+ 1933 021e 0E       		.uleb128 0xe
+ 1934 021f 03       		.uleb128 0x3
+ 1935 0220 0E       		.uleb128 0xe
+ 1936 0221 3A       		.uleb128 0x3a
+ 1937 0222 0B       		.uleb128 0xb
+ 1938 0223 3B       		.uleb128 0x3b
+ 1939 0224 0B       		.uleb128 0xb
+ 1940 0225 00       		.byte	0
+ 1941 0226 00       		.byte	0
+ 1942 0227 00       		.byte	0
+ 1943              		.section	.debug_loc,"",%progbits
+ 1944              	.Ldebug_loc0:
+ 1945              	.LLST0:
+ 1946 0000 00000000 		.4byte	.LVL0
+ 1947 0004 05000000 		.4byte	.LVL1-1
+ 1948 0008 0100     		.2byte	0x1
+ 1949 000a 50       		.byte	0x50
+ 1950 000b 05000000 		.4byte	.LVL1-1
+ 1951 000f 12000000 		.4byte	.LFE45
+ 1952 0013 0400     		.2byte	0x4
+ 1953 0015 F3       		.byte	0xf3
+ 1954 0016 01       		.uleb128 0x1
+ 1955 0017 50       		.byte	0x50
+ 1956 0018 9F       		.byte	0x9f
+ 1957 0019 00000000 		.4byte	0
+ 1958 001d 00000000 		.4byte	0
+ 1959              	.LLST1:
+ 1960 0021 00000000 		.4byte	.LVL0
+ 1961 0025 05000000 		.4byte	.LVL1-1
+ 1962 0029 0100     		.2byte	0x1
+ 1963 002b 51       		.byte	0x51
+ 1964 002c 05000000 		.4byte	.LVL1-1
+ 1965 0030 12000000 		.4byte	.LFE45
+ 1966 0034 0400     		.2byte	0x4
+ 1967 0036 F3       		.byte	0xf3
+ 1968 0037 01       		.uleb128 0x1
+ 1969 0038 51       		.byte	0x51
+ 1970 0039 9F       		.byte	0x9f
+ 1971 003a 00000000 		.4byte	0
+ 1972 003e 00000000 		.4byte	0
+ 1973              	.LLST2:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 41
+
+
+ 1974 0042 00000000 		.4byte	.LVL2
+ 1975 0046 0F000000 		.4byte	.LVL5-1
+ 1976 004a 0100     		.2byte	0x1
+ 1977 004c 50       		.byte	0x50
+ 1978 004d 0F000000 		.4byte	.LVL5-1
+ 1979 0051 28000000 		.4byte	.LFE46
+ 1980 0055 0400     		.2byte	0x4
+ 1981 0057 F3       		.byte	0xf3
+ 1982 0058 01       		.uleb128 0x1
+ 1983 0059 50       		.byte	0x50
+ 1984 005a 9F       		.byte	0x9f
+ 1985 005b 00000000 		.4byte	0
+ 1986 005f 00000000 		.4byte	0
+ 1987              	.LLST3:
+ 1988 0063 00000000 		.4byte	.LVL2
+ 1989 0067 0C000000 		.4byte	.LVL4
+ 1990 006b 0100     		.2byte	0x1
+ 1991 006d 51       		.byte	0x51
+ 1992 006e 0C000000 		.4byte	.LVL4
+ 1993 0072 22000000 		.4byte	.LVL7
+ 1994 0076 0100     		.2byte	0x1
+ 1995 0078 55       		.byte	0x55
+ 1996 0079 22000000 		.4byte	.LVL7
+ 1997 007d 28000000 		.4byte	.LFE46
+ 1998 0081 0400     		.2byte	0x4
+ 1999 0083 F3       		.byte	0xf3
+ 2000 0084 01       		.uleb128 0x1
+ 2001 0085 51       		.byte	0x51
+ 2002 0086 9F       		.byte	0x9f
+ 2003 0087 00000000 		.4byte	0
+ 2004 008b 00000000 		.4byte	0
+ 2005              	.LLST4:
+ 2006 008f 00000000 		.4byte	.LVL2
+ 2007 0093 0A000000 		.4byte	.LVL3
+ 2008 0097 0100     		.2byte	0x1
+ 2009 0099 52       		.byte	0x52
+ 2010 009a 0A000000 		.4byte	.LVL3
+ 2011 009e 22000000 		.4byte	.LVL6
+ 2012 00a2 0100     		.2byte	0x1
+ 2013 00a4 54       		.byte	0x54
+ 2014 00a5 22000000 		.4byte	.LVL6
+ 2015 00a9 28000000 		.4byte	.LFE46
+ 2016 00ad 0400     		.2byte	0x4
+ 2017 00af F3       		.byte	0xf3
+ 2018 00b0 01       		.uleb128 0x1
+ 2019 00b1 52       		.byte	0x52
+ 2020 00b2 9F       		.byte	0x9f
+ 2021 00b3 00000000 		.4byte	0
+ 2022 00b7 00000000 		.4byte	0
+ 2023              	.LLST5:
+ 2024 00bb 00000000 		.4byte	.LVL8
+ 2025 00bf 0F000000 		.4byte	.LVL10-1
+ 2026 00c3 0100     		.2byte	0x1
+ 2027 00c5 50       		.byte	0x50
+ 2028 00c6 0F000000 		.4byte	.LVL10-1
+ 2029 00ca 96000000 		.4byte	.LVL25
+ 2030 00ce 0100     		.2byte	0x1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 42
+
+
+ 2031 00d0 54       		.byte	0x54
+ 2032 00d1 96000000 		.4byte	.LVL25
+ 2033 00d5 B0000000 		.4byte	.LFE47
+ 2034 00d9 0400     		.2byte	0x4
+ 2035 00db F3       		.byte	0xf3
+ 2036 00dc 01       		.uleb128 0x1
+ 2037 00dd 50       		.byte	0x50
+ 2038 00de 9F       		.byte	0x9f
+ 2039 00df 00000000 		.4byte	0
+ 2040 00e3 00000000 		.4byte	0
+ 2041              	.LLST6:
+ 2042 00e7 00000000 		.4byte	.LVL8
+ 2043 00eb 0F000000 		.4byte	.LVL10-1
+ 2044 00ef 0100     		.2byte	0x1
+ 2045 00f1 51       		.byte	0x51
+ 2046 00f2 0F000000 		.4byte	.LVL10-1
+ 2047 00f6 34000000 		.4byte	.LVL13
+ 2048 00fa 0100     		.2byte	0x1
+ 2049 00fc 55       		.byte	0x55
+ 2050 00fd 34000000 		.4byte	.LVL13
+ 2051 0101 36000000 		.4byte	.LVL14
+ 2052 0105 0400     		.2byte	0x4
+ 2053 0107 F3       		.byte	0xf3
+ 2054 0108 01       		.uleb128 0x1
+ 2055 0109 51       		.byte	0x51
+ 2056 010a 9F       		.byte	0x9f
+ 2057 010b 36000000 		.4byte	.LVL14
+ 2058 010f 38000000 		.4byte	.LVL15
+ 2059 0113 0100     		.2byte	0x1
+ 2060 0115 55       		.byte	0x55
+ 2061 0116 38000000 		.4byte	.LVL15
+ 2062 011a 3A000000 		.4byte	.LVL16
+ 2063 011e 0400     		.2byte	0x4
+ 2064 0120 F3       		.byte	0xf3
+ 2065 0121 01       		.uleb128 0x1
+ 2066 0122 51       		.byte	0x51
+ 2067 0123 9F       		.byte	0x9f
+ 2068 0124 3A000000 		.4byte	.LVL16
+ 2069 0128 3C000000 		.4byte	.LVL17
+ 2070 012c 0100     		.2byte	0x1
+ 2071 012e 55       		.byte	0x55
+ 2072 012f 3C000000 		.4byte	.LVL17
+ 2073 0133 3E000000 		.4byte	.LVL18
+ 2074 0137 0400     		.2byte	0x4
+ 2075 0139 F3       		.byte	0xf3
+ 2076 013a 01       		.uleb128 0x1
+ 2077 013b 51       		.byte	0x51
+ 2078 013c 9F       		.byte	0x9f
+ 2079 013d 3E000000 		.4byte	.LVL18
+ 2080 0141 40000000 		.4byte	.LVL19
+ 2081 0145 0100     		.2byte	0x1
+ 2082 0147 55       		.byte	0x55
+ 2083 0148 40000000 		.4byte	.LVL19
+ 2084 014c B0000000 		.4byte	.LFE47
+ 2085 0150 0400     		.2byte	0x4
+ 2086 0152 F3       		.byte	0xf3
+ 2087 0153 01       		.uleb128 0x1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 43
+
+
+ 2088 0154 51       		.byte	0x51
+ 2089 0155 9F       		.byte	0x9f
+ 2090 0156 00000000 		.4byte	0
+ 2091 015a 00000000 		.4byte	0
+ 2092              	.LLST7:
+ 2093 015e 00000000 		.4byte	.LVL8
+ 2094 0162 0F000000 		.4byte	.LVL10-1
+ 2095 0166 0100     		.2byte	0x1
+ 2096 0168 52       		.byte	0x52
+ 2097 0169 0F000000 		.4byte	.LVL10-1
+ 2098 016d 96000000 		.4byte	.LVL27
+ 2099 0171 0100     		.2byte	0x1
+ 2100 0173 56       		.byte	0x56
+ 2101 0174 96000000 		.4byte	.LVL27
+ 2102 0178 B0000000 		.4byte	.LFE47
+ 2103 017c 0400     		.2byte	0x4
+ 2104 017e F3       		.byte	0xf3
+ 2105 017f 01       		.uleb128 0x1
+ 2106 0180 52       		.byte	0x52
+ 2107 0181 9F       		.byte	0x9f
+ 2108 0182 00000000 		.4byte	0
+ 2109 0186 00000000 		.4byte	0
+ 2110              	.LLST8:
+ 2111 018a 00000000 		.4byte	.LVL8
+ 2112 018e 0F000000 		.4byte	.LVL10-1
+ 2113 0192 0100     		.2byte	0x1
+ 2114 0194 53       		.byte	0x53
+ 2115 0195 0F000000 		.4byte	.LVL10-1
+ 2116 0199 96000000 		.4byte	.LVL28
+ 2117 019d 0100     		.2byte	0x1
+ 2118 019f 57       		.byte	0x57
+ 2119 01a0 96000000 		.4byte	.LVL28
+ 2120 01a4 B0000000 		.4byte	.LFE47
+ 2121 01a8 0400     		.2byte	0x4
+ 2122 01aa F3       		.byte	0xf3
+ 2123 01ab 01       		.uleb128 0x1
+ 2124 01ac 53       		.byte	0x53
+ 2125 01ad 9F       		.byte	0x9f
+ 2126 01ae 00000000 		.4byte	0
+ 2127 01b2 00000000 		.4byte	0
+ 2128              	.LLST9:
+ 2129 01b6 0C000000 		.4byte	.LVL9
+ 2130 01ba 40000000 		.4byte	.LVL19
+ 2131 01be 0200     		.2byte	0x2
+ 2132 01c0 30       		.byte	0x30
+ 2133 01c1 9F       		.byte	0x9f
+ 2134 01c2 40000000 		.4byte	.LVL19
+ 2135 01c6 96000000 		.4byte	.LVL26
+ 2136 01ca 0100     		.2byte	0x1
+ 2137 01cc 55       		.byte	0x55
+ 2138 01cd 96000000 		.4byte	.LVL26
+ 2139 01d1 B0000000 		.4byte	.LFE47
+ 2140 01d5 0100     		.2byte	0x1
+ 2141 01d7 50       		.byte	0x50
+ 2142 01d8 00000000 		.4byte	0
+ 2143 01dc 00000000 		.4byte	0
+ 2144              	.LLST10:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 44
+
+
+ 2145 01e0 10000000 		.4byte	.LVL10
+ 2146 01e4 17000000 		.4byte	.LVL11-1
+ 2147 01e8 0100     		.2byte	0x1
+ 2148 01ea 50       		.byte	0x50
+ 2149 01eb 00000000 		.4byte	0
+ 2150 01ef 00000000 		.4byte	0
+ 2151              	.LLST11:
+ 2152 01f3 8C000000 		.4byte	.LVL23
+ 2153 01f7 92000000 		.4byte	.LVL24
+ 2154 01fb 0100     		.2byte	0x1
+ 2155 01fd 50       		.byte	0x50
+ 2156 01fe 00000000 		.4byte	0
+ 2157 0202 00000000 		.4byte	0
+ 2158              	.LLST12:
+ 2159 0206 00000000 		.4byte	.LVL29
+ 2160 020a 08000000 		.4byte	.LVL30
+ 2161 020e 0100     		.2byte	0x1
+ 2162 0210 50       		.byte	0x50
+ 2163 0211 08000000 		.4byte	.LVL30
+ 2164 0215 6A000000 		.4byte	.LVL42
+ 2165 0219 0100     		.2byte	0x1
+ 2166 021b 56       		.byte	0x56
+ 2167 021c 6A000000 		.4byte	.LVL42
+ 2168 0220 84000000 		.4byte	.LFE48
+ 2169 0224 0400     		.2byte	0x4
+ 2170 0226 F3       		.byte	0xf3
+ 2171 0227 01       		.uleb128 0x1
+ 2172 0228 50       		.byte	0x50
+ 2173 0229 9F       		.byte	0x9f
+ 2174 022a 00000000 		.4byte	0
+ 2175 022e 00000000 		.4byte	0
+ 2176              	.LLST13:
+ 2177 0232 00000000 		.4byte	.LVL29
+ 2178 0236 10000000 		.4byte	.LVL32
+ 2179 023a 0100     		.2byte	0x1
+ 2180 023c 51       		.byte	0x51
+ 2181 023d 10000000 		.4byte	.LVL32
+ 2182 0241 15000000 		.4byte	.LVL33-1
+ 2183 0245 0100     		.2byte	0x1
+ 2184 0247 50       		.byte	0x50
+ 2185 0248 15000000 		.4byte	.LVL33-1
+ 2186 024c 84000000 		.4byte	.LFE48
+ 2187 0250 0200     		.2byte	0x2
+ 2188 0252 91       		.byte	0x91
+ 2189 0253 64       		.sleb128 -28
+ 2190 0254 00000000 		.4byte	0
+ 2191 0258 00000000 		.4byte	0
+ 2192              	.LLST14:
+ 2193 025c 00000000 		.4byte	.LVL29
+ 2194 0260 15000000 		.4byte	.LVL33-1
+ 2195 0264 0100     		.2byte	0x1
+ 2196 0266 52       		.byte	0x52
+ 2197 0267 15000000 		.4byte	.LVL33-1
+ 2198 026b 6A000000 		.4byte	.LVL41
+ 2199 026f 0100     		.2byte	0x1
+ 2200 0271 55       		.byte	0x55
+ 2201 0272 6A000000 		.4byte	.LVL41
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 45
+
+
+ 2202 0276 84000000 		.4byte	.LFE48
+ 2203 027a 0400     		.2byte	0x4
+ 2204 027c F3       		.byte	0xf3
+ 2205 027d 01       		.uleb128 0x1
+ 2206 027e 52       		.byte	0x52
+ 2207 027f 9F       		.byte	0x9f
+ 2208 0280 00000000 		.4byte	0
+ 2209 0284 00000000 		.4byte	0
+ 2210              	.LLST15:
+ 2211 0288 00000000 		.4byte	.LVL29
+ 2212 028c 15000000 		.4byte	.LVL33-1
+ 2213 0290 0100     		.2byte	0x1
+ 2214 0292 53       		.byte	0x53
+ 2215 0293 15000000 		.4byte	.LVL33-1
+ 2216 0297 6A000000 		.4byte	.LVL40
+ 2217 029b 0100     		.2byte	0x1
+ 2218 029d 54       		.byte	0x54
+ 2219 029e 6A000000 		.4byte	.LVL40
+ 2220 02a2 84000000 		.4byte	.LFE48
+ 2221 02a6 0400     		.2byte	0x4
+ 2222 02a8 F3       		.byte	0xf3
+ 2223 02a9 01       		.uleb128 0x1
+ 2224 02aa 53       		.byte	0x53
+ 2225 02ab 9F       		.byte	0x9f
+ 2226 02ac 00000000 		.4byte	0
+ 2227 02b0 00000000 		.4byte	0
+ 2228              	.LLST16:
+ 2229 02b4 0E000000 		.4byte	.LVL31
+ 2230 02b8 20000000 		.4byte	.LVL34
+ 2231 02bc 0200     		.2byte	0x2
+ 2232 02be 30       		.byte	0x30
+ 2233 02bf 9F       		.byte	0x9f
+ 2234 02c0 20000000 		.4byte	.LVL34
+ 2235 02c4 54000000 		.4byte	.LVL36
+ 2236 02c8 0100     		.2byte	0x1
+ 2237 02ca 57       		.byte	0x57
+ 2238 02cb 54000000 		.4byte	.LVL36
+ 2239 02cf 56000000 		.4byte	.LVL37
+ 2240 02d3 0200     		.2byte	0x2
+ 2241 02d5 30       		.byte	0x30
+ 2242 02d6 9F       		.byte	0x9f
+ 2243 02d7 56000000 		.4byte	.LVL37
+ 2244 02db 6A000000 		.4byte	.LVL43
+ 2245 02df 0100     		.2byte	0x1
+ 2246 02e1 57       		.byte	0x57
+ 2247 02e2 6A000000 		.4byte	.LVL43
+ 2248 02e6 84000000 		.4byte	.LFE48
+ 2249 02ea 0100     		.2byte	0x1
+ 2250 02ec 50       		.byte	0x50
+ 2251 02ed 00000000 		.4byte	0
+ 2252 02f1 00000000 		.4byte	0
+ 2253              	.LLST17:
+ 2254 02f5 00000000 		.4byte	.LVL44
+ 2255 02f9 05000000 		.4byte	.LVL45-1
+ 2256 02fd 0100     		.2byte	0x1
+ 2257 02ff 50       		.byte	0x50
+ 2258 0300 05000000 		.4byte	.LVL45-1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 46
+
+
+ 2259 0304 08000000 		.4byte	.LFE49
+ 2260 0308 0400     		.2byte	0x4
+ 2261 030a F3       		.byte	0xf3
+ 2262 030b 01       		.uleb128 0x1
+ 2263 030c 50       		.byte	0x50
+ 2264 030d 9F       		.byte	0x9f
+ 2265 030e 00000000 		.4byte	0
+ 2266 0312 00000000 		.4byte	0
+ 2267              	.LLST18:
+ 2268 0316 00000000 		.4byte	.LVL44
+ 2269 031a 05000000 		.4byte	.LVL45-1
+ 2270 031e 0100     		.2byte	0x1
+ 2271 0320 51       		.byte	0x51
+ 2272 0321 05000000 		.4byte	.LVL45-1
+ 2273 0325 08000000 		.4byte	.LFE49
+ 2274 0329 0400     		.2byte	0x4
+ 2275 032b F3       		.byte	0xf3
+ 2276 032c 01       		.uleb128 0x1
+ 2277 032d 51       		.byte	0x51
+ 2278 032e 9F       		.byte	0x9f
+ 2279 032f 00000000 		.4byte	0
+ 2280 0333 00000000 		.4byte	0
+ 2281              	.LLST19:
+ 2282 0337 00000000 		.4byte	.LVL44
+ 2283 033b 05000000 		.4byte	.LVL45-1
+ 2284 033f 0100     		.2byte	0x1
+ 2285 0341 52       		.byte	0x52
+ 2286 0342 05000000 		.4byte	.LVL45-1
+ 2287 0346 08000000 		.4byte	.LFE49
+ 2288 034a 0400     		.2byte	0x4
+ 2289 034c F3       		.byte	0xf3
+ 2290 034d 01       		.uleb128 0x1
+ 2291 034e 52       		.byte	0x52
+ 2292 034f 9F       		.byte	0x9f
+ 2293 0350 00000000 		.4byte	0
+ 2294 0354 00000000 		.4byte	0
+ 2295              	.LLST20:
+ 2296 0358 00000000 		.4byte	.LVL44
+ 2297 035c 05000000 		.4byte	.LVL45-1
+ 2298 0360 0100     		.2byte	0x1
+ 2299 0362 53       		.byte	0x53
+ 2300 0363 05000000 		.4byte	.LVL45-1
+ 2301 0367 08000000 		.4byte	.LFE49
+ 2302 036b 0400     		.2byte	0x4
+ 2303 036d F3       		.byte	0xf3
+ 2304 036e 01       		.uleb128 0x1
+ 2305 036f 53       		.byte	0x53
+ 2306 0370 9F       		.byte	0x9f
+ 2307 0371 00000000 		.4byte	0
+ 2308 0375 00000000 		.4byte	0
+ 2309              	.LLST21:
+ 2310 0379 00000000 		.4byte	.LVL46
+ 2311 037d 05000000 		.4byte	.LVL47-1
+ 2312 0381 0100     		.2byte	0x1
+ 2313 0383 50       		.byte	0x50
+ 2314 0384 05000000 		.4byte	.LVL47-1
+ 2315 0388 08000000 		.4byte	.LFE50
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 47
+
+
+ 2316 038c 0400     		.2byte	0x4
+ 2317 038e F3       		.byte	0xf3
+ 2318 038f 01       		.uleb128 0x1
+ 2319 0390 50       		.byte	0x50
+ 2320 0391 9F       		.byte	0x9f
+ 2321 0392 00000000 		.4byte	0
+ 2322 0396 00000000 		.4byte	0
+ 2323              	.LLST22:
+ 2324 039a 00000000 		.4byte	.LVL46
+ 2325 039e 05000000 		.4byte	.LVL47-1
+ 2326 03a2 0100     		.2byte	0x1
+ 2327 03a4 51       		.byte	0x51
+ 2328 03a5 05000000 		.4byte	.LVL47-1
+ 2329 03a9 08000000 		.4byte	.LFE50
+ 2330 03ad 0400     		.2byte	0x4
+ 2331 03af F3       		.byte	0xf3
+ 2332 03b0 01       		.uleb128 0x1
+ 2333 03b1 51       		.byte	0x51
+ 2334 03b2 9F       		.byte	0x9f
+ 2335 03b3 00000000 		.4byte	0
+ 2336 03b7 00000000 		.4byte	0
+ 2337              	.LLST23:
+ 2338 03bb 00000000 		.4byte	.LVL46
+ 2339 03bf 05000000 		.4byte	.LVL47-1
+ 2340 03c3 0100     		.2byte	0x1
+ 2341 03c5 52       		.byte	0x52
+ 2342 03c6 05000000 		.4byte	.LVL47-1
+ 2343 03ca 08000000 		.4byte	.LFE50
+ 2344 03ce 0400     		.2byte	0x4
+ 2345 03d0 F3       		.byte	0xf3
+ 2346 03d1 01       		.uleb128 0x1
+ 2347 03d2 52       		.byte	0x52
+ 2348 03d3 9F       		.byte	0x9f
+ 2349 03d4 00000000 		.4byte	0
+ 2350 03d8 00000000 		.4byte	0
+ 2351              	.LLST24:
+ 2352 03dc 00000000 		.4byte	.LVL46
+ 2353 03e0 05000000 		.4byte	.LVL47-1
+ 2354 03e4 0100     		.2byte	0x1
+ 2355 03e6 53       		.byte	0x53
+ 2356 03e7 05000000 		.4byte	.LVL47-1
+ 2357 03eb 08000000 		.4byte	.LFE50
+ 2358 03ef 0400     		.2byte	0x4
+ 2359 03f1 F3       		.byte	0xf3
+ 2360 03f2 01       		.uleb128 0x1
+ 2361 03f3 53       		.byte	0x53
+ 2362 03f4 9F       		.byte	0x9f
+ 2363 03f5 00000000 		.4byte	0
+ 2364 03f9 00000000 		.4byte	0
+ 2365              		.section	.debug_aranges,"",%progbits
+ 2366 0000 5C000000 		.4byte	0x5c
+ 2367 0004 0200     		.2byte	0x2
+ 2368 0006 00000000 		.4byte	.Ldebug_info0
+ 2369 000a 04       		.byte	0x4
+ 2370 000b 00       		.byte	0
+ 2371 000c 0000     		.2byte	0
+ 2372 000e 0000     		.2byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 48
+
+
+ 2373 0010 00000000 		.4byte	.LFB45
+ 2374 0014 12000000 		.4byte	.LFE45-.LFB45
+ 2375 0018 00000000 		.4byte	.LFB46
+ 2376 001c 28000000 		.4byte	.LFE46-.LFB46
+ 2377 0020 00000000 		.4byte	.LFB47
+ 2378 0024 B0000000 		.4byte	.LFE47-.LFB47
+ 2379 0028 00000000 		.4byte	.LFB48
+ 2380 002c 84000000 		.4byte	.LFE48-.LFB48
+ 2381 0030 00000000 		.4byte	.LFB49
+ 2382 0034 08000000 		.4byte	.LFE49-.LFB49
+ 2383 0038 00000000 		.4byte	.LFB50
+ 2384 003c 08000000 		.4byte	.LFE50-.LFB50
+ 2385 0040 00000000 		.4byte	.LFB51
+ 2386 0044 08000000 		.4byte	.LFE51-.LFB51
+ 2387 0048 00000000 		.4byte	.LFB52
+ 2388 004c 08000000 		.4byte	.LFE52-.LFB52
+ 2389 0050 00000000 		.4byte	.LFB53
+ 2390 0054 08000000 		.4byte	.LFE53-.LFB53
+ 2391 0058 00000000 		.4byte	0
+ 2392 005c 00000000 		.4byte	0
+ 2393              		.section	.debug_ranges,"",%progbits
+ 2394              	.Ldebug_ranges0:
+ 2395 0000 00000000 		.4byte	.LFB45
+ 2396 0004 12000000 		.4byte	.LFE45
+ 2397 0008 00000000 		.4byte	.LFB46
+ 2398 000c 28000000 		.4byte	.LFE46
+ 2399 0010 00000000 		.4byte	.LFB47
+ 2400 0014 B0000000 		.4byte	.LFE47
+ 2401 0018 00000000 		.4byte	.LFB48
+ 2402 001c 84000000 		.4byte	.LFE48
+ 2403 0020 00000000 		.4byte	.LFB49
+ 2404 0024 08000000 		.4byte	.LFE49
+ 2405 0028 00000000 		.4byte	.LFB50
+ 2406 002c 08000000 		.4byte	.LFE50
+ 2407 0030 00000000 		.4byte	.LFB51
+ 2408 0034 08000000 		.4byte	.LFE51
+ 2409 0038 00000000 		.4byte	.LFB52
+ 2410 003c 08000000 		.4byte	.LFE52
+ 2411 0040 00000000 		.4byte	.LFB53
+ 2412 0044 08000000 		.4byte	.LFE53
+ 2413 0048 00000000 		.4byte	0
+ 2414 004c 00000000 		.4byte	0
+ 2415              		.section	.debug_line,"",%progbits
+ 2416              	.Ldebug_line0:
+ 2417 0000 14030000 		.section	.debug_str,"MS",%progbits,1
+ 2417      02002302 
+ 2417      00000201 
+ 2417      FB0E0D00 
+ 2417      01010101 
+ 2418              	.LASF92:
+ 2419 0000 6466755F 		.ascii	"dfu_user.c\000"
+ 2419      75736572 
+ 2419      2E6300
+ 2420              	.LASF45:
+ 2421 000b 43595F44 		.ascii	"CY_DFU_ERROR_ADDRESS\000"
+ 2421      46555F45 
+ 2421      52524F52 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 49
+
+
+ 2421      5F414444 
+ 2421      52455353 
+ 2422              	.LASF59:
+ 2423 0020 6D696E45 		.ascii	"minEmEepromAddress\000"
+ 2423      6D456570 
+ 2423      726F6D41 
+ 2423      64647265 
+ 2423      737300
+ 2424              	.LASF50:
+ 2425 0033 6D756C74 		.ascii	"multiple\000"
+ 2425      69706C65 
+ 2425      00
+ 2426              	.LASF75:
+ 2427 003c 5F5F6379 		.ascii	"__cy_app0_verify_start\000"
+ 2427      5F617070 
+ 2427      305F7665 
+ 2427      72696679 
+ 2427      5F737461 
+ 2428              	.LASF78:
+ 2429 0053 5F5F6379 		.ascii	"__cy_app1_verify_length\000"
+ 2429      5F617070 
+ 2429      315F7665 
+ 2429      72696679 
+ 2429      5F6C656E 
+ 2430              	.LASF42:
+ 2431 006b 43595F44 		.ascii	"CY_DFU_ERROR_DATA\000"
+ 2431      46555F45 
+ 2431      52524F52 
+ 2431      5F444154 
+ 2431      4100
+ 2432              	.LASF60:
+ 2433 007d 6D617845 		.ascii	"maxEmEepromAddress\000"
+ 2433      6D456570 
+ 2433      726F6D41 
+ 2433      64647265 
+ 2433      737300
+ 2434              	.LASF71:
+ 2435 0090 43795F44 		.ascii	"Cy_DFU_TransportReset\000"
+ 2435      46555F54 
+ 2435      72616E73 
+ 2435      706F7274 
+ 2435      52657365 
+ 2436              	.LASF87:
+ 2437 00a6 55415254 		.ascii	"UART_UartCyBtldrCommWrite\000"
+ 2437      5F556172 
+ 2437      74437942 
+ 2437      746C6472 
+ 2437      436F6D6D 
+ 2438              	.LASF51:
+ 2439 00c0 73746172 		.ascii	"startAddress\000"
+ 2439      74416464 
+ 2439      72657373 
+ 2439      00
+ 2440              	.LASF12:
+ 2441 00cd 73697A65 		.ascii	"sizetype\000"
+ 2441      74797065 
+ 2441      00
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 50
+
+
+ 2442              	.LASF30:
+ 2443 00d6 63795F65 		.ascii	"cy_en_flashdrv_status_t\000"
+ 2443      6E5F666C 
+ 2443      61736864 
+ 2443      72765F73 
+ 2443      74617475 
+ 2444              	.LASF91:
+ 2445 00ee 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 2445      43313120 
+ 2445      352E342E 
+ 2445      31203230 
+ 2445      31363036 
+ 2446 0121 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 2446      20726576 
+ 2446      6973696F 
+ 2446      6E203233 
+ 2446      37373135 
+ 2447 0154 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 2447      67202D66 
+ 2447      66756E63 
+ 2447      74696F6E 
+ 2447      2D736563 
+ 2448              	.LASF56:
+ 2449 0180 6C656E67 		.ascii	"length\000"
+ 2449      746800
+ 2450              	.LASF62:
+ 2451 0187 66737461 		.ascii	"fstatus\000"
+ 2451      74757300 
+ 2452              	.LASF32:
+ 2453 018f 64617461 		.ascii	"dataOffset\000"
+ 2453      4F666673 
+ 2453      657400
+ 2454              	.LASF84:
+ 2455 019a 6D656D63 		.ascii	"memcpy\000"
+ 2455      707900
+ 2456              	.LASF96:
+ 2457 01a1 47657453 		.ascii	"GetStartEndAddress\000"
+ 2457      74617274 
+ 2457      456E6441 
+ 2457      64647265 
+ 2457      737300
+ 2458              	.LASF5:
+ 2459 01b4 73686F72 		.ascii	"short int\000"
+ 2459      7420696E 
+ 2459      7400
+ 2460              	.LASF81:
+ 2461 01be 43795F46 		.ascii	"Cy_Flash_WriteRow\000"
+ 2461      6C617368 
+ 2461      5F577269 
+ 2461      7465526F 
+ 2461      7700
+ 2462              	.LASF49:
+ 2463 01d0 76616C75 		.ascii	"value\000"
+ 2463      6500
+ 2464              	.LASF14:
+ 2465 01d6 75696E74 		.ascii	"uint8_t\000"
+ 2465      385F7400 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 51
+
+
+ 2466              	.LASF66:
+ 2467 01de 43795F44 		.ascii	"Cy_DFU_TransportRead\000"
+ 2467      46555F54 
+ 2467      72616E73 
+ 2467      706F7274 
+ 2467      52656164 
+ 2468              	.LASF37:
+ 2469 01f3 696E6974 		.ascii	"initCtl\000"
+ 2469      43746C00 
+ 2470              	.LASF74:
+ 2471 01fb 63795F64 		.ascii	"cy_dfu_metadata\000"
+ 2471      66755F6D 
+ 2471      65746164 
+ 2471      61746100 
+ 2472              	.LASF69:
+ 2473 020b 636F756E 		.ascii	"count\000"
+ 2473      7400
+ 2474              	.LASF40:
+ 2475 0211 43595F44 		.ascii	"CY_DFU_ERROR_VERIFY\000"
+ 2475      46555F45 
+ 2475      52524F52 
+ 2475      5F564552 
+ 2475      49465900 
+ 2476              	.LASF24:
+ 2477 0225 43595F46 		.ascii	"CY_FLASH_DRV_INVALID_INPUT_PARAMETERS\000"
+ 2477      4C415348 
+ 2477      5F445256 
+ 2477      5F494E56 
+ 2477      414C4944 
+ 2478              	.LASF70:
+ 2479 024b 43795F44 		.ascii	"Cy_DFU_TransportWrite\000"
+ 2479      46555F54 
+ 2479      72616E73 
+ 2479      706F7274 
+ 2479      57726974 
+ 2480              	.LASF16:
+ 2481 0261 666C6F61 		.ascii	"float\000"
+ 2481      7400
+ 2482              	.LASF36:
+ 2483 0267 61707056 		.ascii	"appVerified\000"
+ 2483      65726966 
+ 2483      69656400 
+ 2484              	.LASF85:
+ 2485 0273 6D656D63 		.ascii	"memcmp\000"
+ 2485      6D7000
+ 2486              	.LASF1:
+ 2487 027a 6C6F6E67 		.ascii	"long long int\000"
+ 2487      206C6F6E 
+ 2487      6720696E 
+ 2487      7400
+ 2488              	.LASF11:
+ 2489 0288 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 2489      206C6F6E 
+ 2489      6720756E 
+ 2489      7369676E 
+ 2489      65642069 
+ 2490              	.LASF28:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 52
+
+
+ 2491 029f 43595F46 		.ascii	"CY_FLASH_DRV_OPERATION_STARTED\000"
+ 2491      4C415348 
+ 2491      5F445256 
+ 2491      5F4F5045 
+ 2491      52415449 
+ 2492              	.LASF94:
+ 2493 02be 63795F65 		.ascii	"cy_en_flashdrv_status\000"
+ 2493      6E5F666C 
+ 2493      61736864 
+ 2493      72765F73 
+ 2493      74617475 
+ 2494              	.LASF83:
+ 2495 02d4 6D656D73 		.ascii	"memset\000"
+ 2495      657400
+ 2496              	.LASF7:
+ 2497 02db 6C6F6E67 		.ascii	"long int\000"
+ 2497      20696E74 
+ 2497      00
+ 2498              	.LASF43:
+ 2499 02e4 43595F44 		.ascii	"CY_DFU_ERROR_CMD\000"
+ 2499      46555F45 
+ 2499      52524F52 
+ 2499      5F434D44 
+ 2499      00
+ 2500              	.LASF8:
+ 2501 02f5 5F5F7569 		.ascii	"__uint8_t\000"
+ 2501      6E74385F 
+ 2501      7400
+ 2502              	.LASF79:
+ 2503 02ff 5F5F6379 		.ascii	"__cy_boot_signature_size\000"
+ 2503      5F626F6F 
+ 2503      745F7369 
+ 2503      676E6174 
+ 2503      7572655F 
+ 2504              	.LASF57:
+ 2505 0318 70617261 		.ascii	"params\000"
+ 2505      6D7300
+ 2506              	.LASF4:
+ 2507 031f 756E7369 		.ascii	"unsigned char\000"
+ 2507      676E6564 
+ 2507      20636861 
+ 2507      7200
+ 2508              	.LASF46:
+ 2509 032d 43595F44 		.ascii	"CY_DFU_ERROR_TIMEOUT\000"
+ 2509      46555F45 
+ 2509      52524F52 
+ 2509      5F54494D 
+ 2509      454F5554 
+ 2510              	.LASF76:
+ 2511 0342 5F5F6379 		.ascii	"__cy_app0_verify_length\000"
+ 2511      5F617070 
+ 2511      305F7665 
+ 2511      72696679 
+ 2511      5F6C656E 
+ 2512              	.LASF2:
+ 2513 035a 6C6F6E67 		.ascii	"long double\000"
+ 2513      20646F75 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 53
+
+
+ 2513      626C6500 
+ 2514              	.LASF0:
+ 2515 0366 756E7369 		.ascii	"unsigned int\000"
+ 2515      676E6564 
+ 2515      20696E74 
+ 2515      00
+ 2516              	.LASF33:
+ 2517 0373 7061636B 		.ascii	"packetBuffer\000"
+ 2517      65744275 
+ 2517      66666572 
+ 2517      00
+ 2518              	.LASF93:
+ 2519 0380 433A5C55 		.ascii	"C:\\Users\\Agentos\\Documents\\Univer\\psoc6-labs\\"
+ 2519      73657273 
+ 2519      5C416765 
+ 2519      6E746F73 
+ 2519      5C446F63 
+ 2520 03ad 6C616231 		.ascii	"lab12\\lab12\\lab12.cydsn\000"
+ 2520      325C6C61 
+ 2520      6231325C 
+ 2520      6C616231 
+ 2520      322E6379 
+ 2521              	.LASF31:
+ 2522 03c5 64617461 		.ascii	"dataBuffer\000"
+ 2522      42756666 
+ 2522      657200
+ 2523              	.LASF3:
+ 2524 03d0 7369676E 		.ascii	"signed char\000"
+ 2524      65642063 
+ 2524      68617200 
+ 2525              	.LASF55:
+ 2526 03dc 61646472 		.ascii	"address\000"
+ 2526      65737300 
+ 2527              	.LASF15:
+ 2528 03e4 75696E74 		.ascii	"uint32_t\000"
+ 2528      33325F74 
+ 2528      00
+ 2529              	.LASF73:
+ 2530 03ed 43795F44 		.ascii	"Cy_DFU_TransportStop\000"
+ 2530      46555F54 
+ 2530      72616E73 
+ 2530      706F7274 
+ 2530      53746F70 
+ 2531              	.LASF80:
+ 2532 0402 43795F44 		.ascii	"Cy_DFU_GetAppMetadata\000"
+ 2532      46555F47 
+ 2532      65744170 
+ 2532      704D6574 
+ 2532      61646174 
+ 2533              	.LASF25:
+ 2534 0418 43595F46 		.ascii	"CY_FLASH_DRV_PL_ROW_COMP_FA\000"
+ 2534      4C415348 
+ 2534      5F445256 
+ 2534      5F504C5F 
+ 2534      524F575F 
+ 2535              	.LASF48:
+ 2536 0434 63795F65 		.ascii	"cy_en_dfu_status_t\000"
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 54
+
+
+ 2536      6E5F6466 
+ 2536      755F7374 
+ 2536      61747573 
+ 2536      5F7400
+ 2537              	.LASF47:
+ 2538 0447 43595F44 		.ascii	"CY_DFU_ERROR_UNKNOWN\000"
+ 2538      46555F45 
+ 2538      52524F52 
+ 2538      5F554E4B 
+ 2538      4E4F574E 
+ 2539              	.LASF6:
+ 2540 045c 73686F72 		.ascii	"short unsigned int\000"
+ 2540      7420756E 
+ 2540      7369676E 
+ 2540      65642069 
+ 2540      6E7400
+ 2541              	.LASF61:
+ 2542 046f 73746174 		.ascii	"status\000"
+ 2542      757300
+ 2543              	.LASF38:
+ 2544 0476 63795F73 		.ascii	"cy_stc_dfu_params_t\000"
+ 2544      74635F64 
+ 2544      66755F70 
+ 2544      6172616D 
+ 2544      735F7400 
+ 2545              	.LASF86:
+ 2546 048a 55415254 		.ascii	"UART_UartCyBtldrCommRead\000"
+ 2546      5F556172 
+ 2546      74437942 
+ 2546      746C6472 
+ 2546      436F6D6D 
+ 2547              	.LASF89:
+ 2548 04a3 55415254 		.ascii	"UART_UartCyBtldrCommStart\000"
+ 2548      5F556172 
+ 2548      74437942 
+ 2548      746C6472 
+ 2548      436F6D6D 
+ 2549              	.LASF41:
+ 2550 04bd 43595F44 		.ascii	"CY_DFU_ERROR_LENGTH\000"
+ 2550      46555F45 
+ 2550      52524F52 
+ 2550      5F4C454E 
+ 2550      47544800 
+ 2551              	.LASF29:
+ 2552 04d1 43595F46 		.ascii	"CY_FLASH_DRV_OPCODE_BUSY\000"
+ 2552      4C415348 
+ 2552      5F445256 
+ 2552      5F4F5043 
+ 2552      4F44455F 
+ 2553              	.LASF82:
+ 2554 04ea 43795F44 		.ascii	"Cy_DFU_GetRunningApp\000"
+ 2554      46555F47 
+ 2554      65745275 
+ 2554      6E6E696E 
+ 2554      67417070 
+ 2555              	.LASF68:
+ 2556 04ff 73697A65 		.ascii	"size\000"
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 55
+
+
+ 2556      00
+ 2557              	.LASF95:
+ 2558 0504 49734D75 		.ascii	"IsMultipleOf\000"
+ 2558      6C746970 
+ 2558      6C654F66 
+ 2558      00
+ 2559              	.LASF67:
+ 2560 0511 62756666 		.ascii	"buffer\000"
+ 2560      657200
+ 2561              	.LASF21:
+ 2562 0518 43595F46 		.ascii	"CY_FLASH_DRV_INVALID_FLASH_ADDR\000"
+ 2562      4C415348 
+ 2562      5F445256 
+ 2562      5F494E56 
+ 2562      414C4944 
+ 2563              	.LASF10:
+ 2564 0538 6C6F6E67 		.ascii	"long unsigned int\000"
+ 2564      20756E73 
+ 2564      69676E65 
+ 2564      6420696E 
+ 2564      7400
+ 2565              	.LASF27:
+ 2566 054a 43595F46 		.ascii	"CY_FLASH_DRV_PROGRESS_NO_ERROR\000"
+ 2566      4C415348 
+ 2566      5F445256 
+ 2566      5F50524F 
+ 2566      47524553 
+ 2567              	.LASF17:
+ 2568 0569 646F7562 		.ascii	"double\000"
+ 2568      6C6500
+ 2569              	.LASF35:
+ 2570 0570 61707049 		.ascii	"appId\000"
+ 2570      6400
+ 2571              	.LASF52:
+ 2572 0576 656E6441 		.ascii	"endAddress\000"
+ 2572      64647265 
+ 2572      737300
+ 2573              	.LASF13:
+ 2574 0581 63686172 		.ascii	"char\000"
+ 2574      00
+ 2575              	.LASF9:
+ 2576 0586 5F5F7569 		.ascii	"__uint32_t\000"
+ 2576      6E743332 
+ 2576      5F7400
+ 2577              	.LASF20:
+ 2578 0591 43595F46 		.ascii	"CY_FLASH_DRV_INVALID_FM_PL\000"
+ 2578      4C415348 
+ 2578      5F445256 
+ 2578      5F494E56 
+ 2578      414C4944 
+ 2579              	.LASF65:
+ 2580 05ac 6D696E55 		.ascii	"minUFlashAddress\000"
+ 2580      466C6173 
+ 2580      68416464 
+ 2580      72657373 
+ 2580      00
+ 2581              	.LASF63:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 56
+
+
+ 2582 05bd 43795F44 		.ascii	"Cy_DFU_WriteData\000"
+ 2582      46555F57 
+ 2582      72697465 
+ 2582      44617461 
+ 2582      00
+ 2583              	.LASF23:
+ 2584 05ce 43595F46 		.ascii	"CY_FLASH_DRV_IPC_BUSY\000"
+ 2584      4C415348 
+ 2584      5F445256 
+ 2584      5F495043 
+ 2584      5F425553 
+ 2585              	.LASF22:
+ 2586 05e4 43595F46 		.ascii	"CY_FLASH_DRV_ROW_PROTECTED\000"
+ 2586      4C415348 
+ 2586      5F445256 
+ 2586      5F524F57 
+ 2586      5F50524F 
+ 2587              	.LASF26:
+ 2588 05ff 43595F46 		.ascii	"CY_FLASH_DRV_ERR_UNC\000"
+ 2588      4C415348 
+ 2588      5F445256 
+ 2588      5F455252 
+ 2588      5F554E43 
+ 2589              	.LASF58:
+ 2590 0614 6D617855 		.ascii	"maxUFlashAddress\000"
+ 2590      466C6173 
+ 2590      68416464 
+ 2590      72657373 
+ 2590      00
+ 2591              	.LASF53:
+ 2592 0625 76657269 		.ascii	"verifyStart\000"
+ 2592      66795374 
+ 2592      61727400 
+ 2593              	.LASF64:
+ 2594 0631 43795F44 		.ascii	"Cy_DFU_ReadData\000"
+ 2594      46555F52 
+ 2594      65616444 
+ 2594      61746100 
+ 2595              	.LASF72:
+ 2596 0641 43795F44 		.ascii	"Cy_DFU_TransportStart\000"
+ 2596      46555F54 
+ 2596      72616E73 
+ 2596      706F7274 
+ 2596      53746172 
+ 2597              	.LASF88:
+ 2598 0657 55415254 		.ascii	"UART_UartCyBtldrCommReset\000"
+ 2598      5F556172 
+ 2598      74437942 
+ 2598      746C6472 
+ 2598      436F6D6D 
+ 2599              	.LASF39:
+ 2600 0671 43595F44 		.ascii	"CY_DFU_SUCCESS\000"
+ 2600      46555F53 
+ 2600      55434345 
+ 2600      535300
+ 2601              	.LASF77:
+ 2602 0680 5F5F6379 		.ascii	"__cy_app1_verify_start\000"
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccncDuUf.s 			page 57
+
+
+ 2602      5F617070 
+ 2602      315F7665 
+ 2602      72696679 
+ 2602      5F737461 
+ 2603              	.LASF18:
+ 2604 0697 43595F46 		.ascii	"CY_FLASH_DRV_SUCCESS\000"
+ 2604      4C415348 
+ 2604      5F445256 
+ 2604      5F535543 
+ 2604      43455353 
+ 2605              	.LASF90:
+ 2606 06ac 55415254 		.ascii	"UART_UartCyBtldrCommStop\000"
+ 2606      5F556172 
+ 2606      74437942 
+ 2606      746C6472 
+ 2606      436F6D6D 
+ 2607              	.LASF44:
+ 2608 06c5 43595F44 		.ascii	"CY_DFU_ERROR_CHECKSUM\000"
+ 2608      46555F45 
+ 2608      52524F52 
+ 2608      5F434845 
+ 2608      434B5355 
+ 2609              	.LASF54:
+ 2610 06db 76657269 		.ascii	"verifySize\000"
+ 2610      66795369 
+ 2610      7A6500
+ 2611              	.LASF34:
+ 2612 06e6 74696D65 		.ascii	"timeout\000"
+ 2612      6F757400 
+ 2613              	.LASF19:
+ 2614 06ee 43595F46 		.ascii	"CY_FLASH_DRV_INV_PROT\000"
+ 2614      4C415348 
+ 2614      5F445256 
+ 2614      5F494E56 
+ 2614      5F50524F 
+ 2615              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran
