@@ -324,14 +324,18 @@
 </userData>
 </CyGuid_fdba8dfd-b15b-4469-9bbb-9e40c3e70997>
 <Unloaded />
-<OpenDocs />
+<OpenDocs>
+<name v=".\lab6.cydsn\TopDesign\TopDesign.cysch" />
+<name v=".\lab6.cydsn\main_cm4.c" />
+<name v=".\lab6.cydsn\lab6.cydwr" />
+</OpenDocs>
 <OpenDocsLayout><![CDATA[<?xml version="1.0"?><!--
 
   Actipro Docking/MDI for WinForms
   Copyright (c) 2001-2016 Actipro Software LLC.  All rights reserved.
   http://www.actiprosoftware.com
 
---><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1604, 855" SelectedTabbedMdiWindow="16b8702b-206e-46f3-874b-083d7938365d"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="16b8702b-206e-46f3-874b-083d7938365d" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
+--><DocumentLayout Version="1.0"><LayoutData><TabbedMdiRootContainer Orientation="Horizontal"><TabbedMdiContainer Size="1350, 855" SelectedTabbedMdiWindow="4f3ab24a-5a27-4114-b2a4-623e267c0ad4"><ToolWindow Key="Start Page:bd4649ab-da6b-4d04-a663-c722b8bf99db:Start Page" Guid="16b8702b-206e-46f3-874b-083d7938365d" /><DocumentWindow Key="D:\Web\psoc6-labs\lab6\lab6_1\lab6.cydsn\TopDesign\TopDesign.cysch" Guid="09177a7c-0327-4636-a39c-164d5640c995" /><DocumentWindow Key="D:\Web\psoc6-labs\lab6\lab6_1\lab6.cydsn\main_cm4.c" Guid="4f3ab24a-5a27-4114-b2a4-623e267c0ad4" /><DocumentWindow Key="D:\Web\psoc6-labs\lab6\lab6_1\lab6.cydsn\lab6.cydwr" Guid="ccb3fa85-a7a3-4ca1-a89a-9df2bfca55b6" /></TabbedMdiContainer></TabbedMdiRootContainer><FloatingContainers /></LayoutData></DocumentLayout>]]></OpenDocsLayout>
 <config v="" />
 <AutoUpdate v="true" />
 </CyGuid_843a90a4-0c4b-4e44-991d-05e7fb117a21>
