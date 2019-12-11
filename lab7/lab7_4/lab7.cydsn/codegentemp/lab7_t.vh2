@@ -1,5 +1,5 @@
--- Project:   C:\Users\User\Desktop\labs\psoc\lab7_1\lab7.cydsn\lab7.cyprj
--- Generated: 11/06/2019 17:54:46
+-- Project:   C:\Users\Agentos\Documents\Univer\psoc6-labs\lab7\lab7_4\lab7.cydsn\lab7.cyprj
+-- Generated: 12/11/2019 13:35:52
 -- PSoC Creator  4.2
 
 ENTITY lab7 IS
@@ -8,7 +8,8 @@ ENTITY lab7 IS
         \UART:tx(0)_PAD\ : OUT std_ulogic;
         \UART:rx(0)_PAD\ : IN std_ulogic;
         Pin_RedLED(0)_PAD : OUT std_ulogic;
-        Pin_BlueLED(0)_PAD : OUT std_ulogic);
+        Pin_BlueLED(0)_PAD : OUT std_ulogic;
+        SW2_P0_4(0)_PAD : IN std_ulogic);
     ATTRIBUTE voltage_VBACKUP OF __DEFAULT__ : ENTITY IS 3.3e0;
     ATTRIBUTE voltage_VDD_NS OF __DEFAULT__ : ENTITY IS 3.3e0;
     ATTRIBUTE voltage_VDDA_CSD OF __DEFAULT__ : ENTITY IS 3.3e0;
@@ -47,6 +48,7 @@ ARCHITECTURE __DEFAULT__ OF lab7 IS
     ATTRIBUTE global_signal OF ClockBlock_PeriClk : SIGNAL IS true;
     SIGNAL ClockBlock_SlowClk : bit;
     SIGNAL ClockBlock_WCO : bit;
+    SIGNAL INDIVIDUAL_PICU_OUT_0 : bit;
     SIGNAL Net_10 : bit;
     SIGNAL Net_14_ff11 : bit;
     ATTRIBUTE global_signal OF Net_14_ff11 : SIGNAL IS true;
@@ -58,6 +60,7 @@ ARCHITECTURE __DEFAULT__ OF lab7 IS
     SIGNAL Pin_BlueLED(0)__PA : bit;
     SIGNAL Pin_GreenLED(0)__PA : bit;
     SIGNAL Pin_RedLED(0)__PA : bit;
+    SIGNAL SW2_P0_4(0)__PA : bit;
     SIGNAL \Timer:Net_1\ : bit;
     SIGNAL \Timer:Net_2\ : bit;
     SIGNAL \UART:Net_1172\ : bit;
@@ -95,10 +98,14 @@ ARCHITECTURE __DEFAULT__ OF lab7 IS
     ATTRIBUTE Location OF Pin_RedLED(0) : LABEL IS "P0[3]";
     ATTRIBUTE lib_model OF Pin_BlueLED(0) : LABEL IS "iocell7";
     ATTRIBUTE Location OF Pin_BlueLED(0) : LABEL IS "P11[1]";
+    ATTRIBUTE lib_model OF SW2_P0_4(0) : LABEL IS "iocell8";
+    ATTRIBUTE Location OF SW2_P0_4(0) : LABEL IS "P0[4]";
     ATTRIBUTE Location OF \Timer:TCPWM\ : LABEL IS "F(TCPWM,0)";
     ATTRIBUTE Location OF Isr_Timer : LABEL IS "[IntrContainer=(0)][IntrId=(90)]";
     ATTRIBUTE Location OF \UART:SCB_IRQ\ : LABEL IS "[IntrContainer=(0)][IntrId=(46)]";
     ATTRIBUTE Location OF \UART:SCB\ : LABEL IS "F(SCB,5)";
+    ATTRIBUTE Location OF SysInt_Switch : LABEL IS "[IntrContainer=(0)][IntrId=(0)]";
+    ATTRIBUTE Location OF IOSS : LABEL IS "F(IOSS,0)";
     COMPONENT CLK_GEN
         PORT (
             gen_clk_in_0 : IN std_ulogic;
@@ -416,6 +423,26 @@ ARCHITECTURE __DEFAULT__ OF lab7 IS
             out_clock : IN std_ulogic;
             out_clock_en : IN std_ulogic;
             out_reset : IN std_ulogic);
+    END COMPONENT;
+    COMPONENT IOSS
+        PORT (
+            interrupt_gpio : OUT std_ulogic;
+            interrupt_vdd : OUT std_ulogic;
+            interrupt_port_0 : OUT std_ulogic;
+            interrupt_port_1 : OUT std_ulogic;
+            interrupt_port_2 : OUT std_ulogic;
+            interrupt_port_3 : OUT std_ulogic;
+            interrupt_port_4 : OUT std_ulogic;
+            interrupt_port_5 : OUT std_ulogic;
+            interrupt_port_6 : OUT std_ulogic;
+            interrupt_port_7 : OUT std_ulogic;
+            interrupt_port_8 : OUT std_ulogic;
+            interrupt_port_9 : OUT std_ulogic;
+            interrupt_port_10 : OUT std_ulogic;
+            interrupt_port_11 : OUT std_ulogic;
+            interrupt_port_12 : OUT std_ulogic;
+            interrupt_port_13 : OUT std_ulogic;
+            interrupt_port_14 : OUT std_ulogic);
     END COMPONENT;
     COMPONENT logicalport
         PORT (
@@ -876,6 +903,61 @@ BEGIN
             out_clock_en => open,
             out_reset => open);
 
+    SW2_P0_4:logicalport
+        GENERIC MAP(
+            cy_registers => "",
+            drive_mode => "010",
+            drive_strength => "0",
+            hotswap_needed => "0",
+            i2c_mode => "0",
+            ibuf_enabled => "1",
+            id => "6fb4e58b-fc61-450d-ab10-533363eee47b",
+            init_dr_st => "1",
+            input_sync => "0",
+            intr_mode => "10",
+            io_voltage => "",
+            max_frequency => "100",
+            oe_conn => "0",
+            oe_sync => "0",
+            output_conn => "0",
+            output_current_cap => "8",
+            output_sync => "0",
+            pin_aliases => "",
+            pin_mode => "B",
+            sio_grp_cnt => 0,
+            slew_rate => "0",
+            use_annotation => "1",
+            vtrip => "00",
+            width => 1,
+            in_clk_inv => 0,
+            in_clken_inv => 0,
+            in_clken_mode => 1,
+            in_rst_inv => 0,
+            out_clk_inv => 0,
+            out_clken_inv => 0,
+            out_clken_mode => 1,
+            out_rst_inv => 0);
+
+    SW2_P0_4(0):iocell
+        GENERIC MAP(
+            port_location => "PORT(0,4)",
+            in_sync_mode => 0,
+            out_sync_mode => 0,
+            oe_sync_mode => 0,
+            logicalport => "SW2_P0_4",
+            logicalport_pin_id => 0,
+            io_capabilities => "0000000000000000000000000000000000000000000000000000000000000001")
+        PORT MAP(
+            pa_out => SW2_P0_4(0)__PA,
+            oe => open,
+            pad_in => SW2_P0_4(0)_PAD,
+            in_clock => open,
+            in_clock_en => open,
+            in_reset => open,
+            out_clock => open,
+            out_clock_en => open,
+            out_reset => open);
+
     \Timer:TCPWM\:TCPWM
         GENERIC MAP(
             cy_registers => "",
@@ -936,5 +1018,18 @@ BEGIN
             tr_tx_req => Net_58,
             tr_rx_req => Net_57,
             tr_i2c_scl_filtered => \UART:Net_161\);
+
+    SysInt_Switch:interrupt
+        GENERIC MAP(
+            cy_registers => "",
+            deepsleep_required => 0,
+            int_type => "10")
+        PORT MAP(
+            interrupt => INDIVIDUAL_PICU_OUT_0,
+            clock => ClockBlock_PeriClk);
+
+    IOSS:IOSS
+        PORT MAP(
+            interrupt_port_0 => INDIVIDUAL_PICU_OUT_0);
 
 END __DEFAULT__;

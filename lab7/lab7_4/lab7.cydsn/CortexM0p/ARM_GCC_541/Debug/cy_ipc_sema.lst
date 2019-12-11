@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 1
 
 
    1              		.syntax unified
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
   28:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** * Internal IPC semaphore control data structure.
   29:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** */
   30:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** typedef struct
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 2
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 2
 
 
   31:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** {
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
   40              		.cfi_offset 14, -4
   41 0002 0400     		movs	r4, r0
   42 0004 0E00     		movs	r6, r1
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 3
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 3
 
 
   43 0006 1500     		movs	r5, r2
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
   28:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *     - Driver-level (DRV) API - used internally by Semaphore and Pipe levels
   29:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *     - Pipe-level (PIPE) API - establishes a communication channel between
   30:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *       processors
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 4
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 4
 
 
   31:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *     - Semaphore-level (SEMA) API - enables users to set and clear flags to
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
   85:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * the appropriate client via the client callback function. An interrupt notifies
   86:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * the sending core that the receiver is finished. In this way a single pipe can
   87:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * manage arbitrary data transfers between cores with data flowing in either
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 5
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 5
 
 
   88:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * direction.
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  142:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * After the callback function is returned by the receiver, it invokes the release
  143:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * callback function defined by the sender of the message.
  144:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 6
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 6
 
 
  145:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * \section group_ipc_sema_layer SEMA Layer
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  199:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *  -# Cy_Flash_Init()
  200:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *
  201:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * Also Cy_IPC_SystemPipeInit function is called to support BLE host/controller
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 7
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 7
 
 
  202:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * communication.
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  256:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *     <td></td>
  257:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *   </tr>
  258:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * </table>
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 8
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 8
 
 
  259:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  313:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** /** Return prefix for IPC driver function error return values */
  314:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** #define CY_IPC_ID_ERROR   (uint32_t)( CY_IPC_ID | CY_PDL_STATUS_ERROR)
  315:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** 
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 9
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 9
 
 
  316:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** /** Converts the IPC interrupt channel number to interrupt vector */
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  370:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** __STATIC_INLINE  cy_en_ipcdrv_status_t Cy_IPC_Drv_LockAcquire (IPC_STRUCT_Type const * base);
  371:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** cy_en_ipcdrv_status_t    Cy_IPC_Drv_LockRelease (IPC_STRUCT_Type * base, uint32_t releaseEventIntr)
  372:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** __STATIC_INLINE bool     Cy_IPC_Drv_IsLockAcquired (IPC_STRUCT_Type const * base);
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 10
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 10
 
 
  373:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** __STATIC_INLINE uint32_t Cy_IPC_Drv_GetLockStatus (IPC_STRUCT_Type const * base);
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
   70 0022 6401     		lsls	r4, r4, #5
   71              	.LVL6:
   72 0024 204B     		ldr	r3, .L12+4
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 11
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 11
 
 
   73 0026 9C46     		mov	ip, r3
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  115 0052 6444     		add	r4, r4, ip
  116              	.LVL15:
  117              	.LBE23:
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 12
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 12
 
 
  118              	.LBE22:
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  429:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * base address of the IPC interrupt registers.
  430:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *
  431:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * \return
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 13
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 13
 
 
  432:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * Returns a pointer to the base of the IPC interrupt registers.
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  486:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *
  487:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * \return
  488:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *   The return value is encoded as follows
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 14
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 14
 
 
  489:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *   <table>
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  543:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * IPC interrupt number using \ref Cy_IPC_Drv_GetIntrBaseAddr.
  544:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *
  545:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * \return
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 15
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 15
 
 
  546:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *   The return value is encoded as follows
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  600:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * a pending interrupt source in the interrupt status.
  601:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *
  602:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * \param base
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 16
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 16
 
 
  603:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * This is a handle to the IPC interrupt. This handle can be calculated from the
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  657:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** 
  658:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** /*******************************************************************************
  659:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * Function Name: Cy_IPC_Drv_ReleaseNotify
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 17
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 17
 
 
  660:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** ****************************************************************************//**
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  714:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * software.
  715:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *
  716:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * \param base
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 18
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 18
 
 
  717:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * This parameter is a handle that represents the base address of the registers
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  771:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * Value from LOCK_STATUS register.
  772:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *
  773:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * \funcusage
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 19
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 19
 
 
  774:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * \snippet IPC_sut_01.cydsn/main_cm4.c snippet_Cy_IPC_Drv_GetLockStatus
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  828:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * This function is used to send a message pointer through an IPC channel.
  829:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * The message structure may hold a generic pointer that may contain the address
  830:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * of any user data type or structure. This parameter could be a pointer to a 32-bit
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 20
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 20
 
 
  831:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * integer, an array, or even a data structure defined in the user code. This
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  162              	.L6:
   80:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c ****     }
  163              		.loc 1 80 0
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 21
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 21
 
 
  164 008c 0848     		ldr	r0, .L12+12
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  192              	.LVL30:
  193              	.L2:
  136:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c ****         }
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 22
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 22
 
 
  137:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c ****     }
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  167:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** *
  168:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** * \return Status of the operation
  169:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** *    \retval CY_IPC_SEMA_SUCCESS:      The semaphore was set successfully
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 23
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 23
 
 
  170:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** *    \retval CY_IPC_SEMA_LOCKED:       The semaphore channel is busy or locked
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  192:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c ****     {
  193:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c ****         semaIndex = semaNumber / CY_IPC_SEMA_PER_WORD;
  249              		.loc 1 193 0
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 24
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 24
 
 
  250 0012 4709     		lsrs	r7, r0, #5
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  874:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * of the IPC channel.
  875:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * The parameter is generally returned from a call to the \ref
  876:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** * Cy_IPC_Drv_GetIpcBaseAddress.
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 25
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 25
 
 
  877:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_drv.h **** *
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  290 003c 0F4B     		ldr	r3, .L25+4
  291              	.L17:
  292              	.LVL46:
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 26
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 26
 
 
  293              	.LBE29:
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  219:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c ****         if (!preemptable)
  331              		.loc 1 219 0
  332 0062 002D     		cmp	r5, #0
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 27
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 27
 
 
  333 0064 04D1     		bne	.L15
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  237:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** * This functions tries to releases a semaphore.
  238:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** *
  239:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** * It first acquires the IPC channel that is used for all the semaphores, clears
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 28
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 28
 
 
  240:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** * the semaphore if it is set, then releases the IPC channel used for the
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  386              		.loc 1 277 0
  387 0006 1C4B     		ldr	r3, .L38
  388 0008 1B68     		ldr	r3, [r3]
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 29
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 29
 
 
  389              	.LVL61:
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  290:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c ****            If so, check if specific channel can be locked. */
  291:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c ****         if(CY_IPC_DRV_SUCCESS == Cy_IPC_Drv_LockAcquire (cy_semaIpcStruct))
  429              		.loc 1 291 0
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 30
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 30
 
 
  430 002e 124B     		ldr	r3, .L38
@@ -1798,7 +1798,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  304:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c ****             (void) Cy_IPC_Drv_LockRelease (cy_semaIpcStruct, CY_IPC_NO_NOTIFICATION);
  472              		.loc 1 304 0
  473 0058 0021     		movs	r1, #0
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 31
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 31
 
 
  474 005a FFF7FEFF 		bl	Cy_IPC_Drv_LockRelease
@@ -1858,7 +1858,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  514              		.section	.text.Cy_IPC_Sema_Status,"ax",%progbits
  515              		.align	2
  516              		.global	Cy_IPC_Sema_Status
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 32
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 32
 
 
  517              		.code	16
@@ -1918,7 +1918,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  540 0006 1368     		ldr	r3, [r2]
  541 0008 8342     		cmp	r3, r0
  542 000a 0BD9     		bls	.L42
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 33
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 33
 
 
  348:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c ****     {
@@ -1978,7 +1978,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  576              		.loc 1 367 0
  577              		@ sp needed
  578 002a 7047     		bx	lr
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 34
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 34
 
 
  579              	.L45:
@@ -2038,7 +2038,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  611              	.LBE37:
  612              	.LBE36:
  389:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c **** 
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 35
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 35
 
 
  390:Generated_Source\PSoC6\pdl\drivers\peripheral\ipc/cy_ipc_sema.c ****     return (semaStruct->maxSema);
@@ -2095,10 +2095,10 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  654 000b 01       		.uleb128 0x1
  655 000c 3B000000 		.4byte	.LASF79
  656 0010 0C       		.byte	0xc
- 657 0011 9B040000 		.4byte	.LASF80
- 658 0015 D9030000 		.4byte	.LASF81
+ 657 0011 69040000 		.4byte	.LASF80
+ 658 0015 F2040000 		.4byte	.LASF81
  659 0019 00000000 		.4byte	.Ldebug_ranges0+0
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 36
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 36
 
 
  660 001d 00000000 		.4byte	0
@@ -2118,7 +2118,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  674 003a 02       		.uleb128 0x2
  675 003b 02       		.byte	0x2
  676 003c 07       		.byte	0x7
- 677 003d 0B040000 		.4byte	.LASF3
+ 677 003d D9030000 		.4byte	.LASF3
  678 0041 02       		.uleb128 0x2
  679 0042 04       		.byte	0x4
  680 0043 05       		.byte	0x5
@@ -2131,7 +2131,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  687 0053 02       		.uleb128 0x2
  688 0054 04       		.byte	0x4
  689 0055 07       		.byte	0x7
- 690 0056 6B040000 		.4byte	.LASF5
+ 690 0056 39040000 		.4byte	.LASF5
  691 005a 02       		.uleb128 0x2
  692 005b 08       		.byte	0x8
  693 005c 05       		.byte	0x5
@@ -2158,7 +2158,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  714 0083 07       		.byte	0x7
  715 0084 32000000 		.4byte	.LASF11
  716 0088 05       		.uleb128 0x5
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 37
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 37
 
 
  717 0089 76000000 		.4byte	0x76
@@ -2184,7 +2184,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  737 00b5 23       		.byte	0x23
  738 00b6 03010000 		.4byte	0x103
  739 00ba 0A       		.uleb128 0xa
- 740 00bb 9C050000 		.4byte	.LASF12
+ 740 00bb AE050000 		.4byte	.LASF12
  741 00bf 05       		.byte	0x5
  742 00c0 24       		.byte	0x24
  743 00c1 8D000000 		.4byte	0x8d
@@ -2208,7 +2208,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  761 00e5 88000000 		.4byte	0x88
  762 00e9 0C       		.byte	0xc
  763 00ea 0A       		.uleb128 0xa
- 764 00eb F9040000 		.4byte	.LASF16
+ 764 00eb C7040000 		.4byte	.LASF16
  765 00ef 05       		.byte	0x5
  766 00f0 28       		.byte	0x28
  767 00f1 8D000000 		.4byte	0x8d
@@ -2218,7 +2218,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  771 00fb 05       		.byte	0x5
  772 00fc 29       		.byte	0x29
  773 00fd 08010000 		.4byte	0x108
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 38
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 38
 
 
  774 0101 14       		.byte	0x14
@@ -2238,7 +2238,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  788 011b 2F       		.byte	0x2f
  789 011c 5D010000 		.4byte	0x15d
  790 0120 0A       		.uleb128 0xa
- 791 0121 40040000 		.4byte	.LASF19
+ 791 0121 0E040000 		.4byte	.LASF19
  792 0125 05       		.byte	0x5
  793 0126 30       		.byte	0x30
  794 0127 88000000 		.4byte	0x88
@@ -2278,7 +2278,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  828 016d 35       		.byte	0x35
  829 016e 18010000 		.4byte	0x118
  830 0172 0B       		.uleb128 0xb
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 39
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 39
 
 
  831 0173 0012     		.2byte	0x1200
@@ -2286,7 +2286,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  833 0176 3A       		.byte	0x3a
  834 0177 A2010000 		.4byte	0x1a2
  835 017b 0A       		.uleb128 0xa
- 836 017c 0B050000 		.4byte	.LASF24
+ 836 017c D9040000 		.4byte	.LASF24
  837 0180 05       		.byte	0x5
  838 0181 3B       		.byte	0x3b
  839 0182 A2010000 		.4byte	0x1a2
@@ -2338,7 +2338,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  885 01e9 44020000 		.4byte	.LASF27
  886 01ed 06       		.byte	0x6
  887 01ee C401     		.2byte	0x1c4
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 40
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 40
 
 
  888 01f0 F4010000 		.4byte	0x1f4
@@ -2353,7 +2353,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  897 0202 02       		.uleb128 0x2
  898 0203 08       		.byte	0x8
  899 0204 04       		.byte	0x4
- 900 0205 7D040000 		.4byte	.LASF30
+ 900 0205 4B040000 		.4byte	.LASF30
  901 0209 02       		.uleb128 0x2
  902 020a 08       		.byte	0x8
  903 020b 04       		.byte	0x4
@@ -2398,7 +2398,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  942 0267 8B010000 		.4byte	.LASF39
  943 026b 04018A00 		.4byte	0x8a0104
  944 026f 11       		.uleb128 0x11
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 41
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 41
 
 
  945 0270 92030000 		.4byte	.LASF40
@@ -2410,7 +2410,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  951 0282 BF030000 		.4byte	.LASF42
  952 0286 01018800 		.4byte	0x880101
  953 028a 11       		.uleb128 0x11
- 954 028b 1E040000 		.4byte	.LASF43
+ 954 028b EC030000 		.4byte	.LASF43
  955 028f 00018800 		.4byte	0x880100
  956 0293 00       		.byte	0
  957 0294 03       		.uleb128 0x3
@@ -2424,7 +2424,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  965 02a2 1E       		.byte	0x1e
  966 02a3 C0020000 		.4byte	0x2c0
  967 02a7 0A       		.uleb128 0xa
- 968 02a8 12050000 		.4byte	.LASF45
+ 968 02a8 E0040000 		.4byte	.LASF45
  969 02ac 01       		.byte	0x1
  970 02ad 20       		.byte	0x20
  971 02ae 76000000 		.4byte	0x76
@@ -2458,7 +2458,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  999 02ea 76000000 		.4byte	0x76
  1000 02ee 00       		.byte	0
  1001 02ef 13       		.uleb128 0x13
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 42
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 42
 
 
  1002 02f0 04       		.byte	0x4
@@ -2471,7 +2471,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1009 0301 03       		.byte	0x3
  1010 0302 2B030000 		.4byte	0x32b
  1011 0306 15       		.uleb128 0x15
- 1012 0307 74050000 		.4byte	.LASF51
+ 1012 0307 86050000 		.4byte	.LASF51
  1013 030b 02       		.byte	0x2
  1014 030c 5C03     		.2byte	0x35c
  1015 030e EF020000 		.4byte	0x2ef
@@ -2481,7 +2481,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1019 0318 5C03     		.2byte	0x35c
  1020 031a 76000000 		.4byte	0x76
  1021 031e 15       		.uleb128 0x15
- 1022 031f 64040000 		.4byte	.LASF53
+ 1022 031f 32040000 		.4byte	.LASF53
  1023 0323 02       		.byte	0x2
  1024 0324 5C03     		.2byte	0x35c
  1025 0326 2B030000 		.4byte	0x32b
@@ -2498,7 +2498,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1036 033e 03       		.byte	0x3
  1037 033f 50030000 		.4byte	0x350
  1038 0343 15       		.uleb128 0x15
- 1039 0344 74050000 		.4byte	.LASF51
+ 1039 0344 86050000 		.4byte	.LASF51
  1040 0348 02       		.byte	0x2
  1041 0349 D602     		.2byte	0x2d6
  1042 034b 50030000 		.4byte	0x350
@@ -2516,9 +2516,9 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1054 0367 03       		.byte	0x3
  1055 0368 79030000 		.4byte	0x379
  1056 036c 15       		.uleb128 0x15
- 1057 036d 74050000 		.4byte	.LASF51
+ 1057 036d 86050000 		.4byte	.LASF51
  1058 0371 02       		.byte	0x2
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 43
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 43
 
 
  1059 0372 9903     		.2byte	0x399
@@ -2535,13 +2535,13 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1070 038d 9C       		.byte	0x9c
  1071 038e DB040000 		.4byte	0x4db
  1072 0392 18       		.uleb128 0x18
- 1073 0393 DB040000 		.4byte	.LASF56
+ 1073 0393 A9040000 		.4byte	.LASF56
  1074 0397 01       		.byte	0x1
  1075 0398 46       		.byte	0x46
  1076 0399 76000000 		.4byte	0x76
  1077 039d 00000000 		.4byte	.LLST0
  1078 03a1 18       		.uleb128 0x18
- 1079 03a2 05050000 		.4byte	.LASF57
+ 1079 03a2 D3040000 		.4byte	.LASF57
  1080 03a6 01       		.byte	0x1
  1081 03a7 47       		.byte	0x47
  1082 03a8 76000000 		.4byte	0x76
@@ -2553,7 +2553,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1088 03b7 C0020000 		.4byte	0x2c0
  1089 03bb 0E010000 		.4byte	.LLST2
  1090 03bf 19       		.uleb128 0x19
- 1091 03c0 79050000 		.4byte	.LASF59
+ 1091 03c0 8B050000 		.4byte	.LASF59
  1092 03c4 01       		.byte	0x1
  1093 03c5 4A       		.byte	0x4a
  1094 03c6 C6020000 		.4byte	0x2c6
@@ -2561,7 +2561,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1096 03cb 03       		.byte	0x3
  1097 03cc 04000000 		.4byte	cy_semaData.9582
  1098 03d0 1A       		.uleb128 0x1a
- 1099 03d1 1A050000 		.4byte	.LASF60
+ 1099 03d1 E8040000 		.4byte	.LASF60
  1100 03d5 01       		.byte	0x1
  1101 03d6 4C       		.byte	0x4c
  1102 03d7 94020000 		.4byte	0x294
@@ -2578,7 +2578,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1113 03f7 A5010000 		.4byte	.LLST4
  1114 03fb 1D       		.uleb128 0x1d
  1115 03fc 22000000 		.4byte	.LVL5
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 44
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 44
 
 
  1116 0400 9D070000 		.4byte	0x79d
@@ -2638,7 +2638,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1170 046e 15020000 		.4byte	.LLST7
  1171 0472 1C       		.uleb128 0x1c
  1172 0473 06030000 		.4byte	0x306
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 45
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 45
 
 
  1173 0477 29020000 		.4byte	.LLST8
@@ -2698,7 +2698,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1227 04c8 01       		.uleb128 0x1
  1228 04c9 30       		.byte	0x30
  1229 04ca 00       		.byte	0
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 46
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 46
 
 
  1230 04cb 1D       		.uleb128 0x1d
@@ -2712,7 +2712,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1238 04d9 00       		.byte	0
  1239 04da 00       		.byte	0
  1240 04db 17       		.uleb128 0x17
- 1241 04dc 45040000 		.4byte	.LASF62
+ 1241 04dc 13040000 		.4byte	.LASF62
  1242 04e0 01       		.byte	0x1
  1243 04e1 B3       		.byte	0xb3
  1244 04e2 94020000 		.4byte	0x294
@@ -2734,7 +2734,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1260 050a C5050000 		.4byte	0x5c5
  1261 050e 76020000 		.4byte	.LLST10
  1262 0512 1A       		.uleb128 0x1a
- 1263 0513 24050000 		.4byte	.LASF65
+ 1263 0513 36050000 		.4byte	.LASF65
  1264 0517 01       		.byte	0x1
  1265 0518 B5       		.byte	0xb5
  1266 0519 76000000 		.4byte	0x76
@@ -2746,7 +2746,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1272 0528 76000000 		.4byte	0x76
  1273 052c 07030000 		.4byte	.LLST12
  1274 0530 1A       		.uleb128 0x1a
- 1275 0531 55040000 		.4byte	.LASF67
+ 1275 0531 23040000 		.4byte	.LASF67
  1276 0535 01       		.byte	0x1
  1277 0536 B7       		.byte	0xb7
  1278 0537 76000000 		.4byte	0x76
@@ -2758,10 +2758,10 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1284 0546 CC050000 		.4byte	0x5cc
  1285 054a 7E030000 		.4byte	.LLST14
  1286 054e 1A       		.uleb128 0x1a
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 47
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 47
 
 
- 1287 054f 1A050000 		.4byte	.LASF60
+ 1287 054f E8040000 		.4byte	.LASF60
  1288 0553 01       		.byte	0x1
  1289 0554 BA       		.byte	0xba
  1290 0555 94020000 		.4byte	0x294
@@ -2816,9 +2816,9 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1339 05c5 02       		.uleb128 0x2
  1340 05c6 01       		.byte	0x1
  1341 05c7 02       		.byte	0x2
- 1342 05c8 3A040000 		.4byte	.LASF69
+ 1342 05c8 08040000 		.4byte	.LASF69
  1343 05cc 13       		.uleb128 0x13
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 48
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 48
 
 
  1344 05cd 04       		.byte	0x4
@@ -2846,7 +2846,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1366 0604 C5050000 		.4byte	0x5c5
  1367 0608 92040000 		.4byte	.LLST19
  1368 060c 23       		.uleb128 0x23
- 1369 060d 24050000 		.4byte	.LASF65
+ 1369 060d 36050000 		.4byte	.LASF65
  1370 0611 01       		.byte	0x1
  1371 0612 0D01     		.2byte	0x10d
  1372 0614 76000000 		.4byte	0x76
@@ -2858,7 +2858,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1378 0624 76000000 		.4byte	0x76
  1379 0628 23050000 		.4byte	.LLST21
  1380 062c 23       		.uleb128 0x23
- 1381 062d 55040000 		.4byte	.LASF67
+ 1381 062d 23040000 		.4byte	.LASF67
  1382 0631 01       		.byte	0x1
  1383 0632 0F01     		.2byte	0x10f
  1384 0634 76000000 		.4byte	0x76
@@ -2870,7 +2870,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1390 0644 CC050000 		.4byte	0x5cc
  1391 0648 9A050000 		.4byte	.LLST23
  1392 064c 23       		.uleb128 0x23
- 1393 064d 1A050000 		.4byte	.LASF60
+ 1393 064d E8040000 		.4byte	.LASF60
  1394 0651 01       		.byte	0x1
  1395 0652 1201     		.2byte	0x112
  1396 0654 94020000 		.4byte	0x294
@@ -2878,7 +2878,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1398 065c 24       		.uleb128 0x24
  1399 065d 32030000 		.4byte	0x332
  1400 0661 0A000000 		.4byte	.LBB30
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 49
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 49
 
 
  1401 0665 02000000 		.4byte	.LBE30-.LBB30
@@ -2926,7 +2926,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1443 06c4 00       		.byte	0
  1444 06c5 00       		.byte	0
  1445 06c6 21       		.uleb128 0x21
- 1446 06c7 E6040000 		.4byte	.LASF71
+ 1446 06c7 B4040000 		.4byte	.LASF71
  1447 06cb 01       		.byte	0x1
  1448 06cc 5101     		.2byte	0x151
  1449 06ce 94020000 		.4byte	0x294
@@ -2938,21 +2938,21 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1455 06e0 22       		.uleb128 0x22
  1456 06e1 00010000 		.4byte	.LASF63
  1457 06e5 01       		.byte	0x1
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 50
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 50
 
 
  1458 06e6 5101     		.2byte	0x151
  1459 06e8 76000000 		.4byte	0x76
  1460 06ec 74060000 		.4byte	.LLST27
  1461 06f0 25       		.uleb128 0x25
- 1462 06f1 1A050000 		.4byte	.LASF60
+ 1462 06f1 E8040000 		.4byte	.LASF60
  1463 06f5 01       		.byte	0x1
  1464 06f6 5301     		.2byte	0x153
  1465 06f8 94020000 		.4byte	0x294
  1466 06fc 01       		.uleb128 0x1
  1467 06fd 50       		.byte	0x50
  1468 06fe 23       		.uleb128 0x23
- 1469 06ff 24050000 		.4byte	.LASF65
+ 1469 06ff 36050000 		.4byte	.LASF65
  1470 0703 01       		.byte	0x1
  1471 0704 5401     		.2byte	0x154
  1472 0706 76000000 		.4byte	0x76
@@ -2981,7 +2981,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1495 0747 00       		.byte	0
  1496 0748 00       		.byte	0
  1497 0749 21       		.uleb128 0x21
- 1498 074a 84040000 		.4byte	.LASF72
+ 1498 074a 52040000 		.4byte	.LASF72
  1499 074e 01       		.byte	0x1
  1500 074f 7F01     		.2byte	0x17f
  1501 0751 76000000 		.4byte	0x76
@@ -2998,7 +2998,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1512 076f 01       		.uleb128 0x1
  1513 0770 53       		.byte	0x53
  1514 0771 26       		.uleb128 0x26
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 51
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 51
 
 
  1515 0772 32030000 		.4byte	0x332
@@ -3012,7 +3012,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1523 078a 00       		.byte	0
  1524 078b 00       		.byte	0
  1525 078c 19       		.uleb128 0x19
- 1526 078d 63050000 		.4byte	.LASF73
+ 1526 078d 75050000 		.4byte	.LASF73
  1527 0791 01       		.byte	0x1
  1528 0792 19       		.byte	0x19
  1529 0793 EF020000 		.4byte	0x2ef
@@ -3020,8 +3020,8 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1531 0798 03       		.byte	0x3
  1532 0799 00000000 		.4byte	cy_semaIpcStruct
  1533 079d 27       		.uleb128 0x27
- 1534 079e 85050000 		.4byte	.LASF74
- 1535 07a2 85050000 		.4byte	.LASF74
+ 1534 079e 97050000 		.4byte	.LASF74
+ 1535 07a2 97050000 		.4byte	.LASF74
  1536 07a6 06       		.byte	0x6
  1537 07a7 2A03     		.2byte	0x32a
  1538 07a9 27       		.uleb128 0x27
@@ -3033,8 +3033,8 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1544 07b6 09020000 		.4byte	.LASF82
  1545 07ba 09020000 		.4byte	.LASF82
  1546 07be 27       		.uleb128 0x27
- 1547 07bf 2E050000 		.4byte	.LASF76
- 1548 07c3 2E050000 		.4byte	.LASF76
+ 1547 07bf 40050000 		.4byte	.LASF76
+ 1548 07c3 40050000 		.4byte	.LASF76
  1549 07c7 02       		.byte	0x2
  1550 07c8 7301     		.2byte	0x173
  1551 07ca 27       		.uleb128 0x27
@@ -3043,8 +3043,8 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1554 07d3 06       		.byte	0x6
  1555 07d4 4D03     		.2byte	0x34d
  1556 07d6 27       		.uleb128 0x27
- 1557 07d7 45050000 		.4byte	.LASF78
- 1558 07db 45050000 		.4byte	.LASF78
+ 1557 07d7 57050000 		.4byte	.LASF78
+ 1558 07db 57050000 		.4byte	.LASF78
  1559 07df 06       		.byte	0x6
  1560 07e0 5C03     		.2byte	0x35c
  1561 07e2 00       		.byte	0
@@ -3058,7 +3058,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1569 0005 13       		.uleb128 0x13
  1570 0006 0B       		.uleb128 0xb
  1571 0007 03       		.uleb128 0x3
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 52
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 52
 
 
  1572 0008 0E       		.uleb128 0xe
@@ -3118,7 +3118,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1626 003e 26       		.uleb128 0x26
  1627 003f 00       		.byte	0
  1628 0040 49       		.uleb128 0x49
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 53
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 53
 
 
  1629 0041 13       		.uleb128 0x13
@@ -3178,7 +3178,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1683 0077 3A       		.uleb128 0x3a
  1684 0078 0B       		.uleb128 0xb
  1685 0079 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 54
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 54
 
 
  1686 007a 0B       		.uleb128 0xb
@@ -3238,7 +3238,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1740 00b0 13       		.uleb128 0x13
  1741 00b1 00       		.byte	0
  1742 00b2 00       		.byte	0
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 55
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 55
 
 
  1743 00b3 10       		.uleb128 0x10
@@ -3298,7 +3298,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1797 00e9 13       		.uleb128 0x13
  1798 00ea 20       		.uleb128 0x20
  1799 00eb 0B       		.uleb128 0xb
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 56
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 56
 
 
  1800 00ec 01       		.uleb128 0x1
@@ -3358,7 +3358,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1854 0123 3A       		.uleb128 0x3a
  1855 0124 0B       		.uleb128 0xb
  1856 0125 3B       		.uleb128 0x3b
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 57
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 57
 
 
  1857 0126 0B       		.uleb128 0xb
@@ -3418,7 +3418,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1911 015c 1C       		.uleb128 0x1c
  1912 015d 05       		.uleb128 0x5
  1913 015e 00       		.byte	0
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 58
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 58
 
 
  1914 015f 31       		.uleb128 0x31
@@ -3478,7 +3478,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  1968 019e 05       		.uleb128 0x5
  1969 019f 27       		.uleb128 0x27
  1970 01a0 19       		.uleb128 0x19
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 59
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 59
 
 
  1971 01a1 49       		.uleb128 0x49
@@ -3538,7 +3538,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2025 01d8 0B       		.uleb128 0xb
  2026 01d9 59       		.uleb128 0x59
  2027 01da 05       		.uleb128 0x5
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 60
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 60
 
 
  2028 01db 01       		.uleb128 0x1
@@ -3598,7 +3598,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2082 0211 3F       		.uleb128 0x3f
  2083 0212 19       		.uleb128 0x19
  2084 0213 3C       		.uleb128 0x3c
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 61
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 61
 
 
  2085 0214 19       		.uleb128 0x19
@@ -3658,7 +3658,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2139 006d 94000000 		.4byte	.LVL25
  2140 0071 0100     		.2byte	0x1
  2141 0073 54       		.byte	0x54
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 62
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 62
 
 
  2142 0074 94000000 		.4byte	.LVL25
@@ -3718,7 +3718,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2196 0103 01       		.uleb128 0x1
  2197 0104 51       		.byte	0x51
  2198 0105 9F       		.byte	0x9f
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 63
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 63
 
 
  2199 0106 00000000 		.4byte	0
@@ -3778,7 +3778,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2253 0192 A2000000 		.4byte	.LVL30
  2254 0196 B8000000 		.4byte	.LFE55
  2255 019a 0100     		.2byte	0x1
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 64
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 64
 
 
  2256 019c 50       		.byte	0x50
@@ -3838,7 +3838,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2310 0221 00000000 		.4byte	0
  2311 0225 00000000 		.4byte	0
  2312              	.LLST8:
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 65
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 65
 
 
  2313 0229 72000000 		.4byte	.LVL18
@@ -3898,7 +3898,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2367 02a8 6E000000 		.4byte	.LVL56
  2368 02ac 70000000 		.4byte	.LVL57
  2369 02b0 0100     		.2byte	0x1
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 66
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 66
 
 
  2370 02b2 51       		.byte	0x51
@@ -3958,7 +3958,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2424 0330 0100     		.2byte	0x1
  2425 0332 56       		.byte	0x56
  2426 0333 00000000 		.4byte	0
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 67
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 67
 
 
  2427 0337 00000000 		.4byte	0
@@ -4018,7 +4018,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2481 03c2 52000000 		.4byte	.LVL48
  2482 03c6 56000000 		.4byte	.LVL50
  2483 03ca 0200     		.2byte	0x2
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 68
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 68
 
 
  2484 03cc 30       		.byte	0x30
@@ -4078,7 +4078,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2538 045c 18000000 		.4byte	.LVL64
  2539 0460 0100     		.2byte	0x1
  2540 0462 50       		.byte	0x50
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 69
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 69
 
 
  2541 0463 18000000 		.4byte	.LVL64
@@ -4138,7 +4138,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2595 04dd 00000000 		.4byte	0
  2596 04e1 00000000 		.4byte	0
  2597              	.LLST20:
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 70
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 70
 
 
  2598 04e5 14000000 		.4byte	.LVL63
@@ -4198,7 +4198,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2652 0567 2A000000 		.4byte	.LVL68
  2653 056b 0100     		.2byte	0x1
  2654 056d 50       		.byte	0x50
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 71
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 71
 
 
  2655 056e 2A000000 		.4byte	.LVL68
@@ -4258,7 +4258,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2709 05fa 58000000 		.4byte	.LVL77
  2710 05fe 60000000 		.4byte	.LVL79
  2711 0602 0100     		.2byte	0x1
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 72
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 72
 
 
  2712 0604 54       		.byte	0x54
@@ -4318,7 +4318,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2766 0691 26000000 		.4byte	.LVL94
  2767 0695 0100     		.2byte	0x1
  2768 0697 50       		.byte	0x50
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 73
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 73
 
 
  2769 0698 26000000 		.4byte	.LVL94
@@ -4378,7 +4378,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2823 0715 00000000 		.4byte	0
  2824 0719 00000000 		.4byte	0
  2825              	.LLST31:
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 74
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 74
 
 
  2826 071d 04000000 		.4byte	.LVL86
@@ -4438,7 +4438,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2876              	.LASF64:
  2877 0000 70726565 		.ascii	"preemptable\000"
  2877      6D707461 
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 75
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 75
 
 
  2877      626C6500 
@@ -4498,7 +4498,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2899      4E756D62 
  2899      657200
  2900              	.LASF48:
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 76
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 76
 
 
  2901 010b 43795F49 		.ascii	"Cy_IPC_Drv_GetIpcBaseAddress\000"
@@ -4558,7 +4558,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2921      6720696E 
  2921      7400
  2922              	.LASF37:
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 77
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 77
 
 
  2923 01d1 43595F49 		.ascii	"CY_IPC_SEMA_ERROR_UNLOCKED\000"
@@ -4618,7 +4618,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2944              	.LASF33:
  2945 028b 43595F49 		.ascii	"CY_IPC_DRV_ERROR\000"
  2945      50435F44 
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 78
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 78
 
 
  2945      52565F45 
@@ -4678,7 +4678,7 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2970              	.LASF34:
  2971 032e 63795F65 		.ascii	"cy_en_ipcdrv_status_t\000"
  2971      6E5F6970 
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 79
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 79
 
 
  2971      63647276 
@@ -4729,143 +4729,146 @@ ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 1
  2989      454D415F 
  2989      53544154 
  2989      55535F4C 
- 2990              	.LASF81:
- 2991 03d9 433A5C55 		.ascii	"C:\\Users\\User\\Desktop\\labs\\psoc\\lab7_1\\lab7."
- 2991      73657273 
- 2991      5C557365 
- 2991      725C4465 
- 2991      736B746F 
- 2992 0405 63796473 		.ascii	"cydsn\000"
- 2992      6E00
- 2993              	.LASF3:
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 80
+ 2990              	.LASF3:
+ 2991 03d9 73686F72 		.ascii	"short unsigned int\000"
+ 2991      7420756E 
+ 2991      7369676E 
+ 2991      65642069 
+ 2991      6E7400
+ 2992              	.LASF43:
+ 2993 03ec 43595F49 		.ascii	"CY_IPC_SEMA_STATUS_UNLOCKED\000"
+ 2993      50435F53 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 80
 
 
- 2994 040b 73686F72 		.ascii	"short unsigned int\000"
- 2994      7420756E 
- 2994      7369676E 
- 2994      65642069 
- 2994      6E7400
- 2995              	.LASF43:
- 2996 041e 43595F49 		.ascii	"CY_IPC_SEMA_STATUS_UNLOCKED\000"
- 2996      50435F53 
- 2996      454D415F 
- 2996      53544154 
- 2996      55535F55 
- 2997              	.LASF69:
- 2998 043a 5F426F6F 		.ascii	"_Bool\000"
- 2998      6C00
- 2999              	.LASF19:
- 3000 0440 494E5452 		.ascii	"INTR\000"
- 3000      00
- 3001              	.LASF62:
- 3002 0445 43795F49 		.ascii	"Cy_IPC_Sema_Set\000"
- 3002      50435F53 
- 3002      656D615F 
- 3002      53657400 
- 3003              	.LASF67:
- 3004 0455 696E7465 		.ascii	"interruptState\000"
- 3004      72727570 
- 3004      74537461 
- 3004      746500
- 3005              	.LASF53:
- 3006 0464 6D736750 		.ascii	"msgPtr\000"
- 3006      747200
- 3007              	.LASF5:
- 3008 046b 6C6F6E67 		.ascii	"long unsigned int\000"
- 3008      20756E73 
- 3008      69676E65 
- 3008      6420696E 
- 3008      7400
- 3009              	.LASF30:
- 3010 047d 646F7562 		.ascii	"double\000"
- 3010      6C6500
- 3011              	.LASF72:
- 3012 0484 43795F49 		.ascii	"Cy_IPC_Sema_GetMaxSems\000"
- 3012      50435F53 
- 3012      656D615F 
- 3012      4765744D 
- 3012      61785365 
- 3013              	.LASF80:
- 3014 049b 47656E65 		.ascii	"Generated_Source\\PSoC6\\pdl\\drivers\\peripheral\\"
- 3014      72617465 
- 3014      645F536F 
- 3014      75726365 
- 3014      5C50536F 
- 3015 04c9 6970635C 		.ascii	"ipc\\cy_ipc_sema.c\000"
- 3015      63795F69 
- 3015      70635F73 
- 3015      656D612E 
- 3015      6300
- 3016              	.LASF56:
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 81
+ 2993      454D415F 
+ 2993      53544154 
+ 2993      55535F55 
+ 2994              	.LASF69:
+ 2995 0408 5F426F6F 		.ascii	"_Bool\000"
+ 2995      6C00
+ 2996              	.LASF19:
+ 2997 040e 494E5452 		.ascii	"INTR\000"
+ 2997      00
+ 2998              	.LASF62:
+ 2999 0413 43795F49 		.ascii	"Cy_IPC_Sema_Set\000"
+ 2999      50435F53 
+ 2999      656D615F 
+ 2999      53657400 
+ 3000              	.LASF67:
+ 3001 0423 696E7465 		.ascii	"interruptState\000"
+ 3001      72727570 
+ 3001      74537461 
+ 3001      746500
+ 3002              	.LASF53:
+ 3003 0432 6D736750 		.ascii	"msgPtr\000"
+ 3003      747200
+ 3004              	.LASF5:
+ 3005 0439 6C6F6E67 		.ascii	"long unsigned int\000"
+ 3005      20756E73 
+ 3005      69676E65 
+ 3005      6420696E 
+ 3005      7400
+ 3006              	.LASF30:
+ 3007 044b 646F7562 		.ascii	"double\000"
+ 3007      6C6500
+ 3008              	.LASF72:
+ 3009 0452 43795F49 		.ascii	"Cy_IPC_Sema_GetMaxSems\000"
+ 3009      50435F53 
+ 3009      656D615F 
+ 3009      4765744D 
+ 3009      61785365 
+ 3010              	.LASF80:
+ 3011 0469 47656E65 		.ascii	"Generated_Source\\PSoC6\\pdl\\drivers\\peripheral\\"
+ 3011      72617465 
+ 3011      645F536F 
+ 3011      75726365 
+ 3011      5C50536F 
+ 3012 0497 6970635C 		.ascii	"ipc\\cy_ipc_sema.c\000"
+ 3012      63795F69 
+ 3012      70635F73 
+ 3012      656D612E 
+ 3012      6300
+ 3013              	.LASF56:
+ 3014 04a9 69706343 		.ascii	"ipcChannel\000"
+ 3014      68616E6E 
+ 3014      656C00
+ 3015              	.LASF71:
+ 3016 04b4 43795F49 		.ascii	"Cy_IPC_Sema_Status\000"
+ 3016      50435F53 
+ 3016      656D615F 
+ 3016      53746174 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 81
 
 
- 3017 04db 69706343 		.ascii	"ipcChannel\000"
- 3017      68616E6E 
- 3017      656C00
- 3018              	.LASF71:
- 3019 04e6 43795F49 		.ascii	"Cy_IPC_Sema_Status\000"
- 3019      50435F53 
- 3019      656D615F 
- 3019      53746174 
- 3019      757300
- 3020              	.LASF16:
- 3021 04f9 4C4F434B 		.ascii	"LOCK_STATUS\000"
- 3021      5F535441 
- 3021      54555300 
- 3022              	.LASF57:
- 3023 0505 636F756E 		.ascii	"count\000"
- 3023      7400
- 3024              	.LASF24:
- 3025 050b 53545255 		.ascii	"STRUCT\000"
- 3025      435400
- 3026              	.LASF45:
- 3027 0512 6D617853 		.ascii	"maxSema\000"
- 3027      656D6100 
- 3028              	.LASF60:
- 3029 051a 72657453 		.ascii	"retStatus\000"
- 3029      74617475 
- 3029      7300
+ 3016      757300
+ 3017              	.LASF16:
+ 3018 04c7 4C4F434B 		.ascii	"LOCK_STATUS\000"
+ 3018      5F535441 
+ 3018      54555300 
+ 3019              	.LASF57:
+ 3020 04d3 636F756E 		.ascii	"count\000"
+ 3020      7400
+ 3021              	.LASF24:
+ 3022 04d9 53545255 		.ascii	"STRUCT\000"
+ 3022      435400
+ 3023              	.LASF45:
+ 3024 04e0 6D617853 		.ascii	"maxSema\000"
+ 3024      656D6100 
+ 3025              	.LASF60:
+ 3026 04e8 72657453 		.ascii	"retStatus\000"
+ 3026      74617475 
+ 3026      7300
+ 3027              	.LASF81:
+ 3028 04f2 433A5C55 		.ascii	"C:\\Users\\Agentos\\Documents\\Univer\\psoc6-labs\\"
+ 3028      73657273 
+ 3028      5C416765 
+ 3028      6E746F73 
+ 3028      5C446F63 
+ 3029 051f 6C616237 		.ascii	"lab7\\lab7_4\\lab7.cydsn\000"
+ 3029      5C6C6162 
+ 3029      375F345C 
+ 3029      6C616237 
+ 3029      2E637964 
  3030              	.LASF65:
- 3031 0524 73656D61 		.ascii	"semaIndex\000"
+ 3031 0536 73656D61 		.ascii	"semaIndex\000"
  3031      496E6465 
  3031      7800
  3032              	.LASF76:
- 3033 052e 43795F49 		.ascii	"Cy_IPC_Drv_LockRelease\000"
+ 3033 0540 43795F49 		.ascii	"Cy_IPC_Drv_LockRelease\000"
  3033      50435F44 
  3033      72765F4C 
  3033      6F636B52 
  3033      656C6561 
  3034              	.LASF78:
- 3035 0545 43795F53 		.ascii	"Cy_SysLib_ExitCriticalSection\000"
+ 3035 0557 43795F53 		.ascii	"Cy_SysLib_ExitCriticalSection\000"
  3035      79734C69 
  3035      625F4578 
  3035      69744372 
  3035      69746963 
  3036              	.LASF73:
- 3037 0563 63795F73 		.ascii	"cy_semaIpcStruct\000"
+ 3037 0575 63795F73 		.ascii	"cy_semaIpcStruct\000"
  3037      656D6149 
  3037      70635374 
  3037      72756374 
  3037      00
  3038              	.LASF51:
- 3039 0574 62617365 		.ascii	"base\000"
+ 3039 0586 62617365 		.ascii	"base\000"
  3039      00
  3040              	.LASF59:
- 3041 0579 63795F73 		.ascii	"cy_semaData\000"
+ 3041 058b 63795F73 		.ascii	"cy_semaData\000"
  3041      656D6144 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccl85OXO.s 			page 82
+
+
  3041      61746100 
  3042              	.LASF74:
- 3043 0585 43795F53 		.ascii	"Cy_SysLib_AssertFailed\000"
-ARM GAS  C:\Users\User\AppData\Local\Temp\ccoGl5eu.s 			page 82
-
-
+ 3043 0597 43795F53 		.ascii	"Cy_SysLib_AssertFailed\000"
  3043      79734C69 
  3043      625F4173 
  3043      73657274 
  3043      4661696C 
  3044              	.LASF12:
- 3045 059c 41435155 		.ascii	"ACQUIRE\000"
+ 3045 05ae 41435155 		.ascii	"ACQUIRE\000"
  3045      49524500 
  3046              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,1230 @@
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0plus
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main_cm0p.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.main,"ax",%progbits
+  20              		.align	2
+  21              		.global	main
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	main, %function
+  25              	main:
+  26              	.LFB452:
+  27              		.file 1 "main_cm0p.c"
+   1:main_cm0p.c   **** /* ========================================
+   2:main_cm0p.c   ****  *
+   3:main_cm0p.c   ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main_cm0p.c   ****  * All Rights Reserved
+   5:main_cm0p.c   ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main_cm0p.c   ****  *
+   7:main_cm0p.c   ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main_cm0p.c   ****  * WHICH IS THE PROPERTY OF your company.
+   9:main_cm0p.c   ****  *
+  10:main_cm0p.c   ****  * ========================================
+  11:main_cm0p.c   **** */
+  12:main_cm0p.c   **** #include "project.h"
+  13:main_cm0p.c   **** 
+  14:main_cm0p.c   **** int main(void)
+  15:main_cm0p.c   **** {
+  28              		.loc 1 15 0
+  29              		.cfi_startproc
+  30              		@ Volatile: function does not return.
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 10B5     		push	{r4, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 14, -4
+  37              	.LBB4:
+  38              	.LBB5:
+  39              		.file 2 "Generated_Source\\PSoC6\\pdl\\cmsis/include/cmsis_gcc.h"
+   1:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /**************************************************************************//**
+   2:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 2
+
+
+   4:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @version  V5.0.1
+   5:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * @date     02. February 2017
+   6:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /*
+   8:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * Copyright (c) 2009-2017 ARM Limited. All rights reserved.
+   9:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  10:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
+  11:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  12:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+  13:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * not use this file except in compliance with the License.
+  14:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * You may obtain a copy of the License at
+  15:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  16:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+  17:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  *
+  18:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
+  19:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  20:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * See the License for the specific language governing permissions and
+  22:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  * limitations under the License.
+  23:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  */
+  24:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  25:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  26:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  27:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  28:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  29:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  30:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  31:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  32:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  33:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  34:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
+  35:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __ASM
+  36:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __ASM                     __asm
+  37:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  38:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __INLINE
+  39:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __INLINE                  inline
+  40:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  41:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
+  42:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __STATIC_INLINE           static inline
+  43:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  44:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __NO_RETURN
+  45:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __NO_RETURN               __attribute__((noreturn))
+  46:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  47:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __USED
+  48:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __USED                    __attribute__((used))
+  49:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  50:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __WEAK
+  51:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __WEAK                    __attribute__((weak))
+  52:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  53:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32
+  54:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  55:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wpacked"
+  56:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wattributes"
+  57:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+  58:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #pragma GCC diagnostic pop
+  59:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)     (((struct T_UINT32 *)(x))->v)
+  60:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 3
+
+
+  61:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __ALIGNED
+  62:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __ALIGNED(x)              __attribute__((aligned(x)))
+  63:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  64:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __PACKED
+  65:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __PACKED                  __attribute__((packed, aligned(1)))
+  66:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  67:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
+  68:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   #define __PACKED_STRUCT           struct __attribute__((packed, aligned(1)))
+  69:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** #endif
+  70:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  71:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  72:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
+  73:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /** \ingroup  CMSIS_Core_FunctionInterface
+  74:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
+  75:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   @{
+  76:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  */
+  77:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** 
+  78:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** /**
+  79:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   \brief   Enable IRQ Interrupts
+  80:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   \details Enables IRQ interrupts by clearing the I-bit in the CPSR.
+  81:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****            Can only be executed in Privileged modes.
+  82:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****  */
+  83:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** __attribute__((always_inline)) __STATIC_INLINE void __enable_irq(void)
+  84:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h **** {
+  85:Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h ****   __ASM volatile ("cpsie i" : : : "memory");
+  40              		.loc 2 85 0
+  41              		.syntax divided
+  42              	@ 85 "Generated_Source\PSoC6\pdl\cmsis/include/cmsis_gcc.h" 1
+  43 0002 62B6     		cpsie i
+  44              	@ 0 "" 2
+  45              		.thumb
+  46              		.syntax unified
+  47              	.LBE5:
+  48              	.LBE4:
+  16:main_cm0p.c   ****     __enable_irq(); /* Enable global interrupts. */
+  17:main_cm0p.c   ****     /* Enable CM4.  CY_CORTEX_M4_APPL_ADDR must be updated if CM4 memory layout is changed. */
+  18:main_cm0p.c   ****     Cy_SysEnableCM4(CY_CORTEX_M4_APPL_ADDR); 
+  49              		.loc 1 18 0
+  50 0004 0148     		ldr	r0, .L3
+  51 0006 FFF7FEFF 		bl	Cy_SysEnableCM4
+  52              	.LVL0:
+  53              	.L2:
+  54 000a FEE7     		b	.L2
+  55              	.L4:
+  56              		.align	2
+  57              	.L3:
+  58 000c 00000810 		.word	268959744
+  59              		.cfi_endproc
+  60              	.LFE452:
+  61              		.size	main, .-main
+  62              		.text
+  63              	.Letext0:
+  64              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  65              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+  66              		.file 5 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/tcpwm/cy_tcpwm_counter.h"
+  67              		.file 6 "Generated_Source\\PSoC6\\pdl\\drivers/peripheral/scb/cy_scb_uart.h"
+  68              		.file 7 "Generated_Source\\PSoC6/Timer.h"
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 4
+
+
+  69              		.file 8 "Generated_Source\\PSoC6/UART.h"
+  70              		.file 9 "./system_psoc63.h"
+  71              		.section	.debug_info,"",%progbits
+  72              	.Ldebug_info0:
+  73 0000 03030000 		.4byte	0x303
+  74 0004 0400     		.2byte	0x4
+  75 0006 00000000 		.4byte	.Ldebug_abbrev0
+  76 000a 04       		.byte	0x4
+  77 000b 01       		.uleb128 0x1
+  78 000c A9000000 		.4byte	.LASF57
+  79 0010 0C       		.byte	0xc
+  80 0011 72000000 		.4byte	.LASF58
+  81 0015 82020000 		.4byte	.LASF59
+  82 0019 00000000 		.4byte	.Ldebug_ranges0+0
+  83 001d 00000000 		.4byte	0
+  84 0021 00000000 		.4byte	.Ldebug_line0
+  85 0025 02       		.uleb128 0x2
+  86 0026 02       		.byte	0x2
+  87 0027 05       		.byte	0x5
+  88 0028 7E000000 		.4byte	.LASF0
+  89 002c 02       		.uleb128 0x2
+  90 002d 01       		.byte	0x1
+  91 002e 08       		.byte	0x8
+  92 002f 2D020000 		.4byte	.LASF1
+  93 0033 02       		.uleb128 0x2
+  94 0034 01       		.byte	0x1
+  95 0035 06       		.byte	0x6
+  96 0036 45020000 		.4byte	.LASF2
+  97 003a 02       		.uleb128 0x2
+  98 003b 02       		.byte	0x2
+  99 003c 07       		.byte	0x7
+ 100 003d FB020000 		.4byte	.LASF3
+ 101 0041 02       		.uleb128 0x2
+ 102 0042 04       		.byte	0x4
+ 103 0043 05       		.byte	0x5
+ 104 0044 83010000 		.4byte	.LASF4
+ 105 0048 03       		.uleb128 0x3
+ 106 0049 59010000 		.4byte	.LASF9
+ 107 004d 03       		.byte	0x3
+ 108 004e 41       		.byte	0x41
+ 109 004f 53000000 		.4byte	0x53
+ 110 0053 02       		.uleb128 0x2
+ 111 0054 04       		.byte	0x4
+ 112 0055 07       		.byte	0x7
+ 113 0056 49030000 		.4byte	.LASF5
+ 114 005a 02       		.uleb128 0x2
+ 115 005b 08       		.byte	0x8
+ 116 005c 05       		.byte	0x5
+ 117 005d C7010000 		.4byte	.LASF6
+ 118 0061 02       		.uleb128 0x2
+ 119 0062 08       		.byte	0x8
+ 120 0063 07       		.byte	0x7
+ 121 0064 51020000 		.4byte	.LASF7
+ 122 0068 04       		.uleb128 0x4
+ 123 0069 04       		.byte	0x4
+ 124 006a 05       		.byte	0x5
+ 125 006b 696E7400 		.ascii	"int\000"
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 5
+
+
+ 126 006f 02       		.uleb128 0x2
+ 127 0070 04       		.byte	0x4
+ 128 0071 07       		.byte	0x7
+ 129 0072 F0030000 		.4byte	.LASF8
+ 130 0076 03       		.uleb128 0x3
+ 131 0077 68020000 		.4byte	.LASF10
+ 132 007b 04       		.byte	0x4
+ 133 007c 30       		.byte	0x30
+ 134 007d 48000000 		.4byte	0x48
+ 135 0081 02       		.uleb128 0x2
+ 136 0082 04       		.byte	0x4
+ 137 0083 07       		.byte	0x7
+ 138 0084 88000000 		.4byte	.LASF11
+ 139 0088 05       		.uleb128 0x5
+ 140 0089 76000000 		.4byte	0x76
+ 141 008d 02       		.uleb128 0x2
+ 142 008e 08       		.byte	0x8
+ 143 008f 04       		.byte	0x4
+ 144 0090 09020000 		.4byte	.LASF12
+ 145 0094 02       		.uleb128 0x2
+ 146 0095 01       		.byte	0x1
+ 147 0096 08       		.byte	0x8
+ 148 0097 14030000 		.4byte	.LASF13
+ 149 009b 02       		.uleb128 0x2
+ 150 009c 04       		.byte	0x4
+ 151 009d 04       		.byte	0x4
+ 152 009e AB010000 		.4byte	.LASF14
+ 153 00a2 02       		.uleb128 0x2
+ 154 00a3 08       		.byte	0x8
+ 155 00a4 04       		.byte	0x4
+ 156 00a5 5B030000 		.4byte	.LASF15
+ 157 00a9 06       		.uleb128 0x6
+ 158 00aa 04       		.byte	0x4
+ 159 00ab 02       		.uleb128 0x2
+ 160 00ac 01       		.byte	0x1
+ 161 00ad 02       		.byte	0x2
+ 162 00ae 22030000 		.4byte	.LASF16
+ 163 00b2 07       		.uleb128 0x7
+ 164 00b3 62030000 		.4byte	.LASF38
+ 165 00b7 4C       		.byte	0x4c
+ 166 00b8 05       		.byte	0x5
+ 167 00b9 2B       		.byte	0x2b
+ 168 00ba A3010000 		.4byte	0x1a3
+ 169 00be 08       		.uleb128 0x8
+ 170 00bf EB010000 		.4byte	.LASF17
+ 171 00c3 05       		.byte	0x5
+ 172 00c4 2D       		.byte	0x2d
+ 173 00c5 76000000 		.4byte	0x76
+ 174 00c9 00       		.byte	0
+ 175 00ca 08       		.uleb128 0x8
+ 176 00cb 0C000000 		.4byte	.LASF18
+ 177 00cf 05       		.byte	0x5
+ 178 00d0 2F       		.byte	0x2f
+ 179 00d1 76000000 		.4byte	0x76
+ 180 00d5 04       		.byte	0x4
+ 181 00d6 08       		.uleb128 0x8
+ 182 00d7 D5010000 		.4byte	.LASF19
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 6
+
+
+ 183 00db 05       		.byte	0x5
+ 184 00dc 30       		.byte	0x30
+ 185 00dd 76000000 		.4byte	0x76
+ 186 00e1 08       		.byte	0x8
+ 187 00e2 08       		.uleb128 0x8
+ 188 00e3 3B010000 		.4byte	.LASF20
+ 189 00e7 05       		.byte	0x5
+ 190 00e8 31       		.byte	0x31
+ 191 00e9 76000000 		.4byte	0x76
+ 192 00ed 0C       		.byte	0xc
+ 193 00ee 08       		.uleb128 0x8
+ 194 00ef 71020000 		.4byte	.LASF21
+ 195 00f3 05       		.byte	0x5
+ 196 00f4 33       		.byte	0x33
+ 197 00f5 76000000 		.4byte	0x76
+ 198 00f9 10       		.byte	0x10
+ 199 00fa 08       		.uleb128 0x8
+ 200 00fb 37000000 		.4byte	.LASF22
+ 201 00ff 05       		.byte	0x5
+ 202 0100 34       		.byte	0x34
+ 203 0101 76000000 		.4byte	0x76
+ 204 0105 14       		.byte	0x14
+ 205 0106 08       		.uleb128 0x8
+ 206 0107 40000000 		.4byte	.LASF23
+ 207 010b 05       		.byte	0x5
+ 208 010c 35       		.byte	0x35
+ 209 010d 76000000 		.4byte	0x76
+ 210 0111 18       		.byte	0x18
+ 211 0112 08       		.uleb128 0x8
+ 212 0113 CB020000 		.4byte	.LASF24
+ 213 0117 05       		.byte	0x5
+ 214 0118 36       		.byte	0x36
+ 215 0119 AB000000 		.4byte	0xab
+ 216 011d 1C       		.byte	0x1c
+ 217 011e 08       		.uleb128 0x8
+ 218 011f 8C010000 		.4byte	.LASF25
+ 219 0123 05       		.byte	0x5
+ 220 0124 38       		.byte	0x38
+ 221 0125 76000000 		.4byte	0x76
+ 222 0129 20       		.byte	0x20
+ 223 012a 08       		.uleb128 0x8
+ 224 012b 28030000 		.4byte	.LASF26
+ 225 012f 05       		.byte	0x5
+ 226 0130 39       		.byte	0x39
+ 227 0131 76000000 		.4byte	0x76
+ 228 0135 24       		.byte	0x24
+ 229 0136 08       		.uleb128 0x8
+ 230 0137 64010000 		.4byte	.LASF27
+ 231 013b 05       		.byte	0x5
+ 232 013c 3B       		.byte	0x3b
+ 233 013d 76000000 		.4byte	0x76
+ 234 0141 28       		.byte	0x28
+ 235 0142 08       		.uleb128 0x8
+ 236 0143 B7010000 		.4byte	.LASF28
+ 237 0147 05       		.byte	0x5
+ 238 0148 3C       		.byte	0x3c
+ 239 0149 76000000 		.4byte	0x76
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 7
+
+
+ 240 014d 2C       		.byte	0x2c
+ 241 014e 08       		.uleb128 0x8
+ 242 014f 00000000 		.4byte	.LASF29
+ 243 0153 05       		.byte	0x5
+ 244 0154 3E       		.byte	0x3e
+ 245 0155 76000000 		.4byte	0x76
+ 246 0159 30       		.byte	0x30
+ 247 015a 08       		.uleb128 0x8
+ 248 015b 15020000 		.4byte	.LASF30
+ 249 015f 05       		.byte	0x5
+ 250 0160 3F       		.byte	0x3f
+ 251 0161 76000000 		.4byte	0x76
+ 252 0165 34       		.byte	0x34
+ 253 0166 08       		.uleb128 0x8
+ 254 0167 7E030000 		.4byte	.LASF31
+ 255 016b 05       		.byte	0x5
+ 256 016c 41       		.byte	0x41
+ 257 016d 76000000 		.4byte	0x76
+ 258 0171 38       		.byte	0x38
+ 259 0172 08       		.uleb128 0x8
+ 260 0173 89030000 		.4byte	.LASF32
+ 261 0177 05       		.byte	0x5
+ 262 0178 42       		.byte	0x42
+ 263 0179 76000000 		.4byte	0x76
+ 264 017d 3C       		.byte	0x3c
+ 265 017e 08       		.uleb128 0x8
+ 266 017f F2010000 		.4byte	.LASF33
+ 267 0183 05       		.byte	0x5
+ 268 0184 44       		.byte	0x44
+ 269 0185 76000000 		.4byte	0x76
+ 270 0189 40       		.byte	0x40
+ 271 018a 08       		.uleb128 0x8
+ 272 018b 1B000000 		.4byte	.LASF34
+ 273 018f 05       		.byte	0x5
+ 274 0190 45       		.byte	0x45
+ 275 0191 76000000 		.4byte	0x76
+ 276 0195 44       		.byte	0x44
+ 277 0196 08       		.uleb128 0x8
+ 278 0197 D4030000 		.4byte	.LASF35
+ 279 019b 05       		.byte	0x5
+ 280 019c 47       		.byte	0x47
+ 281 019d 76000000 		.4byte	0x76
+ 282 01a1 48       		.byte	0x48
+ 283 01a2 00       		.byte	0
+ 284 01a3 03       		.uleb128 0x3
+ 285 01a4 DD020000 		.4byte	.LASF36
+ 286 01a8 05       		.byte	0x5
+ 287 01a9 48       		.byte	0x48
+ 288 01aa B2000000 		.4byte	0xb2
+ 289 01ae 09       		.uleb128 0x9
+ 290 01af 04       		.byte	0x4
+ 291 01b0 B4010000 		.4byte	0x1b4
+ 292 01b4 0A       		.uleb128 0xa
+ 293 01b5 BF010000 		.4byte	0x1bf
+ 294 01b9 0B       		.uleb128 0xb
+ 295 01ba 76000000 		.4byte	0x76
+ 296 01be 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 8
+
+
+ 297 01bf 0C       		.uleb128 0xc
+ 298 01c0 53000000 		.4byte	.LASF37
+ 299 01c4 06       		.byte	0x6
+ 300 01c5 AB01     		.2byte	0x1ab
+ 301 01c7 AE010000 		.4byte	0x1ae
+ 302 01cb 0D       		.uleb128 0xd
+ 303 01cc 91000000 		.4byte	.LASF39
+ 304 01d0 38       		.byte	0x38
+ 305 01d1 06       		.byte	0x6
+ 306 01d2 4702     		.2byte	0x247
+ 307 01d4 8F020000 		.4byte	0x28f
+ 308 01d8 0E       		.uleb128 0xe
+ 309 01d9 71010000 		.4byte	.LASF40
+ 310 01dd 06       		.byte	0x6
+ 311 01de 4A02     		.2byte	0x24a
+ 312 01e0 88000000 		.4byte	0x88
+ 313 01e4 00       		.byte	0
+ 314 01e5 0E       		.uleb128 0xe
+ 315 01e6 24020000 		.4byte	.LASF41
+ 316 01ea 06       		.byte	0x6
+ 317 01eb 4B02     		.2byte	0x24b
+ 318 01ed 88000000 		.4byte	0x88
+ 319 01f1 04       		.byte	0x4
+ 320 01f2 0E       		.uleb128 0xe
+ 321 01f3 3B020000 		.4byte	.LASF42
+ 322 01f7 06       		.byte	0x6
+ 323 01f8 4D02     		.2byte	0x24d
+ 324 01fa A9000000 		.4byte	0xa9
+ 325 01fe 08       		.byte	0x8
+ 326 01ff 0E       		.uleb128 0xe
+ 327 0200 DD010000 		.4byte	.LASF43
+ 328 0204 06       		.byte	0x6
+ 329 0205 4E02     		.2byte	0x24e
+ 330 0207 76000000 		.4byte	0x76
+ 331 020b 0C       		.byte	0xc
+ 332 020c 0E       		.uleb128 0xe
+ 333 020d 9D010000 		.4byte	.LASF44
+ 334 0211 06       		.byte	0x6
+ 335 0212 4F02     		.2byte	0x24f
+ 336 0214 88000000 		.4byte	0x88
+ 337 0218 10       		.byte	0x10
+ 338 0219 0E       		.uleb128 0xe
+ 339 021a B9030000 		.4byte	.LASF45
+ 340 021e 06       		.byte	0x6
+ 341 021f 5002     		.2byte	0x250
+ 342 0221 88000000 		.4byte	0x88
+ 343 0225 14       		.byte	0x14
+ 344 0226 0E       		.uleb128 0xe
+ 345 0227 0E030000 		.4byte	.LASF46
+ 346 022b 06       		.byte	0x6
+ 347 022c 5202     		.2byte	0x252
+ 348 022e A9000000 		.4byte	0xa9
+ 349 0232 18       		.byte	0x18
+ 350 0233 0E       		.uleb128 0xe
+ 351 0234 49000000 		.4byte	.LASF47
+ 352 0238 06       		.byte	0x6
+ 353 0239 5302     		.2byte	0x253
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 9
+
+
+ 354 023b 76000000 		.4byte	0x76
+ 355 023f 1C       		.byte	0x1c
+ 356 0240 0E       		.uleb128 0xe
+ 357 0241 7A010000 		.4byte	.LASF48
+ 358 0245 06       		.byte	0x6
+ 359 0246 5402     		.2byte	0x254
+ 360 0248 88000000 		.4byte	0x88
+ 361 024c 20       		.byte	0x20
+ 362 024d 0E       		.uleb128 0xe
+ 363 024e B1010000 		.4byte	.LASF49
+ 364 0252 06       		.byte	0x6
+ 365 0253 5602     		.2byte	0x256
+ 366 0255 A9000000 		.4byte	0xa9
+ 367 0259 24       		.byte	0x24
+ 368 025a 0E       		.uleb128 0xe
+ 369 025b 4A010000 		.4byte	.LASF50
+ 370 025f 06       		.byte	0x6
+ 371 0260 5702     		.2byte	0x257
+ 372 0262 76000000 		.4byte	0x76
+ 373 0266 28       		.byte	0x28
+ 374 0267 0E       		.uleb128 0xe
+ 375 0268 DF030000 		.4byte	.LASF51
+ 376 026c 06       		.byte	0x6
+ 377 026d 5802     		.2byte	0x258
+ 378 026f 88000000 		.4byte	0x88
+ 379 0273 2C       		.byte	0x2c
+ 380 0274 0E       		.uleb128 0xe
+ 381 0275 19030000 		.4byte	.LASF52
+ 382 0279 06       		.byte	0x6
+ 383 027a 5D02     		.2byte	0x25d
+ 384 027c BF010000 		.4byte	0x1bf
+ 385 0280 30       		.byte	0x30
+ 386 0281 0E       		.uleb128 0xe
+ 387 0282 97030000 		.4byte	.LASF53
+ 388 0286 06       		.byte	0x6
+ 389 0287 6002     		.2byte	0x260
+ 390 0289 76000000 		.4byte	0x76
+ 391 028d 34       		.byte	0x34
+ 392 028e 00       		.byte	0
+ 393 028f 0C       		.uleb128 0xc
+ 394 0290 9F030000 		.4byte	.LASF54
+ 395 0294 06       		.byte	0x6
+ 396 0295 6302     		.2byte	0x263
+ 397 0297 CB010000 		.4byte	0x1cb
+ 398 029b 0F       		.uleb128 0xf
+ 399 029c FC010000 		.4byte	.LASF60
+ 400 02a0 02       		.byte	0x2
+ 401 02a1 53       		.byte	0x53
+ 402 02a2 03       		.byte	0x3
+ 403 02a3 10       		.uleb128 0x10
+ 404 02a4 54010000 		.4byte	.LASF61
+ 405 02a8 01       		.byte	0x1
+ 406 02a9 0E       		.byte	0xe
+ 407 02aa 68000000 		.4byte	0x68
+ 408 02ae 00000000 		.4byte	.LFB452
+ 409 02b2 10000000 		.4byte	.LFE452-.LFB452
+ 410 02b6 01       		.uleb128 0x1
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 10
+
+
+ 411 02b7 9C       		.byte	0x9c
+ 412 02b8 DF020000 		.4byte	0x2df
+ 413 02bc 11       		.uleb128 0x11
+ 414 02bd 9B020000 		.4byte	0x29b
+ 415 02c1 02000000 		.4byte	.LBB4
+ 416 02c5 02000000 		.4byte	.LBE4-.LBB4
+ 417 02c9 01       		.byte	0x1
+ 418 02ca 10       		.byte	0x10
+ 419 02cb 12       		.uleb128 0x12
+ 420 02cc 0A000000 		.4byte	.LVL0
+ 421 02d0 FA020000 		.4byte	0x2fa
+ 422 02d4 13       		.uleb128 0x13
+ 423 02d5 01       		.uleb128 0x1
+ 424 02d6 50       		.byte	0x50
+ 425 02d7 05       		.uleb128 0x5
+ 426 02d8 0C       		.byte	0xc
+ 427 02d9 00000810 		.4byte	0x10080000
+ 428 02dd 00       		.byte	0
+ 429 02de 00       		.byte	0
+ 430 02df 14       		.uleb128 0x14
+ 431 02e0 2A000000 		.4byte	.LASF55
+ 432 02e4 07       		.byte	0x7
+ 433 02e5 1F       		.byte	0x1f
+ 434 02e6 EA020000 		.4byte	0x2ea
+ 435 02ea 15       		.uleb128 0x15
+ 436 02eb A3010000 		.4byte	0x1a3
+ 437 02ef 14       		.uleb128 0x14
+ 438 02f0 C7030000 		.4byte	.LASF56
+ 439 02f4 08       		.byte	0x8
+ 440 02f5 87       		.byte	0x87
+ 441 02f6 8F020000 		.4byte	0x28f
+ 442 02fa 16       		.uleb128 0x16
+ 443 02fb 39030000 		.4byte	.LASF62
+ 444 02ff 39030000 		.4byte	.LASF62
+ 445 0303 09       		.byte	0x9
+ 446 0304 FE01     		.2byte	0x1fe
+ 447 0306 00       		.byte	0
+ 448              		.section	.debug_abbrev,"",%progbits
+ 449              	.Ldebug_abbrev0:
+ 450 0000 01       		.uleb128 0x1
+ 451 0001 11       		.uleb128 0x11
+ 452 0002 01       		.byte	0x1
+ 453 0003 25       		.uleb128 0x25
+ 454 0004 0E       		.uleb128 0xe
+ 455 0005 13       		.uleb128 0x13
+ 456 0006 0B       		.uleb128 0xb
+ 457 0007 03       		.uleb128 0x3
+ 458 0008 0E       		.uleb128 0xe
+ 459 0009 1B       		.uleb128 0x1b
+ 460 000a 0E       		.uleb128 0xe
+ 461 000b 55       		.uleb128 0x55
+ 462 000c 17       		.uleb128 0x17
+ 463 000d 11       		.uleb128 0x11
+ 464 000e 01       		.uleb128 0x1
+ 465 000f 10       		.uleb128 0x10
+ 466 0010 17       		.uleb128 0x17
+ 467 0011 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 11
+
+
+ 468 0012 00       		.byte	0
+ 469 0013 02       		.uleb128 0x2
+ 470 0014 24       		.uleb128 0x24
+ 471 0015 00       		.byte	0
+ 472 0016 0B       		.uleb128 0xb
+ 473 0017 0B       		.uleb128 0xb
+ 474 0018 3E       		.uleb128 0x3e
+ 475 0019 0B       		.uleb128 0xb
+ 476 001a 03       		.uleb128 0x3
+ 477 001b 0E       		.uleb128 0xe
+ 478 001c 00       		.byte	0
+ 479 001d 00       		.byte	0
+ 480 001e 03       		.uleb128 0x3
+ 481 001f 16       		.uleb128 0x16
+ 482 0020 00       		.byte	0
+ 483 0021 03       		.uleb128 0x3
+ 484 0022 0E       		.uleb128 0xe
+ 485 0023 3A       		.uleb128 0x3a
+ 486 0024 0B       		.uleb128 0xb
+ 487 0025 3B       		.uleb128 0x3b
+ 488 0026 0B       		.uleb128 0xb
+ 489 0027 49       		.uleb128 0x49
+ 490 0028 13       		.uleb128 0x13
+ 491 0029 00       		.byte	0
+ 492 002a 00       		.byte	0
+ 493 002b 04       		.uleb128 0x4
+ 494 002c 24       		.uleb128 0x24
+ 495 002d 00       		.byte	0
+ 496 002e 0B       		.uleb128 0xb
+ 497 002f 0B       		.uleb128 0xb
+ 498 0030 3E       		.uleb128 0x3e
+ 499 0031 0B       		.uleb128 0xb
+ 500 0032 03       		.uleb128 0x3
+ 501 0033 08       		.uleb128 0x8
+ 502 0034 00       		.byte	0
+ 503 0035 00       		.byte	0
+ 504 0036 05       		.uleb128 0x5
+ 505 0037 35       		.uleb128 0x35
+ 506 0038 00       		.byte	0
+ 507 0039 49       		.uleb128 0x49
+ 508 003a 13       		.uleb128 0x13
+ 509 003b 00       		.byte	0
+ 510 003c 00       		.byte	0
+ 511 003d 06       		.uleb128 0x6
+ 512 003e 0F       		.uleb128 0xf
+ 513 003f 00       		.byte	0
+ 514 0040 0B       		.uleb128 0xb
+ 515 0041 0B       		.uleb128 0xb
+ 516 0042 00       		.byte	0
+ 517 0043 00       		.byte	0
+ 518 0044 07       		.uleb128 0x7
+ 519 0045 13       		.uleb128 0x13
+ 520 0046 01       		.byte	0x1
+ 521 0047 03       		.uleb128 0x3
+ 522 0048 0E       		.uleb128 0xe
+ 523 0049 0B       		.uleb128 0xb
+ 524 004a 0B       		.uleb128 0xb
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 12
+
+
+ 525 004b 3A       		.uleb128 0x3a
+ 526 004c 0B       		.uleb128 0xb
+ 527 004d 3B       		.uleb128 0x3b
+ 528 004e 0B       		.uleb128 0xb
+ 529 004f 01       		.uleb128 0x1
+ 530 0050 13       		.uleb128 0x13
+ 531 0051 00       		.byte	0
+ 532 0052 00       		.byte	0
+ 533 0053 08       		.uleb128 0x8
+ 534 0054 0D       		.uleb128 0xd
+ 535 0055 00       		.byte	0
+ 536 0056 03       		.uleb128 0x3
+ 537 0057 0E       		.uleb128 0xe
+ 538 0058 3A       		.uleb128 0x3a
+ 539 0059 0B       		.uleb128 0xb
+ 540 005a 3B       		.uleb128 0x3b
+ 541 005b 0B       		.uleb128 0xb
+ 542 005c 49       		.uleb128 0x49
+ 543 005d 13       		.uleb128 0x13
+ 544 005e 38       		.uleb128 0x38
+ 545 005f 0B       		.uleb128 0xb
+ 546 0060 00       		.byte	0
+ 547 0061 00       		.byte	0
+ 548 0062 09       		.uleb128 0x9
+ 549 0063 0F       		.uleb128 0xf
+ 550 0064 00       		.byte	0
+ 551 0065 0B       		.uleb128 0xb
+ 552 0066 0B       		.uleb128 0xb
+ 553 0067 49       		.uleb128 0x49
+ 554 0068 13       		.uleb128 0x13
+ 555 0069 00       		.byte	0
+ 556 006a 00       		.byte	0
+ 557 006b 0A       		.uleb128 0xa
+ 558 006c 15       		.uleb128 0x15
+ 559 006d 01       		.byte	0x1
+ 560 006e 27       		.uleb128 0x27
+ 561 006f 19       		.uleb128 0x19
+ 562 0070 01       		.uleb128 0x1
+ 563 0071 13       		.uleb128 0x13
+ 564 0072 00       		.byte	0
+ 565 0073 00       		.byte	0
+ 566 0074 0B       		.uleb128 0xb
+ 567 0075 05       		.uleb128 0x5
+ 568 0076 00       		.byte	0
+ 569 0077 49       		.uleb128 0x49
+ 570 0078 13       		.uleb128 0x13
+ 571 0079 00       		.byte	0
+ 572 007a 00       		.byte	0
+ 573 007b 0C       		.uleb128 0xc
+ 574 007c 16       		.uleb128 0x16
+ 575 007d 00       		.byte	0
+ 576 007e 03       		.uleb128 0x3
+ 577 007f 0E       		.uleb128 0xe
+ 578 0080 3A       		.uleb128 0x3a
+ 579 0081 0B       		.uleb128 0xb
+ 580 0082 3B       		.uleb128 0x3b
+ 581 0083 05       		.uleb128 0x5
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 13
+
+
+ 582 0084 49       		.uleb128 0x49
+ 583 0085 13       		.uleb128 0x13
+ 584 0086 00       		.byte	0
+ 585 0087 00       		.byte	0
+ 586 0088 0D       		.uleb128 0xd
+ 587 0089 13       		.uleb128 0x13
+ 588 008a 01       		.byte	0x1
+ 589 008b 03       		.uleb128 0x3
+ 590 008c 0E       		.uleb128 0xe
+ 591 008d 0B       		.uleb128 0xb
+ 592 008e 0B       		.uleb128 0xb
+ 593 008f 3A       		.uleb128 0x3a
+ 594 0090 0B       		.uleb128 0xb
+ 595 0091 3B       		.uleb128 0x3b
+ 596 0092 05       		.uleb128 0x5
+ 597 0093 01       		.uleb128 0x1
+ 598 0094 13       		.uleb128 0x13
+ 599 0095 00       		.byte	0
+ 600 0096 00       		.byte	0
+ 601 0097 0E       		.uleb128 0xe
+ 602 0098 0D       		.uleb128 0xd
+ 603 0099 00       		.byte	0
+ 604 009a 03       		.uleb128 0x3
+ 605 009b 0E       		.uleb128 0xe
+ 606 009c 3A       		.uleb128 0x3a
+ 607 009d 0B       		.uleb128 0xb
+ 608 009e 3B       		.uleb128 0x3b
+ 609 009f 05       		.uleb128 0x5
+ 610 00a0 49       		.uleb128 0x49
+ 611 00a1 13       		.uleb128 0x13
+ 612 00a2 38       		.uleb128 0x38
+ 613 00a3 0B       		.uleb128 0xb
+ 614 00a4 00       		.byte	0
+ 615 00a5 00       		.byte	0
+ 616 00a6 0F       		.uleb128 0xf
+ 617 00a7 2E       		.uleb128 0x2e
+ 618 00a8 00       		.byte	0
+ 619 00a9 03       		.uleb128 0x3
+ 620 00aa 0E       		.uleb128 0xe
+ 621 00ab 3A       		.uleb128 0x3a
+ 622 00ac 0B       		.uleb128 0xb
+ 623 00ad 3B       		.uleb128 0x3b
+ 624 00ae 0B       		.uleb128 0xb
+ 625 00af 27       		.uleb128 0x27
+ 626 00b0 19       		.uleb128 0x19
+ 627 00b1 20       		.uleb128 0x20
+ 628 00b2 0B       		.uleb128 0xb
+ 629 00b3 00       		.byte	0
+ 630 00b4 00       		.byte	0
+ 631 00b5 10       		.uleb128 0x10
+ 632 00b6 2E       		.uleb128 0x2e
+ 633 00b7 01       		.byte	0x1
+ 634 00b8 3F       		.uleb128 0x3f
+ 635 00b9 19       		.uleb128 0x19
+ 636 00ba 03       		.uleb128 0x3
+ 637 00bb 0E       		.uleb128 0xe
+ 638 00bc 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 14
+
+
+ 639 00bd 0B       		.uleb128 0xb
+ 640 00be 3B       		.uleb128 0x3b
+ 641 00bf 0B       		.uleb128 0xb
+ 642 00c0 27       		.uleb128 0x27
+ 643 00c1 19       		.uleb128 0x19
+ 644 00c2 49       		.uleb128 0x49
+ 645 00c3 13       		.uleb128 0x13
+ 646 00c4 8701     		.uleb128 0x87
+ 647 00c6 19       		.uleb128 0x19
+ 648 00c7 11       		.uleb128 0x11
+ 649 00c8 01       		.uleb128 0x1
+ 650 00c9 12       		.uleb128 0x12
+ 651 00ca 06       		.uleb128 0x6
+ 652 00cb 40       		.uleb128 0x40
+ 653 00cc 18       		.uleb128 0x18
+ 654 00cd 9742     		.uleb128 0x2117
+ 655 00cf 19       		.uleb128 0x19
+ 656 00d0 01       		.uleb128 0x1
+ 657 00d1 13       		.uleb128 0x13
+ 658 00d2 00       		.byte	0
+ 659 00d3 00       		.byte	0
+ 660 00d4 11       		.uleb128 0x11
+ 661 00d5 1D       		.uleb128 0x1d
+ 662 00d6 00       		.byte	0
+ 663 00d7 31       		.uleb128 0x31
+ 664 00d8 13       		.uleb128 0x13
+ 665 00d9 11       		.uleb128 0x11
+ 666 00da 01       		.uleb128 0x1
+ 667 00db 12       		.uleb128 0x12
+ 668 00dc 06       		.uleb128 0x6
+ 669 00dd 58       		.uleb128 0x58
+ 670 00de 0B       		.uleb128 0xb
+ 671 00df 59       		.uleb128 0x59
+ 672 00e0 0B       		.uleb128 0xb
+ 673 00e1 00       		.byte	0
+ 674 00e2 00       		.byte	0
+ 675 00e3 12       		.uleb128 0x12
+ 676 00e4 898201   		.uleb128 0x4109
+ 677 00e7 01       		.byte	0x1
+ 678 00e8 11       		.uleb128 0x11
+ 679 00e9 01       		.uleb128 0x1
+ 680 00ea 31       		.uleb128 0x31
+ 681 00eb 13       		.uleb128 0x13
+ 682 00ec 00       		.byte	0
+ 683 00ed 00       		.byte	0
+ 684 00ee 13       		.uleb128 0x13
+ 685 00ef 8A8201   		.uleb128 0x410a
+ 686 00f2 00       		.byte	0
+ 687 00f3 02       		.uleb128 0x2
+ 688 00f4 18       		.uleb128 0x18
+ 689 00f5 9142     		.uleb128 0x2111
+ 690 00f7 18       		.uleb128 0x18
+ 691 00f8 00       		.byte	0
+ 692 00f9 00       		.byte	0
+ 693 00fa 14       		.uleb128 0x14
+ 694 00fb 34       		.uleb128 0x34
+ 695 00fc 00       		.byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 15
+
+
+ 696 00fd 03       		.uleb128 0x3
+ 697 00fe 0E       		.uleb128 0xe
+ 698 00ff 3A       		.uleb128 0x3a
+ 699 0100 0B       		.uleb128 0xb
+ 700 0101 3B       		.uleb128 0x3b
+ 701 0102 0B       		.uleb128 0xb
+ 702 0103 49       		.uleb128 0x49
+ 703 0104 13       		.uleb128 0x13
+ 704 0105 3F       		.uleb128 0x3f
+ 705 0106 19       		.uleb128 0x19
+ 706 0107 3C       		.uleb128 0x3c
+ 707 0108 19       		.uleb128 0x19
+ 708 0109 00       		.byte	0
+ 709 010a 00       		.byte	0
+ 710 010b 15       		.uleb128 0x15
+ 711 010c 26       		.uleb128 0x26
+ 712 010d 00       		.byte	0
+ 713 010e 49       		.uleb128 0x49
+ 714 010f 13       		.uleb128 0x13
+ 715 0110 00       		.byte	0
+ 716 0111 00       		.byte	0
+ 717 0112 16       		.uleb128 0x16
+ 718 0113 2E       		.uleb128 0x2e
+ 719 0114 00       		.byte	0
+ 720 0115 3F       		.uleb128 0x3f
+ 721 0116 19       		.uleb128 0x19
+ 722 0117 3C       		.uleb128 0x3c
+ 723 0118 19       		.uleb128 0x19
+ 724 0119 6E       		.uleb128 0x6e
+ 725 011a 0E       		.uleb128 0xe
+ 726 011b 03       		.uleb128 0x3
+ 727 011c 0E       		.uleb128 0xe
+ 728 011d 3A       		.uleb128 0x3a
+ 729 011e 0B       		.uleb128 0xb
+ 730 011f 3B       		.uleb128 0x3b
+ 731 0120 05       		.uleb128 0x5
+ 732 0121 00       		.byte	0
+ 733 0122 00       		.byte	0
+ 734 0123 00       		.byte	0
+ 735              		.section	.debug_aranges,"",%progbits
+ 736 0000 1C000000 		.4byte	0x1c
+ 737 0004 0200     		.2byte	0x2
+ 738 0006 00000000 		.4byte	.Ldebug_info0
+ 739 000a 04       		.byte	0x4
+ 740 000b 00       		.byte	0
+ 741 000c 0000     		.2byte	0
+ 742 000e 0000     		.2byte	0
+ 743 0010 00000000 		.4byte	.LFB452
+ 744 0014 10000000 		.4byte	.LFE452-.LFB452
+ 745 0018 00000000 		.4byte	0
+ 746 001c 00000000 		.4byte	0
+ 747              		.section	.debug_ranges,"",%progbits
+ 748              	.Ldebug_ranges0:
+ 749 0000 00000000 		.4byte	.LFB452
+ 750 0004 10000000 		.4byte	.LFE452
+ 751 0008 00000000 		.4byte	0
+ 752 000c 00000000 		.4byte	0
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 16
+
+
+ 753              		.section	.debug_line,"",%progbits
+ 754              	.Ldebug_line0:
+ 755 0000 46020000 		.section	.debug_str,"MS",%progbits,1
+ 755      02002502 
+ 755      00000201 
+ 755      FB0E0D00 
+ 755      01010101 
+ 756              	.LASF29:
+ 757 0000 72656C6F 		.ascii	"reloadInput\000"
+ 757      6164496E 
+ 757      70757400 
+ 758              	.LASF18:
+ 759 000c 636C6F63 		.ascii	"clockPrescaler\000"
+ 759      6B507265 
+ 759      7363616C 
+ 759      657200
+ 760              	.LASF34:
+ 761 001b 636F756E 		.ascii	"countInputMode\000"
+ 761      74496E70 
+ 761      75744D6F 
+ 761      646500
+ 762              	.LASF55:
+ 763 002a 54696D65 		.ascii	"Timer_config\000"
+ 763      725F636F 
+ 763      6E666967 
+ 763      00
+ 764              	.LASF22:
+ 765 0037 636F6D70 		.ascii	"compare0\000"
+ 765      61726530 
+ 765      00
+ 766              	.LASF23:
+ 767 0040 636F6D70 		.ascii	"compare1\000"
+ 767      61726531 
+ 767      00
+ 768              	.LASF47:
+ 769 0049 72784275 		.ascii	"rxBufSize\000"
+ 769      6653697A 
+ 769      6500
+ 770              	.LASF37:
+ 771 0053 63795F63 		.ascii	"cy_cb_scb_uart_handle_events_t\000"
+ 771      625F7363 
+ 771      625F7561 
+ 771      72745F68 
+ 771      616E646C 
+ 772              	.LASF58:
+ 773 0072 6D61696E 		.ascii	"main_cm0p.c\000"
+ 773      5F636D30 
+ 773      702E6300 
+ 774              	.LASF0:
+ 775 007e 73686F72 		.ascii	"short int\000"
+ 775      7420696E 
+ 775      7400
+ 776              	.LASF11:
+ 777 0088 73697A65 		.ascii	"sizetype\000"
+ 777      74797065 
+ 777      00
+ 778              	.LASF39:
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 17
+
+
+ 779 0091 63795F73 		.ascii	"cy_stc_scb_uart_context\000"
+ 779      74635F73 
+ 779      63625F75 
+ 779      6172745F 
+ 779      636F6E74 
+ 780              	.LASF57:
+ 781 00a9 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 781      43313120 
+ 781      352E342E 
+ 781      31203230 
+ 781      31363036 
+ 782 00dc 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0plus -mthumb -"
+ 782      20726576 
+ 782      6973696F 
+ 782      6E203233 
+ 782      37373135 
+ 783 010f 67202D4F 		.ascii	"g -Og -ffunction-sections -ffat-lto-objects\000"
+ 783      67202D66 
+ 783      66756E63 
+ 783      74696F6E 
+ 783      2D736563 
+ 784              	.LASF20:
+ 785 013b 636F756E 		.ascii	"countDirection\000"
+ 785      74446972 
+ 785      65637469 
+ 785      6F6E00
+ 786              	.LASF50:
+ 787 014a 74784275 		.ascii	"txBufSize\000"
+ 787      6653697A 
+ 787      6500
+ 788              	.LASF61:
+ 789 0154 6D61696E 		.ascii	"main\000"
+ 789      00
+ 790              	.LASF9:
+ 791 0159 5F5F7569 		.ascii	"__uint32_t\000"
+ 791      6E743332 
+ 791      5F7400
+ 792              	.LASF27:
+ 793 0164 63617074 		.ascii	"captureInput\000"
+ 793      75726549 
+ 793      6E707574 
+ 793      00
+ 794              	.LASF40:
+ 795 0171 74785374 		.ascii	"txStatus\000"
+ 795      61747573 
+ 795      00
+ 796              	.LASF48:
+ 797 017a 72784275 		.ascii	"rxBufIdx\000"
+ 797      66496478 
+ 797      00
+ 798              	.LASF4:
+ 799 0183 6C6F6E67 		.ascii	"long int\000"
+ 799      20696E74 
+ 799      00
+ 800              	.LASF25:
+ 801 018c 696E7465 		.ascii	"interruptSources\000"
+ 801      72727570 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 18
+
+
+ 801      74536F75 
+ 801      72636573 
+ 801      00
+ 802              	.LASF44:
+ 803 019d 72785269 		.ascii	"rxRingBufHead\000"
+ 803      6E674275 
+ 803      66486561 
+ 803      6400
+ 804              	.LASF14:
+ 805 01ab 666C6F61 		.ascii	"float\000"
+ 805      7400
+ 806              	.LASF49:
+ 807 01b1 74784275 		.ascii	"txBuf\000"
+ 807      6600
+ 808              	.LASF28:
+ 809 01b7 72656C6F 		.ascii	"reloadInputMode\000"
+ 809      6164496E 
+ 809      7075744D 
+ 809      6F646500 
+ 810              	.LASF6:
+ 811 01c7 6C6F6E67 		.ascii	"long long int\000"
+ 811      206C6F6E 
+ 811      6720696E 
+ 811      7400
+ 812              	.LASF19:
+ 813 01d5 72756E4D 		.ascii	"runMode\000"
+ 813      6F646500 
+ 814              	.LASF43:
+ 815 01dd 72785269 		.ascii	"rxRingBufSize\000"
+ 815      6E674275 
+ 815      6653697A 
+ 815      6500
+ 816              	.LASF17:
+ 817 01eb 70657269 		.ascii	"period\000"
+ 817      6F6400
+ 818              	.LASF33:
+ 819 01f2 73746F70 		.ascii	"stopInput\000"
+ 819      496E7075 
+ 819      7400
+ 820              	.LASF60:
+ 821 01fc 5F5F656E 		.ascii	"__enable_irq\000"
+ 821      61626C65 
+ 821      5F697271 
+ 821      00
+ 822              	.LASF12:
+ 823 0209 6C6F6E67 		.ascii	"long double\000"
+ 823      20646F75 
+ 823      626C6500 
+ 824              	.LASF30:
+ 825 0215 73746172 		.ascii	"startInputMode\000"
+ 825      74496E70 
+ 825      75744D6F 
+ 825      646500
+ 826              	.LASF41:
+ 827 0224 72785374 		.ascii	"rxStatus\000"
+ 827      61747573 
+ 827      00
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 19
+
+
+ 828              	.LASF1:
+ 829 022d 756E7369 		.ascii	"unsigned char\000"
+ 829      676E6564 
+ 829      20636861 
+ 829      7200
+ 830              	.LASF42:
+ 831 023b 72785269 		.ascii	"rxRingBuf\000"
+ 831      6E674275 
+ 831      6600
+ 832              	.LASF2:
+ 833 0245 7369676E 		.ascii	"signed char\000"
+ 833      65642063 
+ 833      68617200 
+ 834              	.LASF7:
+ 835 0251 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 835      206C6F6E 
+ 835      6720756E 
+ 835      7369676E 
+ 835      65642069 
+ 836              	.LASF10:
+ 837 0268 75696E74 		.ascii	"uint32_t\000"
+ 837      33325F74 
+ 837      00
+ 838              	.LASF21:
+ 839 0271 636F6D70 		.ascii	"compareOrCapture\000"
+ 839      6172654F 
+ 839      72436170 
+ 839      74757265 
+ 839      00
+ 840              	.LASF59:
+ 841 0282 433A5C55 		.ascii	"C:\\Users\\Agentos\\Documents\\Univer\\psoc6-labs\\"
+ 841      73657273 
+ 841      5C416765 
+ 841      6E746F73 
+ 841      5C446F63 
+ 842 02af 6C616237 		.ascii	"lab7\\lab7_1_test\\lab7.cydsn\000"
+ 842      5C6C6162 
+ 842      375F315F 
+ 842      74657374 
+ 842      5C6C6162 
+ 843              	.LASF24:
+ 844 02cb 656E6162 		.ascii	"enableCompareSwap\000"
+ 844      6C65436F 
+ 844      6D706172 
+ 844      65537761 
+ 844      7000
+ 845              	.LASF36:
+ 846 02dd 63795F73 		.ascii	"cy_stc_tcpwm_counter_config_t\000"
+ 846      74635F74 
+ 846      6370776D 
+ 846      5F636F75 
+ 846      6E746572 
+ 847              	.LASF3:
+ 848 02fb 73686F72 		.ascii	"short unsigned int\000"
+ 848      7420756E 
+ 848      7369676E 
+ 848      65642069 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 20
+
+
+ 848      6E7400
+ 849              	.LASF46:
+ 850 030e 72784275 		.ascii	"rxBuf\000"
+ 850      6600
+ 851              	.LASF13:
+ 852 0314 63686172 		.ascii	"char\000"
+ 852      00
+ 853              	.LASF52:
+ 854 0319 63624576 		.ascii	"cbEvents\000"
+ 854      656E7473 
+ 854      00
+ 855              	.LASF16:
+ 856 0322 5F426F6F 		.ascii	"_Bool\000"
+ 856      6C00
+ 857              	.LASF26:
+ 858 0328 63617074 		.ascii	"captureInputMode\000"
+ 858      75726549 
+ 858      6E707574 
+ 858      4D6F6465 
+ 858      00
+ 859              	.LASF62:
+ 860 0339 43795F53 		.ascii	"Cy_SysEnableCM4\000"
+ 860      7973456E 
+ 860      61626C65 
+ 860      434D3400 
+ 861              	.LASF5:
+ 862 0349 6C6F6E67 		.ascii	"long unsigned int\000"
+ 862      20756E73 
+ 862      69676E65 
+ 862      6420696E 
+ 862      7400
+ 863              	.LASF15:
+ 864 035b 646F7562 		.ascii	"double\000"
+ 864      6C6500
+ 865              	.LASF38:
+ 866 0362 63795F73 		.ascii	"cy_stc_tcpwm_counter_config\000"
+ 866      74635F74 
+ 866      6370776D 
+ 866      5F636F75 
+ 866      6E746572 
+ 867              	.LASF31:
+ 868 037e 73746172 		.ascii	"startInput\000"
+ 868      74496E70 
+ 868      757400
+ 869              	.LASF32:
+ 870 0389 73746F70 		.ascii	"stopInputMode\000"
+ 870      496E7075 
+ 870      744D6F64 
+ 870      6500
+ 871              	.LASF53:
+ 872 0397 696E6974 		.ascii	"initKey\000"
+ 872      4B657900 
+ 873              	.LASF54:
+ 874 039f 63795F73 		.ascii	"cy_stc_scb_uart_context_t\000"
+ 874      74635F73 
+ 874      63625F75 
+ 874      6172745F 
+ARM GAS  C:\Users\Agentos\AppData\Local\Temp\ccZu9Lil.s 			page 21
+
+
+ 874      636F6E74 
+ 875              	.LASF45:
+ 876 03b9 72785269 		.ascii	"rxRingBufTail\000"
+ 876      6E674275 
+ 876      66546169 
+ 876      6C00
+ 877              	.LASF56:
+ 878 03c7 55415254 		.ascii	"UART_context\000"
+ 878      5F636F6E 
+ 878      74657874 
+ 878      00
+ 879              	.LASF35:
+ 880 03d4 636F756E 		.ascii	"countInput\000"
+ 880      74496E70 
+ 880      757400
+ 881              	.LASF51:
+ 882 03df 74784C65 		.ascii	"txLeftToTransmit\000"
+ 882      6674546F 
+ 882      5472616E 
+ 882      736D6974 
+ 882      00
+ 883              	.LASF8:
+ 884 03f0 756E7369 		.ascii	"unsigned int\000"
+ 884      676E6564 
+ 884      20696E74 
+ 884      00
+ 885              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

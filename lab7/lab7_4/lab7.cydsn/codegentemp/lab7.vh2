@@ -2,7 +2,7 @@
 --	Conversion of lab7.v to vh2:
 --
 --	Cypress Semiconductor - WARP Version 6.3 IR 41
---	Wed Nov 06 17:54:31 2019
+--	Wed Dec 11 13:35:33 2019
 --
 
 USE cypress.cypress.all;
@@ -77,6 +77,12 @@ SIGNAL tmpIO_0__Pin_BlueLED_net_0 : bit;
 TERMINAL Net_100 : bit;
 TERMINAL tmpSIOVREF__Pin_BlueLED_net_0 : bit;
 TERMINAL Net_101 : bit;
+TERMINAL Net_80 : bit;
+TERMINAL Net_81 : bit;
+SIGNAL tmpFB_0__SW2_P0_4_net_0 : bit;
+SIGNAL tmpIO_0__SW2_P0_4_net_0 : bit;
+TERMINAL tmpSIOVREF__SW2_P0_4_net_0 : bit;
+SIGNAL Net_309 : bit;
 BEGIN
 
 one <=  ('1') ;
@@ -359,5 +365,55 @@ R_3:cy_annotation_universal_v1_0
 		port_names=>"T1, T2",
 		width=>2)
 	PORT MAP(connect=>(Net_100, Net_101));
+SW_2:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"SwitchSPST_v1_0",
+		port_names=>"T1, T2",
+		width=>2)
+	PORT MAP(connect=>(Net_80, Net_81));
+SW2_P0_4:cy_mxs40_gpio_v1_0
+	GENERIC MAP(cy_registers=>"",
+		width=>1,
+		sio_grp_cnt=>0,
+		id=>"6fb4e58b-fc61-450d-ab10-533363eee47b",
+		drive_mode=>"2",
+		ibuf_enabled=>"1",
+		init_dr_st=>"1",
+		input_sync=>"0",
+		intr_mode=>"2",
+		io_voltage=>"",
+		output_conn=>"0",
+		oe_conn=>"0",
+		output_sync=>"0",
+		oe_sync=>"0",
+		drive_strength=>"0",
+		max_frequency=>"100",
+		output_current_cap=>"8",
+		i2c_mode=>"0",
+		pin_aliases=>"",
+		pin_mode=>"I",
+		slew_rate=>"0",
+		vtrip=>"0",
+		use_annotation=>"1",
+		hotswap_needed=>"0")
+	PORT MAP(oe=>(one),
+		y=>(zero),
+		fb=>(tmpFB_0__SW2_P0_4_net_0),
+		analog=>(open),
+		io=>(tmpIO_0__SW2_P0_4_net_0),
+		annotation=>Net_81,
+		siovref=>(tmpSIOVREF__SW2_P0_4_net_0));
+PWR_3:cy_annotation_universal_v1_0
+	GENERIC MAP(comp_name=>"Power_v1_0",
+		port_names=>"T1",
+		width=>1)
+	PORT MAP(connect=>Net_80);
+Port0_Interrupt:cy_gsref_v1_0
+	GENERIC MAP(guid=>"8C3B410E-0600-5ECF-95DD-0AF91BF8D8A7")
+	PORT MAP(sig_out=>Net_309);
+SysInt_Switch:cy_mxs40_isr_v1_0
+	GENERIC MAP(cy_registers=>"",
+		deepsleep_required=>'0',
+		int_type=>"10")
+	PORT MAP(int_signal=>Net_309);
 
 END R_T_L;

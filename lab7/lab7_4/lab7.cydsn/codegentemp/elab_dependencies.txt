@@ -1,4 +1,4 @@
-C:\Users\User\Desktop\labs\psoc\lab7_1\lab7.cydsn\TopDesign\TopDesign.cysch
+C:\Users\Agentos\Documents\Univer\psoc6-labs\lab7\lab7_4\lab7.cydsn\TopDesign\TopDesign.cysch
 C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\SysClk_PDL_v1_0\SysClk_PDL_v1_0.cyprimitive
 C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\SysClk_PDL_v1_0\SysClk_PDL_v1_0.cysym
 C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\SysClk_PDL_v1_0\SysClk_PDL_v1_0.pdf
@@ -106,4 +106,20 @@ C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrim
 C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_mxs40_scb_v1_10\cy_mxs40_scb_v1_10.cysym
 C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_mxs40_scb_v1_10\version.cypatch
 C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_mxs40_scb_v1_10\PSoC6\cy_mxs40_scb_v1_10.cyprimitive
-C:\Users\User\Desktop\labs\psoc\lab7_1\lab7.cydsn\lab7.cydwr
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\SwitchSPST_v1_0\SwitchSPST_v1_0.cysym
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\SwitchSPST_v1_0\SwitchSPST_v1_0.pdf
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\SwitchSPST_v1_0\version.cypatch
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10\cy_gsref_v2_10.cysym
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10\cy_gsref_v2_10.cystate
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10\cy_gsref_v2_10.cyprimitive
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10\cy_gsref_v2_10.pdf
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10\version.cypatch
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10\Custom\custom.cs
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10\Custom\cycenteredtextcontrol.cs
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10\Custom\cycenteredtextcontrol.designer.cs
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10\Custom\cygsrefidcontrol.cs
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10\Custom\cygsrefidcontrol.designer.cs
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10\Custom\cycenteredtextcontrol.resx
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10\Custom\cygsrefidcontrol.resx
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\CyPrimitives\cyprimitives.cylib\cy_gsref_v2_10
+C:\Users\Agentos\Documents\Univer\psoc6-labs\lab7\lab7_4\lab7.cydsn\lab7.cydwr

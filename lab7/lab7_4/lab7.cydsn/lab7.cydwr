@@ -10,18 +10,27 @@
       <Data key="f3a8a84c-ddef-47bc-9734-4890a79060e4/b68e5b9d-7828-482d-a282-930f990e3b3e" value="UART_SCBCLK" />
     </Group>
     <Group key="Interrupt">
+      <Data key="818dab76-364e-4157-b9b0-82180f3dccb3" value="SysInt_Switch" />
       <Data key="8073f847-f13e-4f74-a18c-14f2aff38df7" value="Isr_Timer" />
       <Data key="f3a8a84c-ddef-47bc-9734-4890a79060e4/9260d369-b684-4310-b925-f618d77b89d7" value="UART_SCB_IRQ" />
     </Group>
     <Group key="Pin">
-      <Data key="be5e4883-575c-41fb-bc37-1a78e01b9698" value="Pin_RedLED_1" />
+      <Data key="6fb4e58b-fc61-450d-ab10-533363eee47b" value="SW2_P0_4" />
+      <Data key="be5e4883-575c-41fb-bc37-1a78e01b9698" value="Pin_RedLED" />
       <Data key="c66c5798-e320-4a9f-a870-48c18cc5b1da" value="Pin_GreenLED" />
-      <Data key="e29eb476-8372-4bbf-8809-7fcbdcff6cc5" value="Pin_BlueLED_2" />
+      <Data key="e29eb476-8372-4bbf-8809-7fcbdcff6cc5" value="Pin_BlueLED" />
       <Data key="f3a8a84c-ddef-47bc-9734-4890a79060e4/65f3af6c-759b-4ccb-8c66-5c95ba1f5f4f" value="UART_tx" />
       <Data key="f3a8a84c-ddef-47bc-9734-4890a79060e4/b7e8018e-1ef7-49c0-b5a5-61641a03e31c" value="UART_rx" />
     </Group>
   </Group>
   <Group key="Interrupt">
+    <Group key="818dab76-364e-4157-b9b0-82180f3dccb3">
+      <Group key="CortexM4">
+        <Data key="Assigned" value="True" />
+        <Data key="Priority" value="0" />
+        <Data key="Vector" value="-1" />
+      </Group>
+    </Group>
     <Group key="f3a8a84c-ddef-47bc-9734-4890a79060e4/9260d369-b684-4310-b925-f618d77b89d7">
       <Group key="CortexM4">
         <Data key="Assigned" value="False" />
@@ -662,6 +671,11 @@
     </Group>
   </Group>
   <Group key="Pin2">
+    <Group key="6fb4e58b-fc61-450d-ab10-533363eee47b">
+      <Group key="0">
+        <Data key="Port Format" value="0,4" />
+      </Group>
+    </Group>
     <Group key="be5e4883-575c-41fb-bc37-1a78e01b9698">
       <Group key="0">
         <Data key="Port Format" value="0,3" />
@@ -687,6 +701,7 @@
         <Data key="Port Format" value="5,0" />
       </Group>
     </Group>
+    <Group key="UnAssigned Pins" />
   </Group>
   <Group key="PlaceDir">
     <Data key="count" value="0" />

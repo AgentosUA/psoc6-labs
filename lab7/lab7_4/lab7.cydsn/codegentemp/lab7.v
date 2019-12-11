@@ -1,6 +1,6 @@
 // ======================================================================
 // lab7.v generated from TopDesign.cysch
-// 11/06/2019 at 17:54
+// 12/11/2019 at 13:35
 // This file is auto generated. ANY EDITS YOU MAKE MAY BE LOST WHEN THIS FILE IS REGENERATED!!!
 // ======================================================================
 
@@ -390,6 +390,11 @@ module top ;
           wire  Net_3;
           wire  Net_2;
           wire  Net_95;
+          wire  Net_309;
+    electrical  Net_80;
+    electrical  Net_81;
+          wire  Net_10;
+          wire  Net_14;
     electrical  Net_99;
     electrical  Net_101;
     electrical  Net_100;
@@ -399,8 +404,6 @@ module top ;
     electrical  Net_66;
     electrical  Net_15;
     electrical  Net_25;
-          wire  Net_10;
-          wire  Net_14;
 
 
 	cy_clock_v1_0
@@ -643,6 +646,77 @@ module top ;
     defparam R_3.comp_name = "Resistor_v1_0";
     defparam R_3.port_names = "T1, T2";
     defparam R_3.width = 2;
+
+    cy_annotation_universal_v1_0 SW_2 (
+        .connect({
+            Net_80,
+            Net_81
+        })
+    );
+    defparam SW_2.comp_name = "SwitchSPST_v1_0";
+    defparam SW_2.port_names = "T1, T2";
+    defparam SW_2.width = 2;
+
+	wire [0:0] tmpFB_0__SW2_P0_4_net;
+	wire [0:0] tmpIO_0__SW2_P0_4_net;
+	electrical [0:0] tmpSIOVREF__SW2_P0_4_net;
+
+	cy_mxs40_gpio_v1_0
+		#(.id("6fb4e58b-fc61-450d-ab10-533363eee47b"),
+		  .width(1),
+		  .sio_grp_cnt(0),
+		  .drive_mode("2"),
+		  .ibuf_enabled("1"),
+		  .init_dr_st("1"),
+		  .input_sync("0"),
+		  .intr_mode("2"),
+		  .io_voltage(""),
+		  .output_conn("0"),
+		  .oe_conn("0"),
+		  .output_sync("0"),
+		  .oe_sync("0"),
+		  .drive_strength("0"),
+		  .max_frequency("100"),
+		  .i2c_mode("0"),
+		  .output_current_cap("8"),
+		  .pin_aliases(""),
+		  .pin_mode("I"),
+		  .slew_rate("0"),
+		  .vtrip("0"),
+		  .use_annotation("1"),
+		  .hotswap_needed("0"))
+		SW2_P0_4
+		 (.oe({1'b1}),
+		  .y({1'b0}),
+		  .fb({tmpFB_0__SW2_P0_4_net[0:0]}),
+		  .io({tmpIO_0__SW2_P0_4_net[0:0]}),
+		  .siovref(tmpSIOVREF__SW2_P0_4_net),
+		  .annotation({Net_81}));
+
+
+    cy_annotation_universal_v1_0 PWR_3 (
+        .connect({
+            Net_80
+        })
+    );
+    defparam PWR_3.comp_name = "Power_v1_0";
+    defparam PWR_3.port_names = "T1";
+    defparam PWR_3.width = 1;
+
+
+	cy_gsref_v1_0
+		#(.guid("8C3B410E-0600-5ECF-95DD-0AF91BF8D8A7"))
+		Port0_Interrupt
+		 (.sig_out(Net_309));
+
+
+
+	cy_mxs40_isr_v1_0
+		#(.deepsleep_required(0),
+		  .int_type(2'b10))
+		SysInt_Switch
+		 (.int_signal(Net_309));
+
 
 
 
